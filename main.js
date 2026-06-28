@@ -106,6 +106,24 @@
     });
   }
 
+  /* ----- Scroll progress bar + back-to-top ----- */
+  const progress = document.getElementById("scrollProgress");
+  const toTop = document.getElementById("toTop");
+  const onScrollProgress = () => {
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    const ratio = max > 0 ? doc.scrollTop / max : 0;
+    if (progress) progress.style.transform = "scaleX(" + ratio + ")";
+    if (toTop) toTop.classList.toggle("show", doc.scrollTop > 600);
+  };
+  window.addEventListener("scroll", onScrollProgress, { passive: true });
+  onScrollProgress();
+  if (toTop) {
+    toTop.addEventListener("click", () =>
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    );
+  }
+
   /* ----- Creators spotlight ----- */
   const crItems = Array.from(document.querySelectorAll(".cr-item"));
   const crImg = document.getElementById("crImg");

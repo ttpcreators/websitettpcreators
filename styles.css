@@ -347,6 +347,41 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.03;
 .stat + .stat { border-left: 1px solid var(--line); padding-left: clamp(20px, 3vw, 40px); }
 
 /* =========================================================
+   Process / méthode (stepper)
+   ========================================================= */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin-top: clamp(36px, 5vw, 56px); }
+.step { position: relative; padding-top: 30px; border-top: 2px solid var(--line); transition: border-color .35s var(--ease); }
+.step::before {
+  content: ""; position: absolute; top: -8px; left: 0; width: 14px; height: 14px;
+  border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--bg);
+}
+.step:hover { border-top-color: var(--accent); }
+.step .s-no { font-family: var(--f-display); color: var(--accent); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; }
+.step h3 { font-size: 1.18rem; margin: 8px 0 10px; }
+.step p { color: var(--muted); font-size: 0.94rem; }
+
+/* =========================================================
+   Testimonials
+   ========================================================= */
+.testi-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--gap); align-items: stretch; }
+.testi-col { display: flex; flex-direction: column; gap: var(--gap); }
+.testi {
+  border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface);
+  padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; justify-content: space-between; gap: 26px;
+  transition: border-color .35s var(--ease), transform .35s var(--ease);
+}
+.testi:hover { border-color: var(--accent); transform: translateY(-4px); }
+.testi.feature { background: linear-gradient(160deg, var(--surface-2), var(--surface)); }
+.testi-col .testi { flex: 1; }
+.testi .quote { font-family: var(--f-display); font-weight: 600; font-size: clamp(1.1rem, 1.7vw, 1.4rem); line-height: 1.4; letter-spacing: -0.01em; }
+.testi.feature .quote { font-size: clamp(1.4rem, 2.4vw, 2rem); line-height: 1.32; }
+.testi .qmark { color: var(--accent); font-size: 1.4em; line-height: 0; margin-right: 2px; }
+.testi .who { display: flex; align-items: center; gap: 13px; }
+.testi .who img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.testi .who b { display: block; font-size: 0.96rem; }
+.testi .who span { color: var(--muted); font-size: 0.84rem; }
+
+/* =========================================================
    Contact / CTA
    ========================================================= */
 .cta {
@@ -395,6 +430,25 @@ form { display: flex; flex-direction: column; gap: 14px; }
 .socials svg { width: 18px; height: 18px; }
 
 /* =========================================================
+   Scroll progress bar + back-to-top
+   ========================================================= */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+  transform: scaleX(0); transform-origin: 0 50%;
+  background: var(--accent); z-index: 60; transition: transform .1s linear;
+}
+.to-top {
+  position: fixed; right: 22px; bottom: 22px; width: 48px; height: 48px;
+  border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; z-index: 55;
+  opacity: 0; transform: translateY(14px); pointer-events: none;
+  box-shadow: 0 10px 28px rgba(90,15,34,0.28); transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { transform: translateY(-4px); }
+.to-top svg { width: 20px; height: 20px; }
+
+/* =========================================================
    Scroll reveal
    ========================================================= */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
@@ -413,6 +467,8 @@ form { display: flex; flex-direction: column; gap: 14px; }
   .spotlight { grid-template-columns: 1fr; }
   .about { grid-template-columns: 1fr; }
   .about-media { aspect-ratio: 16/10; order: -1; }
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .testi-grid { grid-template-columns: 1fr; }
   .cta { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
@@ -428,6 +484,8 @@ form { display: flex; flex-direction: column; gap: 14px; }
   .work-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .stat + .stat { border-left: none; padding-left: 0; }
+  .steps { grid-template-columns: 1fr; }
+  .to-top { right: 16px; bottom: 16px; }
   .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid var(--line); }
   .form-row { grid-template-columns: 1fr; }
   .hero-side { flex-direction: column; }
