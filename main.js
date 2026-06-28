@@ -106,5 +106,60 @@
     });
   }
 
-  /* ----- Footer year (kept dynamic-safe without Date in build) ----- */
+  /* ----- Creators spotlight ----- */
+  const crItems = Array.from(document.querySelectorAll(".cr-item"));
+  const crImg = document.getElementById("crImg");
+  const PLATFORM_SVG = {
+    Instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+    TikTok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.3 1.7 3.8 4 4v3c-1.5 0-2.9-.4-4-1.2V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1A3 3 0 1 0 13 15V3h3z"/></svg>',
+    YouTube: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none"/></svg>'
+  };
+
+  const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  const selectCreator = (btn, index) => {
+    crItems.forEach((b) => {
+      b.classList.remove("is-active");
+      b.setAttribute("aria-selected", "false");
+    });
+    btn.classList.add("is-active");
+    btn.setAttribute("aria-selected", "true");
+
+    const d = btn.dataset;
+    setText("crName", d.name);
+    setText("crNiche", d.niche);
+    setText("crBio", d.bio);
+    setText("crFollowers", d.followers);
+    setText("crEng", d.eng);
+    setText("crViews", d.views);
+    setText("crRank", String(index + 1).padStart(2, "0") + " / " + String(crItems.length).padStart(2, "0"));
+
+    const platBox = document.getElementById("crPlatforms");
+    if (platBox) {
+      platBox.innerHTML = (d.platforms || "")
+        .split(",")
+        .filter(Boolean)
+        .map((p) => '<a href="#" aria-label="' + p + '">' + (PLATFORM_SVG[p] || "") + "</a>")
+        .join("");
+    }
+
+    if (crImg) {
+      crImg.classList.add("swapping");
+      const newSrc = d.img;
+      const pre = new Image();
+      pre.onload = () => { crImg.src = newSrc; crImg.alt = "Portrait de " + d.name; crImg.classList.remove("swapping"); };
+      pre.onerror = () => { crImg.classList.remove("swapping"); };
+      pre.src = newSrc;
+      // Fallback in case the image is cached and onload does not fire promptly
+      setTimeout(() => crImg.classList.remove("swapping"), 500);
+    }
+  };
+
+  crItems.forEach((btn, i) => {
+    btn.addEventListener("click", () => selectCreator(btn, i));
+    btn.addEventListener("mouseenter", () => selectCreator(btn, i));
+  });
+  // Initialise platforms/rank for the default active item
+  const active = crItems.find((b) => b.classList.contains("is-active"));
+  if (active) selectCreator(active, crItems.indexOf(active));
 })();

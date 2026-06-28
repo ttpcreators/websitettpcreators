@@ -205,33 +205,94 @@
     </div>
   </section>
 
-  <!-- ===================== CREATORS ===================== -->
+  <!-- ===================== CREATORS (spotlight interactif) ===================== -->
   <section class="section wrap" id="creators">
     <div class="section-head">
       <div>
         <span class="eyebrow reveal">Notre roster</span>
         <h2 class="h-lg reveal" data-delay="1" style="margin-top:16px">Les talents<br>qu'on accompagne.</h2>
       </div>
-      <p class="lead reveal" data-delay="2">Des créateurs sélectionnés pour leur singularité et leur communauté engagée.</p>
+      <p class="lead reveal" data-delay="2">Sélectionne un créateur pour découvrir son univers, sa communauté et ses chiffres.</p>
     </div>
 
-    <div class="creators-grid">
-      <article class="creator reveal">
-        <div class="photo"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Portrait d'une créatrice lifestyle" loading="lazy" /></div>
-        <div class="meta"><h3>Lina Maro</h3><p class="niche">Lifestyle &amp; Mode</p><span class="followers">1,8M abonnés</span></div>
+    <div class="spotlight reveal">
+      <!-- Panneau mis en avant (rempli par main.js) -->
+      <article class="cr-feature">
+        <div class="cr-media">
+          <img id="crImg" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=900&q=80" alt="Portrait du créateur mis en avant" />
+          <span class="cr-rank" id="crRank">01 / 05</span>
+          <div class="cr-platforms" id="crPlatforms" aria-label="Plateformes"></div>
+        </div>
+        <div class="cr-body">
+          <span class="cr-niche eyebrow" id="crNiche">Danse &amp; Musique</span>
+          <h3 class="h-md" id="crName">Maya Okonkwo</h3>
+          <p class="cr-bio" id="crBio">Chorégraphe devenue phénomène viral, Maya fédère une communauté ultra engagée autour de la danse et des tendances musicales.</p>
+          <div class="cr-stats" id="crStats">
+            <div><b id="crFollowers">3,1M</b><span>Abonnés</span></div>
+            <div><b id="crEng">9,4%</b><span>Engagement</span></div>
+            <div><b id="crViews">95M</b><span>Vues / mois</span></div>
+          </div>
+          <a href="#contact" class="btn btn-ghost cr-cta">Collaborer avec ce talent <span class="arrow">↗</span></a>
+        </div>
       </article>
-      <article class="creator reveal" data-delay="1">
-        <div class="photo"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Portrait d'un créateur tech" loading="lazy" /></div>
-        <div class="meta"><h3>Théo Vance</h3><p class="niche">Tech &amp; Gaming</p><span class="followers">920K abonnés</span></div>
-      </article>
-      <article class="creator reveal" data-delay="2">
-        <div class="photo"><img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=600&q=80" alt="Portrait d'une créatrice beauté" loading="lazy" /></div>
-        <div class="meta"><h3>Sara Idrissi</h3><p class="niche">Beauté &amp; Wellness</p><span class="followers">2,4M abonnés</span></div>
-      </article>
-      <article class="creator reveal" data-delay="3">
-        <div class="photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Portrait d'un créateur food" loading="lazy" /></div>
-        <div class="meta"><h3>Karim Bell</h3><p class="niche">Food &amp; Voyage</p><span class="followers">640K abonnés</span></div>
-      </article>
+
+      <!-- Liste cliquable -->
+      <div class="cr-list" role="tablist" aria-label="Liste des créateurs">
+        <button class="cr-item is-active" role="tab" aria-selected="true"
+          data-name="Maya Okonkwo" data-niche="Danse &amp; Musique"
+          data-img="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=900&q=80"
+          data-thumb="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=200&q=70"
+          data-followers="3,1M" data-eng="9,4%" data-views="95M" data-platforms="TikTok,Instagram"
+          data-bio="Chorégraphe devenue phénomène viral, Maya fédère une communauté ultra engagée autour de la danse et des tendances musicales.">
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" />
+          <span class="cr-item-txt"><b>Maya Okonkwo</b><i>Danse &amp; Musique</i></span>
+          <span class="cr-item-foll">3,1M</span>
+        </button>
+
+        <button class="cr-item" role="tab" aria-selected="false"
+          data-name="Sara Idrissi" data-niche="Beauté &amp; Wellness"
+          data-img="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80"
+          data-thumb="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=200&q=70"
+          data-followers="2,4M" data-eng="8,1%" data-views="60M" data-platforms="Instagram,TikTok,YouTube"
+          data-bio="Experte beauté au regard pointu, Sara transforme chaque routine en rendez-vous suivi par des millions d'abonnés fidèles.">
+          <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" />
+          <span class="cr-item-txt"><b>Sara Idrissi</b><i>Beauté &amp; Wellness</i></span>
+          <span class="cr-item-foll">2,4M</span>
+        </button>
+
+        <button class="cr-item" role="tab" aria-selected="false"
+          data-name="Lina Maro" data-niche="Lifestyle &amp; Mode"
+          data-img="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+          data-thumb="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=70"
+          data-followers="1,8M" data-eng="7,2%" data-views="45M" data-platforms="Instagram,TikTok"
+          data-bio="Lina raconte la mode et le quotidien avec une esthétique léchée qui inspire une communauté lifestyle très active.">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" />
+          <span class="cr-item-txt"><b>Lina Maro</b><i>Lifestyle &amp; Mode</i></span>
+          <span class="cr-item-foll">1,8M</span>
+        </button>
+
+        <button class="cr-item" role="tab" aria-selected="false"
+          data-name="Théo Vance" data-niche="Tech &amp; Gaming"
+          data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+          data-thumb="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=70"
+          data-followers="920K" data-eng="5,8%" data-views="28M" data-platforms="YouTube,TikTok"
+          data-bio="Théo décrypte la tech et le gaming avec pédagogie, une référence pour les lancements de produits high-tech.">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" />
+          <span class="cr-item-txt"><b>Théo Vance</b><i>Tech &amp; Gaming</i></span>
+          <span class="cr-item-foll">920K</span>
+        </button>
+
+        <button class="cr-item" role="tab" aria-selected="false"
+          data-name="Karim Bell" data-niche="Food &amp; Voyage"
+          data-img="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
+          data-thumb="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=70"
+          data-followers="640K" data-eng="6,4%" data-views="18M" data-platforms="Instagram,YouTube"
+          data-bio="Entre cuisine et road trips, Karim donne envie de voyager et de passer à table, un storytelling gourmand et authentique.">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" />
+          <span class="cr-item-txt"><b>Karim Bell</b><i>Food &amp; Voyage</i></span>
+          <span class="cr-item-foll">640K</span>
+        </button>
+      </div>
     </div>
   </section>
 
