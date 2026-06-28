@@ -54,6 +54,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
+/* Skip to content (a11y) */
+.skip-link {
+  position: fixed; top: 10px; left: 10px; z-index: 100;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 10px 16px; border-radius: var(--r-pill); font-size: 0.9rem; font-weight: 600;
+  transform: translateY(-150%); transition: transform .25s var(--ease);
+}
+.skip-link:focus { transform: none; outline: none; }
+
 /* Focus visibility (a11y) */
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--accent);

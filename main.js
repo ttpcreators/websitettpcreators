@@ -83,26 +83,73 @@
     });
   }
 
-  /* ----- Contact form (front-end demo handling) ----- */
+  /* ----- Contact form (Formspree + repli mailto) ----- */
   const form = document.getElementById("contactForm");
   const status = document.getElementById("formStatus");
+  const CONTACT_EMAIL = "hello@ttpcreators.com";
+
+  const setStatus = (msg, ok) => {
+    if (!status) return;
+    status.style.color = ok ? "var(--accent)" : "#c0392b";
+    status.textContent = msg;
+  };
+
   if (form) {
-    form.addEventListener("submit", (ev) => {
+    form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
       const data = new FormData(form);
+
+      // Honeypot : si rempli, c'est un bot -> on ignore silencieusement
+      if ((data.get("_gotcha") || "").toString().trim() !== "") return;
+
       const name = (data.get("name") || "").toString().trim();
       const email = (data.get("email") || "").toString().trim();
       const message = (data.get("message") || "").toString().trim();
+      const profile = (data.get("profile") || "").toString().trim();
       const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
       if (!name || !validEmail || !message) {
-        status.style.color = "#ff6b6b";
-        status.textContent = "Merci de remplir tous les champs avec un email valide.";
+        setStatus("Merci de remplir tous les champs avec un email valide.", false);
         return;
       }
-      status.style.color = "var(--accent)";
-      status.textContent = "Merci " + name + ", message bien reçu. On revient vers toi sous 48h.";
-      form.reset();
+
+      const action = form.getAttribute("action") || "";
+      const configured = action.includes("formspree.io") && !action.includes("votre-id");
+
+      // Repli mailto tant que Formspree n'est pas configuré : ouvre le client mail pré-rempli
+      if (!configured) {
+        const subject = encodeURIComponent("Nouvelle demande - " + name);
+        const body = encodeURIComponent(
+          "Nom : " + name + "\nEmail : " + email + "\nProfil : " + profile + "\n\n" + message
+        );
+        window.location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + subject + "&body=" + body;
+        setStatus("On ouvre ton client mail pour finaliser l'envoi.", true);
+        return;
+      }
+
+      // Envoi réel via Formspree
+      const btn = form.querySelector('button[type="submit"]');
+      const label = btn ? btn.textContent : "";
+      if (btn) { btn.disabled = true; btn.textContent = "Envoi en cours..."; }
+      setStatus("Envoi en cours...", true);
+
+      try {
+        const res = await fetch(action, {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" },
+        });
+        if (res.ok) {
+          form.reset();
+          setStatus("Merci " + name + ", message bien reçu. On revient vers toi sous 48h.", true);
+        } else {
+          setStatus("Une erreur est survenue. Réessaie ou écris-nous à " + CONTACT_EMAIL + ".", false);
+        }
+      } catch (e) {
+        setStatus("Connexion impossible. Réessaie ou écris-nous à " + CONTACT_EMAIL + ".", false);
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = label; }
+      }
     });
   }
 

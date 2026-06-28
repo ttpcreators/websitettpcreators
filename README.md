@@ -65,6 +65,7 @@ Le design suit le framework anti-slop **taste-skill** :
 - [ ] Remplacer les images Unsplash par les visuels réels de l'agence
 - [ ] Remplacer les logos placeholder du bandeau « Ils nous font confiance » (section `.logos` dans `index.html`) par les vrais logos clients : remplacer chaque `<svg class="logo-mark">` + `<span>` par un `<img src="logos/marque.svg" alt="Marque" class="logo-mark">`. Penser à mettre à jour les deux jeux (le second est la copie pour la boucle)
 - [ ] Mettre les vrais noms et stats du roster
-- [ ] Brancher le formulaire à un service (Formspree, Netlify Forms, API...)
+- [ ] Activer le formulaire : créer un formulaire sur [formspree.io](https://formspree.io), puis remplacer `votre-id` dans l'attribut `action` du `<form id="contactForm">` (`index.html`) par ton identifiant. Tant que ce n'est pas fait, le formulaire ouvre automatiquement le client mail (repli `mailto`). Penser à mettre la vraie adresse dans `CONTACT_EMAIL` (`main.js`)
+- [ ] Remplacer l'email `hello@ttpcreators.com` et le téléphone dans `index.html` (section contact, footer, JSON-LD)
 - [ ] Renseigner les liens réseaux sociaux dans le footer
 - [ ] Ajouter un favicon et une image Open Graph
