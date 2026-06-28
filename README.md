@@ -63,6 +63,7 @@ Le design suit le framework anti-slop **taste-skill** :
 ## À faire avant la mise en production
 
 - [ ] Remplacer les images Unsplash par les visuels réels de l'agence
+- [ ] Remplacer les logos placeholder du bandeau « Ils nous font confiance » (section `.logos` dans `index.html`) par les vrais logos clients : remplacer chaque `<svg class="logo-mark">` + `<span>` par un `<img src="logos/marque.svg" alt="Marque" class="logo-mark">`. Penser à mettre à jour les deux jeux (le second est la copie pour la boucle)
 - [ ] Mettre les vrais noms et stats du roster
 - [ ] Brancher le formulaire à un service (Formspree, Netlify Forms, API...)
 - [ ] Renseigner les liens réseaux sociaux dans le footer

@@ -160,17 +160,31 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.03;
 .glow.g2 { width: 360px; height: 360px; background: var(--accent); opacity: 0.04; bottom: -120px; left: -60px; }
 
 /* =========================================================
-   Marquee
+   Trusted-by logos marquee
    ========================================================= */
-.marquee {
-  border-block: 1px solid var(--line); padding-block: 22px;
-  overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+.logos { border-block: 1px solid var(--line); padding-block: 28px; overflow: hidden; background: var(--bg); }
+.logos-label {
+  text-align: center; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted-2); margin-bottom: 22px;
 }
-.marquee-track { display: flex; gap: 56px; width: max-content; animation: scroll-x 28s linear infinite; }
-.marquee:hover .marquee-track { animation-play-state: paused; }
-.marquee-track span { font-family: var(--f-display); font-size: clamp(1.1rem, 2.2vw, 1.7rem); color: var(--muted-2); white-space: nowrap; display: flex; align-items: center; gap: 56px; }
-.marquee-track span::after { content: "✦"; color: var(--accent); }
+.logos-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.logos-track { display: flex; width: max-content; animation: scroll-x 34s linear infinite; }
+.logos:hover .logos-track { animation-play-state: paused; }
+.logo-set {
+  display: flex; align-items: center;
+  gap: clamp(44px, 6vw, 78px); padding-right: clamp(44px, 6vw, 78px);
+}
+.logo {
+  display: inline-flex; align-items: center; gap: 11px; white-space: nowrap;
+  color: var(--muted-2); transition: color .3s var(--ease);
+}
+.logo:hover { color: var(--accent); }
+.logo-mark { width: 26px; height: 26px; flex-shrink: 0; }
+.logo span { font-weight: 600; font-size: clamp(1.05rem, 1.6vw, 1.3rem); letter-spacing: -0.01em; }
 @keyframes scroll-x { to { transform: translateX(-50%); } }
 
 /* =========================================================
