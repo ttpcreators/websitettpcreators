@@ -7,7 +7,8 @@ Site vitrine de l'agence de créateurs **TTP Creators**. Statique, sans build, d
 - HTML5 sémantique
 - CSS moderne (custom properties, grid, clamp, container-friendly)
 - JavaScript vanilla (zéro dépendance)
-- Polices : Space Grotesk (display) + Inter (texte), via Google Fonts
+- Police : Inter (display + texte), via Google Fonts
+- Palette : blanc + burgundy (accent `--accent: #7a1330`)
 
 ## Structure
 
