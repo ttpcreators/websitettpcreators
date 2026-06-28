@@ -8,7 +8,7 @@ Site vitrine de l'agence de créateurs **TTP Creators**. Statique, sans build, d
 - CSS moderne (custom properties, grid, clamp, container-friendly)
 - JavaScript vanilla (zéro dépendance)
 - Police : Inter (display + texte), via Google Fonts
-- Palette : blanc + burgundy (accent `--accent: #7a1330`)
+- Palette : blanc + burgundy foncé (accent `--accent: #5a0f22`)
 
 ## Structure
 
