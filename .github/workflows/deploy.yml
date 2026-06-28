@@ -29,8 +29,10 @@ jobs:
       - name: Récupérer le code
         uses: actions/checkout@v4
 
-      - name: Configurer Pages
+      - name: Configurer Pages (active Pages si besoin)
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Préparer l'artifact (racine du site)
         uses: actions/upload-pages-artifact@v3
