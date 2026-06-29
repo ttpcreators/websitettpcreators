@@ -4,8 +4,29 @@
 (function () {
   "use strict";
 
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const nav = document.getElementById("nav");
   const burger = document.getElementById("burger");
+
+  /* ----- Hero : cascade orchestrée au chargement ----- */
+  const hero = document.querySelector(".hero");
+  if (hero) {
+    requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-loaded")));
+  }
+
+  /* ----- Boutons magnétiques (suivent légèrement le curseur) ----- */
+  if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll(".btn-primary, .nav-cta").forEach((btn) => {
+      btn.addEventListener("mousemove", (e) => {
+        const r = btn.getBoundingClientRect();
+        const mx = e.clientX - r.left - r.width / 2;
+        const my = e.clientY - r.top - r.height / 2;
+        btn.style.transform = "translate(" + mx * 0.2 + "px, " + my * 0.32 + "px)";
+      });
+      btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
+    });
+  }
 
   /* ----- Sticky nav state ----- */
   const onScroll = () => {
