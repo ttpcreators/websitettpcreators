@@ -7,8 +7,9 @@ Site vitrine de l'agence de créateurs **TTP Creators**. Statique, sans build, d
 - HTML5 sémantique
 - CSS moderne (custom properties, grid, clamp, container-friendly)
 - JavaScript vanilla (zéro dépendance)
-- Police : Inter (display + texte), via Google Fonts
-- Palette : blanc + burgundy foncé (accent `--accent: #5a0f22`)
+- Police : Archivo (light pour les grands titres), via Google Fonts
+- Palette : sombre éditorial, accent burgundy (`#c75265` / profond `#5a0f22`)
+- Localisation : Lyon · Genève
 
 ## Structure
 
@@ -41,7 +42,7 @@ Glisser-déposer le dossier, ou connecter le repo. Aucun build command, dossier 
 
 Le design suit le framework anti-slop **taste-skill** :
 
-- **UI sombre éditoriale** (skill Anthropic `frontend-design`) : fond presque noir, atmosphère fumée/soie burgundy, énorme titre en capitales light, marqueurs « + » pour les publics, accent burgundy, nav en verre dépoli
+- **Design importé depuis Claude Design** (`TTP Creators.dc.html`) puis implémenté en site statique autonome : sombre éditorial, atmosphère fumée/soie burgundy, énorme titre Archivo light en capitales (« TRUST THE PROCESS. »), marqueurs « + » pour les publics, accent burgundy, nav en verre dépoli. Le bundle Claude Design ne tournant pas hors de leur environnement, le markup et les données (8 créatrices, 10 marques clientes) ont été extraits et rendus en HTML/CSS/JS propre
 - **Une seule couleur d'accent** (`--accent`), constante partout
 - **Un seul système de corner-radius** (`--r-*`)
 - **Contraste WCAG AA** sur le texte et les champs de formulaire
@@ -65,7 +66,7 @@ Le design suit le framework anti-slop **taste-skill** :
 - [ ] Remplacer les images Unsplash par les visuels réels de l'agence
 - [ ] Remplacer les logos placeholder du bandeau « Ils nous font confiance » (section `.logos` dans `index.html`) par les vrais logos clients : remplacer chaque `<svg class="logo-mark">` + `<span>` par un `<img src="logos/marque.svg" alt="Marque" class="logo-mark">`. Penser à mettre à jour les deux jeux (le second est la copie pour la boucle)
 - [ ] Mettre les vrais noms et stats du roster
-- [ ] Activer le formulaire : créer un formulaire sur [formspree.io](https://formspree.io), puis remplacer `votre-id` dans l'attribut `action` du `<form id="contactForm">` (`index.html`) par ton identifiant. Tant que ce n'est pas fait, le formulaire ouvre automatiquement le client mail (repli `mailto`). Penser à mettre la vraie adresse dans `CONTACT_EMAIL` (`main.js`)
+- [ ] Activer le formulaire : créer un formulaire sur [formspree.io](https://formspree.io), puis remplacer `votre-id` dans l'attribut `action` du `<form id="dcForm">` (`index.html`) par ton identifiant. Tant que ce n'est pas fait, le formulaire ouvre automatiquement le client mail (repli `mailto`). Adresse dans `CONTACT_EMAIL` (`main.js`)
 - [ ] Remplacer l'email `hello@ttpcreators.com` et le téléphone dans `index.html` (section contact, footer, JSON-LD)
 - [ ] Renseigner les liens réseaux sociaux dans le footer
 - [ ] Ajouter un favicon et une image Open Graph

@@ -1,195 +1,152 @@
 /* =========================================================
-   TTP Creators — interactions
+   TTP Creators — interactions (design Claude Design)
    ========================================================= */
 (function () {
   "use strict";
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const nav = document.getElementById("nav");
-  const burger = document.getElementById("burger");
-
-  /* ----- Hero : cascade orchestrée au chargement ----- */
-  const hero = document.querySelector(".hero");
-  if (hero) {
-    requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-loaded")));
-  }
-
-  /* ----- Boutons magnétiques (suivent légèrement le curseur) ----- */
-  if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
-    document.querySelectorAll(".btn-primary, .nav-cta").forEach((btn) => {
-      btn.addEventListener("mousemove", (e) => {
-        const r = btn.getBoundingClientRect();
-        const mx = e.clientX - r.left - r.width / 2;
-        const my = e.clientY - r.top - r.height / 2;
-        btn.style.transform = "translate(" + mx * 0.2 + "px, " + my * 0.32 + "px)";
-      });
-      btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
-    });
-  }
-
-  /* ----- Sticky nav state ----- */
-  const onScroll = () => {
-    if (window.scrollY > 24) nav.classList.add("scrolled");
-    else nav.classList.remove("scrolled");
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
-  /* ----- Mobile menu ----- */
-  if (burger) {
-    burger.addEventListener("click", () => {
-      const open = nav.classList.toggle("open");
+  /* ----- Menu mobile ----- */
+  var burger = document.querySelector("[data-burger]");
+  var panel = document.querySelector("[data-mobile-panel]");
+  if (burger && panel) {
+    burger.addEventListener("click", function () {
+      var open = panel.classList.toggle("open");
       burger.setAttribute("aria-expanded", String(open));
     });
-    nav.querySelectorAll(".nav-links a").forEach((a) =>
-      a.addEventListener("click", () => {
-        nav.classList.remove("open");
+    panel.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        panel.classList.remove("open");
         burger.setAttribute("aria-expanded", "false");
-      })
-    );
+      });
+    });
   }
 
-  /* ----- Scroll reveal ----- */
-  const reveals = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("in");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-    );
-    reveals.forEach((el) => io.observe(el));
-  } else {
-    reveals.forEach((el) => el.classList.add("in"));
-  }
+  /* ----- Toggle « Tu es » (Créateur / Marque) ----- */
+  var segs = Array.prototype.slice.call(document.querySelectorAll("[data-seg]"));
+  var profil = document.getElementById("dcProfil");
+  segs.forEach(function (b) {
+    b.addEventListener("click", function () {
+      segs.forEach(function (x) {
+        x.setAttribute("aria-pressed", "false");
+        x.style.background = "transparent";
+        x.style.color = "#cfd1d6";
+        x.style.borderColor = "rgba(255,255,255,0.14)";
+      });
+      b.setAttribute("aria-pressed", "true");
+      b.style.background = "var(--accent,#c75265)";
+      b.style.color = "#0b0c0e";
+      b.style.borderColor = "transparent";
+      if (profil) profil.value = b.getAttribute("data-val") || "";
+    });
+  });
 
-  /* ----- Animated stat counters ----- */
-  const counters = document.querySelectorAll("[data-count]");
-  const animateCount = (el) => {
-    const target = parseFloat(el.getAttribute("data-count"));
-    const suffix = el.getAttribute("data-suffix") || "";
-    const duration = 1400;
-    let start = null;
-    const step = (ts) => {
+  /* ----- Compteurs de stats ----- */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var counters = Array.prototype.slice.call(document.querySelectorAll("[data-counter]"));
+  var render = function (el, val) {
+    var pad = parseInt(el.getAttribute("data-pad") || "0", 10);
+    var num = String(Math.round(val));
+    if (pad > 0) while (num.length < pad) num = "0" + num;
+    el.textContent = (el.getAttribute("data-prefix") || "") + num + (el.getAttribute("data-suffix") || "");
+  };
+  var runCounter = function (el) {
+    var target = parseFloat(el.getAttribute("data-target") || "0");
+    if (reduce) { render(el, target); return; }
+    var dur = 1500, start = null;
+    var step = function (ts) {
       if (!start) start = ts;
-      const p = Math.min((ts - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased) + suffix;
+      var p = Math.min((ts - start) / dur, 1);
+      render(el, target * (1 - Math.pow(1 - p, 3)));
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
   };
   if ("IntersectionObserver" in window && counters.length) {
-    const co = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            animateCount(e.target);
-            co.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-    counters.forEach((el) => co.observe(el));
+    var co = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { runCounter(e.target); co.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (el) { co.observe(el); });
   } else {
-    counters.forEach((el) => {
-      el.textContent = el.getAttribute("data-count") + (el.getAttribute("data-suffix") || "");
-    });
+    counters.forEach(function (el) { render(el, parseFloat(el.getAttribute("data-target") || "0")); });
   }
 
-  /* ----- Contact form (Formspree + repli mailto) ----- */
-  const form = document.getElementById("contactForm");
-  const status = document.getElementById("formStatus");
-  const CONTACT_EMAIL = "hello@ttpcreators.com";
-
-  const setStatus = (msg, ok) => {
-    if (!status) return;
-    status.style.color = ok ? "var(--accent)" : "#c0392b";
-    status.textContent = msg;
-  };
-
-  if (form) {
-    form.addEventListener("submit", async (ev) => {
-      ev.preventDefault();
-      const data = new FormData(form);
-
-      // Honeypot : si rempli, c'est un bot -> on ignore silencieusement
-      if ((data.get("_gotcha") || "").toString().trim() !== "") return;
-
-      const name = (data.get("name") || "").toString().trim();
-      const email = (data.get("email") || "").toString().trim();
-      const message = (data.get("message") || "").toString().trim();
-      const profile = (data.get("profile") || "").toString().trim();
-      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-      if (!name || !validEmail || !message) {
-        setStatus("Merci de remplir tous les champs avec un email valide.", false);
-        return;
-      }
-
-      const action = form.getAttribute("action") || "";
-      const configured = action.includes("formspree.io") && !action.includes("votre-id");
-
-      // Repli mailto tant que Formspree n'est pas configuré : ouvre le client mail pré-rempli
-      if (!configured) {
-        const subject = encodeURIComponent("Nouvelle demande - " + name);
-        const body = encodeURIComponent(
-          "Nom : " + name + "\nEmail : " + email + "\nProfil : " + profile + "\n\n" + message
-        );
-        window.location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + subject + "&body=" + body;
-        setStatus("On ouvre ton client mail pour finaliser l'envoi.", true);
-        return;
-      }
-
-      // Envoi réel via Formspree
-      const btn = form.querySelector('button[type="submit"]');
-      const label = btn ? btn.textContent : "";
-      if (btn) { btn.disabled = true; btn.textContent = "Envoi en cours..."; }
-      setStatus("Envoi en cours...", true);
-
-      try {
-        const res = await fetch(action, {
-          method: "POST",
-          body: data,
-          headers: { Accept: "application/json" },
-        });
-        if (res.ok) {
-          form.reset();
-          setStatus("Merci " + name + ", message bien reçu. On revient vers toi sous 48h.", true);
-        } else {
-          setStatus("Une erreur est survenue. Réessaie ou écris-nous à " + CONTACT_EMAIL + ".", false);
-        }
-      } catch (e) {
-        setStatus("Connexion impossible. Réessaie ou écris-nous à " + CONTACT_EMAIL + ".", false);
-      } finally {
-        if (btn) { btn.disabled = false; btn.textContent = label; }
-      }
-    });
-  }
-
-  /* ----- Scroll progress bar + back-to-top ----- */
-  const progress = document.getElementById("scrollProgress");
-  const toTop = document.getElementById("toTop");
-  const onScrollProgress = () => {
-    const doc = document.documentElement;
-    const max = doc.scrollHeight - doc.clientHeight;
-    const ratio = max > 0 ? doc.scrollTop / max : 0;
-    if (progress) progress.style.transform = "scaleX(" + ratio + ")";
-    if (toTop) toTop.classList.toggle("show", doc.scrollTop > 600);
-  };
-  window.addEventListener("scroll", onScrollProgress, { passive: true });
-  onScrollProgress();
+  /* ----- Retour en haut ----- */
+  var toTop = document.querySelector("[data-top]");
   if (toTop) {
-    toTop.addEventListener("click", () =>
-      window.scrollTo({ top: 0, behavior: "smooth" })
+    toTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    window.addEventListener(
+      "scroll",
+      function () {
+        toTop.classList.toggle("show", window.scrollY > 600);
+      },
+      { passive: true }
     );
   }
 
+  /* ----- Formulaire (Formspree + repli mailto + honeypot) ----- */
+  var form = document.getElementById("dcForm");
+  var CONTACT_EMAIL = "hello@ttpcreators.com";
+  if (form) {
+    var note = document.createElement("p");
+    note.setAttribute("role", "status");
+    note.style.cssText = "margin:14px 0 0;font-size:14px;min-height:1.2em;color:var(--accent,#c75265)";
+    form.appendChild(note);
+
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var data = new FormData(form);
+      if ((data.get("company") || "").toString().trim() !== "") return; // honeypot
+      var nom = (data.get("nom") || "").toString().trim();
+      var email = (data.get("email") || "").toString().trim();
+      var msg = (data.get("message") || "").toString().trim();
+      var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!nom || !okEmail || !msg) {
+        note.style.color = "#ff8a80";
+        note.textContent = "Merci de remplir tous les champs avec un email valide.";
+        return;
+      }
+      var action = form.getAttribute("action") || "";
+      var configured = action.indexOf("formspree.io") !== -1 && action.indexOf("votre-id") === -1;
+
+      if (!configured) {
+        var subject = encodeURIComponent("Nouvelle demande - " + nom);
+        var bodyTxt = encodeURIComponent(
+          "Nom : " + nom + "\nEmail : " + email +
+          "\nProfil : " + (data.get("profil") || "") + "\n\n" + msg
+        );
+        window.location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + subject + "&body=" + bodyTxt;
+        note.style.color = "var(--accent,#c75265)";
+        note.textContent = "On ouvre ton client mail pour finaliser l'envoi.";
+        return;
+      }
+
+      var btn = form.querySelector('button[type="submit"]');
+      var label = btn ? btn.textContent : "";
+      if (btn) { btn.disabled = true; btn.textContent = "Envoi..."; }
+      note.style.color = "var(--accent,#c75265)";
+      note.textContent = "Envoi en cours...";
+
+      fetch(action, { method: "POST", body: data, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          if (res.ok) {
+            form.reset();
+            if (profil) profil.value = "Créateur";
+            note.textContent = "Merci " + nom + ", message bien reçu. On revient vers toi sous 48h.";
+          } else {
+            note.style.color = "#ff8a80";
+            note.textContent = "Une erreur est survenue. Écris-nous à " + CONTACT_EMAIL + ".";
+          }
+        })
+        .catch(function () {
+          note.style.color = "#ff8a80";
+          note.textContent = "Connexion impossible. Écris-nous à " + CONTACT_EMAIL + ".";
+        })
+        .finally(function () {
+          if (btn) { btn.disabled = false; btn.textContent = label; }
+        });
+    });
+  }
 })();
