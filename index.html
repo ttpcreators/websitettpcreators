@@ -57,7 +57,7 @@ input::placeholder,textarea::placeholder{color:#6f727a}
 [onmouseenter]:hover [data-img]{transform:scale(1.05) !important}
 [onmouseenter]:hover{border-color:var(--accent)}
 [data-overlay] a[aria-label="Instagram"]:hover,[data-overlay] a[aria-label="TikTok"]:hover{background:var(--accent);color:#0b0c0e}
-[data-desktop-nav] a:hover{color:#f2f3f5}
+[data-pillnav] a:hover{color:#0b0c0e}
 [data-mobile-panel]{overflow:hidden;transition:max-height .4s ease,opacity .3s ease}
 [data-mobile-panel].open{max-height:70vh !important;opacity:1 !important;pointer-events:auto !important}
 [data-top]{opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -89,12 +89,13 @@ a{color:inherit;text-decoration:none}
         <span style="width:9px;height:9px;border-radius:50%;background:var(--accent,#c75265);box-shadow:0 0 12px var(--accent,#c75265)"></span>
         TTP Creators
       </a>
-      <div data-desktop-nav="" style="display:flex;align-items:center;gap:30px">
-        <a href="#about" style="font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .3s">À propos</a>
-        <a href="#services" style="font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .3s">Services</a>
-        <a href="#work" style="font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .3s">Réalisations</a>
-        <a href="#roster" style="font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .3s">Créatrices</a>
-        <a href="#contact" style="font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .3s">Contact</a>
+      <div data-desktop-nav="" data-pillnav="" style="position:relative;display:flex;align-items:center;padding:5px;border-radius:100px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05)">
+        <a href="#about" style="position:relative;z-index:2;padding:9px 16px;border-radius:100px;font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .35s">À propos</a>
+        <a href="#services" style="position:relative;z-index:2;padding:9px 16px;border-radius:100px;font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .35s">Services</a>
+        <a href="#work" style="position:relative;z-index:2;padding:9px 16px;border-radius:100px;font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .35s">Réalisations</a>
+        <a href="#roster" style="position:relative;z-index:2;padding:9px 16px;border-radius:100px;font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .35s">Créatrices</a>
+        <a href="#contact" style="position:relative;z-index:2;padding:9px 16px;border-radius:100px;font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .35s">Contact</a>
+        <span data-pill-cursor="" aria-hidden="true" style="position:absolute;z-index:1;top:5px;left:5px;width:0;height:0;border-radius:100px;background:#f2f3f5;opacity:0;transition:opacity .3s, width .4s cubic-bezier(.16,1,.3,1), height .4s cubic-bezier(.16,1,.3,1), left .4s cubic-bezier(.16,1,.3,1), top .4s cubic-bezier(.16,1,.3,1)"></span>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
         <a data-cta-nav="" href="#contact" style="display:inline-flex;align-items:center;gap:8px;background:#f2f3f5;color:#0b0c0e;padding:10px 18px;border-radius:100px;font-size:13px;font-weight:600;transition:transform .3s, background .3s">

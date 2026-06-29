@@ -20,6 +20,32 @@
     });
   }
 
+  /* ----- Nav pilule : curseur glissant ----- */
+  var pillNav = document.querySelector("[data-pillnav]");
+  if (pillNav) {
+    var cursor = pillNav.querySelector("[data-pill-cursor]");
+    var pillLinks = Array.prototype.slice.call(pillNav.querySelectorAll("a"));
+    var moveCursor = function (a) {
+      cursor.style.width = a.offsetWidth + "px";
+      cursor.style.height = a.offsetHeight + "px";
+      cursor.style.left = a.offsetLeft + "px";
+      cursor.style.top = a.offsetTop + "px";
+      cursor.style.opacity = "1";
+    };
+    pillLinks.forEach(function (a) {
+      a.addEventListener("mouseenter", function () {
+        if (cursor) moveCursor(a);
+        a.style.color = "#0b0c0e";
+      });
+      a.addEventListener("mouseleave", function () {
+        a.style.color = "rgba(242,243,245,0.72)";
+      });
+    });
+    pillNav.addEventListener("mouseleave", function () {
+      if (cursor) cursor.style.opacity = "0";
+    });
+  }
+
   /* ----- Toggle « Tu es » (Créateur / Marque) ----- */
   var segs = Array.prototype.slice.call(document.querySelectorAll("[data-seg]"));
   var profil = document.getElementById("dcProfil");
