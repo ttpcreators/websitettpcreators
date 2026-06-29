@@ -41,7 +41,7 @@ Glisser-déposer le dossier, ou connecter le repo. Aucun build command, dossier 
 
 Le design suit le framework anti-slop **taste-skill** :
 
-- **UI inspirée d'Apple** : thème clair, sections centrées, bandes grises `#f5f5f7` qui alternent avec le blanc, typo large au tracking serré, nav en verre dépoli
+- **UI sombre éditoriale** (skill Anthropic `frontend-design`) : fond presque noir, atmosphère fumée/soie burgundy, énorme titre en capitales light, marqueurs « + » pour les publics, accent burgundy, nav en verre dépoli
 - **Une seule couleur d'accent** (`--accent`), constante partout
 - **Un seul système de corner-radius** (`--r-*`)
 - **Contraste WCAG AA** sur le texte et les champs de formulaire

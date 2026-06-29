@@ -1,20 +1,21 @@
 /* =========================================================
-   TTP Creators — Design tokens (UI à la Apple)
-   Light theme. One accent. One radius system.
+   TTP Creators — Design tokens (sombre éditorial)
+   Dark theme. Accent burgundy. Atmosphère fumée.
    ========================================================= */
 :root {
-  /* Color: neutres type Apple, accent burgundy unique */
-  --bg:        #ffffff;
-  --bg-2:      #f5f5f7;   /* gris Apple */
-  --surface:   #f5f5f7;   /* tuiles sur fond blanc */
-  --surface-2: #ececee;
-  --line:      #d2d2d7;   /* filet fin Apple */
-  --text:      #1d1d1f;   /* presque noir Apple */
-  --muted:     #6e6e73;   /* texte secondaire */
-  --muted-2:   #6e6e73;   /* texte tertiaire (AA) */
-  --accent:        #5a0f22;   /* burgundy profond, accent unique */
-  --accent-hover:  #460b1a;
-  --accent-ink:    #ffffff;
+  /* Color: sombre éditorial, accent burgundy */
+  --bg:        #0a0b0d;   /* presque noir */
+  --bg-2:      #101216;   /* bande sombre */
+  --surface:   #15171c;   /* tuiles */
+  --surface-2: #1d2026;
+  --line:      rgba(255,255,255,0.10);
+  --text:      #f3f4f6;
+  --muted:     #9498a0;
+  --muted-2:   #6f727a;
+  --accent:        #cf6678;   /* wine éclairci, lisible sur sombre (texte/liens) */
+  --accent-deep:   #5a0f22;   /* burgundy profond (atmosphère, halos) */
+  --accent-hover:  #db7c8c;
+  --accent-ink:    #0a0b0d;   /* texte sur surfaces claires/accent clair */
   --on-photo:      #ffffff;
 
   /* One corner-radius system */
@@ -38,7 +39,18 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg); }
+
+/* Atmosphère fumée/soie (élément signature, fixe derrière tout) */
+body::before {
+  content: ""; position: fixed; inset: -12vmax; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(42% 38% at 80% 8%, rgba(154,164,184,0.13), transparent 70%),
+    radial-gradient(38% 36% at 16% 24%, rgba(120,128,150,0.09), transparent 72%),
+    radial-gradient(50% 46% at 64% 82%, rgba(122,20,45,0.20), transparent 70%),
+    radial-gradient(36% 34% at 6% 94%, rgba(90,15,34,0.13), transparent 72%);
+  filter: blur(46px);
+}
 
 body {
   background: var(--bg);
@@ -103,10 +115,10 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.07;
   font-weight: 500; font-size: 1rem; line-height: 1;
   transition: background .25s var(--ease), color .25s var(--ease), opacity .25s var(--ease);
 }
-.btn-primary { background: var(--accent); color: var(--accent-ink); }
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-ghost { background: var(--surface-2); color: var(--text); }
-.btn-ghost:hover { background: #e3e3e6; }
+.btn-primary { background: #ffffff; color: #0a0b0d; }
+.btn-primary:hover { background: #e7e7ea; }
+.btn-ghost { background: transparent; border: 1px solid var(--line); color: var(--text); }
+.btn-ghost:hover { border-color: rgba(255,255,255,0.32); }
 .btn .arrow { transition: transform .3s var(--ease); }
 .btn:hover .arrow { transform: translate(3px, -3px); }
 /* Lien à chevron façon Apple (« Voir plus › ») */
@@ -124,14 +136,14 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.07;
 .nav {
   position: fixed; inset: 0 0 auto 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
-  height: 52px; padding: 0 clamp(20px, 4vw, 40px);
-  background: rgba(255,255,255,0.72);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-          backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid rgba(0,0,0,0.07);
+  height: 56px; padding: 0 clamp(20px, 4vw, 40px);
+  background: rgba(10,11,13,0.55);
+  -webkit-backdrop-filter: saturate(160%) blur(20px);
+          backdrop-filter: saturate(160%) blur(20px);
+  border-bottom: 1px solid var(--line);
   transition: background .4s var(--ease);
 }
-.nav.scrolled { background: rgba(255,255,255,0.8); }
+.nav.scrolled { background: rgba(10,11,13,0.78); }
 .brand { display: flex; align-items: center; gap: 9px; font-family: var(--f-display); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.015em; }
 .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
 .nav-links { display: flex; align-items: center; gap: clamp(20px, 2.6vw, 34px); }
@@ -142,26 +154,24 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.07;
 .burger span { width: 24px; height: 2px; background: var(--text); transition: .3s var(--ease); }
 
 /* =========================================================
-   Hero — centré façon Apple
+   Hero — éditorial sombre, énorme titre capitales light
    ========================================================= */
-.hero { position: relative; padding-top: clamp(118px, 15vw, 172px); padding-bottom: clamp(36px, 5vw, 64px); overflow: clip; text-align: center; }
-.hero-inner { max-width: 880px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.hero { position: relative; padding-top: clamp(130px, 16vw, 210px); padding-bottom: clamp(56px, 8vw, 110px); overflow: clip; }
+.hero-inner { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(22px, 3vw, 34px); }
 .hero-eyebrow { margin-bottom: 2px; }
-.hero h1 { letter-spacing: -0.03em; }
-.hero .lead { margin-inline: auto; max-width: 40ch; }
-.hero-actions { display: flex; gap: 26px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
-
-.hero-visual {
-  margin-top: clamp(44px, 6vw, 80px);
-  border-radius: var(--r-xl); overflow: hidden;
-  aspect-ratio: 16/9; background: var(--surface);
-  box-shadow: 0 30px 80px -40px rgba(0,0,0,0.35);
+.hero h1 {
+  text-transform: uppercase; font-weight: 300;
+  font-size: clamp(2.6rem, 9vw, 7rem); line-height: 0.95; letter-spacing: -0.01em;
 }
-.hero-visual img { width: 100%; height: 100%; object-fit: cover; }
-
-.glow { position: absolute; z-index: -1; filter: blur(90px); border-radius: 50%; }
-.glow.g1 { width: 560px; height: 560px; background: var(--accent); opacity: 0.05; top: -180px; right: -120px; }
-.glow.g2 { width: 380px; height: 380px; background: var(--accent); opacity: 0.03; top: 60px; left: -120px; }
+.hero-meta { display: flex; align-items: center; gap: clamp(20px, 3vw, 34px); flex-wrap: wrap; }
+.hero-meta .lead { margin: 0; max-width: 34ch; font-size: clamp(1rem, 1.3vw, 1.18rem); }
+.hero-cols {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 44px);
+  margin-top: clamp(24px, 4vw, 56px); max-width: 860px; width: 100%;
+}
+.hero-col { display: flex; gap: 12px; }
+.hero-col .plus { color: var(--accent); font-weight: 300; font-size: 1.25rem; line-height: 1; flex-shrink: 0; }
+.hero-col p { color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
 
 /* =========================================================
    Trusted-by logos marquee
@@ -409,10 +419,12 @@ form { display: flex; flex-direction: column; gap: 14px; }
 .field { display: flex; flex-direction: column; gap: 7px; }
 .field label { font-size: 0.82rem; color: var(--muted); }
 .field input, .field textarea, .field select {
-  background: var(--bg); border: 1px solid var(--line); color: var(--text);
+  background: rgba(255,255,255,0.03); border: 1px solid var(--line); color: var(--text);
   padding: 13px 15px; border-radius: var(--r-sm); font-family: inherit; font-size: 0.95rem;
   transition: border-color .25s;
 }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted-2); }
+.field select option { background: var(--surface); color: var(--text); }
 .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); outline: none; }
 .field textarea { resize: vertical; min-height: 110px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
