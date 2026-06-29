@@ -294,38 +294,50 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.07;
   transition: transform .35s var(--ease), border-color .35s var(--ease);
 }
 .creator:hover { transform: translateY(-6px); border-color: var(--accent); }
-.creator .photo { position: relative; aspect-ratio: 4/5; overflow: hidden; }
-.creator .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.creator .photo { position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--surface-2); }
+.creator .photo img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
 .creator:hover .photo img { transform: scale(1.06); }
+/* Fallback initiales (visible tant que la vraie photo n'est pas déposée) */
+.ph-fallback {
+  position: absolute; inset: 0; z-index: 0; display: grid; place-items: center;
+  background: linear-gradient(160deg, #6e1430, #3a0a17);
+  color: rgba(255,255,255,0.92); font-family: var(--f-display); font-weight: 600;
+  font-size: 2.4rem; letter-spacing: 0.02em;
+}
 
 /* Overlay d'infos révélé au survol */
 .creator-info {
-  position: absolute; inset: 0; padding: 20px;
+  position: absolute; inset: 0; z-index: 2; padding: 20px;
   display: flex; flex-direction: column; justify-content: flex-end; gap: 14px;
   background: linear-gradient(to top, rgba(20,6,12,0.96) 18%, rgba(20,6,12,0.55) 55%, rgba(20,6,12,0.05));
   color: var(--on-photo);
   opacity: 0; transition: opacity .4s var(--ease);
 }
-.creator:hover .creator-info, .creator:focus-visible .creator-info { opacity: 1; }
-.ci-bio { font-size: 0.9rem; line-height: 1.45; color: rgba(255,255,255,0.92); transform: translateY(10px); transition: transform .45s var(--ease); }
-.creator:hover .ci-bio { transform: none; }
+.creator:hover .creator-info, .creator:focus-within .creator-info { opacity: 1; }
+.ci-platforms { display: flex; gap: 8px; transform: translateY(10px); transition: transform .45s var(--ease); }
+.creator:hover .ci-platforms { transform: none; }
+.ci-platforms a {
+  width: 34px; height: 34px; border-radius: var(--r-xs); display: grid; place-items: center;
+  background: rgba(255,255,255,0.16); color: #fff; transition: background .25s var(--ease), color .25s var(--ease);
+}
+.ci-platforms a:hover { background: #fff; color: var(--accent); }
+.ci-platforms svg { width: 16px; height: 16px; }
 .ci-stats { display: flex; gap: 22px; transform: translateY(10px); transition: transform .45s var(--ease) .05s; }
 .creator:hover .ci-stats { transform: none; }
 .ci-stats b { display: block; font-family: var(--f-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; }
 .ci-stats span { font-size: 0.68rem; color: rgba(255,255,255,0.72); }
 .ci-cta {
-  display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 0.86rem;
+  display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.86rem;
   color: var(--on-photo); transform: translateY(10px); transition: transform .45s var(--ease) .1s;
 }
 .creator:hover .ci-cta { transform: none; }
 .ci-cta .arrow { transition: transform .35s var(--ease); }
-.creator:hover .ci-cta .arrow { transform: translate(3px, -3px); }
+.creator:hover .ci-cta .arrow { transform: translateX(3px); }
 
 .creator .meta { padding: 18px; }
-.creator .meta h3 { font-size: 1.12rem; }
+.creator .meta h3 { font-size: 1.1rem; }
 .creator .meta .niche { color: var(--muted); font-size: 0.84rem; margin-top: 2px; }
-.creator .meta .followers { margin-top: 12px; display: inline-flex; align-items: center; gap: 7px; font-size: 0.82rem; color: var(--accent); }
-.creator .meta .followers::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.creator .meta .handle { display: block; margin-top: 10px; font-size: 0.82rem; color: var(--accent); }
 
 /* =========================================================
    Stats band
