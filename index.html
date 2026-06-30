@@ -65,6 +65,14 @@ input::placeholder,textarea::placeholder{color:#6f727a}
 .cl{height:clamp(26px,3.2vw,44px);width:auto;display:block;opacity:.82;transition:opacity .3s}.cl:hover{opacity:1}
 .cr-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .9s cubic-bezier(.16,1,.3,1)}#roster [data-overlay]{z-index:5}#roster [data-badge]{z-index:5}[onmouseenter]:hover .cr-photo{transform:scale(1.05)}
 a{color:inherit;text-decoration:none}
+[data-encrypted]{white-space:nowrap}
+[data-encrypted] .enc-c{transition:color .18s ease}
+[data-encrypted] .enc-c.scz{color:var(--accent,#c75265);opacity:.8}
+.wm-arc{fill:none;stroke:url(#wmGrad);stroke-width:1.2;stroke-linecap:round;stroke-dasharray:18 82;animation:wmDash 3.4s linear infinite}
+@keyframes wmDash{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+.wm-dot{fill:var(--accent,#c75265)}
+.wm-ring{fill:none;stroke:var(--accent,#c75265);transform-box:fill-box;transform-origin:center;animation:wmPulse 2.6s ease-out infinite}
+@keyframes wmPulse{0%{transform:scale(.4);opacity:.85}70%{transform:scale(2.6);opacity:0}100%{opacity:0}}
 </style>
 </head>
 <body>
@@ -126,7 +134,7 @@ a{color:inherit;text-decoration:none}
       <canvas data-sphere="" aria-hidden="true" style="position:absolute;top:clamp(54px,11vh,150px);right:clamp(-110px,-3vw,8px);width:min(60vw,560px);height:min(60vw,560px);z-index:-1;pointer-events:none;opacity:.9;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 75%);mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 75%)"></canvas>
       <div data-reveal="" style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
         <span style="width:26px;height:1px;background:var(--accent,#c75265)"></span>
-        Agence de créateurs & de contenu
+        <span data-encrypted="">Agence de créateurs & de contenu</span>
         <span style="color:rgba(242,243,245,0.4)">·</span> Lyon · Genève
       </div>
       <h1 data-hero-title="" style="margin:28px 0 0;font-weight:300;font-size:clamp(56px,11.5vw,172px);line-height:0.9;letter-spacing:-0.035em;text-transform:uppercase;color:#f2f3f5">
@@ -167,7 +175,7 @@ a{color:inherit;text-decoration:none}
     </section>
 
     <section aria-label="Ils nous font confiance" style="position:relative;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden">
-      <div style="max-width:1320px;margin:0 auto 18px;padding:0 clamp(18px,5vw,48px);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)">Ils nous font confiance</div>
+      <div style="max-width:1320px;margin:0 auto 18px;padding:0 clamp(18px,5vw,48px);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span data-encrypted="">Ils nous font confiance</span></div>
       <div style="position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)">
         <div style="display:flex;width:max-content;animation:ttpMarquee 40s linear infinite"><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/tesla.png" alt="Tesla" loading="lazy" onerror="this.replaceWith(document.createTextNode('Tesla'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/ray-ban.png" alt="Ray-Ban" loading="lazy" onerror="this.replaceWith(document.createTextNode('Ray-Ban'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/hp.png" alt="HP" loading="lazy" onerror="this.replaceWith(document.createTextNode('HP'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/speedo.png" alt="Speedo" loading="lazy" onerror="this.replaceWith(document.createTextNode('Speedo'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/palladium.png" alt="Palladium" loading="lazy" onerror="this.replaceWith(document.createTextNode('Palladium'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/bumble.png" alt="Bumble" loading="lazy" onerror="this.replaceWith(document.createTextNode('Bumble'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/magnum.png" alt="Magnum" loading="lazy" onerror="this.replaceWith(document.createTextNode('Magnum'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/quonto.png" alt="Qonto" loading="lazy" onerror="this.replaceWith(document.createTextNode('Qonto'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/nutripure.png" alt="Nutripure" loading="lazy" onerror="this.replaceWith(document.createTextNode('Nutripure'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/so-shape.png" alt="So Shape" loading="lazy" onerror="this.replaceWith(document.createTextNode('So Shape'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/novoma.png" alt="Novoma" loading="lazy" onerror="this.replaceWith(document.createTextNode('Novoma'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/tesla.png" alt="Tesla" loading="lazy" onerror="this.replaceWith(document.createTextNode('Tesla'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/ray-ban.png" alt="Ray-Ban" loading="lazy" onerror="this.replaceWith(document.createTextNode('Ray-Ban'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/hp.png" alt="HP" loading="lazy" onerror="this.replaceWith(document.createTextNode('HP'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/speedo.png" alt="Speedo" loading="lazy" onerror="this.replaceWith(document.createTextNode('Speedo'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/palladium.png" alt="Palladium" loading="lazy" onerror="this.replaceWith(document.createTextNode('Palladium'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/bumble.png" alt="Bumble" loading="lazy" onerror="this.replaceWith(document.createTextNode('Bumble'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/magnum.png" alt="Magnum" loading="lazy" onerror="this.replaceWith(document.createTextNode('Magnum'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/quonto.png" alt="Qonto" loading="lazy" onerror="this.replaceWith(document.createTextNode('Qonto'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/nutripure.png" alt="Nutripure" loading="lazy" onerror="this.replaceWith(document.createTextNode('Nutripure'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/so-shape.png" alt="So Shape" loading="lazy" onerror="this.replaceWith(document.createTextNode('So Shape'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/novoma.png" alt="Novoma" loading="lazy" onerror="this.replaceWith(document.createTextNode('Novoma'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#c75265);opacity:.6"></span></div></div>
       </div>
@@ -175,7 +183,7 @@ a{color:inherit;text-decoration:none}
 
     <section id="about" data-screen-label="À propos" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(80px,11vw,150px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#c75265);font-weight:600">(01)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span>À propos
+        <span style="color:var(--accent,#c75265);font-weight:600">(01)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">À propos</span>
       </div>
       <div data-2col="" style="display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(34px,5vw,72px);margin-top:32px;align-items:stretch">
         <div data-reveal="" style="position:relative;min-height:440px;border-radius:22px;overflow:hidden;border:1px solid var(--line);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
@@ -205,7 +213,7 @@ a{color:inherit;text-decoration:none}
 
     <section id="services" data-screen-label="Services" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#c75265);font-weight:600">(02)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span>Services
+        <span style="color:var(--accent,#c75265);font-weight:600">(02)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Services</span>
       </div>
       <h2 data-reveal="" data-delay="80" style="margin:20px 0 36px;max-width:20ch;font-size:clamp(30px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;text-wrap:balance;color:#f2f3f5;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Un accompagnement complet, du talent à la marque.</h2>
       <div data-bento="" style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px">
@@ -269,7 +277,7 @@ a{color:inherit;text-decoration:none}
 
     <section id="method" data-screen-label="Méthode" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#c75265);font-weight:600">(03)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span>Notre méthode
+        <span style="color:var(--accent,#c75265);font-weight:600">(03)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre méthode</span>
       </div>
       <h2 data-reveal="" data-delay="80" style="margin:20px 0 48px;max-width:18ch;font-size:clamp(30px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;text-wrap:balance;color:#f2f3f5;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Quatre étapes, un process éprouvé.</h2>
       <div data-collapse="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
@@ -302,7 +310,7 @@ a{color:inherit;text-decoration:none}
 
     <section id="work" data-screen-label="Réalisations" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#c75265);font-weight:600">(04)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span>Réalisations
+        <span style="color:var(--accent,#c75265);font-weight:600">(04)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Réalisations</span>
       </div>
       <h2 data-reveal="" data-delay="80" style="margin:20px 0 36px;max-width:18ch;font-size:clamp(30px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;text-wrap:balance;color:#f2f3f5;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Des collaborations qui marquent.</h2>
       <div data-2col="" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
@@ -366,10 +374,49 @@ a{color:inherit;text-decoration:none}
       </div>
     </section>
 
+    <section data-screen-label="Réseau" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
+      <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <span style="color:var(--accent,#c75265);font-weight:600">(05)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre réseau</span>
+      </div>
+      <div data-2col="" style="display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(24px,4vw,60px);align-items:center;margin-top:30px">
+        <div data-reveal="" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <h2 style="margin:0;font-size:clamp(28px,3.6vw,46px);font-weight:600;line-height:1.08;letter-spacing:-0.022em;text-wrap:balance;color:#f2f3f5">De Lyon &amp; Genève,<br>on connecte les talents au monde.</h2>
+          <p style="margin:22px 0 0;font-size:16px;line-height:1.65;color:var(--gray,#9a9da4);max-width:46ch">Nos créatrices et créateurs collaborent avec des marques partout dans le monde. Campagnes locales ou activations internationales, on relie les bons talents aux bons marchés.</p>
+        </div>
+        <div data-reveal="" data-delay="80" style="position:relative;width:100%;aspect-ratio:123/62;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <img src="assets/world-dotted.svg" alt="" aria-hidden="true" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5;-webkit-mask-image:radial-gradient(120% 120% at 50% 50%,#000 62%,transparent 92%);mask-image:radial-gradient(120% 120% at 50% 50%,#000 62%,transparent 92%)">
+          <svg viewBox="0 0 800 400" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%">
+            <defs>
+              <linearGradient id="wmGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#c75265" stop-opacity="0"></stop>
+                <stop offset="12%" stop-color="#c75265" stop-opacity="1"></stop>
+                <stop offset="88%" stop-color="#e0808f" stop-opacity="1"></stop>
+                <stop offset="100%" stop-color="#e0808f" stop-opacity="0"></stop>
+              </linearGradient>
+            </defs>
+            <path class="wm-arc" pathLength="100" d="M410.7 98.3 Q405.2 35.6 399.7 85.6" style="animation-delay:0s"></path>
+            <path class="wm-arc" pathLength="100" d="M410.7 98.3 Q323.2 48.3 235.6 109.5" style="animation-delay:.5s"></path>
+            <path class="wm-arc" pathLength="100" d="M235.6 109.5 Q186.4 59.5 137.2 124.3" style="animation-delay:1.1s"></path>
+            <path class="wm-arc" pathLength="100" d="M413.6 97.3 Q468.2 47.3 522.8 144.0" style="animation-delay:.8s"></path>
+            <path class="wm-arc" pathLength="100" d="M410.7 98.3 Q353.6 48.3 296.4 252.3" style="animation-delay:1.5s"></path>
+            <g>
+              <circle class="wm-ring" cx="137.2" cy="124.3" r="3" style="animation-delay:.2s"></circle><circle class="wm-dot" cx="137.2" cy="124.3" r="2.4"></circle>
+              <circle class="wm-ring" cx="235.6" cy="109.5" r="3" style="animation-delay:.6s"></circle><circle class="wm-dot" cx="235.6" cy="109.5" r="2.4"></circle>
+              <circle class="wm-ring" cx="399.7" cy="85.6" r="3" style="animation-delay:1s"></circle><circle class="wm-dot" cx="399.7" cy="85.6" r="2.4"></circle>
+              <circle class="wm-ring" cx="522.8" cy="144.0" r="3" style="animation-delay:1.3s"></circle><circle class="wm-dot" cx="522.8" cy="144.0" r="2.4"></circle>
+              <circle class="wm-ring" cx="296.4" cy="252.3" r="3" style="animation-delay:1.7s"></circle><circle class="wm-dot" cx="296.4" cy="252.3" r="2.4"></circle>
+              <circle class="wm-ring" cx="410.7" cy="98.3" r="3.4" style="animation-delay:0s"></circle><circle class="wm-dot" cx="410.7" cy="98.3" r="3" style="fill:#f2f3f5"></circle>
+              <circle class="wm-dot" cx="413.6" cy="97.3" r="3" style="fill:#f2f3f5"></circle>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
     <section id="roster" data-screen-label="Créatrices" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:38px">
         <div data-reveal="" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#c75265);font-weight:600">(05)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span>Créatrices</div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#c75265);font-weight:600">(06)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Créatrices</span></div>
           <h2 style="margin:20px 0 0;font-size:clamp(30px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;color:#f2f3f5">Le roster.</h2>
         </div>
         <p data-reveal="" data-delay="80" style="margin:0;max-width:34ch;font-size:15px;line-height:1.6;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Huit créatrices, deux univers: Sport et Lifestyle. Survole une carte pour collaborer.</p>
@@ -533,7 +580,7 @@ a{color:inherit;text-decoration:none}
 
     <section data-screen-label="Témoignages" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:36px;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#c75265);font-weight:600">(06)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span>Témoignages
+        <span style="color:var(--accent,#c75265);font-weight:600">(07)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Témoignages</span>
       </div>
       <div data-2col="" style="display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:stretch">
         <blockquote data-reveal="" style="margin:0;display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:clamp(30px,3.5vw,48px);border-radius:24px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
@@ -560,7 +607,7 @@ a{color:inherit;text-decoration:none}
       <div data-reveal="" style="border-radius:28px;border:1px solid var(--line);background:rgba(255,255,255,0.025);backdrop-filter:blur(12px);overflow:hidden;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
         <div data-2col="" style="display:grid;grid-template-columns:1fr 1.1fr">
           <div style="padding:clamp(32px,4vw,56px);border-right:1px solid var(--line)">
-            <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#c75265);font-weight:600">(07)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span>Contact</div>
+            <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#c75265);font-weight:600">(08)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Contact</span></div>
             <h2 style="margin:22px 0 0;font-size:clamp(30px,3.6vw,48px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;color:#f2f3f5">Parlons de ton projet.</h2>
             <p style="margin:18px 0 0;font-size:15px;line-height:1.65;color:var(--gray,#9a9da4);max-width:42ch">Créateur qui veut une vraie structure, ou marque qui veut activer des talents. On te répond vite.</p>
             <div style="margin-top:36px;display:flex;flex-direction:column;gap:18px">
@@ -644,5 +691,6 @@ a{color:inherit;text-decoration:none}
 
 <script src="main.js"></script>
 <script src="sphere.js" defer></script>
+<script src="encrypted.js" defer></script>
 </body>
 </html>
