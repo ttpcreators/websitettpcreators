@@ -114,7 +114,7 @@
 
   /* ----- Formulaire (Formspree + repli mailto + honeypot) ----- */
   var form = document.getElementById("dcForm");
-  var CONTACT_EMAIL = "hello@ttpcreators.com";
+  var CONTACT_EMAIL = "partnerships@ttpcreators.pro";
   if (form) {
     var note = document.createElement("p");
     note.setAttribute("role", "status");
