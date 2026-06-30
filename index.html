@@ -51,6 +51,17 @@
     [data-2col]{grid-template-columns:1fr !important}
     [data-plat]{grid-template-columns:1fr !important}
   }
+  html,body{overflow-x:hidden}
+  #hero{overflow:hidden}
+  @media (max-width:760px){
+    [data-sphere]{width:min(66vw,300px) !important;height:min(66vw,300px) !important;top:58px !important;right:-10vw !important;opacity:.4 !important}
+    [data-stats]{grid-template-columns:1fr 1fr !important;row-gap:30px !important}
+    [data-form-row]{grid-template-columns:1fr !important}
+    [data-encrypted]{white-space:normal}
+  }
+  @media (max-width:380px){
+    [data-sphere]{opacity:.32 !important}
+  }
   @media (prefers-reduced-motion: reduce){*{animation:none !important;scroll-behavior:auto !important;transition-duration:.001ms !important}[data-reveal]{opacity:1 !important;transform:none !important}}
 
 
@@ -404,7 +415,7 @@ a{color:inherit;text-decoration:none}
     </section>
 
     <section data-screen-label="Stats" style="position:relative;max-width:1320px;margin:0 auto;padding:0 clamp(18px,5vw,48px)">
-      <div data-reveal="" data-collapse="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:clamp(36px,4vw,56px) clamp(28px,4vw,52px);border-radius:24px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+      <div data-reveal="" data-collapse="" data-stats="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:clamp(36px,4vw,56px) clamp(28px,4vw,52px);border-radius:24px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
         <div style="display:flex;flex-direction:column;gap:8px">
           <div data-counter="" data-prefix="+" data-target="50" data-suffix="" data-pad="0" style="font-size:clamp(44px,6vw,82px);font-weight:300;letter-spacing:-0.03em;line-height:1;color:#f2f3f5">+0</div>
           <div style="font-size:14px;color:var(--gray,#9a9da4)">Campagnes livrées</div>
@@ -669,7 +680,7 @@ a{color:inherit;text-decoration:none}
           <div style="padding:clamp(32px,4vw,56px)">
             <form id="dcForm" action="https://formspree.io/f/votre-id" method="POST" novalidate><input type="hidden" name="profil" id="dcProfil" value="Créateur">
               <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Ne pas remplir<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div data-form-row="" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
                 <div><label for="f-nom" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Nom</label><input id="f-nom" name="nom" type="text" required="" autocomplete="name" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#c75265);background:rgba(255,255,255,0.05)"></div>
                 <div><label for="f-email" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Email</label><input id="f-email" name="email" type="email" required="" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#c75265);background:rgba(255,255,255,0.05)"></div>
               </div>
