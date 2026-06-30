@@ -176,3 +176,49 @@
     });
   }
 })();
+
+/* ===== Roster dynamique : lit le roster de l'agence depuis Supabase (vue publique
+   public_roster : champs publics uniquement) et remplace les cartes. Quand l'agence
+   ajoute un créateur dans l'app, il apparaît ici automatiquement. Repli : si le
+   chargement échoue, les cartes statiques de la page restent affichées. ===== */
+(function () {
+  var SB_URL = "https://tytbkyyfhlyhxpbcwnkw.supabase.co";
+  var SB_KEY = "sb_publishable_LQS5P8cn2kd8pKnN7kiilg_y9UgGLAx";
+  var grid = document.getElementById("roster-grid");
+  if (!grid) return;
+
+  var IG = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>';
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function titleCase(s) { return String(s || "").toLowerCase().replace(/(^|[\s\-'’])([\wà-ÿ])/g, function (m, a, b) { return a + b.toUpperCase(); }); }
+  function igUser(h) { return String(h || "").replace(/^@/, "").trim(); }
+
+  function card(c) {
+    var niche = esc(c.niche || "");
+    var name = esc(titleCase(c.name));
+    var handle = esc(c.handle || "");
+    var user = igUser(c.handle);
+    var hasIg = user && user.toLowerCase() !== "nouveau";
+    var photo = c.photo_url ? '<img class="cr-photo" src="' + esc(c.photo_url) + '" alt="' + name + '" loading="lazy" onerror="this.remove()">' : '';
+    var social = hasIg ? '<a href="https://instagram.com/' + esc(user) + '" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;color:#f2f3f5;transition:background .3s, color .3s">' + IG + '</a>' : '';
+    return '<article data-niche="' + niche + '" data-reveal="" onmouseenter="" onmouseleave="" style="position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#0e0f12;transition:border-color .4s">'
+      + '<div style="position:relative;width:100%;aspect-ratio:4/5;overflow:hidden">'
+      + '<div data-img="" role="img" aria-label="Portrait" style="position:absolute;inset:0;background:repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 12px), linear-gradient(160deg,#17181c,#0e0f12);transition:transform .9s cubic-bezier(.16,1,.3,1)"></div>' + photo
+      + '<div data-badge="" style="position:absolute;top:12px;left:12px;background:rgba(11,12,14,0.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.12);padding:5px 11px;border-radius:100px;font-size:11px;letter-spacing:.04em;color:#f2f3f5">' + niche + '</div>'
+      + '<div data-overlay="" style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(11,12,14,0.94) 12%, rgba(11,12,14,0.2) 70%);opacity:0;transform:translateY(8px);transition:opacity .4s, transform .4s;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:16px">'
+      + '<div style="display:flex;align-items:center;gap:8px">' + social + '<a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#c75265)">›</span></a></div>'
+      + '</div></div>'
+      + '<div style="padding:14px 14px 16px"><div style="font-weight:600;font-size:16px;letter-spacing:-0.01em;color:#f2f3f5">' + name + '</div><div style="font-size:13px;color:var(--gray,#9a9da4)">' + handle + '</div></div>'
+      + '</article>';
+  }
+
+  fetch(SB_URL + "/rest/v1/public_roster?select=name,handle,niche,platform,photo_url&order=sort_order", { headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY } })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (rows) {
+      if (!Array.isArray(rows) || !rows.length) return; // repli : on garde les cartes statiques
+      grid.innerHTML = rows.map(card).join("");
+      var sub = document.getElementById("roster-count");
+      if (sub) sub.textContent = rows.length + " créatrice" + (rows.length > 1 ? "s" : "") + ", deux univers : Sport et Lifestyle. Survole une carte pour collaborer.";
+    })
+    .catch(function () { /* repli : les cartes statiques restent affichées */ });
+})();
