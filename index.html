@@ -9,6 +9,8 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://ttpcreators.github.io/websitettpcreators/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="TTP Creators">
 <meta property="og:locale" content="fr_FR">
@@ -82,6 +84,11 @@ a{color:inherit;text-decoration:none}
 .plat-beam i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:0;animation:ttpSpark 2.1s linear infinite}
 @keyframes ttpBeam{0%{left:14%;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:86%;opacity:0}}
 @keyframes ttpSpark{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.9;transform:scale(1.2)}}
+@property --ttpmb{syntax:'<angle>';initial-value:0deg;inherits:false}
+.ttp-mb{position:relative;isolation:isolate}
+.ttp-mb::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.7px;background:conic-gradient(from var(--ttpmb), rgba(255,255,255,0) 0deg, rgba(255,255,255,0) 250deg, var(--accent,#c75265) 312deg, #ffffff 340deg, rgba(255,255,255,0) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:ttpMB 3.4s linear infinite}
+@keyframes ttpMB{to{--ttpmb:360deg}}
+@media (prefers-reduced-motion: reduce){.ttp-mb::after{animation:none}}
 </style>
 </head>
 <body>
@@ -115,7 +122,7 @@ a{color:inherit;text-decoration:none}
         <span data-pill-cursor="" aria-hidden="true" style="position:absolute;z-index:1;top:5px;left:5px;width:0;height:0;border-radius:100px;background:#f2f3f5;opacity:0;transition:opacity .3s, width .4s cubic-bezier(.16,1,.3,1), height .4s cubic-bezier(.16,1,.3,1), left .4s cubic-bezier(.16,1,.3,1), top .4s cubic-bezier(.16,1,.3,1)"></span>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
-        <a data-cta-nav="" href="#contact" style="display:inline-flex;align-items:center;gap:8px;background:#f2f3f5;color:#0b0c0e;padding:10px 18px;border-radius:100px;font-size:13px;font-weight:600;transition:transform .3s, background .3s">
+        <a data-cta-nav="" class="ttp-mb" href="#contact" style="display:inline-flex;align-items:center;gap:8px;background:#f2f3f5;color:#0b0c0e;padding:10px 18px;border-radius:100px;font-size:13px;font-weight:600;transition:transform .3s, background .3s">
           <span style="width:6px;height:6px;border-radius:50%;background:var(--accent,#c75265)"></span>
           Travailler avec nous
         </a>
@@ -132,7 +139,7 @@ a{color:inherit;text-decoration:none}
         <a href="#work" onclick="" style="padding:14px 0;font-size:18px;font-weight:500;border-bottom:1px solid var(--line);color:#f2f3f5">Réalisations</a>
         <a href="#roster" onclick="" style="padding:14px 0;font-size:18px;font-weight:500;border-bottom:1px solid var(--line);color:#f2f3f5">Créatrices</a>
         <a href="#contact" onclick="" style="padding:14px 0;font-size:18px;font-weight:500;color:#f2f3f5">Contact</a>
-        <a href="#contact" onclick="" style="margin-top:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent,#c75265);color:#0b0c0e;padding:14px 18px;border-radius:100px;font-size:15px;font-weight:600">Travailler avec nous</a>
+        <a href="#contact" onclick="" class="ttp-mb" style="margin-top:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent,#c75265);color:#0b0c0e;padding:14px 18px;border-radius:100px;font-size:15px;font-weight:600">Travailler avec nous</a>
       </div>
     </div>
   </header>
@@ -156,7 +163,7 @@ a{color:inherit;text-decoration:none}
         <div data-reveal="" data-delay="360" style="max-width:470px;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
           <p style="margin:0 0 24px;font-size:clamp(16px,1.4vw,19px);line-height:1.6;color:#cfd1d6">On transforme les créateurs en marques. Management de talents, production de contenu et activations marques, en Sport et Lifestyle.</p>
           <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
-            <a href="#contact" style="display:inline-flex;align-items:center;gap:10px;background:#f2f3f5;color:#0b0c0e;padding:14px 24px;border-radius:100px;font-size:15px;font-weight:600;transition:transform .3s, background .3s">
+            <a href="#contact" class="ttp-mb" style="display:inline-flex;align-items:center;gap:10px;background:#f2f3f5;color:#0b0c0e;padding:14px 24px;border-radius:100px;font-size:15px;font-weight:600;transition:transform .3s, background .3s">
               <span style="width:7px;height:7px;border-radius:50%;background:var(--accent,#c75265)"></span>
               Travailler avec nous
             </a>
@@ -675,7 +682,7 @@ a{color:inherit;text-decoration:none}
               </div>
               <div style="margin-top:18px"><label for="f-msg" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Message</label><textarea id="f-msg" name="message" rows="4" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;resize:vertical;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#c75265);background:rgba(255,255,255,0.05)"></textarea></div>
               <div style="margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:16px">
-                <button type="submit" style="display:inline-flex;align-items:center;gap:10px;background:#f2f3f5;color:#0b0c0e;padding:14px 26px;border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:transform .3s, background .3s"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent,#c75265)"></span>Envoyer</button>
+                <button type="submit" class="ttp-mb" style="display:inline-flex;align-items:center;gap:10px;background:#f2f3f5;color:#0b0c0e;padding:14px 26px;border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:transform .3s, background .3s"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent,#c75265)"></span>Envoyer</button>
                 <span data-form-status="" role="status" style="font-size:13px;color:var(--gray,#9a9da4);opacity:0;transition:opacity .3s;max-width:30ch"></span>
               </div>
             </form>
