@@ -47,6 +47,7 @@
     [data-collapse]{grid-template-columns:1fr !important}
     [data-bento]{grid-template-columns:1fr !important}
     [data-2col]{grid-template-columns:1fr !important}
+    [data-plat]{grid-template-columns:1fr !important}
   }
   @media (prefers-reduced-motion: reduce){*{animation:none !important;scroll-behavior:auto !important;transition-duration:.001ms !important}[data-reveal]{opacity:1 !important;transform:none !important}}
 
@@ -73,6 +74,14 @@ a{color:inherit;text-decoration:none}
 .wm-dot{fill:var(--accent,#c75265)}
 .wm-ring{fill:none;stroke:var(--accent,#c75265);transform-box:fill-box;transform-origin:center;animation:wmPulse 2.6s ease-out infinite}
 @keyframes wmPulse{0%{transform:scale(.4);opacity:.85}70%{transform:scale(2.6);opacity:0}100%{opacity:0}}
+.plat-stage{position:relative}
+.plat-ic{border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(248,248,248,0.015);box-shadow:0 0 8px 0 rgba(248,248,248,0.16) inset,0 20px 18px -12px rgba(0,0,0,0.55);animation:ttpBob 3.2s ease-in-out infinite}
+.plat-ic svg{display:block}
+@keyframes ttpBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.plat-beam{position:absolute;top:50%;left:14%;transform:translateY(-50%);width:1px;height:64%;background:linear-gradient(to bottom,transparent,var(--accent,#c75265),transparent);box-shadow:0 0 14px 1px rgba(199,82,101,0.55);animation:ttpBeam 4.6s ease-in-out infinite}
+.plat-beam i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:0;animation:ttpSpark 2.1s linear infinite}
+@keyframes ttpBeam{0%{left:14%;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:86%;opacity:0}}
+@keyframes ttpSpark{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.9;transform:scale(1.2)}}
 </style>
 </head>
 <body>
@@ -269,6 +278,39 @@ a{color:inherit;text-decoration:none}
               <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">Sourcing</span>
               <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">Campagnes</span>
               <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">Reporting</span>
+            </div>
+          </div>
+        </div>
+        <div data-reveal="" data-plat="" style="grid-column:span 6;display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(18px,3vw,44px);align-items:center;padding:clamp(26px,3vw,40px);border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <div class="plat-stage" style="height:clamp(170px,21vw,230px);border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.015);-webkit-mask-image:radial-gradient(72% 72% at 50% 50%,#000 32%,transparent 100%);mask-image:radial-gradient(72% 72% at 50% 50%,#000 32%,transparent 100%)">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="plat-ic" style="width:44px;height:44px;animation-delay:0s">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFC00" aria-hidden="true"><path d="M12 2.2c2.7 0 4 2 4 4.4 0 .8-.1 1.5-.1 1.8.2.1.6.1 1 0 .6-.1.8.5.4.9-.3.3-1.1.5-1.3.9-.2.5 1.1 2.7 3 3 .4.1.4.5 0 .7-.5.3-1.5.3-1.8.8-.1.3.1.7-.2.9-.3.2-1-.1-1.7 0-.7.1-1.2.8-2.5.8s-1.8-.7-2.5-.8c-.7-.1-1.4.2-1.7 0-.3-.2-.1-.6-.2-.9-.3-.5-1.3-.5-1.8-.8-.4-.2-.4-.6 0-.7 1.9-.3 3.2-2.5 3-3-.2-.4-1-.6-1.3-.9-.4-.4-.2-1 .4-.9.4.1.8.1 1 0 0-.3-.1-1-.1-1.8C8 4.2 9.3 2.2 12 2.2z"/></svg>
+              </div>
+              <div class="plat-ic" style="width:56px;height:56px;animation-delay:.25s">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="#f2f3f5" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg>
+              </div>
+              <div class="plat-ic" style="width:68px;height:68px;animation-delay:.5s">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#f2f3f5" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.4" cy="6.6" r="1.1" fill="#f2f3f5" stroke="none"></circle></svg>
+              </div>
+              <div class="plat-ic" style="width:56px;height:56px;animation-delay:.75s">
+                <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4.5" fill="#FF3B30"></rect><path d="M10 8.5l6 3.5-6 3.5z" fill="#fff"></path></svg>
+              </div>
+              <div class="plat-ic" style="width:44px;height:44px;animation-delay:1s">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#a970ff" aria-hidden="true"><path d="M4.3 3 3 6.4v12.1h4.1V21h2.3l2.3-2.5h3.4L23 13V3H4.3zm15.6 9.2-2.7 2.7h-4.1l-2.3 2.3v-2.3H7.6V5h12.3v7.2zM16.6 7.6h-1.7v4.6h1.7V7.6zm-4.6 0h-1.7v4.6H12V7.6z"></path></svg>
+              </div>
+            </div>
+            <span class="plat-beam" aria-hidden="true"><i style="left:-6px;top:18%;animation-delay:0s"></i><i style="left:4px;top:52%;animation-delay:.6s"></i><i style="left:-4px;top:82%;animation-delay:1.2s"></i></span>
+          </div>
+          <div>
+            <h3 style="margin:0 0 10px;font-size:22px;font-weight:600;letter-spacing:-0.01em;color:#f2f3f5">Présents sur toutes les plateformes</h3>
+            <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:var(--gray,#9a9da4);max-width:46ch">Instagram, TikTok, YouTube, Snapchat, Twitch. On produit du contenu natif, pensé pour les codes de chaque réseau et de chaque audience.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">Instagram</span>
+              <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">TikTok</span>
+              <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">YouTube</span>
+              <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">Snapchat</span>
+              <span style="display:inline-flex;padding:6px 13px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--gray,#9a9da4)">Twitch</span>
             </div>
           </div>
         </div>
