@@ -35,10 +35,10 @@
     pillLinks.forEach(function (a) {
       a.addEventListener("mouseenter", function () {
         if (cursor) moveCursor(a);
-        a.style.color = "#0b0c0e";
+        a.style.color = "#ffffff";
       });
       a.addEventListener("mouseleave", function () {
-        a.style.color = "rgba(242,243,245,0.72)";
+        a.style.color = "rgba(23,24,28,0.72)";
       });
     });
     pillNav.addEventListener("mouseleave", function () {
@@ -54,12 +54,12 @@
       segs.forEach(function (x) {
         x.setAttribute("aria-pressed", "false");
         x.style.background = "transparent";
-        x.style.color = "#cfd1d6";
-        x.style.borderColor = "rgba(255,255,255,0.14)";
+        x.style.color = "#4b4e56";
+        x.style.borderColor = "rgba(0,0,0,0.14)";
       });
       b.setAttribute("aria-pressed", "true");
       b.style.background = "var(--accent,#c75265)";
-      b.style.color = "#0b0c0e";
+      b.style.color = "#ffffff";
       b.style.borderColor = "transparent";
       if (profil) profil.value = b.getAttribute("data-val") || "";
     });
@@ -200,15 +200,15 @@
     var user = igUser(c.handle);
     var hasIg = user && user.toLowerCase() !== "nouveau";
     var photo = c.photo_url ? '<img class="cr-photo" src="' + esc(c.photo_url) + '" alt="' + name + '" loading="lazy" onerror="this.remove()">' : '';
-    var social = hasIg ? '<a href="https://instagram.com/' + esc(user) + '" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;color:#f2f3f5;transition:background .3s, color .3s">' + IG + '</a>' : '';
-    return '<article data-niche="' + niche + '" data-reveal="" onmouseenter="" onmouseleave="" style="position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#0e0f12;transition:border-color .4s">'
+    var social = hasIg ? '<a href="https://instagram.com/' + esc(user) + '" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(0,0,0,0.18);display:flex;align-items:center;justify-content:center;color:#17181c;transition:background .3s, color .3s">' + IG + '</a>' : '';
+    return '<article data-niche="' + niche + '" data-reveal="" onmouseenter="" onmouseleave="" style="position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#f3f1ed;transition:border-color .4s">'
       + '<div style="position:relative;width:100%;aspect-ratio:4/5;overflow:hidden">'
-      + '<div data-img="" role="img" aria-label="Portrait" style="position:absolute;inset:0;background:repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 12px), linear-gradient(160deg,#17181c,#0e0f12);transition:transform .9s cubic-bezier(.16,1,.3,1)"></div>' + photo
-      + '<div data-badge="" style="position:absolute;top:12px;left:12px;background:rgba(11,12,14,0.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.12);padding:5px 11px;border-radius:100px;font-size:11px;letter-spacing:.04em;color:#f2f3f5">' + niche + '</div>'
-      + '<div data-overlay="" style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(11,12,14,0.94) 12%, rgba(11,12,14,0.2) 70%);opacity:0;transform:translateY(8px);transition:opacity .4s, transform .4s;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:16px">'
+      + '<div data-img="" role="img" aria-label="Portrait" style="position:absolute;inset:0;background:repeating-linear-gradient(135deg, rgba(0,0,0,0.03) 0 2px, transparent 2px 12px), linear-gradient(160deg,#ece9e4,#f3f1ed);transition:transform .9s cubic-bezier(.16,1,.3,1)"></div>' + photo
+      + '<div data-badge="" style="position:absolute;top:12px;left:12px;background:rgba(255,255,255,0.55);backdrop-filter:blur(6px);border:1px solid rgba(0,0,0,0.12);padding:5px 11px;border-radius:100px;font-size:11px;letter-spacing:.04em;color:#17181c">' + niche + '</div>'
+      + '<div data-overlay="" style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(255,255,255,0.94) 12%, rgba(255,255,255,0.2) 70%);opacity:0;transform:translateY(8px);transition:opacity .4s, transform .4s;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:16px">'
       + '<div style="display:flex;align-items:center;gap:8px">' + social + '<a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#c75265)">›</span></a></div>'
       + '</div></div>'
-      + '<div style="padding:14px 14px 16px"><div style="font-weight:600;font-size:16px;letter-spacing:-0.01em;color:#f2f3f5">' + name + '</div><div style="font-size:13px;color:var(--gray,#9a9da4)">' + handle + '</div></div>'
+      + '<div style="padding:14px 14px 16px"><div style="font-weight:600;font-size:16px;letter-spacing:-0.01em;color:#17181c">' + name + '</div><div style="font-size:13px;color:var(--gray,#6b6e76)">' + handle + '</div></div>'
       + '</article>';
   }
 
