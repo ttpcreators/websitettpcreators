@@ -30,14 +30,14 @@
 *{box-sizing:border-box}
   html{scroll-behavior:smooth;scroll-padding-top:84px}
   body{margin:0;background:#0b0c0e;color:#f2f3f5;font-family:'Archivo',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  ::selection{background:rgba(168,50,80,0.32);color:#fff}
+  ::selection{background:rgba(184,58,90,0.32);color:#fff}
   @keyframes ttpDrift1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(4%,-3%) scale(1.08)}100%{transform:translate(0,0) scale(1)}}
   @keyframes ttpDrift2{0%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-5%,4%) scale(1)}100%{transform:translate(0,0) scale(1.05)}}
   @keyframes ttpDrift3{0%{transform:translate(0,0) scale(1)}50%{transform:translate(3%,5%) scale(1.1)}100%{transform:translate(0,0) scale(1)}}
   @keyframes ttpMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @keyframes ttpReveal{from{opacity:1;transform:translateY(14px)}to{opacity:1;transform:none}}
   [data-reveal]{animation:ttpReveal .9s cubic-bezier(.16,1,.3,1) both}
-  :focus-visible{outline:2px solid var(--accent,#a83250);outline-offset:3px;border-radius:4px}
+  :focus-visible{outline:2px solid var(--accent,#b83a5a);outline-offset:3px;border-radius:4px}
   [data-burger]{display:none}
   @media (max-width:900px){
     [data-desktop-nav]{display:none !important}
@@ -66,7 +66,7 @@
   @media (prefers-reduced-motion: reduce){*{animation:none !important;scroll-behavior:auto !important;transition-duration:.001ms !important}[data-reveal]{opacity:1 !important;transform:none !important}}
 
 
-:root,#main{--accent:#a83250;--accent-deep:#5a0f22;--gray:#9a9da4;--line:rgba(255,255,255,0.08)}
+:root,#main{--accent:#b83a5a;--accent-deep:#5a0f22;--gray:#9a9da4;--line:rgba(255,255,255,0.08)}
 input::placeholder,textarea::placeholder{color:#6f727a}
 [onmouseenter]:hover [data-overlay]{opacity:1 !important;transform:none !important}
 [onmouseenter]:hover [data-img]{transform:scale(1.05) !important}
@@ -82,30 +82,30 @@ input::placeholder,textarea::placeholder{color:#6f727a}
 a{color:inherit;text-decoration:none}
 [data-encrypted]{white-space:nowrap}
 [data-encrypted] .enc-c{transition:color .18s ease}
-[data-encrypted] .enc-c.scz{color:var(--accent,#a83250);opacity:.8}
+[data-encrypted] .enc-c.scz{color:var(--accent,#b83a5a);opacity:.8}
 .wm-arc{fill:none;stroke:url(#wmGrad);stroke-width:1.2;stroke-linecap:round;stroke-dasharray:18 82;animation:wmDash 3.4s linear infinite}
 @keyframes wmDash{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
-.wm-dot{fill:var(--accent,#a83250)}
-.wm-ring{fill:none;stroke:var(--accent,#a83250);transform-box:fill-box;transform-origin:center;animation:wmPulse 2.6s ease-out infinite}
+.wm-dot{fill:var(--accent,#b83a5a)}
+.wm-ring{fill:none;stroke:var(--accent,#b83a5a);transform-box:fill-box;transform-origin:center;animation:wmPulse 2.6s ease-out infinite}
 @keyframes wmPulse{0%{transform:scale(.4);opacity:.85}70%{transform:scale(2.6);opacity:0}100%{opacity:0}}
 .plat-stage{position:relative}
 .plat-ic{border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(248,248,248,0.015);box-shadow:0 0 8px 0 rgba(248,248,248,0.16) inset,0 20px 18px -12px rgba(0,0,0,0.55);animation:ttpBob 3.2s ease-in-out infinite}
 .plat-ic svg{display:block}
 @keyframes ttpBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.plat-beam{position:absolute;top:50%;left:14%;transform:translateY(-50%);width:1px;height:64%;background:linear-gradient(to bottom,transparent,var(--accent,#a83250),transparent);box-shadow:0 0 14px 1px rgba(168,50,80,0.55);animation:ttpBeam 4.6s ease-in-out infinite}
+.plat-beam{position:absolute;top:50%;left:14%;transform:translateY(-50%);width:1px;height:64%;background:linear-gradient(to bottom,transparent,var(--accent,#b83a5a),transparent);box-shadow:0 0 14px 1px rgba(184,58,90,0.55);animation:ttpBeam 4.6s ease-in-out infinite}
 .plat-beam i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:0;animation:ttpSpark 2.1s linear infinite}
 @keyframes ttpBeam{0%{left:14%;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:86%;opacity:0}}
 @keyframes ttpSpark{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.9;transform:scale(1.2)}}
 @property --ttpmb{syntax:'<angle>';initial-value:0deg;inherits:false}
 .ttp-mb{position:relative;isolation:isolate}
-.ttp-mb::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.7px;background:conic-gradient(from var(--ttpmb), rgba(255,255,255,0) 0deg, rgba(255,255,255,0) 250deg, var(--accent,#a83250) 312deg, #ffffff 340deg, rgba(255,255,255,0) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:ttpMB 3.4s linear infinite}
+.ttp-mb::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.7px;background:conic-gradient(from var(--ttpmb), rgba(255,255,255,0) 0deg, rgba(255,255,255,0) 250deg, var(--accent,#b83a5a) 312deg, #ffffff 340deg, rgba(255,255,255,0) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:ttpMB 3.4s linear infinite}
 @keyframes ttpMB{to{--ttpmb:360deg}}
 @media (prefers-reduced-motion: reduce){.ttp-mb::after{animation:none}}
 </style>
 </head>
 <body>
 
-<div ref="" style="position:relative;min-height:100vh;overflow-x:clip;background:#0b0c0e;--gray:#9a9da4;--line:rgba(255,255,255,0.08);--accent:#a83250;--accent-deep:#5a0f22;--smoke-op:0.6;--smoke-op2:0.42">
+<div ref="" style="position:relative;min-height:100vh;overflow-x:clip;background:#0b0c0e;--gray:#9a9da4;--line:rgba(255,255,255,0.08);--accent:#b83a5a;--accent-deep:#5a0f22;--smoke-op:0.6;--smoke-op2:0.42">
 
   <a href="#main" style="position:fixed;left:14px;top:-60px;z-index:100;background:#f2f3f5;color:#0b0c0e;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;transition:top .2s" style-focus="top:14px">Aller au contenu</a>
 
@@ -117,12 +117,12 @@ a{color:inherit;text-decoration:none}
     <div style="position:absolute;inset:0;opacity:0.045;mix-blend-mode:overlay;background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC45IiBudW1PY3RhdmVzPSIyIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')"></div>
   </div>
 
-  <div data-progress="" aria-hidden="true" style="position:fixed;top:0;left:0;height:2px;width:0%;z-index:60;background:linear-gradient(90deg,var(--accent-deep,#5a0f22),var(--accent,#a83250));box-shadow:0 0 12px rgba(168,50,80,0.6)"></div>
+  <div data-progress="" aria-hidden="true" style="position:fixed;top:0;left:0;height:2px;width:0%;z-index:60;background:linear-gradient(90deg,var(--accent-deep,#5a0f22),var(--accent,#b83a5a));box-shadow:0 0 12px rgba(184,58,90,0.6)"></div>
 
   <header data-nav="" style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(11,12,14,0.16);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid transparent;transition:background .4s, border-color .4s">
     <nav style="max-width:1320px;margin:0 auto;padding:14px clamp(18px,5vw,48px);display:flex;align-items:center;justify-content:space-between;gap:20px">
       <a href="#hero" aria-label="TTP Creators, accueil" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'});history.replaceState(null,'',location.pathname);" style="display:flex;align-items:center;color:#f2f3f5">
-        <img src="assets/logo.png" alt="TTP Creators" style="display:block;width:auto;height:34px" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'width:9px;height:9px;border-radius:50%;background:var(--accent,#a83250);box-shadow:0 0 12px var(--accent,#a83250)'}))">
+        <img src="assets/logo.png" alt="TTP Creators" style="display:block;width:auto;height:34px" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'width:9px;height:9px;border-radius:50%;background:var(--accent,#b83a5a);box-shadow:0 0 12px var(--accent,#b83a5a)'}))">
       </a>
       <div data-desktop-nav="" data-pillnav="" style="position:relative;display:flex;align-items:center;padding:5px;border-radius:100px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05)">
         <a href="#about" style="position:relative;z-index:2;padding:9px 16px;border-radius:100px;font-size:14px;font-weight:500;color:rgba(242,243,245,0.72);transition:color .35s">À propos</a>
@@ -134,7 +134,7 @@ a{color:inherit;text-decoration:none}
       </div>
       <div style="display:flex;align-items:center;gap:12px">
         <a data-cta-nav="" class="ttp-mb" href="#contact" style="display:inline-flex;align-items:center;gap:8px;background:#f2f3f5;color:#0b0c0e;padding:10px 18px;border-radius:100px;font-size:13px;font-weight:600;transition:transform .3s, background .3s">
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--accent,#a83250)"></span>
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--accent,#b83a5a)"></span>
           Travailler avec nous
         </a>
         <button data-burger="" type="button" onclick="" aria-label="Ouvrir le menu" aria-expanded="false" style="width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#f2f3f5;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:5px">
@@ -150,7 +150,7 @@ a{color:inherit;text-decoration:none}
         <a href="#work" onclick="" style="padding:14px 0;font-size:18px;font-weight:500;border-bottom:1px solid var(--line);color:#f2f3f5">Réalisations</a>
         <a href="#roster" onclick="" style="padding:14px 0;font-size:18px;font-weight:500;border-bottom:1px solid var(--line);color:#f2f3f5">Créatrices</a>
         <a href="#contact" onclick="" style="padding:14px 0;font-size:18px;font-weight:500;color:#f2f3f5">Contact</a>
-        <a href="#contact" onclick="" class="ttp-mb" style="margin-top:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent,#a83250);color:#0b0c0e;padding:14px 18px;border-radius:100px;font-size:15px;font-weight:600">Travailler avec nous</a>
+        <a href="#contact" onclick="" class="ttp-mb" style="margin-top:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent,#b83a5a);color:#0b0c0e;padding:14px 18px;border-radius:100px;font-size:15px;font-weight:600">Travailler avec nous</a>
       </div>
     </div>
   </header>
@@ -160,40 +160,40 @@ a{color:inherit;text-decoration:none}
     <section id="hero" data-screen-label="Hero" style="position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;max-width:1320px;margin:0 auto;padding:150px clamp(18px,5vw,48px) 70px">
       <canvas data-sphere="" aria-hidden="true" style="position:absolute;top:clamp(54px,11vh,150px);right:clamp(-110px,-3vw,8px);width:min(60vw,560px);height:min(60vw,560px);z-index:-1;pointer-events:none;opacity:.9;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 75%);mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 75%)"></canvas>
       <div data-reveal="" style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="width:26px;height:1px;background:var(--accent,#a83250)"></span>
+        <span style="width:26px;height:1px;background:var(--accent,#b83a5a)"></span>
         <span data-encrypted="">Talent management</span>
       </div>
       <h1 data-hero-title="" style="margin:28px 0 0;font-weight:300;font-size:clamp(56px,11.5vw,172px);line-height:0.9;letter-spacing:-0.035em;text-transform:uppercase;color:#f2f3f5">
         <span data-reveal="" data-delay="60" style="display:block;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Trust</span>
         <span data-reveal="" data-delay="150" style="display:block;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">The</span>
-        <span data-reveal="" data-delay="240" style="display:block;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Process<span style="color:var(--accent,#a83250)">.</span></span>
+        <span data-reveal="" data-delay="240" style="display:block;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Process<span style="color:var(--accent,#b83a5a)">.</span></span>
       </h1>
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:36px;margin-top:50px">
-        <p data-reveal="" data-delay="320" style="margin:0;max-width:300px;font-size:13px;line-height:1.6;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><span style="color:var(--accent,#a83250)">TTP</span>, pour Trust the Process. Une agence de talent management entre Lyon et Genève.</p>
+        <p data-reveal="" data-delay="320" style="margin:0;max-width:300px;font-size:13px;line-height:1.6;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><span style="color:var(--accent,#b83a5a)">TTP</span>, pour Trust the Process. Une agence de talent management entre Lyon et Genève.</p>
         <div data-reveal="" data-delay="360" style="max-width:470px;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
           <p style="margin:0 0 24px;font-size:clamp(16px,1.4vw,19px);line-height:1.6;color:#cfd1d6">Nous maximisons la valeur des créateurs et la performance des campagnes marques. Sport, Lifestyle, Fashion.</p>
           <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
             <a href="#contact" class="ttp-mb" style="display:inline-flex;align-items:center;gap:10px;background:#f2f3f5;color:#0b0c0e;padding:14px 24px;border-radius:100px;font-size:15px;font-weight:600;transition:transform .3s, background .3s">
-              <span style="width:7px;height:7px;border-radius:50%;background:var(--accent,#a83250)"></span>
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--accent,#b83a5a)"></span>
               Travailler avec nous
             </a>
-            <a href="#roster" style="display:inline-flex;align-items:center;gap:8px;color:#f2f3f5;font-size:15px;font-weight:500;padding:14px 6px;transition:color .3s">Voir le roster <span style="color:var(--accent,#a83250)">›</span></a>
+            <a href="#roster" style="display:inline-flex;align-items:center;gap:8px;color:#f2f3f5;font-size:15px;font-weight:500;padding:14px 6px;transition:color .3s">Voir le roster <span style="color:var(--accent,#b83a5a)">›</span></a>
           </div>
         </div>
       </div>
       <div data-collapse="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:clamp(54px,8vh,104px);padding-top:34px;border-top:1px solid var(--line)">
         <div data-reveal="" data-delay="380" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="font-size:24px;font-weight:300;color:var(--accent,#a83250);line-height:1">+</div>
+          <div style="font-size:24px;font-weight:300;color:var(--accent,#b83a5a);line-height:1">+</div>
           <h3 style="margin:14px 0 8px;font-size:16px;font-weight:600;letter-spacing:-0.01em;color:#f2f3f5">Créateurs</h3>
           <p style="margin:0;font-size:13.5px;line-height:1.6;color:var(--gray,#9a9da4);max-width:32ch">On structure ta carrière, on négocie tes deals, on maximise tes revenus.</p>
         </div>
         <div data-reveal="" data-delay="440" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="font-size:24px;font-weight:300;color:var(--accent,#a83250);line-height:1">+</div>
+          <div style="font-size:24px;font-weight:300;color:var(--accent,#b83a5a);line-height:1">+</div>
           <h3 style="margin:14px 0 8px;font-size:16px;font-weight:600;letter-spacing:-0.01em;color:#f2f3f5">Marques</h3>
           <p style="margin:0;font-size:13.5px;line-height:1.6;color:var(--gray,#9a9da4);max-width:32ch">On connecte ton image aux bons talents, avec des campagnes qui convertissent.</p>
         </div>
         <div data-reveal="" data-delay="500" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="font-size:24px;font-weight:300;color:var(--accent,#a83250);line-height:1">+</div>
+          <div style="font-size:24px;font-weight:300;color:var(--accent,#b83a5a);line-height:1">+</div>
           <h3 style="margin:14px 0 8px;font-size:16px;font-weight:600;letter-spacing:-0.01em;color:#f2f3f5">Médias</h3>
           <p style="margin:0;font-size:13.5px;line-height:1.6;color:var(--gray,#9a9da4);max-width:32ch">Du contenu natif pensé pour les plateformes, du brief à la livraison.</p>
         </div>
@@ -203,13 +203,13 @@ a{color:inherit;text-decoration:none}
     <section aria-label="Ils nous font confiance" style="position:relative;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden">
       <div style="max-width:1320px;margin:0 auto 18px;padding:0 clamp(18px,5vw,48px);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span data-encrypted="">Ils nous font confiance</span></div>
       <div style="position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)">
-        <div style="display:flex;width:max-content;animation:ttpMarquee 40s linear infinite"><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/tesla.png" alt="Tesla" loading="lazy" onerror="this.replaceWith(document.createTextNode('Tesla'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/ray-ban.png" alt="Ray-Ban" loading="lazy" onerror="this.replaceWith(document.createTextNode('Ray-Ban'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/hp.png" alt="HP" loading="lazy" onerror="this.replaceWith(document.createTextNode('HP'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/speedo.png" alt="Speedo" loading="lazy" onerror="this.replaceWith(document.createTextNode('Speedo'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/palladium.png" alt="Palladium" loading="lazy" onerror="this.replaceWith(document.createTextNode('Palladium'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/bumble.png" alt="Bumble" loading="lazy" onerror="this.replaceWith(document.createTextNode('Bumble'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/magnum.png" alt="Magnum" loading="lazy" onerror="this.replaceWith(document.createTextNode('Magnum'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/quonto.png" alt="Qonto" loading="lazy" onerror="this.replaceWith(document.createTextNode('Qonto'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/nutripure.png" alt="Nutripure" loading="lazy" onerror="this.replaceWith(document.createTextNode('Nutripure'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/so-shape.png" alt="So Shape" loading="lazy" onerror="this.replaceWith(document.createTextNode('So Shape'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/novoma.png" alt="Novoma" loading="lazy" onerror="this.replaceWith(document.createTextNode('Novoma'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/tesla.png" alt="Tesla" loading="lazy" onerror="this.replaceWith(document.createTextNode('Tesla'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/ray-ban.png" alt="Ray-Ban" loading="lazy" onerror="this.replaceWith(document.createTextNode('Ray-Ban'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/hp.png" alt="HP" loading="lazy" onerror="this.replaceWith(document.createTextNode('HP'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/speedo.png" alt="Speedo" loading="lazy" onerror="this.replaceWith(document.createTextNode('Speedo'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/palladium.png" alt="Palladium" loading="lazy" onerror="this.replaceWith(document.createTextNode('Palladium'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/bumble.png" alt="Bumble" loading="lazy" onerror="this.replaceWith(document.createTextNode('Bumble'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/magnum.png" alt="Magnum" loading="lazy" onerror="this.replaceWith(document.createTextNode('Magnum'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/quonto.png" alt="Qonto" loading="lazy" onerror="this.replaceWith(document.createTextNode('Qonto'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/nutripure.png" alt="Nutripure" loading="lazy" onerror="this.replaceWith(document.createTextNode('Nutripure'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/so-shape.png" alt="So Shape" loading="lazy" onerror="this.replaceWith(document.createTextNode('So Shape'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/novoma.png" alt="Novoma" loading="lazy" onerror="this.replaceWith(document.createTextNode('Novoma'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#a83250);opacity:.6"></span></div></div>
+        <div style="display:flex;width:max-content;animation:ttpMarquee 40s linear infinite"><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/tesla.png" alt="Tesla" loading="lazy" onerror="this.replaceWith(document.createTextNode('Tesla'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/ray-ban.png" alt="Ray-Ban" loading="lazy" onerror="this.replaceWith(document.createTextNode('Ray-Ban'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/hp.png" alt="HP" loading="lazy" onerror="this.replaceWith(document.createTextNode('HP'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/speedo.png" alt="Speedo" loading="lazy" onerror="this.replaceWith(document.createTextNode('Speedo'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/palladium.png" alt="Palladium" loading="lazy" onerror="this.replaceWith(document.createTextNode('Palladium'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/bumble.png" alt="Bumble" loading="lazy" onerror="this.replaceWith(document.createTextNode('Bumble'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/magnum.png" alt="Magnum" loading="lazy" onerror="this.replaceWith(document.createTextNode('Magnum'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/quonto.png" alt="Qonto" loading="lazy" onerror="this.replaceWith(document.createTextNode('Qonto'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/nutripure.png" alt="Nutripure" loading="lazy" onerror="this.replaceWith(document.createTextNode('Nutripure'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/so-shape.png" alt="So Shape" loading="lazy" onerror="this.replaceWith(document.createTextNode('So Shape'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/novoma.png" alt="Novoma" loading="lazy" onerror="this.replaceWith(document.createTextNode('Novoma'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/tesla.png" alt="Tesla" loading="lazy" onerror="this.replaceWith(document.createTextNode('Tesla'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/ray-ban.png" alt="Ray-Ban" loading="lazy" onerror="this.replaceWith(document.createTextNode('Ray-Ban'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/hp.png" alt="HP" loading="lazy" onerror="this.replaceWith(document.createTextNode('HP'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/speedo.png" alt="Speedo" loading="lazy" onerror="this.replaceWith(document.createTextNode('Speedo'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/palladium.png" alt="Palladium" loading="lazy" onerror="this.replaceWith(document.createTextNode('Palladium'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/bumble.png" alt="Bumble" loading="lazy" onerror="this.replaceWith(document.createTextNode('Bumble'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/magnum.png" alt="Magnum" loading="lazy" onerror="this.replaceWith(document.createTextNode('Magnum'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/quonto.png" alt="Qonto" loading="lazy" onerror="this.replaceWith(document.createTextNode('Qonto'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/nutripure.png" alt="Nutripure" loading="lazy" onerror="this.replaceWith(document.createTextNode('Nutripure'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/so-shape.png" alt="So Shape" loading="lazy" onerror="this.replaceWith(document.createTextNode('So Shape'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div><div style="display:flex;align-items:center;gap:16px;padding:0 34px;font-size:clamp(20px,2.4vw,30px);font-weight:500;letter-spacing:-0.01em;color:#e7e8ea;white-space:nowrap;opacity:0.78"><img class="cl" src="assets/clients/novoma.png" alt="Novoma" loading="lazy" onerror="this.replaceWith(document.createTextNode('Novoma'))"><span style="width:5px;height:5px;border-radius:50%;background:var(--accent,#b83a5a);opacity:.6"></span></div></div>
       </div>
     </section>
 
     <section id="about" data-screen-label="À propos" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(80px,11vw,150px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#a83250);font-weight:600">(01)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">À propos</span>
+        <span style="color:var(--accent,#b83a5a);font-weight:600">(01)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">À propos</span>
       </div>
       <div data-2col="" style="display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(34px,5vw,72px);margin-top:32px;align-items:stretch">
         <div data-reveal="" style="position:relative;min-height:440px;border-radius:22px;overflow:hidden;border:1px solid var(--line);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
@@ -222,15 +222,15 @@ a{color:inherit;text-decoration:none}
           <p style="margin:22px 0 0;font-size:16px;line-height:1.65;color:var(--gray,#9a9da4);max-width:52ch">On structure les talents et on construit des campagnes qui performent. Lyon · Genève.</p>
           <div style="margin-top:32px;display:flex;flex-direction:column;gap:2px">
             <div style="display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--line)">
-              <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250);padding-top:2px">01</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a);padding-top:2px">01</span>
               <div><h3 style="margin:0 0 5px;font-size:17px;font-weight:600;color:#f2f3f5">Talent d'abord</h3><p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">Une marque, pas qu'une audience. Des talents qui matchent vraiment l'image.</p></div>
             </div>
             <div style="display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--line)">
-              <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250);padding-top:2px">02</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a);padding-top:2px">02</span>
               <div><h3 style="margin:0 0 5px;font-size:17px;font-weight:600;color:#f2f3f5">Studio intégré</h3><p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">Stratégie, production, négociation. Une équipe. Aucune sous-traitance.</p></div>
             </div>
             <div style="display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-              <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250);padding-top:2px">03</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a);padding-top:2px">03</span>
               <div><h3 style="margin:0 0 5px;font-size:17px;font-weight:600;color:#f2f3f5">Résultats mesurés</h3><p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">Pas de feeling. Des KPIs clairs, à chaque collaboration.</p></div>
             </div>
           </div>
@@ -240,12 +240,12 @@ a{color:inherit;text-decoration:none}
 
     <section id="services" data-screen-label="Services" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#a83250);font-weight:600">(02)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Services</span>
+        <span style="color:var(--accent,#b83a5a);font-weight:600">(02)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Services</span>
       </div>
       <h2 data-reveal="" data-delay="80" style="margin:20px 0 36px;max-width:20ch;font-size:clamp(30px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;text-wrap:balance;color:#f2f3f5;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Un accompagnement complet, du talent à la marque.</h2>
       <div data-bento="" style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px">
         <div data-reveal="" style="grid-column:span 4;display:flex;flex-direction:column;gap:18px;padding:clamp(26px,3vw,40px);border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:background .4s, border-color .4s, transform .4s">
-          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(168,50,80,0.10);border:1px solid rgba(168,50,80,0.22);color:var(--accent,#a83250)">
+          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(184,58,90,0.10);border:1px solid rgba(184,58,90,0.22);color:var(--accent,#b83a5a)">
             <svg width="28" height="28" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="15" y1="4" x2="15" y2="26"></line><line x1="4" y1="15" x2="26" y2="15"></line><line x1="7.5" y1="7.5" x2="22.5" y2="22.5"></line><line x1="22.5" y1="7.5" x2="7.5" y2="22.5"></line></svg>
           </div>
           <div style="margin-top:auto">
@@ -259,7 +259,7 @@ a{color:inherit;text-decoration:none}
           </div>
         </div>
         <div data-reveal="" data-delay="80" style="grid-column:span 2;display:flex;flex-direction:column;gap:18px;padding:clamp(26px,3vw,40px);border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:background .4s, border-color .4s, transform .4s">
-          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(168,50,80,0.10);border:1px solid rgba(168,50,80,0.22);color:var(--accent,#a83250)">
+          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(184,58,90,0.10);border:1px solid rgba(184,58,90,0.22);color:var(--accent,#b83a5a)">
             <svg width="28" height="28" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="15" cy="15" r="10"></circle><path d="M12.5 11 L20 15 L12.5 19 Z" fill="currentColor" stroke="none"></path></svg>
           </div>
           <div style="margin-top:auto">
@@ -272,7 +272,7 @@ a{color:inherit;text-decoration:none}
           </div>
         </div>
         <div data-reveal="" style="grid-column:span 3;display:flex;flex-direction:column;gap:18px;padding:clamp(26px,3vw,40px);border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:background .4s, border-color .4s, transform .4s">
-          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(168,50,80,0.10);border:1px solid rgba(168,50,80,0.22);color:var(--accent,#a83250)">
+          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(184,58,90,0.10);border:1px solid rgba(184,58,90,0.22);color:var(--accent,#b83a5a)">
             <svg width="28" height="28" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.4"><polyline points="5 13 15 9 25 13"></polyline><polyline points="5 20 15 16 25 20"></polyline></svg>
           </div>
           <div style="margin-top:auto">
@@ -286,7 +286,7 @@ a{color:inherit;text-decoration:none}
           </div>
         </div>
         <div data-reveal="" data-delay="80" style="grid-column:span 3;display:flex;flex-direction:column;gap:18px;padding:clamp(26px,3vw,40px);border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:background .4s, border-color .4s, transform .4s">
-          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(168,50,80,0.10);border:1px solid rgba(168,50,80,0.22);color:var(--accent,#a83250)">
+          <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(184,58,90,0.10);border:1px solid rgba(184,58,90,0.22);color:var(--accent,#b83a5a)">
             <svg width="28" height="28" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="5" y="9" width="12" height="12" rx="2"></rect><rect x="13" y="9" width="12" height="12" rx="2"></rect></svg>
           </div>
           <div style="margin-top:auto">
@@ -337,31 +337,31 @@ a{color:inherit;text-decoration:none}
 
     <section id="method" data-screen-label="Méthode" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#a83250);font-weight:600">(03)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre méthode</span>
+        <span style="color:var(--accent,#b83a5a);font-weight:600">(03)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre méthode</span>
       </div>
       <h2 data-reveal="" data-delay="80" style="margin:20px 0 48px;max-width:18ch;font-size:clamp(30px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;text-wrap:balance;color:#f2f3f5;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Quatre étapes, un process éprouvé.</h2>
       <div data-collapse="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
         <div data-reveal="" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="width:12px;height:12px;border-radius:50%;background:var(--accent,#a83250);box-shadow:0 0 0 4px rgba(168,50,80,0.14);flex-shrink:0"></span><span style="flex:1;height:1px;background:var(--line)"></span></div>
-          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250)">01</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="width:12px;height:12px;border-radius:50%;background:var(--accent,#b83a5a);box-shadow:0 0 0 4px rgba(184,58,90,0.14);flex-shrink:0"></span><span style="flex:1;height:1px;background:var(--line)"></span></div>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a)">01</div>
           <h3 style="margin:8px 0 8px;font-size:20px;font-weight:600;color:#f2f3f5">Découverte</h3>
           <p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">On apprend à te connaître: objectifs, audience, positionnement.</p>
         </div>
         <div data-reveal="" data-delay="90" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="width:12px;height:12px;border-radius:50%;background:var(--accent,#a83250);box-shadow:0 0 0 4px rgba(168,50,80,0.14);flex-shrink:0"></span><span style="flex:1;height:1px;background:var(--line)"></span></div>
-          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250)">02</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="width:12px;height:12px;border-radius:50%;background:var(--accent,#b83a5a);box-shadow:0 0 0 4px rgba(184,58,90,0.14);flex-shrink:0"></span><span style="flex:1;height:1px;background:var(--line)"></span></div>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a)">02</div>
           <h3 style="margin:8px 0 8px;font-size:20px;font-weight:600;color:#f2f3f5">Stratégie</h3>
           <p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">On pose la ligne, les formats et le plan de croissance.</p>
         </div>
         <div data-reveal="" data-delay="180" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="width:12px;height:12px;border-radius:50%;background:var(--accent,#a83250);box-shadow:0 0 0 4px rgba(168,50,80,0.14);flex-shrink:0"></span><span style="flex:1;height:1px;background:var(--line)"></span></div>
-          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250)">03</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="width:12px;height:12px;border-radius:50%;background:var(--accent,#b83a5a);box-shadow:0 0 0 4px rgba(184,58,90,0.14);flex-shrink:0"></span><span style="flex:1;height:1px;background:var(--line)"></span></div>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a)">03</div>
           <h3 style="margin:8px 0 8px;font-size:20px;font-weight:600;color:#f2f3f5">Production</h3>
           <p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">On crée le contenu et on l'optimise pour chaque plateforme.</p>
         </div>
         <div data-reveal="" data-delay="270" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="width:12px;height:12px;border-radius:50%;background:#f2f3f5;flex-shrink:0"></span><span style="flex:1;height:1px;background:var(--line)"></span></div>
-          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250)">04</div>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a)">04</div>
           <h3 style="margin:8px 0 8px;font-size:20px;font-weight:600;color:#f2f3f5">Croissance</h3>
           <p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">On mesure, on ajuste, et on active les bonnes marques.</p>
         </div>
@@ -391,7 +391,7 @@ a{color:inherit;text-decoration:none}
 
     <section data-screen-label="Réseau" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#a83250);font-weight:600">(04)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre réseau</span>
+        <span style="color:var(--accent,#b83a5a);font-weight:600">(04)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre réseau</span>
       </div>
       <div data-2col="" style="display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(24px,4vw,60px);align-items:center;margin-top:30px">
         <div data-reveal="" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
@@ -403,8 +403,8 @@ a{color:inherit;text-decoration:none}
           <svg viewBox="0 0 800 400" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%">
             <defs>
               <linearGradient id="wmGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#a83250" stop-opacity="0"></stop>
-                <stop offset="12%" stop-color="#a83250" stop-opacity="1"></stop>
+                <stop offset="0%" stop-color="#b83a5a" stop-opacity="0"></stop>
+                <stop offset="12%" stop-color="#b83a5a" stop-opacity="1"></stop>
                 <stop offset="88%" stop-color="#e0808f" stop-opacity="1"></stop>
                 <stop offset="100%" stop-color="#e0808f" stop-opacity="0"></stop>
               </linearGradient>
@@ -431,7 +431,7 @@ a{color:inherit;text-decoration:none}
     <section id="roster" data-screen-label="Créatrices" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:38px">
         <div data-reveal="" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-          <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#a83250);font-weight:600">(05)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Créatrices</span></div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#b83a5a);font-weight:600">(05)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Créatrices</span></div>
           <h2 style="margin:20px 0 0;font-size:clamp(30px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;color:#f2f3f5">Le roster.</h2>
         </div>
         <p id="roster-count" data-reveal="" data-delay="80" style="margin:0;max-width:34ch;font-size:15px;line-height:1.6;color:var(--gray,#9a9da4);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">Huit créatrices, deux univers: Sport et Lifestyle. Survole une carte pour collaborer.</p>
@@ -447,7 +447,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/mathild.e_" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@mathild.e_" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -466,7 +466,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/maybefeelgood_" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@maybefeelgood_" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -485,7 +485,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/candicemaissa" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@candicemaissa" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -504,7 +504,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/jufrasca__" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@jufrasca__" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -523,7 +523,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/lenaa.psl" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@lenaa.psl" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -542,7 +542,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/irina.smb" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@irina.smb" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -561,7 +561,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/lucie.bots" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@lucie.bots" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -580,7 +580,7 @@ a{color:inherit;text-decoration:none}
                 <div style="display:flex;align-items:center;gap:8px">
                   <a href="https://instagram.com/beverly.filoni" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                   <a href="https://tiktok.com/@beverly.filoni" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#f2f3f5;transition:background .3s, color .3s"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16.6 2h-2.9v13.7a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.12v-3a5.6 5.6 0 1 0 6.7 5.5V9.3a7 7 0 0 0 4.1 1.32V7.7a4.1 4.1 0 0 1-3.1-1.4A4.1 4.1 0 0 1 16.6 2z"/></svg></a>
-                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#a83250)">›</span></a>
+                  <a href="#contact" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#fff">Collaborer <span style="color:var(--accent,#b83a5a)">›</span></a>
                 </div>
               </div>
             </div>
@@ -595,7 +595,7 @@ a{color:inherit;text-decoration:none}
 
     <section data-screen-label="Notre histoire" style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(18px,5vw,48px)">
       <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:36px;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
-        <span style="color:var(--accent,#a83250);font-weight:600">(06)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre histoire</span>
+        <span style="color:var(--accent,#b83a5a);font-weight:600">(06)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Notre histoire</span>
       </div>
       <div data-2col="" style="display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(34px,5vw,72px);align-items:start">
         <div data-reveal="" style="transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
@@ -605,16 +605,16 @@ a{color:inherit;text-decoration:none}
         </div>
         <div data-reveal="" data-delay="80" style="position:relative;padding:clamp(28px,3vw,40px);border-radius:24px;background:rgba(255,255,255,0.025);border:1px solid var(--line);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
           <div style="position:relative;padding-left:30px">
-            <span style="position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--accent,#a83250),rgba(168,50,80,0.15))"></span>
+            <span style="position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--accent,#b83a5a),rgba(184,58,90,0.15))"></span>
             <div style="position:relative;padding-bottom:30px">
-              <span style="position:absolute;left:-30px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent,#a83250);box-shadow:0 0 0 4px rgba(168,50,80,0.14)"></span>
-              <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250)">2022</div>
+              <span style="position:absolute;left:-30px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent,#b83a5a);box-shadow:0 0 0 4px rgba(184,58,90,0.14)"></span>
+              <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a)">2022</div>
               <h3 style="margin:6px 0 6px;font-size:19px;font-weight:600;color:#f2f3f5">TTP Agency</h3>
               <p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">Naissance de l'agence de communication : stratégie de marque, création et campagnes.</p>
             </div>
             <div style="position:relative">
               <span style="position:absolute;left:-30px;top:4px;width:12px;height:12px;border-radius:50%;background:#f2f3f5;box-shadow:0 0 0 4px rgba(255,255,255,0.08)"></span>
-              <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#a83250)">Aujourd'hui</div>
+              <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent,#b83a5a)">Aujourd'hui</div>
               <h3 style="margin:6px 0 6px;font-size:19px;font-weight:600;color:#f2f3f5">TTP Creators</h3>
               <p style="margin:0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4)">Le talent management comme évidence : les créateurs au cœur des marques, du sourcing à l'activation.</p>
             </div>
@@ -627,7 +627,7 @@ a{color:inherit;text-decoration:none}
       <div data-reveal="" style="border-radius:28px;border:1px solid var(--line);background:rgba(255,255,255,0.025);backdrop-filter:blur(12px);overflow:hidden;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
         <div data-2col="" style="display:grid;grid-template-columns:1fr 1.1fr">
           <div style="padding:clamp(32px,4vw,56px);border-right:1px solid var(--line)">
-            <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#a83250);font-weight:600">(07)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Contact</span></div>
+            <div style="display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray,#9a9da4)"><span style="color:var(--accent,#b83a5a);font-weight:600">(07)</span><span style="width:26px;height:1px;background:rgba(255,255,255,0.2)"></span><span data-encrypted="">Contact</span></div>
             <h2 style="margin:22px 0 0;font-size:clamp(30px,3.6vw,48px);font-weight:600;line-height:1.05;letter-spacing:-0.022em;color:#f2f3f5">Parlons de ton projet.</h2>
             <p style="margin:18px 0 0;font-size:15px;line-height:1.65;color:var(--gray,#9a9da4);max-width:42ch">Créateur qui veut une vraie structure, ou marque qui veut activer des talents. On te répond vite.</p>
             <div style="margin-top:36px;display:flex;flex-direction:column;gap:18px">
@@ -640,20 +640,20 @@ a{color:inherit;text-decoration:none}
             <form id="dcForm" action="https://formspree.io/f/votre-id" method="POST" novalidate><input type="hidden" name="profil" id="dcProfil" value="Créateur">
               <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Ne pas remplir<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
               <div data-form-row="" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-                <div><label for="f-nom" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Nom</label><input id="f-nom" name="nom" type="text" required="" autocomplete="name" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#a83250);background:rgba(255,255,255,0.05)"></div>
-                <div><label for="f-email" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Email</label><input id="f-email" name="email" type="email" required="" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#a83250);background:rgba(255,255,255,0.05)"></div>
+                <div><label for="f-nom" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Nom</label><input id="f-nom" name="nom" type="text" required="" autocomplete="name" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#b83a5a);background:rgba(255,255,255,0.05)"></div>
+                <div><label for="f-email" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Email</label><input id="f-email" name="email" type="email" required="" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#b83a5a);background:rgba(255,255,255,0.05)"></div>
               </div>
               <div style="margin-top:18px">
                 <span style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);display:block">Tu es</span>
                 <div data-seg-wrap="" style="display:inline-flex;gap:8px;margin-top:10px">
-                  <button type="button" data-seg="" data-val="Créateur" aria-pressed="true" onclick="" style="padding:10px 18px;border-radius:100px;border:1px solid transparent;background:var(--accent,#a83250);color:#0b0c0e;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .25s">Créateur</button>
+                  <button type="button" data-seg="" data-val="Créateur" aria-pressed="true" onclick="" style="padding:10px 18px;border-radius:100px;border:1px solid transparent;background:var(--accent,#b83a5a);color:#0b0c0e;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .25s">Créateur</button>
                   <button type="button" data-seg="" data-val="Marque" aria-pressed="false" onclick="" style="padding:10px 18px;border-radius:100px;border:1px solid rgba(255,255,255,0.14);background:transparent;color:#cfd1d6;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .25s">Marque</button>
                 </div>
                 <input type="hidden" name="profil" value="Créateur">
               </div>
-              <div style="margin-top:18px"><label for="f-msg" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Message</label><textarea id="f-msg" name="message" rows="4" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;resize:vertical;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#a83250);background:rgba(255,255,255,0.05)"></textarea></div>
+              <div style="margin-top:18px"><label for="f-msg" style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gray,#9a9da4);margin-bottom:8px;display:block">Message</label><textarea id="f-msg" name="message" rows="4" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:#f2f3f5;font-size:15px;font-family:inherit;outline:none;resize:vertical;transition:border-color .3s, background .3s" style-focus="border-color:var(--accent,#b83a5a);background:rgba(255,255,255,0.05)"></textarea></div>
               <div style="margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:16px">
-                <button type="submit" class="ttp-mb" style="display:inline-flex;align-items:center;gap:10px;background:#f2f3f5;color:#0b0c0e;padding:14px 26px;border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:transform .3s, background .3s"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent,#a83250)"></span>Envoyer</button>
+                <button type="submit" class="ttp-mb" style="display:inline-flex;align-items:center;gap:10px;background:#f2f3f5;color:#0b0c0e;padding:14px 26px;border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:transform .3s, background .3s"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent,#b83a5a)"></span>Envoyer</button>
                 <span data-form-status="" role="status" style="font-size:13px;color:var(--gray,#9a9da4);opacity:0;transition:opacity .3s;max-width:30ch"></span>
               </div>
             </form>
@@ -671,8 +671,8 @@ a{color:inherit;text-decoration:none}
           <a href="#hero" style="display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;color:#f2f3f5"><img src="assets/logo.png" alt="TTP Creators" style="display:block;width:auto;height:30px" onerror="this.remove()"></a>
           <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--gray,#9a9da4);max-width:36ch">Talent management Sport et Lifestyle, entre Lyon et Genève. Trust the Process.</p>
           <div style="margin-top:20px;display:flex;gap:10px">
-            <a href="https://www.instagram.com/ttpcreators/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid var(--line);border-radius:100px;font-size:13px;color:#cfd1d6;transition:border-color .3s, color .3s">Instagram <span style="color:var(--accent,#a83250)">↗</span></a>
-            <a href="https://www.linkedin.com/company/ttp-creators/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid var(--line);border-radius:100px;font-size:13px;color:#cfd1d6;transition:border-color .3s, color .3s">LinkedIn <span style="color:var(--accent,#a83250)">↗</span></a>
+            <a href="https://www.instagram.com/ttpcreators/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid var(--line);border-radius:100px;font-size:13px;color:#cfd1d6;transition:border-color .3s, color .3s">Instagram <span style="color:var(--accent,#b83a5a)">↗</span></a>
+            <a href="https://www.linkedin.com/company/ttp-creators/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1px solid var(--line);border-radius:100px;font-size:13px;color:#cfd1d6;transition:border-color .3s, color .3s">LinkedIn <span style="color:var(--accent,#b83a5a)">↗</span></a>
           </div>
         </div>
         <div>
