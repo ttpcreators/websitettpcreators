@@ -17,7 +17,7 @@
   if (!gl) return; // pas de WebGL2 -> le hero garde son atmosphère seule
 
   /* ----- Réglages (couleurs de marque) ----- */
-  var COLOR_FRONT = [61 / 255, 0 / 255, 0 / 255, 1.0]; // #3d0000 (accent)
+  var COLOR_FRONT = [122 / 255, 26 / 255, 48 / 255, 1.0]; // #7a1a30 (accent)
   var COLOR_BACK = [0.0, 0.0, 0.0, 0.0];                   // transparent
   var SHAPE = 7.0;  // sphere
   var TYPE = 4.0;   // 1=random, 2=2x2, 3=4x4, 4=8x8 (Bayer ordonné)
