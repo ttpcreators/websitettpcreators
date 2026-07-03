@@ -12,7 +12,8 @@
   --faint: rgba(11, 11, 13, 0.4);
   --line: rgba(0, 0, 0, 0.1);
   --panel: #f4f4f6;
-  --accent: #3d0000;
+  --accent: #3d0000; /* bordeaux profond (logo) */
+  --accent-3: #b83a5a; /* rose vif — numéros et petits accents */
 }
 
 html {
