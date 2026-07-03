@@ -18,6 +18,7 @@ export default function Manifesto() {
             Le talent brut ne suffit pas. Ce qui fait la différence : une image{' '}
             <Highlight
               icon={<MousePointerClickIcon />}
+              color="#8c1d3f"
               image={asset('assets/creators/candice.jpg')}
               imageAlt="Candice Maissa"
             >
@@ -35,6 +36,7 @@ export default function Manifesto() {
             , des campagnes{' '}
             <Highlight
               icon={<RocketIcon />}
+              color="#8c1d3f"
               image={asset('assets/creators/lena.jpg')}
               imageAlt="Léna Pasquale"
             >

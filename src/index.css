@@ -12,7 +12,12 @@
   --faint: rgba(11, 11, 13, 0.4);
   --line: rgba(0, 0, 0, 0.1);
   --panel: #f4f4f6;
-  --accent: #3d0000;
+  --accent: #3d0000; /* bordeaux profond (logo) */
+  --accent-2: #8c1d3f; /* bordeaux vif */
+  --accent-3: #b83a5a; /* rose */
+  --blush: #faf3f2; /* fond rosé clair */
+  --blush-deep: #f5e7e5; /* fond rosé soutenu */
+  --grad-accent: linear-gradient(135deg, #8c1d3f 0%, #3d0000 100%);
 }
 
 html {

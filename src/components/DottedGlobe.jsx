@@ -126,8 +126,8 @@ export default function DottedGlobe({ width = 520, className = '' }) {
         context.lineWidth = 1 * scaleFactor
         context.stroke()
 
-        // trame de points
-        context.fillStyle = 'rgba(11, 11, 13, 0.3)'
+        // trame de points (teinte bordeaux)
+        context.fillStyle = 'rgba(90, 15, 38, 0.35)'
         allDots.forEach((dot) => {
           const projected = projection(dot)
           if (
