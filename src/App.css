@@ -56,7 +56,7 @@ h2 {
 }
 
 .eyebrow b {
-  color: var(--accent-3);
+  color: var(--accent);
   font-weight: 600;
   font-family: ui-monospace, Menlo, monospace;
 }
@@ -293,7 +293,7 @@ h2 {
 .overlay-n {
   font-family: ui-monospace, Menlo, monospace;
   font-size: 13px;
-  color: var(--accent-3);
+  color: var(--accent);
 }
 
 .overlay-foot {
@@ -922,7 +922,7 @@ h2 {
 .pillar-n {
   font-family: ui-monospace, Menlo, monospace;
   font-size: 13px;
-  color: var(--accent-3);
+  color: var(--accent);
   padding-top: 3px;
 }
 
@@ -1109,7 +1109,7 @@ h2 {
 .step-n {
   font-family: ui-monospace, Menlo, monospace;
   font-size: 13px;
-  color: var(--accent-3);
+  color: var(--accent);
   margin-bottom: 10px;
 }
 
@@ -1637,7 +1637,7 @@ a.rt-handle:hover {
 .tl-year {
   font-family: ui-monospace, Menlo, monospace;
   font-size: 13px;
-  color: var(--accent-3);
+  color: var(--accent);
 }
 
 .tl h3 {
