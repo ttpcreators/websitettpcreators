@@ -131,7 +131,7 @@ export default function Hero() {
         <BlurIn className="hero-lead" delay={1.2} reduce={reduce}>
           L'agence qui accompagne tes créateurs préférés.
           <br />
-          Image, partenariats, croissance — une seule équipe qui s'occupe de tout.
+          Image, partenariats, croissance.
         </BlurIn>
 
         <BlurIn className="hero-ctas" delay={1.45} reduce={reduce} y={10}>

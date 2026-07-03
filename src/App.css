@@ -505,7 +505,12 @@ h2 {
   font-size: 17px;
   line-height: 1.6;
   color: rgba(11, 11, 13, 0.6);
-  max-width: 46ch;
+  max-width: 68ch;
+}
+
+/* segment insécable : passe à la ligne en entier, jamais coupé au milieu */
+.nobr {
+  white-space: nowrap;
 }
 
 .hero-ctas {
@@ -2007,6 +2012,10 @@ a.ci:hover b {
   .sec-title-wide br,
   .about-title br {
     display: none;
+  }
+
+  .hero-lead {
+    font-size: 15px;
   }
 
   /* pile du roster : marge pour les cartes pivotées (elles débordaient) */
