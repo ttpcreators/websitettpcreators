@@ -129,9 +129,7 @@ export default function Hero() {
         <TypeTitle reduce={reduce} />
 
         <BlurIn className="hero-lead" delay={1.7} reduce={reduce}>
-          L'agence qui transforme les créatrices en marques.
-          <br />
-          Image, partenariats, croissance — on s'occupe de tout.
+          L'agence qui accompagne tes créateurs préférés.
         </BlurIn>
 
         <BlurIn className="hero-ctas" delay={1.95} reduce={reduce} y={10}>
