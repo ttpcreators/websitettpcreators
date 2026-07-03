@@ -930,7 +930,6 @@ h2 {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: var(--accent-3);
 }
 
 .pillar p {
@@ -966,7 +965,6 @@ h2 {
   font-size: 19px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--accent-3);
 }
 
 .svc p {
@@ -1119,7 +1117,6 @@ h2 {
   font-size: 19px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: var(--accent-3);
 }
 
 .step p {
