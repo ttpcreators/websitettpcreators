@@ -1,26 +1,61 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { ChevronDown } from 'lucide-react'
 import BorderBeam from './BorderBeam.jsx'
 
-// Hero « motion design » : révélation mot à mot avec flou qui se dissipe,
-// reflet dégradé animé sur « Process. », halos de lumière ambiante qui
-// respirent en fond, et fondu/rétrécissement du bloc au scroll.
+// Hero « motion design » : titre « Trust The Process. » (initiales TTP)
+// tapé à la machine avec curseur bordeaux, reflet dégradé animé sur
+// « Process. », halos ambiants, fondu/rétrécissement au scroll.
 
 const EASE_SOFT = [0.22, 1, 0.36, 1]
 
-// Un mot qui monte en se défloutant (l'effet-signature des keynotes)
-function BlurWord({ children, delay, reduce, className }) {
+const TITLE = 'Trust The Process.'
+const GRAD_FROM = TITLE.indexOf('Process') // début de la partie en dégradé
+
+// Effet machine à écrire : un fantôme invisible réserve la largeur finale
+// (le bloc centré ne bouge pas), le texte tapé se superpose par-dessus.
+function TypeTitle({ reduce, startDelay = 500, speed = 72 }) {
+  const [n, setN] = useState(reduce ? TITLE.length : 0)
+  const [done, setDone] = useState(reduce)
+
+  useEffect(() => {
+    if (reduce) return
+    let interval
+    let endTimeout
+    const start = setTimeout(() => {
+      let i = 0
+      interval = setInterval(() => {
+        i += 1
+        setN(i)
+        if (i >= TITLE.length) {
+          clearInterval(interval)
+          endTimeout = setTimeout(() => setDone(true), 1200)
+        }
+      }, speed)
+    }, startDelay)
+    return () => {
+      clearTimeout(start)
+      clearTimeout(endTimeout)
+      if (interval) clearInterval(interval)
+    }
+  }, [reduce, startDelay, speed])
+
+  const typed = TITLE.slice(0, n)
+  const head = typed.slice(0, GRAD_FROM)
+  const tail = typed.slice(GRAD_FROM)
+
   return (
-    <motion.span
-      className={className}
-      style={{ display: 'inline-block', willChange: 'transform, filter' }}
-      initial={reduce ? false : { opacity: 0, y: 26, filter: 'blur(14px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{ delay, duration: 1.1, ease: EASE_SOFT }}
-    >
-      {children}
-    </motion.span>
+    <h1 className="hero-h1 hero-h1-type">
+      <span className="hh-ghost" aria-hidden="true">
+        {TITLE}
+      </span>
+      <span className="hh-typed" aria-hidden="true">
+        {head}
+        {tail && <span className="hh-grad">{tail}</span>}
+        {!done && <span className="hero-caret" />}
+      </span>
+      <span className="sr-only">{TITLE}</span>
+    </h1>
   )
 }
 
@@ -91,25 +126,15 @@ export default function Hero() {
           <span>Agence de talent management</span>
         </BlurIn>
 
-        <h1 className="hero-h1">
-          <BlurWord delay={0.35} reduce={reduce}>
-            Trust
-          </BlurWord>{' '}
-          <BlurWord delay={0.47} reduce={reduce}>
-            the
-          </BlurWord>{' '}
-          <BlurWord delay={0.62} reduce={reduce} className="hh-grad">
-            Process.
-          </BlurWord>
-        </h1>
+        <TypeTitle reduce={reduce} />
 
-        <BlurIn className="hero-lead" delay={1.0} reduce={reduce}>
-          On transforme les créatrices en marques.
+        <BlurIn className="hero-lead" delay={1.7} reduce={reduce}>
+          L'agence qui transforme les créatrices en marques.
           <br />
-          Sport &amp; Lifestyle, de Lyon à Genève.
+          Image, partenariats, croissance — on s'occupe de tout.
         </BlurIn>
 
-        <BlurIn className="hero-ctas" delay={1.25} reduce={reduce} y={10}>
+        <BlurIn className="hero-ctas" delay={1.95} reduce={reduce} y={10}>
           <a className="btn btn-dark" href="#roster">
             Découvrir le roster
           </a>
@@ -127,7 +152,7 @@ export default function Hero() {
         onClick={scrollDown}
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
+        transition={{ delay: 2.6, duration: 1 }}
       >
         <span>Découvrir</span>
         <motion.span

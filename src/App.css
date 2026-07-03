@@ -426,6 +426,52 @@ h2 {
   white-space: nowrap;
 }
 
+/* machine à écrire : le fantôme réserve la largeur, le tapé se superpose */
+.hero-h1-type {
+  position: relative;
+  display: inline-block;
+}
+
+.hh-ghost {
+  visibility: hidden;
+}
+
+.hh-typed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+}
+
+.hero-caret {
+  display: inline-block;
+  width: 0.05em;
+  min-width: 3px;
+  height: 0.74em;
+  margin-left: 0.05em;
+  background: var(--accent);
+  vertical-align: -0.04em;
+  animation: caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* reflet dégradé qui traverse lentement « Process. » */
 .hh-grad {
   background: linear-gradient(
