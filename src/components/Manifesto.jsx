@@ -18,7 +18,7 @@ export default function Manifesto() {
             Le talent brut ne suffit pas. Ce qui fait la différence : une image{' '}
             <Highlight
               icon={<MousePointerClickIcon />}
-              image={asset('assets/creators/candice.png')}
+              image={asset('assets/creators/candice.jpg')}
               imageAlt="Candice Maissa"
             >
               construite
@@ -27,7 +27,7 @@ export default function Manifesto() {
             <Highlight
               icon={<HeartIcon />}
               color="#8c1d3f"
-              image={asset('assets/creators/beverly.png')}
+              image={asset('assets/creators/beverly.jpg')}
               imageAlt="Beverly Filoni"
             >
               engagée
@@ -35,7 +35,7 @@ export default function Manifesto() {
             , des campagnes{' '}
             <Highlight
               icon={<RocketIcon />}
-              image={asset('assets/creators/lena.png')}
+              image={asset('assets/creators/lena.jpg')}
               imageAlt="Léna Pasquale"
             >
               lancées

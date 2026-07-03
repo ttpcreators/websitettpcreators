@@ -92,6 +92,8 @@ export default function RosterCarousel({ creators, autoplay = true }) {
                   src={c.photo}
                   alt={c.name}
                   draggable={false}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none'
                   }}

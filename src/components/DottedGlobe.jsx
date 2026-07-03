@@ -194,8 +194,15 @@ export default function DottedGlobe({ width = 520, className = '' }) {
       }
     }
 
+    // le globe ne se redessine que lorsqu'il est visible à l'écran
+    let onScreen = true
+    const io = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting
+    })
+    io.observe(wrap)
+
     const rotate = () => {
-      if (autoRotate) {
+      if (autoRotate && onScreen) {
         rotation[0] += rotationSpeed
         projection.rotate(rotation)
         render()
@@ -244,6 +251,7 @@ export default function DottedGlobe({ width = 520, className = '' }) {
     return () => {
       if (rotationTimer) rotationTimer.stop()
       ro.disconnect()
+      io.disconnect()
       canvas.removeEventListener('mousedown', handleMouseDown)
     }
   }, [width])

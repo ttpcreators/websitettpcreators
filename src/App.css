@@ -357,11 +357,12 @@ h2 {
   pointer-events: none;
 }
 
+/* pas de filter:blur (très coûteux en GPU) : les dégradés radiaux
+   s'estompent déjà tout seuls — même rendu, bien plus fluide */
 .aur {
   position: absolute;
   display: block;
   border-radius: 50%;
-  filter: blur(90px);
   will-change: transform;
 }
 

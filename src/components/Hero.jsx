@@ -14,7 +14,7 @@ const GRAD_FROM = TITLE.indexOf('Process') // début de la partie en dégradé
 
 // Effet machine à écrire : un fantôme invisible réserve la largeur finale
 // (le bloc centré ne bouge pas), le texte tapé se superpose par-dessus.
-function TypeTitle({ reduce, startDelay = 500, speed = 72 }) {
+function TypeTitle({ reduce, startDelay = 150, speed = 55 }) {
   const [n, setN] = useState(reduce ? TITLE.length : 0)
   const [done, setDone] = useState(reduce)
 
@@ -29,7 +29,7 @@ function TypeTitle({ reduce, startDelay = 500, speed = 72 }) {
         setN(i)
         if (i >= TITLE.length) {
           clearInterval(interval)
-          endTimeout = setTimeout(() => setDone(true), 1200)
+          endTimeout = setTimeout(() => setDone(true), 900)
         }
       }, speed)
     }, startDelay)
@@ -121,18 +121,20 @@ export default function Hero() {
       <Aurora reduce={reduce} />
 
       <motion.div className="hero-center" style={contentStyle}>
-        <BlurIn className="hero-eyebrow" delay={0.15} reduce={reduce}>
+        <BlurIn className="hero-eyebrow" delay={0.05} reduce={reduce}>
           <span className="hero-dot" />
           <span>Agence de talent management</span>
         </BlurIn>
 
         <TypeTitle reduce={reduce} />
 
-        <BlurIn className="hero-lead" delay={1.7} reduce={reduce}>
+        <BlurIn className="hero-lead" delay={1.2} reduce={reduce}>
           L'agence qui accompagne tes créateurs préférés.
+          <br />
+          Image, partenariats, croissance — une seule équipe qui s'occupe de tout.
         </BlurIn>
 
-        <BlurIn className="hero-ctas" delay={1.95} reduce={reduce} y={10}>
+        <BlurIn className="hero-ctas" delay={1.45} reduce={reduce} y={10}>
           <a className="btn btn-dark" href="#roster">
             Découvrir le roster
           </a>
@@ -150,7 +152,7 @@ export default function Hero() {
         onClick={scrollDown}
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.6, duration: 1 }}
+        transition={{ delay: 1.9, duration: 1 }}
       >
         <span>Découvrir</span>
         <motion.span
