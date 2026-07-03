@@ -13,9 +13,7 @@
   --line: rgba(0, 0, 0, 0.1);
   --panel: #f4f4f6;
   --accent: #3d0000; /* bordeaux profond (logo) */
-  --accent-2: #8c1d3f; /* bordeaux vif — icônes et éléments actifs */
   --accent-3: #b83a5a; /* rose vif — numéros et petits accents */
-  --grad-accent: linear-gradient(135deg, #8c1d3f 0%, #3d0000 100%);
 }
 
 html {
