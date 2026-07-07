@@ -1,0 +1,12 @@
+# Mises à jour Dependabot pour le site vitrine (statique : pas de package.json,
+# donc seul l'écosystème github-actions du workflow de déploiement est suivi).
+# Les alertes de vulnérabilité + correctifs de sécurité sont activés côté repo.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    commit-message:
+      prefix: "ci"
