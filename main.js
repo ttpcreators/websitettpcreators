@@ -182,8 +182,8 @@
    ajoute un créateur dans l'app, il apparaît ici automatiquement. Repli : si le
    chargement échoue, les cartes statiques de la page restent affichées. ===== */
 (function () {
-  var SB_URL = "https://tytbkyyfhlyhxpbcwnkw.supabase.co";
-  var SB_KEY = "sb_publishable_LQS5P8cn2kd8pKnN7kiilg_y9UgGLAx";
+  var SB_URL = "https://zizvggziggswhrbuyhuo.supabase.co";
+  var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppenZnZ3ppZ2dzd2hyYnV5aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5Mzk2NjcsImV4cCI6MjA5ODUxNTY2N30.5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU";
   var grid = document.getElementById("roster-grid");
   if (!grid) return;
 
