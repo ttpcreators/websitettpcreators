@@ -70,7 +70,8 @@ def shell(c, slug):
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{og_img}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="../../assets/favicon-180.png?v=2">
 <link rel="stylesheet" href="../_assets/mediakit.css">
 </head>
 <body>

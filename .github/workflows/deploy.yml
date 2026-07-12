@@ -1,11 +1,16 @@
 name: Déployer sur GitHub Pages
 
-# Publie le site statique à chaque push sur la branche de travail.
+# Publie le site statique à chaque push sur la branche de travail,
+# et régénère les media kits toutes les heures pour publier
+# automatiquement la page de toute nouvelle créatrice ajoutée dans l'app.
 on:
   push:
     branches:
       - claude/agency-website-m3e282
       - main
+  schedule:
+    # Toutes les heures à :17 (créneau peu congestionné → plus fiable que :00).
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 # Permissions requises par le déploiement Pages
@@ -28,6 +33,18 @@ jobs:
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Générer les pages media kit (1 par créatrice, données live)
+        # Régénère mediakit/<slug>/index.html depuis public_mediakit (anon).
+        # continue-on-error : un hoquet réseau Supabase ne doit jamais bloquer
+        # le déploiement du reste du site (on retombe alors sur les shells commités).
+        continue-on-error: true
+        run: python3 mediakit/_build_mediakits.py
 
       - name: Configurer Pages (active Pages si besoin)
         uses: actions/configure-pages@v5
