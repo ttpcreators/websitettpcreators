@@ -53,6 +53,17 @@ jobs:
         continue-on-error: true
         run: python3 mediakit/_render_pdfs.py
 
+      - name: Garde-fou — le site officiel est la version BLANCHE (jamais la refonte cinématique)
+        # La version blanche n'utilise AUCUNE balise <video>. L'ancienne refonte
+        # « cinématique » (fond noir) en contient une. Si index.html en contient
+        # une, c'est une régression → on BLOQUE le déploiement (jamais publié).
+        run: |
+          if grep -qiE "<video" index.html; then
+            echo "::error::index.html contient une balise <video> = ancienne refonte cinématique (fond noir). Le site officiel est la version BLANCHE. Déploiement BLOQUÉ."
+            exit 1
+          fi
+          echo "OK — index.html est bien la version blanche (aucune balise vidéo)."
+
       - name: Configurer Pages (active Pages si besoin)
         uses: actions/configure-pages@v5
         with:
