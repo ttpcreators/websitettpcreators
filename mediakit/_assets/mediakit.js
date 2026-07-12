@@ -128,11 +128,17 @@
   }
 
   function buildAudience(data) {
-    var a = data.audience, hasGender = has(a.gender.femmes) || has(a.gender.hommes);
+    var a = data.audience;
+    // Genre : si un seul des deux est renseigné, on déduit l'autre (100 − x)
+    // pour ne jamais afficher un disgracieux « Hommes 0% ».
+    var gf = a.gender.femmes, gh = a.gender.hommes;
+    if (has(gf) && !has(gh)) gh = String(Math.max(0, 100 - num(gf)));
+    else if (has(gh) && !has(gf)) gf = String(Math.max(0, 100 - num(gh)));
+    var hasGender = has(gf) || has(gh);
     if (!(a.age.length || a.formats.length || a.pays.length || hasGender)) return "";
     var main = mainPlatform(data);
     var communaute = barsHTML(a.age, null) +
-      (hasGender ? barsHTML([{ label: "Femmes", pct: a.gender.femmes }, { label: "Hommes", pct: a.gender.hommes }], null) : "");
+      (hasGender ? barsHTML([{ label: "Femmes", pct: gf }, { label: "Hommes", pct: gh }], null) : "");
     var bestFmt = a.formats[0] || null;
     var mid = (bestFmt ? '<div><div class="big-stat tnum">' + num(bestFmt.pct) + '%</div><div class="stat-cap">Meilleur format — ' + esc(bestFmt.label) + "</div></div>" : "") +
       (a.formats.length ? donutHTML(a.formats) : "");
