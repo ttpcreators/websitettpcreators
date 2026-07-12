@@ -1,11 +1,21 @@
-# Déploiement automatique sur GitHub Pages : chaque push sur main
-# (y compris un upload de fichier via l'interface web GitHub)
-# rebuild le site et le publie.
+# Déploiement GitHub Pages du SITE OFFICIEL (React + Vite) sur https://ttpcreators.pro
+#
+# Un push sur main (ou l'upload d'un fichier via l'interface GitHub) rebuild le
+# site et le publie en ~1 min. Le même déploiement génère aussi le MEDIA KIT
+# (mediakit/<slug>/) depuis les données live Supabase et le rend en PDF paysage,
+# puis intègre le tout dans dist/ → le site + les media kits sortent ensemble.
+#
+# ⚠️ La production, c'est CETTE branche (main) uniquement. L'ancien site (branche
+# claude/agency-website-m3e282) ne doit PAS déployer — cf. CLAUDE.md.
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, claude/react-site]
+    branches: [main]
+  schedule:
+    # Toutes les heures à :17 → toute nouvelle créatrice ajoutée dans l'app
+    # obtient sa page media kit + son PDF automatiquement, sans intervention.
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,18 +25,54 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # 1) Site React → dist/
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm ci
       - run: npm run build
+
+      # 2) Media kit : pages live + intégration dans dist/, puis rendu PDF
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Générer les pages media kit (1 par créatrice, données live)
+        # continue-on-error : un hoquet Supabase ne doit jamais bloquer le site.
+        continue-on-error: true
+        run: python3 mediakit/_build_mediakits.py
+
+      - name: Intégrer le media kit dans le build (dist/mediakit/)
+        run: |
+          cp -r mediakit dist/mediakit
+          # Ne pas publier les scripts internes.
+          rm -f dist/mediakit/_build_mediakits.py dist/mediakit/_render_pdfs.py
+
+      - name: Rendre chaque media kit en PDF paysage 16:9 (Chrome headless, sert dist/)
+        # Chrome est préinstallé sur ubuntu-latest. continue-on-error + le repli
+        # window.print() côté page garantissent que rien ne bloque le déploiement.
+        continue-on-error: true
+        env:
+          SERVE_DIR: dist
+        run: python3 mediakit/_render_pdfs.py
+
+      # 3) Garde-fou : ne publier QUE le vrai site React (build valide), jamais
+      #    un ancien site statique/cinématique ni un build cassé (page blanche).
+      - name: Garde-fou — vérifier que le build React est valide
+        run: |
+          test -f dist/index.html || { echo "::error::dist/index.html manquant — build cassé."; exit 1; }
+          grep -q 'id="root"' dist/index.html || { echo "::error::dist/index.html n'est pas l'app React (id=\"root\" absent). Déploiement BLOQUÉ."; exit 1; }
+          if grep -qiE "<video" dist/index.html; then echo "::error::index.html contient <video> = ancien site cinématique. BLOQUÉ."; exit 1; fi
+          echo "OK — site React valide."
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
