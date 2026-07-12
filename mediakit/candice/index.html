@@ -108,7 +108,12 @@
     width: fit-content;
     padding-bottom: 4px;
     border-bottom: 2px solid var(--rose);
+    text-decoration: none;
+    transition: color .15s ease;
   }
+  a.hero-handle:hover { color: #fff; }
+  a.contact-link { text-decoration: none; transition: color .15s ease; }
+  a.contact-link:hover { color: #fff; }
   .hero-bio {
     max-width: 42ch;
     display: flex;
@@ -378,7 +383,7 @@
 
   /* ======================================================= PRINT / PDF */
   @media print {
-    @page { size: A4; margin: 0; }
+    @page { size: A4 landscape; margin: 0; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     body { background: #fff; }
     .kit { max-width: none; }
@@ -428,6 +433,7 @@
   var DEFAULT = {
     name: "Candice Maissa",
     handle: "candicemaissa",
+    platform: "instagram",
     slug: "candice",
     bio:
       "Candice est une créatrice lifestyle & blogging basée à Paris, étudiante à l'ESCP. Entre voyages, culture pop et contenus spontanés, elle partage un univers jeune, coloré et sans filtre.\n\nProfil idéal pour les marques lifestyle, mode et divertissement ciblant une audience féminine 18–25 ans, urbaine et connectée.",
@@ -492,6 +498,16 @@
   function monthFR() {
     try { var s = new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" }); return s; } catch (e) { return "juillet 2026"; }
   }
+  // URL du profil à partir du @handle + plateforme principale.
+  function profileUrl(handle, platform) {
+    var h = String(handle || "").replace(/^@/, "").trim();
+    var p = String(platform || "").toLowerCase();
+    if (p.indexOf("tiktok") >= 0) return "https://www.tiktok.com/@" + h;
+    if (p.indexOf("youtube") >= 0) return "https://youtube.com/@" + h;
+    if (p.indexOf("snap") >= 0) return "https://www.snapchat.com/add/" + h;
+    if (p === "x" || p.indexOf("twitter") >= 0) return "https://x.com/" + h;
+    return "https://instagram.com/" + h;
+  }
 
   // ---- Fusion données base > défaut -----------------------------------------
   function merge(def, row) {
@@ -501,6 +517,7 @@
     return {
       name: row.name || def.name,
       handle: String(mk.handle || row.handle || def.handle || "").replace(/^@/, ""),
+      platform: row.platform || def.platform,
       slug: mk.slug || def.slug,
       bio: has(mk.bio) ? mk.bio : def.bio,
       tags: arr(mk.tags) || def.tags,
@@ -559,7 +576,7 @@
     return '<section class="hero"><div class="hero-text" data-reveal>' +
       '<p class="eyebrow">Media Kit — <span class="js-month">' + monthFR() + "</span></p>" +
       '<h1 class="display hero-name">' + esc(first) + (rest ? "<br>" + esc(rest) : "") + "</h1>" +
-      '<span class="hero-handle">@' + esc(data.handle) + "</span>" +
+      '<a class="hero-handle" href="' + esc(profileUrl(data.handle, data.platform)) + '" target="_blank" rel="noreferrer">@' + esc(data.handle) + "</a>" +
       '<div class="hero-bio">' + bioP + "</div>" +
       '<div class="tags">' + tags + "</div></div>" +
       '<div class="hero-media">' + photoBox(data.photos && data.photos.hero, "Portrait principal<br>— ta photo ici —", true) + "</div></section>";
@@ -636,9 +653,9 @@
   function buildContact(data) {
     return '<section class="contact"><div class="contact-text" data-reveal>' +
       '<p class="eyebrow">( 05 ) — Contact</p><h2 class="display contact-title">Let\'s<br>Work !</h2>' +
-      '<div class="contact-block"><span class="k">Social Media</span><span class="v">@ttp.creators</span></div>' +
-      '<div class="contact-block"><span class="k">Mobile</span><span class="v tnum">07 66 25 98 03</span></div>' +
-      '<div class="contact-block"><span class="k">Email</span><span class="v">partnerships@ttpcreators.pro</span></div>' +
+      '<div class="contact-block"><span class="k">Social Media</span><a class="v contact-link" href="https://instagram.com/ttp.creators" target="_blank" rel="noreferrer">@ttp.creators</a></div>' +
+      '<div class="contact-block"><span class="k">Mobile</span><a class="v contact-link tnum" href="tel:+33766259803">07 66 25 98 03</a></div>' +
+      '<div class="contact-block"><span class="k">Email</span><a class="v contact-link" href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a></div>' +
       '<a class="send" href="mailto:partnerships@ttpcreators.pro?subject=' + encodeURIComponent("Collaboration avec " + data.name) + '">Envoyer</a></div>' +
       '<div class="contact-media hero-media">' + photoBox(data.photos && data.photos.contact, "Portrait secondaire<br>— ta photo ici —", false) + "</div>" +
       '<div class="footer"><div>TTP Creators — Talent management stratégique</div>' +
