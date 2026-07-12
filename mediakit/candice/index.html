@@ -383,17 +383,50 @@
 
   /* ======================================================= PRINT / PDF */
   @media print {
-    @page { size: A4 landscape; margin: 0; }
+    @page { size: A4 portrait; margin: 0; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    body { background: #fff; }
-    .kit { max-width: none; }
+    html, body { background: #fff; margin: 0; }
+    .kit { max-width: none; width: auto; }
     .pdf-btn, .progress { display: none !important; }
     [data-reveal] { opacity: 1 !important; transform: none !important; }
-    .hero, .contact { min-height: 100vh; break-inside: avoid; }
-    .sheet { break-inside: avoid; }
-    .hero, .sheet, .contact { break-after: page; }
-    .footer { break-after: auto; }
-    .tri, .plat-row, .stat, figure { break-inside: avoid; }
+
+    /* Une section = une page A4 portrait pleine (comme la plaquette). */
+    .hero, .sheet, .contact {
+      width: 210mm;
+      min-height: 297mm;
+      break-inside: avoid;
+      break-after: page;
+      box-sizing: border-box;
+    }
+    .contact { break-after: auto; }
+
+    /* hero & contact : grille 2 colonnes qui remplit la page */
+    .hero, .contact { display: grid; }
+    .hero-text, .contact-text { padding: 20mm 15mm; }
+    .hero-media, .contact-media { min-height: 0; }
+
+    /* feuilles blanches : contenu du haut, source rejetée en bas de page */
+    .sheet { display: flex; flex-direction: column; padding: 18mm 15mm; }
+    .aud-foot { margin-top: auto; }
+
+    /* Tailles FIXES pour l'impression (le vw n'a pas de sens sur papier). */
+    .hero-name { font-size: 58pt; }
+    .contact-title { font-size: 50pt; }
+    .sec-title { font-size: 32pt; }
+    .plat-name { font-size: 21pt; }
+    .big-stat { font-size: 23pt; }
+    .tri-num, .plat-row-val { font-size: 17pt; }
+    .hero-handle { font-size: 11pt; }
+    .hero-bio p, .plat-intro { font-size: 10.5pt; line-height: 1.6; }
+    .eyebrow, .tag, .col-label, .bar-name, .bar-val, .stat-cap, .plat-row-label,
+    .plat-kicker, .tri-cap, .legend-item, .sec-tag, .aud-foot, .photo-note, .photo-badge,
+    .contact-block .k, .contact-block .v, .footer div, .logo-cell span { font-size: 9pt; }
+
+    /* Ne pas couper ces blocs ; tailler images/graphes pour tenir sur la page. */
+    .tri, .plat-row, .bar-row, .legend-item, figure { break-inside: avoid; }
+    .donut { width: 46mm; }
+    .phone { width: 58mm; }
+    .send { display: none; }            /* le bouton "Envoyer" n'a pas de sens sur papier */
   }
 </style>
 </head>
