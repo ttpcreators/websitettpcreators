@@ -385,48 +385,50 @@
   @media print {
     @page { size: A4 portrait; margin: 0; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    html, body { background: #fff; margin: 0; }
-    .kit { max-width: none; width: auto; }
+    html, body { background: #fff; margin: 0; width: 100%; }
+    .kit { max-width: none; width: 100%; }
     .pdf-btn, .progress { display: none !important; }
     [data-reveal] { opacity: 1 !important; transform: none !important; }
 
-    /* Une section = une page A4 portrait pleine (comme la plaquette). */
+    /* Forcer les mises en page DESKTOP : la largeur A4 (~793px) déclenche sinon
+       les breakpoints mobile (< 860px) → tout s'empile et se décale. */
+    .hero, .contact { grid-template-columns: 1.05fr 1fr !important; }
+    .aud-grid { grid-template-columns: 1fr 1.1fr 1fr !important; }
+    .plat-grid { grid-template-columns: 1fr 1fr !important; }
+    .plat-media { order: 0 !important; }
+    .logo-grid { grid-template-columns: repeat(5, 1fr) !important; }
+    .mid { border-left: 1px solid var(--line) !important; border-right: 1px solid var(--line) !important;
+           border-top: 0 !important; border-bottom: 0 !important; padding: 0 6mm !important; }
+
+    /* Une section = une page A4 pleine. overflow:hidden → jamais de débordement. */
     .hero, .sheet, .contact {
-      width: 210mm;
-      min-height: 297mm;
-      break-inside: avoid;
-      break-after: page;
-      box-sizing: border-box;
+      width: 100%; height: 297mm; break-inside: avoid; break-after: page;
+      box-sizing: border-box; overflow: hidden;
     }
     .contact { break-after: auto; }
-
-    /* hero & contact : grille 2 colonnes qui remplit la page */
-    .hero, .contact { display: grid; }
-    .hero-text, .contact-text { padding: 20mm 15mm; }
+    .hero-text, .contact-text { padding: 16mm 14mm; }
     .hero-media, .contact-media { min-height: 0; }
-
-    /* feuilles blanches : contenu du haut, source rejetée en bas de page */
-    .sheet { display: flex; flex-direction: column; padding: 18mm 15mm; }
+    .sheet { display: flex; flex-direction: column; justify-content: flex-start; padding: 16mm 14mm; }
     .aud-foot { margin-top: auto; }
+    .plat-grid, .aud-grid { margin-top: 8mm; }
 
-    /* Tailles FIXES pour l'impression (le vw n'a pas de sens sur papier). */
-    .hero-name { font-size: 58pt; }
-    .contact-title { font-size: 50pt; }
-    .sec-title { font-size: 32pt; }
-    .plat-name { font-size: 21pt; }
-    .big-stat { font-size: 23pt; }
-    .tri-num, .plat-row-val { font-size: 17pt; }
+    /* Tailles FIXES (le vw n'a pas de sens sur papier). */
+    .hero-name { font-size: 52pt; }
+    .contact-title { font-size: 44pt; }
+    .sec-title { font-size: 29pt; }
+    .plat-name { font-size: 19pt; }
+    .big-stat { font-size: 21pt; }
+    .tri-num, .plat-row-val { font-size: 15pt; }
     .hero-handle { font-size: 11pt; }
-    .hero-bio p, .plat-intro { font-size: 10.5pt; line-height: 1.6; }
+    .hero-bio p, .plat-intro { font-size: 10pt; line-height: 1.55; }
     .eyebrow, .tag, .col-label, .bar-name, .bar-val, .stat-cap, .plat-row-label,
     .plat-kicker, .tri-cap, .legend-item, .sec-tag, .aud-foot, .photo-note, .photo-badge,
-    .contact-block .k, .contact-block .v, .footer div, .logo-cell span { font-size: 9pt; }
+    .contact-block .k, .contact-block .v, .footer div, .logo-cell span { font-size: 8.5pt; }
 
-    /* Ne pas couper ces blocs ; tailler images/graphes pour tenir sur la page. */
     .tri, .plat-row, .bar-row, .legend-item, figure { break-inside: avoid; }
-    .donut { width: 46mm; }
-    .phone { width: 58mm; }
-    .send { display: none; }            /* le bouton "Envoyer" n'a pas de sens sur papier */
+    .donut { width: 42mm; }
+    .phone { width: 60mm; }
+    .send { display: none; }
   }
 </style>
 </head>
