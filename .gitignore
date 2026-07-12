@@ -9,3 +9,6 @@ Thumbs.db
 
 # Screenshots de preview
 preview-*.png
+
+# Media kit PDFs — générés en CI (Chrome headless) à chaque déploiement, jamais versionnés
+mediakit/*/media-kit.pdf

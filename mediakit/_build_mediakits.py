@@ -76,14 +76,14 @@ def shell(c, slug):
 </head>
 <body>
 <div class="kit" id="kit"></div>
-<button class="pdf-btn" onclick="window.print()" aria-label="Télécharger le media kit en PDF">
+<a class="pdf-btn" id="dl-pdf" href="media-kit.pdf" download="Media Kit - {title}.pdf" aria-label="Télécharger le media kit en PDF">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
     <polyline points="7 10 12 15 17 10"></polyline>
     <line x1="12" y1="15" x2="12" y2="3"></line>
   </svg>
   Télécharger en PDF
-</button>
+</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
 <script>window.MK = {baked};</script>
 <script src="../_assets/mediakit.js"></script>

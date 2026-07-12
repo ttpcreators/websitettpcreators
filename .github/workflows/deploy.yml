@@ -46,6 +46,13 @@ jobs:
         continue-on-error: true
         run: python3 mediakit/_build_mediakits.py
 
+      - name: Rendre chaque media kit en PDF paysage 16:9 (Chrome headless)
+        # Génère mediakit/<slug>/media-kit.pdf (téléchargement direct 1 clic).
+        # Chrome est préinstallé sur ubuntu-latest. continue-on-error + le repli
+        # window.print() côté page garantissent que rien ne bloque le déploiement.
+        continue-on-error: true
+        run: python3 mediakit/_render_pdfs.py
+
       - name: Configurer Pages (active Pages si besoin)
         uses: actions/configure-pages@v5
         with:

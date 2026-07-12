@@ -241,6 +241,27 @@
   paint(normalize({ name: baked.name, handle: baked.handle, platform: baked.platform, photo_url: baked.photo_url, mediakit: null }), true);
   onScroll();
 
+  // 1b) Bouton PDF : lien direct vers le PDF paysage pré-rendu (media-kit.pdf,
+  // généré en CI par Chrome headless → 1 clic, aucun réglage). Repli robuste :
+  // si le PDF n'est pas encore là (nouvelle créatrice avant le rendu horaire, ou
+  // rendu en échec), le bouton bascule sur l'impression navigateur.
+  (function () {
+    var btn = document.getElementById("dl-pdf");
+    if (!btn) return;
+    var href = btn.getAttribute("href");
+    try {
+      fetch(href, { method: "HEAD" })
+        .then(function (r) { if (!r.ok) throw 0; })
+        .catch(function () {
+          btn.removeAttribute("href");
+          btn.removeAttribute("download");
+          btn.setAttribute("role", "button");
+          btn.style.cursor = "pointer";
+          btn.addEventListener("click", function () { window.print(); });
+        });
+    } catch (e) {}
+  })();
+
   // 2) Contenu à jour : on lit la ligne par NOM (toujours présent).
   var name = baked.name || "";
   if (name) {
