@@ -1,16 +1,12 @@
 name: Déployer sur GitHub Pages
 
-# Publie le site statique à chaque push sur la branche de travail,
-# et régénère les media kits toutes les heures pour publier
-# automatiquement la page de toute nouvelle créatrice ajoutée dans l'app.
+# ⚠️ BRANCHE ARCHIVE (ancien site). NE DÉPLOIE PLUS.
+# La PRODUCTION est la branche `main` (site React + media kit intégré).
+# Cette branche a été retirée des branches autorisées de l'environnement
+# github-pages (elle avait par erreur redéployé l'ancien site par-dessus le
+# nouveau). Workflow neutralisé : déclenchement MANUEL uniquement (plus de push
+# ni de cron automatiques) → ne peut plus rien republier tout seul.
 on:
-  push:
-    branches:
-      - claude/agency-website-m3e282
-      - main
-  schedule:
-    # Toutes les heures à :17 (créneau peu congestionné → plus fiable que :00).
-    - cron: "17 * * * *"
   workflow_dispatch:
 
 # Permissions requises par le déploiement Pages
