@@ -56,15 +56,26 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
 
 ## Déploiement (GitHub Pages + Actions)
 
-- Repo : `ttpcreators/websitettpcreators`. Branche de production : voir la policy de
-  l'environnement `github-pages` (seules les branches whitelistées peuvent déployer).
-- Workflow `.github/workflows/deploy.yml` : push → build → deploy. Échec « Deployment failed,
-  try again later » = transitoire GitHub → `gh run rerun <id> --failed`.
-- ⚠️ La branche `claude/agency-website-m3e282` = ARCHIVE de l'ancien site (vanilla JS).
-  Elle a été RETIRÉE des branches autorisées après qu'un push Dependabot a redéployé l'ancien
-  site par-dessus le nouveau (incident 2026-07-05). Ne pas la réautoriser, ne pas la supprimer.
+- Repo : `ttpcreators/websitettpcreators`. **PRODUCTION = branche `main` UNIQUEMENT.**
+  L'environnement `github-pages` n'autorise plus QUE `main` (les policies `claude/react-site`
+  et `claude/agency-website-m3e282` ont été supprimées le 2026-07-13). Un seul point de vérité.
+- Workflow `.github/workflows/deploy.yml` (sur main) : `npm ci && npm run build` (React → `dist/`)
+  PUIS génération du **media kit** (`python3 mediakit/_build_mediakits.py`, données live Supabase)
+  → `cp -r mediakit dist/mediakit` → rendu **PDF paysage** (`SERVE_DIR=dist python3
+  mediakit/_render_pdfs.py`, Chrome headless) → garde-fou (build React valide, pas de `<video>`)
+  → upload `dist/`. Le site + les media kits partent ENSEMBLE. Cron horaire `:17` → toute
+  nouvelle créatrice ajoutée dans l'app obtient sa page `/mediakit/<slug>/` + son PDF toute seule.
+  Échec « Deployment failed, try again later » = transitoire GitHub → `gh run rerun <id> --failed`.
+- ⚠️ La branche `claude/agency-website-m3e282` = ARCHIVE de l'ancien site (vanilla JS + media kit
+  vanilla). En juil. elle avait été ré-autorisée puis avait redéployé l'ancien site par-dessus le
+  vrai site React (régression corrigée le 2026-07-13). Elle est désormais **retirée des branches
+  autorisées ET son workflow est neutralisé** (`on: workflow_dispatch` seul). NE PAS la
+  réautoriser, NE PAS la supprimer, NE PAS déployer depuis elle.
 - ⚠️ NE PAS désactiver le workflow via l'API Actions : l'entité (par chemin de fichier) est
   partagée entre branches — ça tuerait aussi les déploiements de production.
+- **Media kit** : tout vit dans `mediakit/` (moteur `mediakit.js` générique, `_build_mediakits.py`
+  = 1 shell/créatrice depuis la vue anon `public_mediakit`, `_render_pdfs.py` = PDF 16:9). Les PDF
+  sont gitignorés (régénérés en CI). Détails : la doc media kit côté app + la vue `public_mediakit`.
 - GitHub Pages est **sensible à la casse** des noms de fichiers (et macOS non) : renommage de
   casse ⇒ `git mv -f` obligatoire. Les uploads web des fondateurs arrivent avec des noms
   arbitraires (`IMG_1234.jpg`, majuscules) → renommer/compresser (`sips`) puis commit.
