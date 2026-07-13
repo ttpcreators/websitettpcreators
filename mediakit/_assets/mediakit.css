@@ -433,7 +433,9 @@
     .stat-cap { margin-top: 2mm !important; }
     .donut { width: 44mm !important; margin: 3mm auto 0 !important; }
     .legend { gap: 2mm !important; margin-top: 4mm !important; }
-    .phone { width: 58mm !important; }
+    /* Pas d'ombre à l'impression : le halo gris derrière le mockup n'est pas beau.
+       Le téléphone repose sur du blanc pur. */
+    .phone { width: 58mm !important; box-shadow: none !important; }
     .send { display: none; }
 
     /* Marques : cartes encadrées centrées, adaptatif (2 → N logos) — plus de
