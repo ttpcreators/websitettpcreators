@@ -280,7 +280,12 @@
   (function () {
     var btn = document.getElementById("dl-pdf");
     if (!btn) return;
-    var href = btn.getAttribute("href");
+    // Le PDF a un nom FIXE (media-kit.pdf) → un edge CDN peut servir une version périmée
+    // (ex. PDF tronqué à 2 pages avant un correctif). On force une URL UNIQUE par
+    // chargement de page → toujours la dernière version depuis l'origine, jamais un cache
+    // périmé. Le nom du fichier téléchargé reste propre (attribut `download`).
+    var href = "media-kit.pdf?t=" + Date.now();
+    btn.setAttribute("href", href);
     try {
       fetch(href, { method: "HEAD" })
         .then(function (r) { if (!r.ok) throw 0; })
