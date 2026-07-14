@@ -4,4 +4,4 @@ dist
 *.local
 
 # Media kit PDFs — générés en CI (Chrome headless), jamais versionnés
-mediakit/*/media-kit.pdf
+mediakit/*/media-kit*.pdf

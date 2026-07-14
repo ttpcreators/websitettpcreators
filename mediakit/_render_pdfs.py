@@ -32,6 +32,9 @@ MK = os.path.join(BASE, "mediakit")                        # dossier media kit s
 PORT = 8799
 CHROME = os.environ.get("CHROME_BIN") or "google-chrome"
 MIN_BYTES = 20000   # un PDF valide de 1+ slide pèse largement plus
+# Nom de PDF versionné (media-kit-<build>.pdf) → URL unique par déploiement, jamais servie
+# périmée par un cache CDN. DOIT correspondre au BUILD de _build_mediakits.py (même job CI).
+BUILD = (os.environ.get("GITHUB_SHA") or "dev")[:12]
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -54,7 +57,7 @@ def slugs():
 
 
 def render(slug):
-    out = os.path.join(MK, slug, "media-kit.pdf")
+    out = os.path.join(MK, slug, "media-kit-%s.pdf" % BUILD)
     url = "http://127.0.0.1:%d/mediakit/%s/" % (PORT, slug)
     cmd = [
         CHROME, "--headless", "--disable-gpu", "--no-sandbox",

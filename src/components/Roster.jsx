@@ -4,7 +4,7 @@ import RosterCarousel from './RosterCarousel.jsx'
 import { Tooltip } from './TooltipCard.jsx'
 import { ROSTER_FALLBACK, asset } from '../data.js'
 import { fetchRoster } from '../lib/roster.js'
-import { titleCase } from '../lib/format.js'
+import { titleCase, displayName } from '../lib/format.js'
 
 // Mini-carte d'univers : avatars des créatrices de la niche + descriptif
 function UniversCard({ creators, niche, desc }) {
@@ -39,12 +39,12 @@ export default function Roster() {
   }, [])
 
   const creators = useMemo(() => {
-    if (!rows) return ROSTER_FALLBACK.map((c) => ({ ...c, photo: asset(c.photo) }))
+    if (!rows) return ROSTER_FALLBACK.map((c) => ({ ...c, name: displayName(c.name), photo: asset(c.photo) }))
     return rows.map((r) => {
-      const name = titleCase(r.name)
-      const local = ROSTER_FALLBACK.find((f) => f.name.toLowerCase() === name.toLowerCase())
+      const canonical = titleCase(r.name) // nom réel → sert à retrouver la fiche fallback
+      const local = ROSTER_FALLBACK.find((f) => f.name.toLowerCase() === canonical.toLowerCase())
       return {
-        name,
+        name: displayName(r.name), // nom AFFICHÉ (avec override éventuel, ex. Lucie Bots)
         handle: r.handle || local?.handle || '',
         niche: r.niche || local?.niche || '',
         photo: r.photo_url || (local ? asset(local.photo) : null),

@@ -25,6 +25,11 @@ SB_KEY = ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6
 
 ROOT = os.path.dirname(os.path.abspath(__file__))         # …/mediakit
 OG_FALLBACK = "https://ttpcreators.pro/og-image.png"
+# Version du build → nom de PDF versionné (media-kit-<build>.pdf). URL unique à chaque
+# déploiement ⇒ aucun edge CDN / proxy ne peut servir un PDF périmé (le query string, lui,
+# est ignoré par Fastly). En CI = SHA du commit ; en local = "dev". DOIT correspondre à
+# la même valeur dans _render_pdfs.py (tous deux lisent GITHUB_SHA dans le même job CI).
+BUILD = (os.environ.get("GITHUB_SHA") or "dev")[:12]
 
 
 def slugify(s):
@@ -80,7 +85,7 @@ def shell(c, slug):
 </head>
 <body>
 <div class="kit" id="kit"></div>
-<a class="pdf-btn" id="dl-pdf" href="media-kit.pdf" download="Media Kit - {title}.pdf" aria-label="Télécharger le media kit en PDF">
+<a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="Media Kit - {title}.pdf" aria-label="Télécharger le media kit en PDF">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
     <polyline points="7 10 12 15 17 10"></polyline>
@@ -94,7 +99,7 @@ def shell(c, slug):
 </body>
 </html>
 """.format(title=esc(name.title() if name.isupper() else name), desc=esc(desc),
-           canonical=canonical, og_img=esc(og_img), baked=baked)
+           canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 
 def main():
