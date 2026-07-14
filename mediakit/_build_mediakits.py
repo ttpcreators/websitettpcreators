@@ -51,7 +51,11 @@ def shell(c, slug):
     platform = c.get("platform") or "instagram"
     photo = c.get("photo_url") or None
     niche = c.get("niche") or ""
-    baked = json.dumps({"name": name, "handle": handle, "platform": platform, "photo_url": photo}, ensure_ascii=False)
+    # On bake la donnée COMPLÈTE (y compris le blob `mediakit` : audience, plateformes,
+    # formats, marques, photos) → le rendu PDF en CI est DÉTERMINISTE et n'attend plus un
+    # fetch Supabase live (qui pouvait échouer → PDF tronqué à 2 pages, ex. Léna). Le fetch
+    # live reste ensuite comme rafraîchissement pour la page web.
+    baked = json.dumps({"name": name, "handle": handle, "platform": platform, "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
     canonical = "https://ttpcreators.pro/mediakit/%s/" % slug
     desc = "Media kit de %s%s — audience, statistiques et collaborations. TTP Creators." % (
         name.title() if name.isupper() else name, (" · " + niche) if niche else "")

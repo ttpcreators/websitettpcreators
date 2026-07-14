@@ -266,9 +266,11 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
 
-  // 1) Rendu immédiat depuis les champs bakés (nom, handle, photo) → hero visible tout de suite.
+  // 1) Rendu immédiat depuis la donnée COMPLÈTE bakée (window.MK inclut désormais le blob
+  //    `mediakit`) → TOUTES les sections sont visibles tout de suite, sans attendre le
+  //    réseau. C'est ce qui rend le PDF (rendu en CI) déterministe et jamais tronqué.
   var baked = window.MK || {};
-  paint(normalize({ name: baked.name, handle: baked.handle, platform: baked.platform, photo_url: baked.photo_url, mediakit: null }), true);
+  paint(normalize(baked), true);
   onScroll();
 
   // 1b) Bouton PDF : lien direct vers le PDF paysage pré-rendu (media-kit.pdf,
