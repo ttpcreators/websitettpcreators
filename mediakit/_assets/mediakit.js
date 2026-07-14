@@ -96,6 +96,24 @@
         '<span class="bar-val tnum">' + p + "%</span></div>";
     }).join("");
   }
+
+  // Genre = une seule barre scindée Femmes | Hommes (plus lisible que 2 barres jumelles).
+  function genderSplit(gf, gh) {
+    var f = num(gf), h = num(gh);
+    return '<div class="gsplit">' +
+      '<div class="gsplit-bar">' +
+      '<span class="gseg gseg-f" style="width:' + f + '%"></span>' +
+      '<span class="gseg gseg-h" style="width:' + h + '%"></span></div>' +
+      '<div class="gsplit-legend">' +
+      '<span class="gl"><span class="gdot gdot-f"></span>Femmes <b class="tnum">' + f + '%</b></span>' +
+      '<span class="gl"><span class="gdot gdot-h"></span>Hommes <b class="tnum">' + h + '%</b></span>' +
+      "</div></div>";
+  }
+
+  // Groupe démographique = petit label + contenu (barres ou split).
+  function audGroup(label, inner) {
+    return '<div class="aud-group"><p class="col-label">' + label + "</p>" + inner + "</div>";
+  }
   function donutHTML(formats) {
     var C = 502.65, off = 0, circles = '<circle cx="100" cy="100" r="80" fill="none" stroke="var(--track)" stroke-width="30"></circle>';
     formats.forEach(function (f, i) {
@@ -137,27 +155,39 @@
     var hasGender = has(gf) || has(gh);
     if (!(a.age.length || a.formats.length || a.pays.length || hasGender)) return "";
     var main = mainPlatform(data);
-    var communaute = barsHTML(a.age, null) +
-      (hasGender ? barsHTML([{ label: "Femmes", pct: gf }, { label: "Hommes", pct: gh }], null) : "");
-    var bestFmt = a.formats[0] || null;
-    var mid = (bestFmt ? '<div><div class="big-stat tnum">' + num(bestFmt.pct) + '%</div><div class="stat-cap">Meilleur format — ' + esc(bestFmt.label) + "</div></div>" : "") +
-      (a.formats.length ? donutHTML(a.formats) : "");
-    var right = [
+
+    // ── Colonne GAUCHE : démographie (âge / genre / localisation), barres proportionnelles.
+    var demo = "";
+    if (a.age.length) demo += audGroup("Âge", '<div class="bars">' + barsHTML(a.age, null) + "</div>");
+    if (hasGender) demo += audGroup("Genre", genderSplit(gf, gh));
+    if (a.pays.length) demo += audGroup("Localisation", '<div class="bars">' + barsHTML(a.pays, "name") + "</div>");
+
+    // ── Colonne DROITE : performance (donut des formats + KPI héro).
+    var perf = "";
+    if (a.formats.length) {
+      var best = a.formats[0];
+      perf += '<div class="perf-formats"><p class="col-label">Formats · 30 j</p>' + donutHTML(a.formats) +
+        (best ? '<p class="perf-best">Meilleur format — <b>' + esc(best.label) + "</b></p>" : "") + "</div>";
+    }
+    var kpis = [
       [main.er, "Taux d'engagement " + (PLAT_LABEL[main.key] || "")],
-      [main.impressions30j, "Impressions sur les 30 derniers jours"],
+      [main.impressions30j, "Impressions · 30 j"],
       [main.nonFollowersPct, "Non-followers touchés"],
-    ].filter(function (r) { return has(r[0]); }).map(function (r) {
-      return '<div class="rstat"><div class="big-stat tnum">' + esc(r[0]) + '</div><div class="stat-cap">' + esc(r[1]) + "</div></div>";
-    }).join("");
+    ].filter(function (r) { return has(r[0]); });
+    if (kpis.length) {
+      perf += '<div class="perf-kpis">' + kpis.map(function (r, i) {
+        return '<div class="kpi' + (i === 0 ? " kpi-hero" : "") + '"><div class="big-stat tnum">' + esc(r[0]) +
+          '</div><div class="stat-cap">' + esc(r[1]) + "</div></div>";
+      }).join("") + "</div>";
+    }
+
     var srcLabel = PLAT_LABEL[main.key] || "Instagram";
     return '<section class="sheet audience"><div class="sec-head" data-reveal>' +
       '<p class="eyebrow">( 02 ) — Communauté</p><div class="sec-titlerow">' +
       '<h2 class="display sec-title">Audience</h2><hr class="rule"><span class="sec-tag">' + esc(firstName(data.name)) + " — KPI's</span></div></div>" +
       '<div class="aud-grid" data-reveal>' +
-      '<div class="aud-col">' + (a.age.length || hasGender ? '<div><p class="col-label">Communauté</p><div class="bars">' + communaute + "</div></div>" : "") +
-      (a.pays.length ? '<div><p class="col-label">Localisation</p><div class="bars">' + barsHTML(a.pays, "name") + "</div></div>" : "") + "</div>" +
-      '<div class="aud-col mid">' + mid + "</div>" +
-      '<div class="aud-col">' + right + "</div></div>" +
+      '<div class="aud-col aud-demo">' + demo + "</div>" +
+      '<div class="aud-col aud-perf">' + perf + "</div></div>" +
       '<p class="aud-foot">Source — Analytics ' + esc(srcLabel) + ' · 30 derniers jours · <span class="js-month">' + monthFR() + "</span></p></section>";
   }
 

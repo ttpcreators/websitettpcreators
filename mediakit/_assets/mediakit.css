@@ -177,37 +177,62 @@
   }
 
   /* ---- Section 2: audience ---- */
+  /* AUDIENCE — 2 colonnes : démographie (gauche) · performance (droite). */
   .aud-grid {
     display: grid;
-    grid-template-columns: 1fr 1.15fr 1fr;
-    gap: clamp(1.6rem, 3vw, 3rem);
-    align-items: start;
+    grid-template-columns: 1.15fr .85fr;
+    gap: clamp(1.8rem, 4vw, 3.4rem);
+    align-items: center;
   }
-  .aud-col { display: flex; flex-direction: column; gap: 1.5rem; }
+  .aud-col { display: flex; flex-direction: column; min-width: 0; }
+  .aud-demo { gap: 1.6rem; }
+  .aud-perf { gap: 1.6rem; border-left: 1px solid var(--line); padding-left: clamp(1.4rem, 3vw, 3rem); align-items: center; }
+  .aud-group { display: flex; flex-direction: column; gap: 1.15rem; }
+  .aud-demo { gap: 2.1rem; }
+  /* Label de section (Âge / Genre / Localisation / Formats) = mini-titre bordeaux,
+     DÉTACHÉ de ses données par un filet + de l'air (avant il était collé à la 1re ligne). */
   .col-label {
-    font-size: .7rem;
-    letter-spacing: .24em;
-    text-transform: uppercase;
-    color: var(--ink);
-    font-weight: 700;
-    margin: 0 0 .2rem;
+    font-size: .74rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--wine); font-weight: 700; margin: 0;
+    padding-bottom: .6rem; border-bottom: 1px solid var(--line);
   }
-  .bars { display: flex; flex-direction: column; gap: .95rem; }
-  .bar-row { display: grid; grid-template-columns: 1fr 84px auto; align-items: center; gap: .7rem; }
-  .bar-name { font-size: .8rem; color: var(--ink); }
-  .bar-track { height: 7px; background: var(--track); border-radius: 999px; overflow: hidden; }
-  .bar-fill { height: 100%; background: var(--wine); border-radius: 999px; }
-  .bar-val { font-size: .82rem; font-weight: 700; color: var(--ink); text-align: right; }
 
-  .mid { border-left: 1px solid var(--line); border-right: 1px solid var(--line); padding: 0 clamp(1rem, 2.4vw, 2.4rem); align-items: center; text-align: center; }
-  .big-stat { font-family: var(--display); font-size: clamp(2.6rem, 6vw, 4.2rem); color: var(--wine); line-height: 1; }
+  /* Barres : nom fixe · piste FLEXIBLE (longue → proportions lisibles) · valeur. */
+  .bars { display: flex; flex-direction: column; gap: .72rem; }
+  .bar-row { display: grid; grid-template-columns: 5.4rem 1fr 2.6rem; align-items: center; gap: .8rem; }
+  .bar-name { font-size: .82rem; color: var(--ink); white-space: nowrap; }
+  .bar-track { display: block; height: 9px; background: var(--track); border-radius: 999px; overflow: hidden; }
+  /* display:block OBLIGATOIRE : sans lui, le <span> reste inline et son width:X% est
+     ignoré → la barre ne montrait aucun remplissage proportionnel (bug d'origine). */
+  .bar-fill { display: block; height: 100%; background: var(--wine); border-radius: 999px; min-width: 3px; }
+  .bar-val { font-size: .82rem; font-weight: 700; color: var(--wine); text-align: right; }
+
+  /* Genre : barre scindée Femmes | Hommes. */
+  .gsplit { display: flex; flex-direction: column; gap: .6rem; }
+  .gsplit-bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--track); }
+  .gseg { height: 100%; }
+  .gseg-f { background: var(--wine); }
+  .gseg-h { background: #bfa2a6; }
+  .gsplit-legend { display: flex; justify-content: space-between; gap: 1rem; font-size: .8rem; color: var(--ink); }
+  .gl { display: flex; align-items: center; gap: .45rem; }
+  .gdot { width: 9px; height: 9px; border-radius: 999px; flex: none; }
+  .gdot-f { background: var(--wine); }
+  .gdot-h { background: #bfa2a6; }
+
+  /* Performance : donut des formats + KPI héro. */
+  .perf-formats { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
+  .perf-best { font-size: .8rem; color: var(--ink); text-align: center; margin: .35rem 0 0; }
+  .perf-best b { color: var(--wine); font-weight: 700; }
+  .big-stat { font-family: var(--display); font-size: clamp(2.4rem, 5vw, 3.4rem); color: var(--wine); line-height: 1; }
   .stat-cap { font-size: .82rem; color: var(--ink); margin-top: .35rem; }
-  .donut { width: min(230px, 62vw); height: auto; margin: .4rem auto 0; display: block; }
-  .legend { display: flex; flex-direction: column; gap: .55rem; align-items: flex-start; margin: .4rem auto 0; width: fit-content; }
-  .legend-item { display: flex; align-items: center; gap: .6rem; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+  .donut { width: min(190px, 52vw); height: auto; margin: .2rem auto 0; display: block; }
+  .legend { display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; margin: .55rem auto 0; width: fit-content; }
+  .legend-item { display: flex; align-items: center; gap: .6rem; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
   .swatch { width: 11px; height: 11px; border-radius: 2px; flex: none; }
 
-  .rstat { display: flex; flex-direction: column; gap: .1rem; }
+  .perf-kpis { display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center; }
+  .kpi { display: flex; flex-direction: column; gap: .1rem; }
+  .kpi-hero .big-stat { font-size: clamp(3rem, 7vw, 4.4rem); }
   .aud-foot { margin-top: clamp(2rem, 4vw, 3rem); padding-top: 1.1rem; border-top: 1px solid var(--line);
     font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
 
@@ -325,7 +350,7 @@
     .hero-media { min-height: 78vh; }
     .contact .contact-media { min-height: 62vh; position: relative; }
     .aud-grid { grid-template-columns: 1fr; }
-    .mid { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1.8rem 0; }
+    .aud-perf { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; padding-top: 1.8rem; }
     .plat-grid { grid-template-columns: 1fr; }
     .plat-media { order: -1; }
     .logo-grid { grid-template-columns: repeat(2, 1fr); }
@@ -336,7 +361,7 @@
   }
   @media (max-width: 460px) {
     .plat-tris { grid-template-columns: 1fr; }
-    .bar-row { grid-template-columns: 1fr 60px auto; }
+    .bar-row { grid-template-columns: 4.4rem 1fr 2.4rem; }
   }
 
   /* ======================================================= WEB / MOTION */
@@ -381,12 +406,11 @@
     /* Forcer les grilles DESKTOP (la largeur diapo déclencherait sinon les
        breakpoints mobile < 860px → tout s'empile). */
     .hero, .contact { grid-template-columns: 1.02fr 1fr !important; }
-    .aud-grid { grid-template-columns: 1fr 1.15fr 1fr !important; align-items: center !important; margin: 0 !important; }
+    .aud-grid { grid-template-columns: 1.18fr .82fr !important; align-items: center !important; margin: 0 !important; }
     .plat-grid { grid-template-columns: 1.05fr 1fr !important; align-items: center !important; margin: 0 !important; }
     .plat-media { order: 0 !important; }
     .logo-grid { grid-template-columns: repeat(5, 1fr) !important; }
-    .mid { border-left: 1px solid var(--line) !important; border-right: 1px solid var(--line) !important;
-           border-top: 0 !important; border-bottom: 0 !important; padding: 0 8mm !important; }
+    .aud-perf { border-left: 1px solid var(--line) !important; padding-left: 12mm !important; align-items: center !important; }
 
     /* Une section = une diapo 16:9 pleine. overflow:hidden → jamais de débordement. */
     .hero, .sheet, .contact {
@@ -403,6 +427,9 @@
     .sec-head { margin-bottom: 9mm !important; gap: 3mm !important; }
     .sec-titlerow { gap: 8mm !important; }
     .aud-col { gap: 7mm !important; }
+    .aud-demo { gap: 11mm !important; }
+    .aud-perf { gap: 6mm !important; }
+    .aud-group { gap: 4.5mm !important; }
     .aud-foot { margin-top: 9mm !important; padding-top: 4mm !important; }
     .plat-intro { margin-bottom: 7mm !important; }
     .plat-tris { margin-bottom: 7mm !important; gap: 6mm !important; }
@@ -412,27 +439,35 @@
     .contact-title { font-size: 50pt; }
     .sec-title { font-size: 33pt; }
     .plat-name { font-size: 22pt; margin: 3mm 0 !important; }
-    .big-stat { font-size: 28pt; }
+    .big-stat { font-size: 24pt; }
+    .kpi-hero .big-stat { font-size: 34pt; }
     .tri-num, .plat-row-val { font-size: 19pt; }
     .hero-handle { font-size: 12pt; }
     .contact-block .v { font-size: 12pt; }
     .hero-bio p, .plat-intro { font-size: 10.5pt; line-height: 1.6; }
-    .bar-name, .bar-val, .stat-cap, .tri-cap { font-size: 9pt; }
-    .col-label, .plat-row-label, .plat-kicker, .legend-item, .sec-tag,
+    .bar-name, .bar-val, .stat-cap, .tri-cap, .gsplit-legend, .perf-best { font-size: 9pt; }
+    .plat-row-label, .plat-kicker, .legend-item, .sec-tag,
     .eyebrow, .tag, .aud-foot, .photo-note, .photo-badge,
     .contact-block .k, .footer div, .logo-cell span { font-size: 8pt; }
+    /* Labels de section = mini-titres bordeaux, plus affirmés que les autres labels. */
+    .col-label { font-size: 8.5pt !important; color: var(--wine) !important; letter-spacing: .18em !important;
+                 padding-bottom: 2.6mm !important; margin-bottom: 0 !important; }
 
     /* Réglages fins. */
     .tri, .plat-row, .bar-row, .legend-item, figure { break-inside: avoid; }
-    .bars { gap: 4mm !important; }
-    .bar-row { padding: 0 !important; grid-template-columns: 1fr 30mm auto !important; }
-    .bar-track { height: 2.4mm !important; }
+    .bars { gap: 3.4mm !important; }
+    /* piste FLEXIBLE (1fr) → barres longues, proportions enfin lisibles */
+    .bar-row { padding: 0 !important; grid-template-columns: 20mm 1fr 9mm !important; gap: 3mm !important; }
+    .bar-track { height: 3mm !important; }
+    .gsplit-bar { height: 3.8mm !important; }
+    .gsplit { gap: 2.5mm !important; }
     .tri { padding-top: 3mm !important; }
     .tri-cap { margin-top: 2mm !important; }
     .plat-row { padding: 3mm 0 !important; }
     .stat-cap { margin-top: 2mm !important; }
-    .donut { width: 44mm !important; margin: 3mm auto 0 !important; }
-    .legend { gap: 2mm !important; margin-top: 4mm !important; }
+    .donut { width: 40mm !important; margin: 2mm auto 0 !important; }
+    .legend { gap: 2mm !important; margin-top: 3mm !important; }
+    .perf-kpis { gap: 5mm !important; margin-top: 2mm !important; }
     /* Pas d'ombre à l'impression : le halo gris derrière le mockup n'est pas beau.
        Le téléphone repose sur du blanc pur. */
     .phone { width: 58mm !important; box-shadow: none !important; }
