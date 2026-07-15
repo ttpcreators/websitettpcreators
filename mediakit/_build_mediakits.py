@@ -52,6 +52,29 @@ def display_name(n):
     return NAME_OVERRIDES.get(str(n or "").strip().lower(), n)
 
 
+# Marques & piliers de l'agence pour le MEDIA KIT AGENCE (deck global). Copie des
+# sources canoniques du site (src/data.js CLIENTS + PILLARS) pour rester auto-suffisant ;
+# garder synchro si data.js change. Logos = silhouettes masquées en bordeaux (dist/assets/clients/).
+CLIENTS = [
+    {"name": "Tesla", "file": "tesla.png"},
+    {"name": "Ray-Ban", "file": "ray-ban.png"},
+    {"name": "HP", "file": "hp.png"},
+    {"name": "Speedo", "file": "speedo.png"},
+    {"name": "Palladium", "file": "palladium.png"},
+    {"name": "Bumble", "file": "bumble.png"},
+    {"name": "Magnum", "file": "magnum.png"},
+    {"name": "Qonto", "file": "quonto.png"},
+    {"name": "Nutripure", "file": "nutripure.png"},
+    {"name": "So Shape", "file": "so-shape.png"},
+    {"name": "Novoma", "file": "novoma.png"},
+]
+PILLARS = [
+    {"title": "Talent d'abord", "text": "Une créatrice n'est pas une audience : c'est une marque. On construit une identité qui dure, pas des pics de vues."},
+    {"title": "Studio intégré", "text": "Stratégie, production, négociation : tout se passe en interne. Une seule équipe, aucune perte en ligne."},
+    {"title": "Résultats mesurés", "text": "Pas de feeling : des KPIs clairs et un reporting précis, à chaque collaboration."},
+]
+
+
 def fetch_creators():
     url = SB_URL + "/rest/v1/public_mediakit?select=name,handle,niche,platform,photo_url,mediakit,sort_order&order=sort_order"
     req = urllib.request.Request(url, headers={"apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY})
@@ -113,6 +136,58 @@ def shell(c, slug):
            canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 
+def agency_shell(creators):
+    """Deck MEDIA KIT AGENCE (mediakit/agence/index.html).
+
+    Bake window.MK_AGENCY (toutes les créatrices actives + marques + piliers) → le moteur
+    mediakit-agence.js rend couverture · agence · marques · 1 diapo/créatrice · contact, sans
+    attendre le réseau (PDF déterministe). Réutilise mediakit.css (tokens, Anton, @page 16:9).
+    """
+    # On ne bake que les champs utiles au deck (allège le HTML, pas d'email/tel/etc.).
+    slim = [{
+        "name": c.get("name"), "handle": c.get("handle"), "niche": c.get("niche"),
+        "platform": c.get("platform"), "photo_url": c.get("photo_url"),
+        "mediakit": c.get("mediakit") or {},
+    } for c in creators]
+    baked = json.dumps({"creators": slim, "clients": CLIENTS, "pillars": PILLARS}, ensure_ascii=False)
+    desc = "Media kit de l'agence TTP Creators — le roster complet, ses créatrices Sport & Lifestyle, audiences et marques partenaires."
+    return """<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Kit Agence — TTP Creators</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="https://ttpcreators.pro/mediakit/agence/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Media Kit Agence — TTP Creators">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="https://ttpcreators.pro/mediakit/agence/">
+<meta property="og:image" content="{og}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="../../assets/favicon-180.png?v=2">
+<link rel="stylesheet" href="../_assets/mediakit.css">
+<link rel="stylesheet" href="../_assets/mediakit-agence.css">
+</head>
+<body>
+<div class="ag-deck kit" id="kit"></div>
+<a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="TTP Creators - Media Kit Agence.pdf" aria-label="Télécharger le media kit agence en PDF">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <polyline points="7 10 12 15 17 10"></polyline>
+    <line x1="12" y1="15" x2="12" y2="3"></line>
+  </svg>
+  Télécharger en PDF
+</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<script>window.MK_AGENCY = {baked};</script>
+<script src="../_assets/mediakit-agence.js"></script>
+</body>
+</html>
+""".format(desc=esc(desc), og=OG_FALLBACK, build=BUILD, baked=baked)
+
+
 def main():
     creators = fetch_creators()
     used, out = set(), []
@@ -130,9 +205,17 @@ def main():
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(shell(c, slug))
         out.append((c.get("name"), slug))
-    print("Pages générées : %d" % len(out))
+
+    # Deck AGENCE (toutes les créatrices dans un seul media kit).
+    ag_dir = os.path.join(ROOT, "agence")
+    os.makedirs(ag_dir, exist_ok=True)
+    with open(os.path.join(ag_dir, "index.html"), "w", encoding="utf-8") as f:
+        f.write(agency_shell(creators))
+
+    print("Pages générées : %d + 1 (agence)" % len(out))
     for name, slug in out:
         print("  /mediakit/%-20s ← %s" % (slug + "/", name))
+    print("  /mediakit/agence/           ← Media Kit Agence (%d créatrices bakées)" % len(creators))
 
 
 if __name__ == "__main__":

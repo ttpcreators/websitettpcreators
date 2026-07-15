@@ -1,0 +1,270 @@
+/* ============================================================================
+ * Media kit AGENCE — deck 16:9 (couverture · agence · marques · N créatrices ·
+ * contact). Charge APRÈS mediakit.css : réutilise ses tokens (:root), la police
+ * Anton (@font-face), le format d'impression (@page 338.67 × 190.5 mm) et les
+ * primitives (.display, .eyebrow, .tnum, .pdf-btn, .progress). Ici on n'ajoute
+ * QUE les classes propres au deck agence (préfixe .ag-).
+ * ========================================================================== */
+
+:root { --cream: #ece0cf; }   /* crème « fil brodé » du monogramme (cf. app icon) */
+
+.ag-deck { width: 100%; background: var(--paper); }
+
+/* Une section = une diapo 16:9. En web : pleine hauteur, empilées (scroll). */
+.ag-slide {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Monogramme TTP : le PNG (P bordeaux sur transparent) sert de MASQUE alpha →
+   on le remplit de la couleur voulue (crème sur bordeaux, bordeaux sur blanc).
+   Un seul asset, deux traitements, aucune tuile de fond parasite. */
+.ag-mono {
+  -webkit-mask: url("../../assets/logo-dark.png") center/contain no-repeat;
+  mask: url("../../assets/logo-dark.png") center/contain no-repeat;
+  display: block;
+}
+
+/* ======================================================= COUVERTURE */
+.ag-cover {
+  background:
+    radial-gradient(130% 100% at 50% 8%, rgba(227,154,168,.10), transparent 55%),
+    radial-gradient(120% 90% at 50% 120%, rgba(0,0,0,.42), transparent 60%),
+    linear-gradient(160deg, #520a0e 0%, #3d0000 46%, #240103 100%);
+  color: var(--on-deep);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+/* Grain velours discret (SVG inline, très léger). */
+.ag-cover::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.ag-cover-top {
+  position: absolute; top: clamp(1.6rem, 4vw, 3.2rem); left: 0; right: 0;
+  display: flex; justify-content: space-between;
+  padding: 0 clamp(1.8rem, 5vw, 4rem);
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--on-deep-muted);
+}
+.ag-cover-mono {
+  width: clamp(88px, 12vw, 148px); aspect-ratio: 470 / 480;
+  background: var(--cream);
+  margin: 0 auto clamp(1.4rem, 3vw, 2.4rem);
+  filter: drop-shadow(0 10px 26px rgba(0,0,0,.45));
+}
+.ag-cover-tick { width: 34px; height: 2px; background: var(--rose); margin: 0 auto clamp(1.2rem, 2.6vw, 2rem); border: 0; opacity: .8; }
+.ag-cover-title { font-size: clamp(3rem, 10vw, 8rem); color: #fff; line-height: .86; }
+.ag-cover-handle {
+  margin: clamp(1.2rem, 3vw, 2rem) 0 0;
+  font-family: var(--mono); font-size: .82rem; letter-spacing: .34em;
+  text-transform: uppercase; color: var(--on-deep);
+}
+
+/* ======================================================= AGENCE (positionnement) */
+.ag-intro { padding: clamp(2.4rem, 5.5vw, 6rem) clamp(1.6rem, 6vw, 8rem); }
+.ag-intro-head { max-width: 62ch; margin-bottom: clamp(2rem, 4vw, 3.4rem); }
+.ag-intro-title { font-size: clamp(2.4rem, 6vw, 4.4rem); color: var(--wine); margin: 1rem 0 1.4rem; }
+.ag-intro-lead { font-size: 1rem; line-height: 1.75; color: var(--ink); max-width: 54ch; margin: 0; }
+.ag-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.4rem, 3vw, 2.6rem); margin-bottom: clamp(2rem, 4vw, 3.2rem); }
+.ag-pillar { border-top: 2px solid var(--wine); padding-top: 1rem; }
+.ag-pillar h3 { font-family: var(--display); font-size: clamp(1.2rem, 2.4vw, 1.7rem); text-transform: uppercase; color: var(--ink); margin: 0 0 .7rem; letter-spacing: .01em; }
+.ag-pillar p { font-size: .86rem; line-height: 1.7; color: var(--ink); margin: 0; }
+.ag-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; border-top: 1px solid var(--line); padding-top: clamp(1.4rem, 3vw, 2.2rem); }
+.ag-kpi .n { font-family: var(--display); font-size: clamp(2.2rem, 5vw, 3.4rem); color: var(--wine); line-height: 1; }
+.ag-kpi .c { font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-top: .5rem; }
+
+/* ======================================================= MARQUES */
+.ag-brands { padding: clamp(2.4rem, 5.5vw, 6rem) clamp(1.6rem, 6vw, 8rem); justify-content: flex-start; }
+.ag-brands-head { display: flex; flex-direction: column; gap: 1rem; margin-bottom: clamp(2.4rem, 5vw, 4rem); }
+.ag-brands-titlerow { display: flex; align-items: center; gap: 1.6rem; }
+.ag-brands-title { font-size: clamp(2rem, 5vw, 3.6rem); color: var(--wine); }
+/* Mur de logos : flex-wrap CENTRÉ (la dernière rangée orpheline reste centrée,
+   contrairement à une grille qui la laisserait alignée à gauche). Chaque logo =
+   silhouette masquée en bordeaux → mur monochrome cohérent et premium. */
+.ag-logos { flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; align-content: center; gap: clamp(2rem, 4vw, 3.6rem) clamp(2.4rem, 5vw, 4.4rem); }
+.ag-logo {
+  flex: 0 0 auto;
+  width: clamp(80px, 12vw, 132px);
+  height: clamp(34px, 4.4vw, 52px);
+  background: var(--wine);
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: contain; mask-size: contain;
+  opacity: .8; transition: opacity .2s ease;
+}
+.ag-logo:hover { opacity: 1; }
+
+/* ======================================================= CRÉATRICE */
+.ag-creator { display: grid; grid-template-columns: 1.12fr .88fr; align-items: stretch; }
+.ag-creator-body {
+  padding: clamp(2.2rem, 5vw, 5rem) clamp(1.8rem, 4.5vw, 5rem);
+  display: flex; flex-direction: column; justify-content: center; gap: 1.15rem;
+  min-width: 0;
+}
+.ag-pill {
+  align-self: flex-start;
+  background: var(--deep); color: var(--on-deep);
+  font-family: var(--mono); font-size: .64rem; letter-spacing: .26em; text-transform: uppercase;
+  padding: .62rem 1.15rem; border-radius: 999px;
+}
+.ag-creator-name { font-size: clamp(2.6rem, 6.5vw, 5.2rem); color: var(--wine); margin: .4rem 0 0; }
+.ag-creator-handle {
+  align-self: flex-start; width: fit-content;
+  font-family: var(--mono); font-size: .84rem; letter-spacing: .1em; color: var(--ink);
+  padding-bottom: 3px; border-bottom: 2px solid var(--rose); text-decoration: none;
+  transition: color .15s ease;
+}
+a.ag-creator-handle:hover { color: var(--wine); }
+.ag-creator-bio { display: flex; flex-direction: column; gap: .9rem; max-width: 46ch; margin: .3rem 0 0; }
+.ag-creator-bio p { margin: 0; font-size: .9rem; line-height: 1.72; color: var(--ink); }
+.ag-creator-bio b { color: var(--wine); font-weight: 700; }
+.ag-stats { display: flex; flex-wrap: wrap; gap: clamp(1.4rem, 3.5vw, 2.8rem); margin-top: .8rem; }
+.ag-stat { min-width: 0; }
+.ag-stat .n { font-family: var(--display); font-size: clamp(1.8rem, 3.6vw, 2.6rem); color: var(--wine); line-height: 1; }
+.ag-stat .c { font-size: .74rem; line-height: 1.45; color: var(--ink); margin-top: .4rem; }
+.ag-niche { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.ag-creator-media { position: relative; overflow: hidden; background: linear-gradient(150deg, #5a1119, #2c0709); min-height: 100%; }
+.ag-creator-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ag-creator-media .ag-photo-note {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--mono); font-size: .66rem; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(244,236,236,.5); text-align: center; line-height: 2;
+}
+/* Filigrane monogramme (coin bas-droite du volet texte, très discret). */
+.ag-watermark {
+  position: absolute; right: clamp(1rem, 2vw, 2rem); bottom: clamp(1rem, 2vw, 2rem);
+  width: clamp(26px, 3vw, 40px); aspect-ratio: 470 / 480;
+  background: var(--wine); opacity: .16; pointer-events: none; z-index: 2;
+}
+
+/* ======================================================= CONTACT (natif)
+   100% propre au deck (on NE réutilise PAS .contact de mediakit.css : .ag-slide,
+   chargé après, écraserait son display:grid → layout cassé). */
+.ag-contact { display: grid; grid-template-columns: 1.05fr 1fr; grid-template-rows: 1fr auto; background: var(--deep); color: var(--on-deep); }
+.ag-contact-text { padding: clamp(2.4rem, 5vw, 4.5rem); display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; }
+.ag-contact .eyebrow { color: var(--on-deep-muted); }
+.ag-contact-title { font-size: clamp(3rem, 8vw, 6rem); color: #fff; }
+.ag-cblock { display: flex; flex-direction: column; gap: .3rem; }
+.ag-cblock .k { font-size: .66rem; letter-spacing: .26em; text-transform: uppercase; color: var(--on-deep-muted); }
+.ag-cblock .v { font-size: 1.02rem; letter-spacing: .04em; color: var(--on-deep); text-decoration: none; transition: color .15s ease; }
+a.ag-cblock .v:hover, a.ag-cblock:hover .v { color: #fff; }
+.ag-send {
+  width: fit-content; margin-top: .8rem;
+  font-family: var(--mono); font-size: .74rem; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--deep); background: var(--on-deep);
+  border: 0; padding: .95rem 2.2rem; cursor: pointer;
+  text-decoration: none; display: inline-block; transition: background .15s ease;
+}
+.ag-send:hover { background: #fff; }
+.ag-contact-media {
+  position: relative; overflow: hidden; display: grid; place-items: center;
+  background:
+    radial-gradient(120% 90% at 70% 20%, rgba(227,154,168,.12), transparent 60%),
+    linear-gradient(150deg, #5a1119 0%, #2c0709 100%);
+}
+.ag-contact-media::after {
+  content: ""; position: absolute; inset: clamp(16px, 2.4vw, 30px);
+  border: 1px solid rgba(244,236,236,.28); pointer-events: none;
+}
+.ag-contact-mono { width: 34%; aspect-ratio: 470 / 480; background: var(--cream); opacity: .92; filter: drop-shadow(0 10px 26px rgba(0,0,0,.35)); }
+.ag-footer {
+  grid-column: 1 / -1; background: #2c0709;
+  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.6rem, 5vw, 4.5rem);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem 2rem;
+  border-top: 1px solid var(--on-deep-line);
+}
+.ag-footer div { font-size: .64rem; letter-spacing: .22em; text-transform: uppercase; color: var(--on-deep-muted); }
+
+/* ======================================================= RESPONSIVE (web) */
+@media (max-width: 860px) {
+  .ag-creator { grid-template-columns: 1fr; }
+  .ag-creator-media { order: -1; min-height: 64vh; }
+  .ag-pillars, .ag-kpis { grid-template-columns: repeat(2, 1fr); }
+  .ag-cover-title { font-size: clamp(2.6rem, 15vw, 5rem); }
+  .ag-contact { grid-template-columns: 1fr; }
+  .ag-contact-media { min-height: 48vh; }
+}
+@media (max-width: 460px) {
+  .ag-kpis { grid-template-columns: 1fr 1fr; gap: 1.6rem 1rem; }
+  .ag-logos { grid-template-columns: repeat(2, 1fr); }
+  .ag-stats { gap: 1.4rem 2rem; }
+}
+
+/* ======================================================= REVEAL (web only) */
+html.js .ag-slide [data-reveal] {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+}
+html.js .ag-slide [data-reveal].in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html.js .ag-slide [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* ======================================================= PRINT / PDF
+   Une diapo agence = une page 16:9 (le @page vient de mediakit.css). */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #fff; margin: 0; }
+  .pdf-btn, .progress { display: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+
+  .ag-slide {
+    width: 100%; height: 190.5mm; min-height: 0;
+    break-inside: avoid; break-after: page; overflow: hidden;
+  }
+  .ag-slide:last-child { break-after: auto; }
+
+  /* Forcer les grilles desktop (la largeur diapo déclencherait les breakpoints mobile). */
+  .ag-creator { grid-template-columns: 1.12fr .88fr !important; }
+  .ag-creator-media { order: 0 !important; min-height: 0 !important; }
+  .ag-pillars { grid-template-columns: repeat(3, 1fr) !important; }
+  .ag-kpis { grid-template-columns: repeat(4, 1fr) !important; }
+  .ag-logos { grid-template-columns: repeat(4, 1fr) !important; }
+
+  /* Zones de sécurité + échelle typo diapo (calquée sur les kits individuels). */
+  .ag-intro, .ag-brands { padding: 15mm 20mm !important; }
+  .ag-creator-body { padding: 14mm 16mm !important; gap: 4mm !important; }
+  .ag-cover-title { font-size: 66pt; }
+  .ag-cover-mono { width: 30mm !important; margin-bottom: 8mm !important; }
+  .ag-cover-handle { font-size: 10pt; margin-top: 8mm !important; }
+  .ag-intro-title, .ag-brands-title { font-size: 30pt; }
+  .ag-intro-lead { font-size: 10.5pt; line-height: 1.6; }
+  .ag-pillar h3 { font-size: 13pt; }
+  .ag-pillar p { font-size: 8.5pt; line-height: 1.55; }
+  .ag-kpi .n { font-size: 26pt; }
+  .ag-creator-name { font-size: 46pt; }
+  .ag-creator-bio p { font-size: 10pt; line-height: 1.55; }
+  .ag-creator-bio { gap: 2.6mm !important; }
+  .ag-stat .n { font-size: 22pt; }
+  .ag-logo { width: 44mm !important; height: 15mm !important; opacity: .8 !important; }
+  .ag-logos { gap: 12mm 16mm !important; }
+
+  /* Contact 16:9. */
+  .ag-contact { grid-template-columns: 1.05fr 1fr !important; grid-template-rows: 1fr auto !important; }
+  .ag-contact-text { padding: 0 20mm !important; justify-content: center; gap: 5mm !important; }
+  .ag-contact-title { font-size: 50pt; }
+  .ag-contact-mono { width: 30% !important; }
+  .ag-cblock .v { font-size: 11pt; }
+  .ag-cblock .k, .ag-footer div { font-size: 8pt; }
+  .ag-cover-top, .ag-pill, .ag-niche, .ag-creator-handle,
+  .ag-stat .c, .ag-kpi .c, .ag-brands-title ~ *, .eyebrow, .ag-photo-note { }
+  .ag-intro-head { margin-bottom: 9mm !important; }
+  .ag-pillars { margin-bottom: 9mm !important; gap: 8mm !important; }
+  .ag-kpis { padding-top: 6mm !important; }
+  .ag-brands-head { margin-bottom: 10mm !important; }
+  .ag-logos { gap: 8mm 10mm !important; }
+  .ag-stats { gap: 8mm !important; margin-top: 4mm !important; }
+  .ag-pill, .eyebrow, .ag-niche, .ag-stat .c, .ag-kpi .c, .contact-block .k, .footer div { font-size: 8pt; }
+  .ag-creator-handle, .contact-block .v { font-size: 11pt; }
+  .ag-watermark { display: none; }   /* pas de filigrane à l'impression (plus net) */
+  .ag-send { display: none; }
+}
