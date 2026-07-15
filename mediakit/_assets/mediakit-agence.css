@@ -175,10 +175,17 @@ a.ag-cblock .v:hover, a.ag-cblock:hover .v { color: #fff; }
     linear-gradient(150deg, #5a1119 0%, #2c0709 100%);
 }
 .ag-contact-media::after {
-  content: ""; position: absolute; inset: clamp(16px, 2.4vw, 30px);
+  content: ""; position: absolute; inset: clamp(16px, 2.4vw, 30px); z-index: 2;
   border: 1px solid rgba(244,236,236,.28); pointer-events: none;
 }
 .ag-contact-mono { width: 34%; aspect-ratio: 470 / 480; background: var(--cream); opacity: .92; filter: drop-shadow(0 10px 26px rgba(0,0,0,.35)); }
+/* Photo d'agence (optionnelle) sur le volet contact : recouvre le fond, léger
+   dégradé bordeaux pour la cohérence, le cadre (::after) reste au-dessus. */
+.ag-contact-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.ag-contact-media.has-photo::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(36,3,5,.10) 0%, rgba(36,3,5,.55) 100%);
+}
 .ag-footer {
   grid-column: 1 / -1; background: #2c0709;
   padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.6rem, 5vw, 4.5rem);

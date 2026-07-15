@@ -109,12 +109,16 @@
         universesLabel: pick(kpis.universesLabel, AG_DEFAULTS.kpis.universesLabel),
         platforms: pick(kpis.platforms, AG_DEFAULTS.kpis.platforms),
         platformsLabel: pick(kpis.platformsLabel, AG_DEFAULTS.kpis.platformsLabel),
+        // Overrides manuels (vides = auto : nb de créatrices affichées / followers cumulés).
+        creatorsOverride: has(kpis.creatorsOverride) ? kpis.creatorsOverride : "",
+        followersOverride: has(kpis.followersOverride) ? kpis.followersOverride : "",
       },
       contact: {
         instagram: String(pick(contact.instagram, AG_DEFAULTS.contact.instagram)).replace(/^@/, ""),
         phone: pick(contact.phone, AG_DEFAULTS.contact.phone),
         email: pick(contact.email, AG_DEFAULTS.contact.email),
       },
+      photo: has(a.photo) ? a.photo : "",
     };
   }
 
@@ -167,8 +171,8 @@
       return '<div class="ag-pillar"><h3>' + esc(p.title) + "</h3><p>" + esc(p.text) + "</p></div>";
     }).join("");
     var kp = [
-      [String(kpis.creators), "Créatrices"],
-      [kpis.followers, "Followers cumulés"],
+      [has(ag.kpis.creatorsOverride) ? ag.kpis.creatorsOverride : String(kpis.creators), "Créatrices"],
+      [has(ag.kpis.followersOverride) ? ag.kpis.followersOverride : kpis.followers, "Followers cumulés"],
       [ag.kpis.universes, ag.kpis.universesLabel],
       [ag.kpis.platforms, ag.kpis.platformsLabel],
     ].map(function (k) {
@@ -202,6 +206,10 @@
 
   function buildContact(ag) {
     var ig = ag.contact.instagram, phone = ag.contact.phone, email = ag.contact.email;
+    // Volet droit : photo d'agence si renseignée (page contact), sinon le monogramme.
+    var media = has(ag.photo)
+      ? '<div class="ag-contact-media has-photo"><img class="ag-contact-photo" src="' + esc(ag.photo) + '" alt="TTP Creators" loading="lazy"></div>'
+      : '<div class="ag-contact-media"><span class="ag-mono ag-contact-mono" aria-hidden="true"></span></div>';
     return '<section class="ag-slide ag-contact">' +
       '<div class="ag-contact-text" data-reveal>' +
         '<p class="eyebrow">( 03 ) — Contact</p><h2 class="display ag-contact-title">Let\'s<br>Work !</h2>' +
@@ -210,7 +218,7 @@
         '<a class="ag-cblock" href="mailto:' + esc(email) + '"><span class="k">Email</span><span class="v">' + esc(email) + "</span></a>" +
         '<a class="ag-send" href="mailto:' + esc(email) + '">Travaillons ensemble</a>' +
       "</div>" +
-      '<div class="ag-contact-media"><span class="ag-mono ag-contact-mono" aria-hidden="true"></span></div>' +
+      media +
       '<div class="ag-footer"><div>TTP Creators — Talent management stratégique</div>' +
         '<div>Media Kit Agence · <span class="js-month">' + monthFR() + "</span></div></div></section>";
   }
