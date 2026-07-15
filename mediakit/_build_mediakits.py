@@ -42,6 +42,16 @@ def esc(s):
     return (str(s or "")).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
 
+# Noms d'AFFICHAGE personnalisés (une créatrice peut masquer son nom de famille) : n'affecte
+# que le titre / nom de fichier / méta du media kit. Le nom RÉEL reste baké dans window.MK et
+# sert de clé (fetch public_mediakit, slug). Idem côté JS (mediakit.js NAME_OVERRIDES).
+NAME_OVERRIDES = {"lucie botans": "LUCIE BOTS"}
+
+
+def display_name(n):
+    return NAME_OVERRIDES.get(str(n or "").strip().lower(), n)
+
+
 def fetch_creators():
     url = SB_URL + "/rest/v1/public_mediakit?select=name,handle,niche,platform,photo_url,mediakit,sort_order&order=sort_order"
     req = urllib.request.Request(url, headers={"apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY})
@@ -50,7 +60,8 @@ def fetch_creators():
 
 
 def shell(c, slug):
-    name = c.get("name") or ""
+    name = c.get("name") or ""      # nom RÉEL (clé : baked window.MK, slug, fetch)
+    disp = display_name(name)       # nom AFFICHÉ (titre / nom de fichier / méta)
     mk = c.get("mediakit") or {}
     handle = str(mk.get("handle") or c.get("handle") or "").lstrip("@")
     platform = c.get("platform") or "instagram"
@@ -63,7 +74,7 @@ def shell(c, slug):
     baked = json.dumps({"name": name, "handle": handle, "platform": platform, "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
     canonical = "https://ttpcreators.pro/mediakit/%s/" % slug
     desc = "Media kit de %s%s — audience, statistiques et collaborations. TTP Creators." % (
-        name.title() if name.isupper() else name, (" · " + niche) if niche else "")
+        disp.title() if disp.isupper() else disp, (" · " + niche) if niche else "")
     og_img = photo or OG_FALLBACK
     return """<!doctype html>
 <html lang="fr">
@@ -98,7 +109,7 @@ def shell(c, slug):
 <script src="../_assets/mediakit.js"></script>
 </body>
 </html>
-""".format(title=esc(name.title() if name.isupper() else name), desc=esc(desc),
+""".format(title=esc(disp.title() if disp.isupper() else disp), desc=esc(desc),
            canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 

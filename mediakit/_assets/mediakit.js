@@ -52,6 +52,10 @@
   function val(v) { return has(v) ? esc(v) : "—"; }
   function arr(a) { return Array.isArray(a) && a.length ? a : null; }
   function firstName(name) { return String(name || "").trim().split(/\s+/)[0] || ""; }
+  // Noms d'affichage personnalisés (une créatrice peut vouloir masquer son nom de famille).
+  // N'affecte QUE l'affichage ; la recherche par nom (fetch public_mediakit) garde le nom RÉEL.
+  var NAME_OVERRIDES = { "lucie botans": "LUCIE BOTS" };
+  function displayName(n) { return NAME_OVERRIDES[String(n || "").trim().toLowerCase()] || n; }
   function zero(n) { return (n < 10 ? "0" : "") + n; }
   function monthFR() { try { return new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" }); } catch (e) { return ""; } }
   function profileUrl(handle, platform) {
@@ -69,7 +73,7 @@
     var mk = (row && row.mediakit) || {};
     var au = mk.audience || {};
     return {
-      name: (row && row.name) || "",
+      name: displayName((row && row.name) || ""),
       handle: String(mk.handle || (row && row.handle) || "").replace(/^@/, ""),
       platform: (row && row.platform) || "instagram",
       photoUrl: (row && row.photo_url) || null,
