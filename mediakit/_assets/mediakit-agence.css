@@ -153,7 +153,10 @@ a.ag-creator-handle:hover { color: var(--wine); }
 .ag-contact-text { padding: clamp(2.4rem, 5vw, 4.5rem); display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; }
 .ag-contact .eyebrow { color: var(--on-deep-muted); }
 .ag-contact-title { font-size: clamp(3rem, 8vw, 6rem); color: #fff; }
-.ag-cblock { display: flex; flex-direction: column; gap: .3rem; }
+/* .ag-cblock EST le <a> : lui poser color + text-decoration ici, sinon l'ancre
+   garde le bleu + soulignement par défaut du navigateur (qui se propage même aux
+   spans .k/.v, un text-decoration:none sur l'enfant ne l'annule pas). */
+.ag-cblock { display: flex; flex-direction: column; gap: .3rem; color: var(--on-deep); text-decoration: none; }
 .ag-cblock .k { font-size: .66rem; letter-spacing: .26em; text-transform: uppercase; color: var(--on-deep-muted); }
 .ag-cblock .v { font-size: 1.02rem; letter-spacing: .04em; color: var(--on-deep); text-decoration: none; transition: color .15s ease; }
 a.ag-cblock .v:hover, a.ag-cblock:hover .v { color: #fff; }
