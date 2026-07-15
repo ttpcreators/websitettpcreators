@@ -71,6 +71,53 @@
     return '<div class="ag-stat"><div class="n tnum">' + esc(n) + '</div><div class="c">' + cap + "</div></div>";
   }
 
+  // Contenu ÉDITABLE de l'agence (piloté depuis l'app → table agency_mediakit,
+  // exposée par la vue anon public_agency_mediakit et bakée dans window.MK_AGENCY.agency).
+  // Repli COMPLET sur ces valeurs par défaut si le blob est absent/vide → le deck
+  // reste identique tant que rien n'est saisi (et avant que le SQL soit appliqué).
+  var AG_DEFAULTS = {
+    intro: {
+      title: "Talent management\nstratégique",
+      lead: "TTP Creators accompagne une sélection de créatrices Sport & Lifestyle : stratégie de carrière, production de contenu et négociation, tout en interne. On construit des identités qui durent — pas des pics de vues.",
+    },
+    pillars: [
+      { title: "Talent d'abord", text: "Une créatrice n'est pas une audience : c'est une marque. On construit une identité qui dure, pas des pics de vues." },
+      { title: "Studio intégré", text: "Stratégie, production, négociation : tout se passe en interne. Une seule équipe, aucune perte en ligne." },
+      { title: "Résultats mesurés", text: "Pas de feeling : des KPIs clairs et un reporting précis, à chaque collaboration." },
+    ],
+    kpis: { universes: "02", universesLabel: "Univers · Sport & Lifestyle", platforms: "05", platformsLabel: "Plateformes couvertes" },
+    contact: { instagram: "ttp.creators", phone: "07 66 25 98 03", email: "partnerships@ttpcreators.pro" },
+  };
+  function pick(v, dflt) { return has(v) ? v : dflt; }
+  function multiline(s) { return esc(s).replace(/\n/g, "<br>"); }
+  function telHref(phone) {
+    var p = String(phone || "").replace(/[^\d+]/g, "");
+    if (p.charAt(0) === "0") p = "+33" + p.slice(1);
+    return "tel:" + p;
+  }
+  // Fusionne le blob agence édité (window.MK_AGENCY.agency) avec les défauts.
+  function agencyData() {
+    var a = (window.MK_AGENCY && window.MK_AGENCY.agency) || {};
+    var intro = a.intro || {}, kpis = a.kpis || {}, contact = a.contact || {};
+    var pillars = Array.isArray(a.pillars) && a.pillars.length ? a.pillars
+      : (Array.isArray(window.MK_AGENCY.pillars) && window.MK_AGENCY.pillars.length ? window.MK_AGENCY.pillars : AG_DEFAULTS.pillars);
+    return {
+      intro: { title: pick(intro.title, AG_DEFAULTS.intro.title), lead: pick(intro.lead, AG_DEFAULTS.intro.lead) },
+      pillars: pillars,
+      kpis: {
+        universes: pick(kpis.universes, AG_DEFAULTS.kpis.universes),
+        universesLabel: pick(kpis.universesLabel, AG_DEFAULTS.kpis.universesLabel),
+        platforms: pick(kpis.platforms, AG_DEFAULTS.kpis.platforms),
+        platformsLabel: pick(kpis.platformsLabel, AG_DEFAULTS.kpis.platformsLabel),
+      },
+      contact: {
+        instagram: String(pick(contact.instagram, AG_DEFAULTS.contact.instagram)).replace(/^@/, ""),
+        phone: pick(contact.phone, AG_DEFAULTS.contact.phone),
+        email: pick(contact.email, AG_DEFAULTS.contact.email),
+      },
+    };
+  }
+
   function bioHTML(bio) {
     if (!has(bio)) return "";
     var ps = String(bio).split(/\n\n+/).slice(0, 3).map(function (p) { return "<p>" + esc(p).replace(/\n/g, "<br>") + "</p>"; }).join("");
@@ -104,36 +151,34 @@
       "</section>";
   }
 
-  function buildCover() {
+  function buildCover(ag) {
     return '<section class="ag-slide ag-cover">' +
       '<div class="ag-cover-top"><span>TTP Creators</span><span class="js-month">' + monthFR() + "</span></div>" +
       '<div data-reveal>' +
         '<span class="ag-mono ag-cover-mono" aria-hidden="true"></span>' +
         '<hr class="ag-cover-tick">' +
         '<h1 class="display ag-cover-title">Media Kit<br>Agence</h1>' +
-        '<p class="ag-cover-handle">@ttp.creators</p>' +
+        '<p class="ag-cover-handle">@' + esc(ag.contact.instagram) + "</p>" +
       "</div></section>";
   }
 
-  function buildIntro(kpis) {
-    var pillars = (window.MK_AGENCY.pillars || []).map(function (p) {
+  function buildIntro(kpis, ag) {
+    var pillars = ag.pillars.map(function (p) {
       return '<div class="ag-pillar"><h3>' + esc(p.title) + "</h3><p>" + esc(p.text) + "</p></div>";
     }).join("");
     var kp = [
       [String(kpis.creators), "Créatrices"],
       [kpis.followers, "Followers cumulés"],
-      ["02", "Univers · Sport & Lifestyle"],
-      ["05", "Plateformes couvertes"],
+      [ag.kpis.universes, ag.kpis.universesLabel],
+      [ag.kpis.platforms, ag.kpis.platformsLabel],
     ].map(function (k) {
       return '<div class="ag-kpi"><div class="n tnum">' + esc(k[0]) + '</div><div class="c">' + esc(k[1]) + "</div></div>";
     }).join("");
     return '<section class="ag-slide ag-intro">' +
       '<div class="ag-intro-head" data-reveal>' +
         '<p class="eyebrow">( 01 ) — L\'agence</p>' +
-        '<h2 class="display ag-intro-title">Talent management<br>stratégique</h2>' +
-        '<p class="ag-intro-lead">TTP Creators accompagne une sélection de créatrices Sport &amp; Lifestyle : ' +
-        'stratégie de carrière, production de contenu et négociation, tout en interne. ' +
-        'On construit des identités qui durent — pas des pics de vues.</p>' +
+        '<h2 class="display ag-intro-title">' + multiline(ag.intro.title) + "</h2>" +
+        '<p class="ag-intro-lead">' + esc(ag.intro.lead) + "</p>" +
       "</div>" +
       '<div class="ag-pillars" data-reveal>' + pillars + "</div>" +
       '<div class="ag-kpis" data-reveal>' + kp + "</div></section>";
@@ -155,14 +200,15 @@
       '<div class="ag-logos" data-reveal>' + logos + "</div></section>";
   }
 
-  function buildContact() {
+  function buildContact(ag) {
+    var ig = ag.contact.instagram, phone = ag.contact.phone, email = ag.contact.email;
     return '<section class="ag-slide ag-contact">' +
       '<div class="ag-contact-text" data-reveal>' +
         '<p class="eyebrow">( 03 ) — Contact</p><h2 class="display ag-contact-title">Let\'s<br>Work !</h2>' +
-        '<a class="ag-cblock" href="https://instagram.com/ttpcreators" target="_blank" rel="noreferrer"><span class="k">Social Media</span><span class="v">@ttp.creators</span></a>' +
-        '<a class="ag-cblock" href="tel:+33766259803"><span class="k">Mobile</span><span class="v tnum">07 66 25 98 03</span></a>' +
-        '<a class="ag-cblock" href="mailto:partnerships@ttpcreators.pro"><span class="k">Email</span><span class="v">partnerships@ttpcreators.pro</span></a>' +
-        '<a class="ag-send" href="mailto:partnerships@ttpcreators.pro">Travaillons ensemble</a>' +
+        '<a class="ag-cblock" href="https://instagram.com/' + esc(ig) + '" target="_blank" rel="noreferrer"><span class="k">Social Media</span><span class="v">@' + esc(ig) + "</span></a>" +
+        '<a class="ag-cblock" href="' + esc(telHref(phone)) + '"><span class="k">Mobile</span><span class="v tnum">' + esc(phone) + "</span></a>" +
+        '<a class="ag-cblock" href="mailto:' + esc(email) + '"><span class="k">Email</span><span class="v">' + esc(email) + "</span></a>" +
+        '<a class="ag-send" href="mailto:' + esc(email) + '">Travaillons ensemble</a>' +
       "</div>" +
       '<div class="ag-contact-media"><span class="ag-mono ag-contact-mono" aria-hidden="true"></span></div>' +
       '<div class="ag-footer"><div>TTP Creators — Talent management stratégique</div>' +
@@ -184,9 +230,10 @@
     var xtot = 0;
     shown.forEach(function (c) { xtot += c.xfoll; });
     var kpis = { creators: shown.length, followers: fmtK(xtot) };
+    var ag = agencyData();
 
-    return buildCover() + buildIntro(kpis) + buildBrands() +
-      shown.map(buildCreator).join("") + buildContact();
+    return buildCover(ag) + buildIntro(kpis, ag) + buildBrands() +
+      shown.map(buildCreator).join("") + buildContact(ag);
   }
 
   var kit = document.getElementById("kit"), bar = document.getElementById("progress"), _io = null;
@@ -211,7 +258,7 @@
   window.addEventListener("resize", onScroll);
 
   // 1) Rendu immédiat depuis la donnée COMPLÈTE bakée → PDF déterministe.
-  if (!window.MK_AGENCY) window.MK_AGENCY = { creators: [], clients: [], pillars: [] };
+  if (!window.MK_AGENCY) window.MK_AGENCY = { creators: [], clients: [], pillars: [], agency: {} };
   paint(true);
   onScroll();
 
@@ -234,7 +281,8 @@
     } catch (e) {}
   })();
 
-  // 2) Rafraîchissement live (page web) : on relit toutes les créatrices actives.
+  // 2) Rafraîchissement live (page web) : on relit toutes les créatrices actives
+  //    ET le contenu agence édité (intro / piliers / KPIs / contact).
   try {
     fetch(SB_URL + "/rest/v1/public_mediakit?select=name,handle,niche,platform,photo_url,mediakit,sort_order&order=sort_order", {
       headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },
@@ -243,6 +291,20 @@
       .then(function (rows) {
         if (rows && rows.length) {
           window.MK_AGENCY.creators = rows;
+          paint(false);
+          onScroll();
+        }
+      })
+      .catch(function () {});
+  } catch (e) {}
+  try {
+    fetch(SB_URL + "/rest/v1/public_agency_mediakit?select=data&limit=1", {
+      headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },
+    })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (rows) {
+        if (rows && rows[0] && rows[0].data) {
+          window.MK_AGENCY.agency = rows[0].data;
           paint(false);
           onScroll();
         }

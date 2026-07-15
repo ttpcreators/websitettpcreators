@@ -82,6 +82,22 @@ def fetch_creators():
         return json.load(r)
 
 
+def fetch_agency():
+    """Contenu agence éditable (intro/piliers/KPIs/contact), saisi dans l'app et
+    exposé par la vue anon public_agency_mediakit. TOLÉRANT : si la vue n'existe pas
+    encore (SQL pas appliqué) ou en cas d'erreur réseau → {} et le deck retombe sur
+    ses valeurs par défaut (côté JS AG_DEFAULTS). Ne JAMAIS faire échouer le build."""
+    url = SB_URL + "/rest/v1/public_agency_mediakit?select=data&limit=1"
+    req = urllib.request.Request(url, headers={"apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            rows = json.load(r)
+        return (rows[0].get("data") if rows else None) or {}
+    except Exception as e:
+        print("  (media kit agence : contenu agence non chargé — défauts utilisés : %s)" % e)
+        return {}
+
+
 def shell(c, slug):
     name = c.get("name") or ""      # nom RÉEL (clé : baked window.MK, slug, fetch)
     disp = display_name(name)       # nom AFFICHÉ (titre / nom de fichier / méta)
@@ -136,12 +152,13 @@ def shell(c, slug):
            canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 
-def agency_shell(creators):
+def agency_shell(creators, agency=None):
     """Deck MEDIA KIT AGENCE (mediakit/agence/index.html).
 
-    Bake window.MK_AGENCY (toutes les créatrices actives + marques + piliers) → le moteur
-    mediakit-agence.js rend couverture · agence · marques · 1 diapo/créatrice · contact, sans
-    attendre le réseau (PDF déterministe). Réutilise mediakit.css (tokens, Anton, @page 16:9).
+    Bake window.MK_AGENCY (toutes les créatrices actives + marques + piliers + contenu
+    agence éditable) → le moteur mediakit-agence.js rend couverture · agence · marques ·
+    1 diapo/créatrice · contact, sans attendre le réseau (PDF déterministe). Réutilise
+    mediakit.css (tokens, Anton, @page 16:9).
     """
     # On ne bake que les champs utiles au deck (allège le HTML, pas d'email/tel/etc.).
     slim = [{
@@ -149,7 +166,11 @@ def agency_shell(creators):
         "platform": c.get("platform"), "photo_url": c.get("photo_url"),
         "mediakit": c.get("mediakit") or {},
     } for c in creators]
-    baked = json.dumps({"creators": slim, "clients": CLIENTS, "pillars": PILLARS}, ensure_ascii=False)
+    # `agency` = blob éditable (intro/piliers/KPIs/contact) saisi dans l'app ; {} → défauts JS.
+    baked = json.dumps(
+        {"creators": slim, "clients": CLIENTS, "pillars": PILLARS, "agency": agency or {}},
+        ensure_ascii=False,
+    )
     desc = "Media kit de l'agence TTP Creators — le roster complet, ses créatrices Sport & Lifestyle, audiences et marques partenaires."
     return """<!doctype html>
 <html lang="fr">
@@ -207,10 +228,11 @@ def main():
         out.append((c.get("name"), slug))
 
     # Deck AGENCE (toutes les créatrices dans un seul media kit).
+    agency = fetch_agency()
     ag_dir = os.path.join(ROOT, "agence")
     os.makedirs(ag_dir, exist_ok=True)
     with open(os.path.join(ag_dir, "index.html"), "w", encoding="utf-8") as f:
-        f.write(agency_shell(creators))
+        f.write(agency_shell(creators, agency))
 
     print("Pages générées : %d + 1 (agence)" % len(out))
     for name, slug in out:
