@@ -28,14 +28,41 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <!--
+      Données structurées schema.org (JSON-LD). INVISIBLE sur la page, lu par les
+      moteurs : c'est la façon LÉGITIME de déclarer l'entité « TTP Creators » et ses
+      fondateurs. `alternateName` = alias officiel d'une personne (Marc Maher, aussi
+      connu sous Marc Bouraoui) → aide Google à relier les deux noms à ce site.
+      NE PAS ajouter de texte caché dans la page pour le référencement : c'est du
+      cloaking, explicitement sanctionné par Google (pénalité / désindexation).
+    -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://ttpcreators.pro/#organization",
         "name": "TTP Creators",
+        "url": "https://ttpcreators.pro/",
+        "logo": "https://ttpcreators.pro/assets/favicon.png",
         "description": "Agence de talent management Sport et Lifestyle à Lyon et Genève.",
         "areaServed": ["Lyon", "Genève"],
         "email": "partnerships@ttpcreators.pro",
+        "founder": [
+          {
+            "@type": "Person",
+            "@id": "https://ttpcreators.pro/#marc",
+            "name": "Marc Maher",
+            "alternateName": "Marc Bouraoui",
+            "jobTitle": "Co-fondateur",
+            "worksFor": { "@id": "https://ttpcreators.pro/#organization" }
+          },
+          {
+            "@type": "Person",
+            "name": "Gianni",
+            "jobTitle": "Co-fondateur",
+            "worksFor": { "@id": "https://ttpcreators.pro/#organization" }
+          }
+        ],
         "sameAs": [
           "https://www.instagram.com/ttpcreators/",
           "https://www.linkedin.com/company/ttp-creators/"
