@@ -55,6 +55,11 @@ jobs:
           cp -r mediakit dist/mediakit
           # Ne pas publier les scripts internes.
           rm -f dist/mediakit/_build_mediakits.py dist/mediakit/_render_pdfs.py
+          # sitemap.xml (généré par _build_mediakits.py, liste / + /mentions-legales/
+          # + chaque media kit) → racine du site, déclaré dans robots.txt.
+          # `|| true` : si la génération a échoué (continue-on-error ci-dessus), le
+          # sitemap commité dans le repo sert de repli.
+          cp -f sitemap.xml dist/sitemap.xml || true
 
       - name: Rendre chaque media kit en PDF paysage 16:9 (Chrome headless, sert dist/)
         # Chrome est préinstallé sur ubuntu-latest. continue-on-error + le repli

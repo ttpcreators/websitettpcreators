@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ttpcreators.github.io/websitettpcreators/sitemap.xml
+Sitemap: https://ttpcreators.pro/sitemap.xml

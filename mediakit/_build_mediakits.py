@@ -15,6 +15,7 @@ Usage : python3 mediakit/_build_mediakits.py   (depuis la racine du repo)
 import json
 import os
 import re
+import time
 import unicodedata
 import urllib.request
 
@@ -209,6 +210,28 @@ def agency_shell(creators, agency=None):
 """.format(desc=esc(desc), og=OG_FALLBACK, build=BUILD, baked=baked)
 
 
+def write_sitemap(slugs):
+    """Écrit sitemap.xml à la RACINE du repo (la CI le copie dans dist/).
+
+    Un sitemap ne peut référencer que des URLs de son propre dossier ou en dessous →
+    il DOIT être à la racine du site pour couvrir /, /mentions-legales/ et les media
+    kits. Régénéré à chaque build (+ cron horaire) → toute nouvelle créatrice y entre
+    toute seule. robots.txt le déclare sur https://ttpcreators.pro/sitemap.xml.
+    """
+    urls = ["https://ttpcreators.pro/", "https://ttpcreators.pro/mentions-legales/"]
+    urls += ["https://ttpcreators.pro/mediakit/%s/" % s for s in slugs]
+    today = time.strftime("%Y-%m-%d")
+    body = "".join("  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n" % (u, today) for u in urls)
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n"
+    )
+    path = os.path.join(os.path.dirname(ROOT), "sitemap.xml")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(xml)
+    return len(urls)
+
+
 def main():
     creators = fetch_creators()
     used, out = set(), []
@@ -238,6 +261,9 @@ def main():
     for name, slug in out:
         print("  /mediakit/%-20s ← %s" % (slug + "/", name))
     print("  /mediakit/agence/           ← Media Kit Agence (%d créatrices bakées)" % len(creators))
+
+    n = write_sitemap([slug for _, slug in out] + ["agence"])
+    print("sitemap.xml : %d URLs (racine du repo → copié dans dist/ par la CI)" % n)
 
 
 if __name__ == "__main__":
