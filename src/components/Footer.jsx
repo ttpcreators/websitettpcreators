@@ -42,6 +42,7 @@ export default function Footer() {
       </div>
       <div className="wrap footer-bottom">
         <span>© 2026 TTP Creators. Tous droits réservés.</span>
+        <a className="footer-legal" href="/mentions-legales/">Mentions légales</a>
         <span>Lyon · Genève</span>
       </div>
     </footer>

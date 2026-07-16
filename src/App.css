@@ -1880,6 +1880,16 @@ a.ci:hover b {
   color: var(--muted);
 }
 
+/* Lien mentions légales (obligation LCEN) — discret, ton du pied de page. */
+.footer-legal {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer-legal:hover {
+  color: var(--ink);
+}
+
 /* ── Retour en haut ────────────────────────────────────── */
 
 .to-top {
