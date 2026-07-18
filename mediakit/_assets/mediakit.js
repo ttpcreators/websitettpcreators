@@ -83,6 +83,8 @@
       platforms: arr(mk.platforms) || [],
       brands: arr(mk.brands) || [],
       photos: mk.photos || {},
+      // Captures d'insights (6 max) saisies dans l'app — section masquée si vide.
+      statsShots: (arr(mk.statsShots) || []).filter(Boolean).slice(0, 6),
     };
   }
 
@@ -219,6 +221,20 @@
     }).join("");
   }
 
+  // Captures d'insights (6 max) — section entièrement masquée si rien n'est renseigné.
+  function buildStats(data) {
+    var shots = data.statsShots;
+    if (!shots.length) return "";
+    var cells = shots.map(function (u) {
+      return '<div class="stat-shot"><img src="' + esc(u) + '" alt="Statistiques" loading="lazy"></div>';
+    }).join("");
+    return '<section class="sheet stats"><div class="sec-head" data-reveal>' +
+      '<p class="eyebrow">( 04 ) — Statistiques</p><div class="sec-titlerow">' +
+      '<h2 class="display sec-title">Les chiffres<br>en capture</h2>' +
+      '<hr class="rule"><span class="sec-tag">' + shots.length + " capture" + (shots.length > 1 ? "s" : "") + "</span></div></div>" +
+      '<div class="stats-grid" data-reveal>' + cells + "</div></section>";
+  }
+
   function buildBrands(data) {
     var brands = data.brands;
     if (!brands.length) return "";
@@ -227,7 +243,7 @@
       return '<div class="logo-cell">' + inner + "</div>";
     }).join("");
     return '<section class="sheet brands"><div class="sec-head" data-reveal>' +
-      '<p class="eyebrow">( 04 ) — Preuves sociales</p><div class="sec-titlerow">' +
+      '<p class="eyebrow">( 05 ) — Preuves sociales</p><div class="sec-titlerow">' +
       '<h2 class="display sec-title">Ces marques ont<br>fait confiance à ' + esc(firstName(data.name)) + "</h2>" +
       '<hr class="rule"><span class="sec-tag">' + brands.length + " Collaboration" + (brands.length > 1 ? "s" : "") + "</span></div></div>" +
       '<div class="logo-grid" data-reveal>' + cells + "</div></section>";
@@ -235,7 +251,7 @@
 
   function buildContact(data) {
     return '<section class="contact"><div class="contact-text" data-reveal>' +
-      '<p class="eyebrow">( 05 ) — Contact</p><h2 class="display contact-title">Let\'s<br>Work !</h2>' +
+      '<p class="eyebrow">( 06 ) — Contact</p><h2 class="display contact-title">Let\'s<br>Work !</h2>' +
       '<div class="contact-block"><span class="k">Social Media</span><a class="v contact-link" href="https://instagram.com/ttpcreators" target="_blank" rel="noreferrer">@ttpcreators</a></div>' +
       '<div class="contact-block"><span class="k">Mobile</span><a class="v contact-link tnum" href="tel:+33766259803">07 66 25 98 03</a></div>' +
       '<div class="contact-block"><span class="k">Email</span><a class="v contact-link" href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a></div></div>' +
@@ -245,7 +261,7 @@
   }
 
   function build(data) {
-    return buildHero(data) + buildAudience(data) + buildPlatforms(data) + buildBrands(data) + buildContact(data);
+    return buildHero(data) + buildAudience(data) + buildPlatforms(data) + buildStats(data) + buildBrands(data) + buildContact(data);
   }
 
   var kit = document.getElementById("kit"), bar = document.getElementById("progress"), _io = null;

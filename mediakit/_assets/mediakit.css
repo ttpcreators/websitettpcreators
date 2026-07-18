@@ -278,6 +278,21 @@
     width: 120px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.25); z-index: 2;
   }
 
+  /* ---- Section 4: captures de stats ---- */
+  /* Captures d'écran d'insights (portraits de téléphone) : `contain` et non `cover`,
+     pour ne JAMAIS rogner les chiffres. Fond clair pour les captures transparentes. */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.7rem, 1.6vw, 1.3rem); }
+  .stat-shot {
+    aspect-ratio: 9 / 16;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+  }
+  .stat-shot img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
   /* ---- Section 5: brands ---- */
   .logo-grid { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line); }
   .logo-cell {
@@ -353,6 +368,7 @@
     .aud-perf { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; padding-top: 1.8rem; }
     .plat-grid { grid-template-columns: 1fr; }
     .plat-media { order: -1; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .logo-grid { grid-template-columns: repeat(2, 1fr); }
     .logo-cell:nth-child(5n) { border-right: 1px solid var(--line); }
     .logo-cell:nth-child(2n) { border-right: 0; }
@@ -410,6 +426,9 @@
     .plat-grid { grid-template-columns: 1.05fr 1fr !important; align-items: center !important; margin: 0 !important; }
     .plat-media { order: 0 !important; }
     .logo-grid { grid-template-columns: repeat(5, 1fr) !important; }
+    /* Captures : 3 colonnes, hauteur fixe pour tenir sur une diapo 16:9 (2 rangées max). */
+    .stats-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 6mm !important; }
+    .stat-shot { aspect-ratio: auto !important; height: 52mm !important; }
     .aud-perf { border-left: 1px solid var(--line) !important; padding-left: 12mm !important; align-items: center !important; }
 
     /* Une section = une diapo 16:9 pleine. overflow:hidden → jamais de débordement. */
