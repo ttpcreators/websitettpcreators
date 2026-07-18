@@ -62,7 +62,7 @@
   filter: drop-shadow(0 10px 26px rgba(0,0,0,.45));
 }
 .ag-cover-tick { width: 34px; height: 2px; background: var(--rose); margin: 0 auto clamp(1.2rem, 2.6vw, 2rem); border: 0; opacity: .8; }
-.ag-cover-title { font-size: clamp(3rem, 10vw, 8rem); color: #fff; line-height: .86; }
+.ag-cover-title { font-size: clamp(3rem, 10vw, 8rem); color: #fff; line-height: 1.02; }
 .ag-cover-handle {
   margin: clamp(1.2rem, 3vw, 2rem) 0 0;
   font-family: var(--mono); font-size: .82rem; letter-spacing: .34em;
@@ -93,8 +93,8 @@
 .ag-logos { flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; align-content: center; gap: clamp(2rem, 4vw, 3.6rem) clamp(2.4rem, 5vw, 4.4rem); }
 .ag-logo {
   flex: 0 0 auto;
-  width: clamp(80px, 12vw, 132px);
-  height: clamp(34px, 4.4vw, 52px);
+  width: clamp(120px, 16vw, 190px);
+  height: clamp(50px, 6vw, 74px);
   background: var(--wine);
   -webkit-mask-position: center; mask-position: center;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
@@ -255,8 +255,8 @@ html.js .ag-slide [data-reveal].in { opacity: 1; transform: none; }
   .ag-creator-bio p { font-size: 10pt; line-height: 1.55; }
   .ag-creator-bio { gap: 2.6mm !important; }
   .ag-stat .n { font-size: 22pt; }
-  .ag-logo { width: 44mm !important; height: 15mm !important; opacity: .8 !important; }
-  .ag-logos { gap: 12mm 16mm !important; }
+  .ag-logo { width: 52mm !important; height: 18mm !important; opacity: .8 !important; }
+  .ag-logos { gap: 11mm 13mm !important; }
 
   /* Contact 16:9. */
   .ag-contact { grid-template-columns: 1.05fr 1fr !important; grid-template-rows: 1fr auto !important; }
