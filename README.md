@@ -29,6 +29,7 @@ Pages + CNAME www) avec HTTPS forcé.
 | Quoi | Où |
 |---|---|
 | Textes, nav, stats, roster de repli | `src/data.js` |
+| Textes du hero (titre, eyebrow, lead) | `src/components/Hero.jsx` |
 | Photos fondateurs | `public/assets/about/equipe.jpg` (Marc) / `gianni.jpg` |
 | Photos créatrices | `public/assets/creators/*.jpg` (noms en minuscules !) |
 | Favicon | `public/assets/favicon.png` (carré, 512×512) |
@@ -36,9 +37,10 @@ Pages + CNAME www) avec HTTPS forcé.
 
 ## Roster live (Supabase)
 
-La section « Nos créatrices » lit la vue `public_roster` du projet Supabase de TTP Suite ;
-si elle est absente ou injoignable, une liste statique s'affiche. Pour activer la synchro :
-exécuter [`supabase/public_roster.sql`](supabase/public_roster.sql) dans le SQL Editor.
+La section « Nos créatrices » lit la vue `public_roster` du projet Supabase de TTP Suite
+(**active en production** : ajouter une créatrice dans l'app la fait apparaître sur le site) ;
+si la vue est injoignable, une liste statique de repli s'affiche. Définition de la vue :
+[`supabase/public_roster.sql`](supabase/public_roster.sql).
 
 ## Pour les mainteneurs (humains et IA)
 

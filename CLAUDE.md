@@ -91,11 +91,12 @@ Pages `cname=ttpcreators.pro`, `https_enforced=true`. ⚠️ Les **MX Google res
 
 ## Roster (Supabase)
 
-La section Roster tente `public_roster` sur le projet Supabase `zizvggziggswhrbuyhuo`
-(clé anon dans `src/lib/roster.js`, publique par design). **La vue n'existe pas encore** →
-repli statique `ROSTER_FALLBACK` (data.js). Pour activer la synchro live avec l'app TTP Suite :
-exécuter `supabase/public_roster.sql` dans le SQL Editor du dashboard. Contrainte : tout doit
-rester **0 €** (free tiers, repo public).
+La section Roster lit `public_roster` sur le projet Supabase `zizvggziggswhrbuyhuo`
+(clé anon dans `src/lib/roster.js`, publique par design). **La vue EXISTE et est active**
+(vérifié 2026-07-18) : la synchro live avec l'app TTP Suite fonctionne — une créatrice ajoutée
+dans l'app apparaît sur le site. `ROSTER_FALLBACK` (data.js) reste le repli si la vue est
+injoignable ; définition dans `supabase/public_roster.sql`. Contrainte : tout doit rester
+**0 €** (free tiers, repo public).
 
 ## Formulaire de contact
 
@@ -104,6 +105,9 @@ Pour un envoi direct : créer un form sur formspree.io et renseigner l'URL.
 
 ## Sauvegardes
 
-- Tag git `v1.0` + branche `backup/v1-2026-07-05` (état stable du 2026-07-05)
-- Zip local : `~/Downloads/ttp-creators-site-backup-2026-07-05.zip`
-- Ancien site : branche `claude/agency-website-m3e282` + clone `~/Claude/TTP SOCIETY/websitettpcreators`
+- Tags git : `v1.0` (état stable validé 2026-07-05) et `handoff-2026-07-18` (passation) ;
+  branche `backup/v1-2026-07-05`. L'historique git conserve tout le reste.
+- Zip local (machine de Marc) : `~/Downloads/ttp-creators-site-backup-2026-07-05.zip`
+- Ancien site : branche `claude/agency-website-m3e282` (sa branche `backup-fond-blanc-v1` est
+  une variante de l'ANCIEN site, sans intérêt pour le site actuel) ; copie locale dans
+  `~/Claude/TTP SOCIETY/_ARCHIVE-anciennes-versions/`
