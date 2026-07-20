@@ -56,24 +56,32 @@ def slugs():
     return out
 
 
-def render(slug):
-    out = os.path.join(MK, slug, "media-kit-%s.pdf" % BUILD)
-    url = "http://127.0.0.1:%d/mediakit/%s/" % (PORT, slug)
+def ugc_slugs():
+    """Créateurs ayant une page UGC (mediakit/<slug>/ugc/index.html)."""
+    out = []
+    for p in sorted(glob.glob(os.path.join(MK, "*", "ugc", "index.html"))):
+        out.append(os.path.basename(os.path.dirname(os.path.dirname(p))))
+    return out
+
+
+def render(url_path, out_file, label):
+    """Rend l'URL `url_path` (relative au serveur local) en PDF `out_file`."""
+    url = "http://127.0.0.1:%d/%s" % (PORT, url_path)
     cmd = [
         CHROME, "--headless", "--disable-gpu", "--no-sandbox",
         "--hide-scrollbars", "--no-pdf-header-footer",
         "--virtual-time-budget=15000",
-        "--print-to-pdf=" + out, url,
+        "--print-to-pdf=" + out_file, url,
     ]
     try:
         subprocess.run(cmd, capture_output=True, timeout=120)
     except Exception as e:
-        print("  ✗ %-20s (chrome: %s)" % (slug, e))
+        print("  ✗ %-24s (chrome: %s)" % (label, e))
         return False
-    if os.path.exists(out) and os.path.getsize(out) >= MIN_BYTES:
-        print("  ✓ %-20s %d Ko" % (slug, os.path.getsize(out) // 1024))
+    if os.path.exists(out_file) and os.path.getsize(out_file) >= MIN_BYTES:
+        print("  ✓ %-24s %d Ko" % (label, os.path.getsize(out_file) // 1024))
         return True
-    print("  ✗ %-20s (PDF vide/absent)" % slug)
+    print("  ✗ %-24s (PDF vide/absent)" % label)
     return False
 
 
@@ -85,8 +93,13 @@ def main():
     threading.Thread(target=serve, daemon=True).start()
     time.sleep(1.5)
     names = slugs()
-    ok = sum(1 for s in names if render(s))
-    print("PDF paysage générés : %d/%d" % (ok, len(names)))
+    ok = sum(1 for s in names if render("mediakit/%s/" % s, os.path.join(MK, s, "media-kit-%s.pdf" % BUILD), s))
+    ugc = ugc_slugs()
+    ok_ugc = sum(
+        1 for s in ugc
+        if render("mediakit/%s/ugc/" % s, os.path.join(MK, s, "ugc", "media-kit-ugc-%s.pdf" % BUILD), s + " (ugc)")
+    )
+    print("PDF paysage générés : %d/%d (+ %d/%d UGC)" % (ok, len(names), ok_ugc, len(ugc)))
     # Ne jamais faire échouer le déploiement : les shells + le repli window.print()
     # couvrent l'absence d'un PDF. On sort toujours 0.
     sys.exit(0)

@@ -153,6 +153,56 @@ def shell(c, slug):
            canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 
+def ugc_shell(c, slug):
+    """Page media kit UGC (mediakit/<slug>/ugc/index.html) — orientée personne.
+    Générée UNIQUEMENT si le créateur a activé son kit UGC (mediakit.ugc.enabled).
+    Chemins d'assets en `../../` car la page est un niveau plus bas que le kit standard."""
+    name = c.get("name") or ""
+    disp = display_name(name)
+    title = disp.title() if disp.isupper() else disp
+    mk = c.get("mediakit") or {}
+    handle = str((mk.get("ugc") or {}).get("handle") or mk.get("handle") or c.get("handle") or "").lstrip("@")
+    photo = (mk.get("photos") or {}).get("hero") or c.get("photo_url") or None
+    baked = json.dumps({"name": name, "handle": handle, "platform": c.get("platform") or "instagram",
+                        "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
+    canonical = "https://ttpcreators.pro/mediakit/%s/ugc/" % slug
+    desc = "Media kit UGC de %s — personnalité, quotidien, matériel et portfolio de contenus. TTP Creators." % title
+    og_img = photo or OG_FALLBACK
+    return """<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Kit UGC — {title} · TTP Creators</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="{canonical}">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Media Kit UGC — {title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:image" content="{og_img}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="../../../assets/favicon-180.png?v=2">
+<link rel="stylesheet" href="../../_assets/mediakit-ugc.css">
+</head>
+<body>
+<div class="kit" id="kit"></div>
+<a class="pdf-btn" id="dl-pdf" href="media-kit-ugc-{build}.pdf" download="Media Kit UGC - {title}.pdf" aria-label="Télécharger le media kit UGC en PDF">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <polyline points="7 10 12 15 17 10"></polyline>
+    <line x1="12" y1="15" x2="12" y2="3"></line>
+  </svg>
+  Télécharger en PDF
+</a>
+<script>window.MK = {baked};</script>
+<script src="../../_assets/mediakit-ugc.js"></script>
+</body>
+</html>
+""".format(title=esc(title), desc=esc(desc), canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
+
+
 def agency_shell(creators, agency=None):
     """Deck MEDIA KIT AGENCE (mediakit/agence/index.html).
 
@@ -210,7 +260,7 @@ def agency_shell(creators, agency=None):
 """.format(desc=esc(desc), og=OG_FALLBACK, build=BUILD, baked=baked)
 
 
-def write_sitemap(slugs):
+def write_sitemap(slugs, ugc=None):
     """Écrit sitemap.xml à la RACINE du repo (la CI le copie dans dist/).
 
     Un sitemap ne peut référencer que des URLs de son propre dossier ou en dessous →
@@ -220,6 +270,7 @@ def write_sitemap(slugs):
     """
     urls = ["https://ttpcreators.pro/", "https://ttpcreators.pro/mentions-legales/"]
     urls += ["https://ttpcreators.pro/mediakit/%s/" % s for s in slugs]
+    urls += ["https://ttpcreators.pro/mediakit/%s/ugc/" % s for s in (ugc or [])]
     today = time.strftime("%Y-%m-%d")
     body = "".join("  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n" % (u, today) for u in urls)
     xml = (
@@ -234,7 +285,7 @@ def write_sitemap(slugs):
 
 def main():
     creators = fetch_creators()
-    used, out = set(), []
+    used, out, ugc_out = set(), [], []
     for c in creators:
         mk = c.get("mediakit") or {}
         base = mk.get("slug") or slugify((c.get("name") or "").split()[0] if c.get("name") else "")
@@ -249,6 +300,13 @@ def main():
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(shell(c, slug))
         out.append((c.get("name"), slug))
+        # Page UGC séparée — seulement si le créateur l'a activée dans l'app.
+        if (mk.get("ugc") or {}).get("enabled"):
+            ud = os.path.join(d, "ugc")
+            os.makedirs(ud, exist_ok=True)
+            with open(os.path.join(ud, "index.html"), "w", encoding="utf-8") as f:
+                f.write(ugc_shell(c, slug))
+            ugc_out.append(slug)
 
     # Deck AGENCE (toutes les créatrices dans un seul media kit).
     agency = fetch_agency()
@@ -261,8 +319,10 @@ def main():
     for name, slug in out:
         print("  /mediakit/%-20s ← %s" % (slug + "/", name))
     print("  /mediakit/agence/           ← Media Kit Agence (%d créatrices bakées)" % len(creators))
+    for slug in ugc_out:
+        print("  /mediakit/%s/ugc/          ← Media Kit UGC" % slug)
 
-    n = write_sitemap([slug for _, slug in out] + ["agence"])
+    n = write_sitemap([slug for _, slug in out] + ["agence"], ugc_out)
     print("sitemap.xml : %d URLs (racine du repo → copié dans dist/ par la CI)" % n)
 
 
