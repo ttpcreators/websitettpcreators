@@ -421,7 +421,9 @@ h2 {
   margin-top: 22px;
   font-size: clamp(2.1rem, 8.4vw, 6.6rem);
   font-weight: 600;
-  letter-spacing: -0.045em;
+  /* Inter Variable, tracking -77 (outil de design) = -0.077em */
+  letter-spacing: -0.077em;
+  font-optical-sizing: auto;
   line-height: 1.05;
   color: var(--ink);
   white-space: nowrap;
