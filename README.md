@@ -30,7 +30,7 @@ Pages + CNAME www) avec HTTPS forcé.
 |---|---|
 | Textes, nav, stats, roster de repli | `src/data.js` |
 | Textes du hero (titre, eyebrow, lead) | `src/components/Hero.jsx` |
-| Photos fondateurs | `public/assets/about/equipe.jpg` (Marc) / `gianni.jpg` |
+| Photos fondateurs | `public/assets/about/marc.jpg` (Marc) / `gianni.jpg` |
 | Photos créatrices | `public/assets/creators/*.jpg` (noms en minuscules !) |
 | Favicon | `public/assets/favicon.png` (carré, 512×512) |
 | Email de contact | `CONTACT_EMAIL` dans `src/data.js` |

@@ -8,8 +8,9 @@ import { PILLARS, asset } from '../data.js'
 // Si une photo manque (ex. gianni.jpg pas encore déposée dans
 // public/assets/about/), un placeholder à initiales prend le relais.
 const FOUNDERS = [
-  { name: 'Marc Maher', role: 'Co-founder', photo: 'assets/about/equipe.jpg' },
-  { name: 'Gianni', role: 'Co-founder', photo: 'assets/about/gianni.jpg' },
+  // pos = object-position : ajuste le cadrage vertical de chaque photo
+  { name: 'Marc Maher', role: 'Co-founder', photo: 'assets/about/marc.jpg', pos: 'center 62%' },
+  { name: 'Gianni', role: 'Co-founder', photo: 'assets/about/gianni.jpg', pos: 'center 30%' },
 ]
 
 const initials = (name) =>
@@ -61,6 +62,7 @@ function FounderPhoto() {
             key={f.photo}
             src={asset(f.photo)}
             alt={`${f.name}, ${f.role} de TTP Creators`}
+            style={{ objectPosition: f.pos }}
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}

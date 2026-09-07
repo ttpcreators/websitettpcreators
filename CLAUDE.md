@@ -26,7 +26,7 @@ npm run build      # tsc absent : vite build seul, dist/
   `CONTACT_EMAIL = partnerships@ttpcreators.pro` (source unique).
 - `src/App.css` — tout le style (classes par section). `src/index.css` — reset + tokens.
 - `src/components/` — un fichier par section + composants portés (voir ci-dessous)
-- `public/assets/` — images. `about/equipe.jpg` = Marc, `about/gianni.jpg` = Gianni,
+- `public/assets/` — images. `about/marc.jpg` = Marc, `about/gianni.jpg` = Gianni,
   `creators/*.jpg` = les 8 créatrices, `clients/*.png` = logos marques (blancs, colorés via
   mask CSS), `favicon.png` (unique, 512×512), `geo/ne_110m_land.json` (globe, servi en local)
 - `supabase/public_roster.sql` — vue à créer côté Supabase (voir Roster)
