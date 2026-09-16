@@ -5,6 +5,7 @@ import Navbar from './components/Navbar.jsx'
 import MenuOverlay from './components/MenuOverlay.jsx'
 import Hero from './components/Hero.jsx'
 import Clients from './components/Clients.jsx'
+import ParallaxGallery from './components/ParallaxGallery.jsx'
 import Manifesto from './components/Manifesto.jsx'
 import About from './components/About.jsx'
 import Services from './components/Services.jsx'
@@ -42,6 +43,7 @@ export default function App() {
       <main>
         <Hero />
         <Clients />
+        <ParallaxGallery />
         <Manifesto />
         <About />
         <Services />
