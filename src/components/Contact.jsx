@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import Reveal, { Eyebrow } from './Reveal.jsx'
 import BorderBeam from './BorderBeam.jsx'
@@ -24,6 +25,7 @@ export default function Contact() {
     const nom = String(data.get('nom') || '').trim()
     const email = String(data.get('email') || '').trim()
     const msg = String(data.get('message') || '').trim()
+    const handle = String(data.get('pseudo') || '').trim().replace(/^@+/, '')
     const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
     if (!nom || !okEmail || !msg) {
@@ -31,10 +33,17 @@ export default function Contact() {
       return
     }
 
+    if (profil === 'Créateur' && !handle) {
+      setNote({ ok: false, text: 'Merci d’indiquer ton @ (Instagram ou TikTok).' })
+      return
+    }
+
     if (!FORM_ENDPOINT) {
       const subject = encodeURIComponent(`Nouvelle demande — ${nom} (${profil})`)
       const body = encodeURIComponent(
-        `Nom : ${nom}\nEmail : ${email}\nProfil : ${profil}\n\n${msg}`,
+        `Nom : ${nom}\nEmail : ${email}\nProfil : ${profil}` +
+          (profil === 'Créateur' ? `\nCompte : @${handle}` : '') +
+          `\n\n${msg}`,
       )
       setNote({ loader: true, text: 'Ouverture de ton client mail…' })
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
@@ -49,6 +58,7 @@ export default function Contact() {
       setBusy(true)
       setNote({ loader: true, text: 'Envoi en cours…' })
       data.set('profil', profil)
+      if (profil === 'Créateur') data.set('pseudo', `@${handle}`)
       const res = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         body: data,
@@ -127,6 +137,28 @@ export default function Contact() {
                 ))}
               </div>
             </div>
+            <AnimatePresence initial={false}>
+              {profil === 'Créateur' && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <label className="field">
+                    <span>Ton @</span>
+                    <input
+                      name="pseudo"
+                      type="text"
+                      placeholder="@toncompte — Instagram ou TikTok"
+                      autoComplete="off"
+                      spellCheck={false}
+                    />
+                  </label>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <label className="field">
               <span>Message</span>
               <textarea name="message" rows={4} required />
