@@ -19,6 +19,7 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function has(v) { return v != null && String(v).trim() !== ""; }
   function num(v) { var n = parseFloat(String(v == null ? "" : v).replace(/\s/g, "").replace(",", ".")); return isFinite(n) ? n : 0; }
+  function zero(n) { return (n < 10 ? "0" : "") + n; }
   function firstName(name) { return String(name || "").trim().split(/\s+/)[0] || ""; }
 
   // Noms d'affichage personnalisés (une créatrice peut masquer son nom de famille).
@@ -65,6 +66,7 @@
       tkER: has(tk.er) ? tk.er : "",
       xfoll: xfoll,
       fromPrice: minPrice(mk),
+      casting: (mk.casting && typeof mk.casting === "object") ? mk.casting : {},
     };
   }
 
@@ -80,6 +82,13 @@
     });
     return best;
   }
+  // Critères du tableau comparatif — MÊME liste (clés + ordre) que CASTING_CRITERIA
+  // dans l'app (MediakitEditor.tsx). Valeur "oui" = coche, autre texte = précision.
+  var CASTING = [["sport", "Sport"], ["mode", "Mode"], ["beaute", "Beauté / skincare"], ["food", "Food"],
+    ["wellness", "Bien-être"], ["voyage", "Voyage"], ["deco", "Déco / maison"], ["famille", "Famille"],
+    ["animaux", "Animaux"], ["pedago", "Contenu pédagogique"]];
+  var CASTING_PER_SLIDE = 6;
+  var CHECK = '<svg class="ag-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-label="Oui"><path d="M4 12.5l5 5L20 6.5"/></svg>';
   function statBlock(n, cap) {
     return '<div class="ag-stat"><div class="n tnum">' + esc(n) + '</div><div class="c">' + cap + "</div></div>";
   }
@@ -132,6 +141,7 @@
         email: pick(contact.email, AG_DEFAULTS.contact.email),
       },
       photo: has(a.photo) ? a.photo : "",
+      concepts: (Array.isArray(a.concepts) ? a.concepts : []).filter(function (c) { return c && has(c.title); }),
     };
   }
 
@@ -218,7 +228,56 @@
       '<div class="ag-logos" data-reveal>' + logos + "</div></section>";
   }
 
-  function buildContact(ag) {
+  // Tableau comparatif « qui fait quoi » : créatrices ayant un profil casting,
+  // critères renseignés par au moins une, 6 colonnes max par diapo.
+  function buildCasting(creators, n) {
+    var list = creators.filter(function (c) { return CASTING.some(function (k) { return has(c.casting[k[0]]); }); });
+    if (!list.length) return "";
+    var rows = CASTING.filter(function (k) { return list.some(function (c) { return has(c.casting[k[0]]); }); });
+    // Répartition équilibrée (ex. 9 → 5 + 4, jamais 6 + 1).
+    var per = Math.ceil(list.length / Math.ceil(list.length / CASTING_PER_SLIDE));
+    var chunks = [];
+    for (var i = 0; i < list.length; i += per) chunks.push(list.slice(i, i + per));
+    return chunks.map(function (chunk, ci) {
+      var head = '<tr><th scope="col"></th>' + chunk.map(function (c) {
+        var av = c.photoUrl ? '<img src="' + esc(c.photoUrl) + '" alt="" loading="lazy">' : "";
+        return '<th scope="col"><span class="ag-avatar">' + av + '</span><span class="ag-th-name">' + esc(firstName(c.name)) +
+          "</span>" + (has(c.handle) ? '<span class="ag-th-handle">@' + esc(c.handle) + "</span>" : "") + "</th>";
+      }).join("") + "</tr>";
+      var body = rows.map(function (k) {
+        return '<tr><th scope="row">' + esc(k[1]) + "</th>" + chunk.map(function (c) {
+          var v = String(c.casting[k[0]] || "").trim();
+          var cell = !v ? "" : /^(oui|x|✓|yes)$/i.test(v) ? CHECK : '<span class="ag-cell-txt">' + esc(v) + "</span>";
+          return "<td>" + cell + "</td>";
+        }).join("") + "</tr>";
+      }).join("");
+      var part = chunks.length > 1 ? ' <span class="ag-part">' + (ci + 1) + "/" + chunks.length + "</span>" : "";
+      return '<section class="ag-slide ag-casting">' +
+        '<div class="ag-casting-head" data-reveal><p class="eyebrow">( ' + n + " ) — Casting</p>" +
+        '<div class="ag-brands-titlerow"><h2 class="display ag-brands-title">Qui fait quoi' + part + '</h2><hr class="rule"></div></div>' +
+        '<div class="ag-table-wrap" data-reveal><table class="ag-table"><thead>' + head + "</thead><tbody>" + body + "</tbody></table></div></section>";
+    }).join("");
+  }
+
+  // Une diapo par événement / concept porté par une créatrice.
+  function buildConcept(c, n) {
+    var photos = (Array.isArray(c.photos) ? c.photos : []).filter(has).slice(0, 4);
+    var hl = (Array.isArray(c.highlights) ? c.highlights : []).filter(has);
+    var paras = has(c.text) ? String(c.text).split(/\n\n+/).map(function (p) { return "<p>" + esc(p).replace(/\n/g, "<br>") + "</p>"; }).join("") : "";
+    var by = has(c.by) ? '<a class="ag-concept-by" href="https://instagram.com/' + esc(String(c.by).replace(/^@/, "")) + '" target="_blank" rel="noreferrer">by @' + esc(String(c.by).replace(/^@/, "")) + "</a>" : "";
+    var body = '<div class="ag-concept-body" data-reveal>' +
+      '<p class="eyebrow">( ' + n + " ) — Événements &amp; concepts</p>" +
+      '<h2 class="display ag-concept-title">' + esc(c.title) + "</h2>" + by +
+      (paras ? '<div class="ag-concept-text">' + paras + "</div>" : "") +
+      (hl.length ? '<ul class="ag-hl">' + hl.map(function (h) { return "<li>" + esc(h) + "</li>"; }).join("") + "</ul>" : "") +
+      (has(c.brands) ? '<p class="ag-concept-brands">Déjà accompagné par ' + esc(c.brands) + "</p>" : "") + "</div>";
+    var media = photos.length
+      ? '<div class="ag-concept-media n' + photos.length + '">' + photos.map(function (u) { return '<img src="' + esc(u) + '" alt="" loading="lazy">'; }).join("") + "</div>"
+      : "";
+    return '<section class="ag-slide ag-concept' + (photos.length ? "" : " no-media") + '">' + body + media + "</section>";
+  }
+
+  function buildContact(ag, n) {
     var ig = ag.contact.instagram, phone = ag.contact.phone, email = ag.contact.email;
     // Volet droit : photo d'agence si renseignée (page contact), sinon le monogramme.
     var media = has(ag.photo)
@@ -226,7 +285,7 @@
       : '<div class="ag-contact-media"><span class="ag-mono ag-contact-mono" aria-hidden="true"></span></div>';
     return '<section class="ag-slide ag-contact">' +
       '<div class="ag-contact-text" data-reveal>' +
-        '<p class="eyebrow">( 03 ) — Contact</p><h2 class="display ag-contact-title">Let\'s<br>Work !</h2>' +
+        '<p class="eyebrow">( ' + n + ' ) — Contact</p><h2 class="display ag-contact-title">Let\'s<br>Work !</h2>' +
         '<a class="ag-cblock" href="https://instagram.com/' + esc(ig) + '" target="_blank" rel="noreferrer"><span class="k">Social Media</span><span class="v">@' + esc(ig) + "</span></a>" +
         '<a class="ag-cblock" href="' + esc(telHref(phone)) + '"><span class="k">Mobile</span><span class="v tnum">' + esc(phone) + "</span></a>" +
         '<a class="ag-cblock" href="mailto:' + esc(email) + '"><span class="k">Email</span><span class="v">' + esc(email) + "</span></a>" +
@@ -254,8 +313,14 @@
     var kpis = { creators: shown.length, followers: fmtK(xtot) };
     var ag = agencyData();
 
+    // Numérotation continue des sections (01 agence, 02 partenaires, puis casting / concepts / contact).
+    var num = 3;
+    var casting = buildCasting(shown, zero(num));
+    if (casting) num++;
+    var concepts = ag.concepts.map(function (c) { return buildConcept(c, zero(num)); }).join("");
+    if (concepts) num++;
     return buildCover(ag) + buildIntro(kpis, ag) + buildBrands() +
-      shown.map(buildCreator).join("") + buildContact(ag);
+      shown.map(buildCreator).join("") + casting + concepts + buildContact(ag, zero(num));
   }
 
   var kit = document.getElementById("kit"), bar = document.getElementById("progress"), _io = null;
