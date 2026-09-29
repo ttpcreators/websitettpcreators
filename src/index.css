@@ -13,6 +13,8 @@
   --line: rgba(0, 0, 0, 0.1);
   --panel: #f4f4f6;
   --accent: #3d0000;
+  --dark: #141110; /* fond sombre (hero, footer) — réglable en un point */
+  --dark-ink: #f4f4f2;
 }
 
 html {
