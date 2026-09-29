@@ -75,7 +75,11 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
   réautoriser, NE PAS la supprimer, NE PAS déployer depuis elle.
 - ⚠️ NE PAS désactiver le workflow via l'API Actions : l'entité (par chemin de fichier) est
   partagée entre branches — ça tuerait aussi les déploiements de production.
-- **Media kit** : tout vit dans `mediakit/` (moteur `mediakit.js` générique, `_build_mediakits.py`
+- **Media kit** : DA **« Minuit »** alignée sur l'app TTP Suite depuis 2026-09-29 (fond #000,
+  surface #0a0a0a, filets #222, texte #fafafa, Inter, bandeaux de chiffres à filets — les
+  tokens historiques `--deep/--wine/--rose/--ink…` de `mediakit.css` sont REMAPPÉS vers cette
+  palette, ne pas les réinterpréter comme du bordeaux). Tout vit dans `mediakit/` (moteur
+  `mediakit.js` générique, `_build_mediakits.py`
   = 1 shell/créatrice depuis la vue anon `public_mediakit`, `_render_pdfs.py` = PDF 16:9). Les PDF
   sont gitignorés (régénérés en CI). Détails : la doc media kit côté app + la vue `public_mediakit`.
 - GitHub Pages est **sensible à la casse** des noms de fichiers (et macOS non) : renommage de
