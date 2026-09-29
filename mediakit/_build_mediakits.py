@@ -99,6 +99,16 @@ def fetch_agency():
         return {}
 
 
+# Thèmes de couleurs du media kit (choisis dans l'app : mediakit.theme / agence.theme).
+# « minuit » = défaut, sans attribut. Baké sur <html> → appliqué AVANT le 1er rendu
+# (pas de flash, et le PDF rendu en CI sort dans le bon thème).
+MK_THEMES = ("ivoire", "blanc", "bordeaux", "sauge")
+
+
+def theme_attr(t):
+    return ' data-mk-theme="%s"' % t if t in MK_THEMES else ""
+
+
 def shell(c, slug):
     name = c.get("name") or ""      # nom RÉEL (clé : baked window.MK, slug, fetch)
     disp = display_name(name)       # nom AFFICHÉ (titre / nom de fichier / méta)
@@ -117,7 +127,7 @@ def shell(c, slug):
         disp.title() if disp.isupper() else disp, (" · " + niche) if niche else "")
     og_img = photo or OG_FALLBACK
     return """<!doctype html>
-<html lang="fr">
+<html lang="fr"{theme}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,7 +159,7 @@ def shell(c, slug):
 <script src="../_assets/mediakit.js"></script>
 </body>
 </html>
-""".format(title=esc(disp.title() if disp.isupper() else disp), desc=esc(desc),
+""".format(theme=theme_attr(mk.get("theme")), title=esc(disp.title() if disp.isupper() else disp), desc=esc(desc),
            canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 
@@ -169,7 +179,7 @@ def ugc_shell(c, slug):
     desc = "Media kit UGC de %s — personnalité, quotidien, matériel et portfolio de contenus. TTP Creators." % title
     og_img = photo or OG_FALLBACK
     return """<!doctype html>
-<html lang="fr">
+<html lang="fr"{theme}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -200,7 +210,7 @@ def ugc_shell(c, slug):
 <script src="../../_assets/mediakit-ugc.js"></script>
 </body>
 </html>
-""".format(title=esc(title), desc=esc(desc), canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
+""".format(theme=theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc), canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 
 def agency_shell(creators, agency=None):
@@ -224,7 +234,7 @@ def agency_shell(creators, agency=None):
     )
     desc = "Media kit de l'agence TTP Creators — le roster complet, ses créatrices Sport & Lifestyle, audiences et marques partenaires."
     return """<!doctype html>
-<html lang="fr">
+<html lang="fr"{theme}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -257,7 +267,7 @@ def agency_shell(creators, agency=None):
 <script src="../_assets/mediakit-agence.js"></script>
 </body>
 </html>
-""".format(desc=esc(desc), og=OG_FALLBACK, build=BUILD, baked=baked)
+""".format(theme=theme_attr((agency or {}).get("theme")), desc=esc(desc), og=OG_FALLBACK, build=BUILD, baked=baked)
 
 
 def write_sitemap(slugs, ugc=None):

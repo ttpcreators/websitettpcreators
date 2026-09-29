@@ -13,6 +13,16 @@
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppenZnZ3ppZ2dzd2hyYnV5aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5Mzk2NjcsImV4cCI6MjA5ODUxNTY2N30.5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU";
 
   var d = document.documentElement;
+  // Thème de couleurs choisi dans l'app (mediakit.theme / agence.theme). Déjà baké sur
+  // <html> par le build ; ré-appliqué ici depuis la donnée (bakée puis live).
+  // ?theme=<nom> dans l'URL = aperçu d'un thème avant de l'enregistrer.
+  var MK_THEMES = ["ivoire", "blanc", "bordeaux", "sauge"];
+  var themePreview = (function () { try { return new URLSearchParams(location.search).get("theme"); } catch (e) { return null; } })();
+  function applyTheme(t) {
+    var v = themePreview || t;
+    if (MK_THEMES.indexOf(v) >= 0) d.setAttribute("data-mk-theme", v);
+    else d.removeAttribute("data-mk-theme");
+  }
   d.classList.add("js");
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -346,6 +356,7 @@
 
   // 1) Rendu immédiat depuis la donnée COMPLÈTE bakée → PDF déterministe.
   if (!window.MK_AGENCY) window.MK_AGENCY = { creators: [], clients: [], pillars: [], agency: {} };
+  applyTheme((window.MK_AGENCY.agency || {}).theme);
   paint(true);
   onScroll();
 
@@ -392,6 +403,7 @@
       .then(function (rows) {
         if (rows && rows[0] && rows[0].data) {
           window.MK_AGENCY.agency = rows[0].data;
+          applyTheme(rows[0].data.theme);
           paint(false);
           onScroll();
         }

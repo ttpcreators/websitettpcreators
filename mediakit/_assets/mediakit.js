@@ -11,6 +11,16 @@
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppenZnZ3ppZ2dzd2hyYnV5aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5Mzk2NjcsImV4cCI6MjA5ODUxNTY2N30.5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU";
 
   var d = document.documentElement;
+  // Thème de couleurs choisi dans l'app (mediakit.theme / agence.theme). Déjà baké sur
+  // <html> par le build ; ré-appliqué ici depuis la donnée (bakée puis live).
+  // ?theme=<nom> dans l'URL = aperçu d'un thème avant de l'enregistrer.
+  var MK_THEMES = ["ivoire", "blanc", "bordeaux", "sauge"];
+  var themePreview = (function () { try { return new URLSearchParams(location.search).get("theme"); } catch (e) { return null; } })();
+  function applyTheme(t) {
+    var v = themePreview || t;
+    if (MK_THEMES.indexOf(v) >= 0) d.setAttribute("data-mk-theme", v);
+    else d.removeAttribute("data-mk-theme");
+  }
   d.classList.add("js");
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -51,7 +61,8 @@
     youtube: [["Moyenne vues — vidéo", "avgViews"]],
   };
   var RATES_NOTE = "Tarifs indicatifs HT — des packages sont proposés selon le dispositif.";
-  var DONUT_COLORS = ["#fafafa", "#737373", "#3f3f46", "#a3a3a3", "#525252", "#e5e5e5"];
+  // Teintes de l'anneau : variables CSS du thème (--d1…--d6 dans mediakit.css).
+  var DONUT_COLORS = ["var(--d1)", "var(--d2)", "var(--d3)", "var(--d4)", "var(--d5)", "var(--d6)"];
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function num(v) { var n = parseFloat(String(v == null ? "" : v).replace(/\s/g, "").replace(",", ".")); return isFinite(n) ? n : 0; }
@@ -144,7 +155,7 @@
     var C = 502.65, off = 0, circles = '<circle cx="100" cy="100" r="80" fill="none" stroke="var(--track)" stroke-width="30"></circle>';
     formats.forEach(function (f, i) {
       var seg = (num(f.pct) / 100) * C;
-      circles += '<circle cx="100" cy="100" r="80" fill="none" stroke="' + DONUT_COLORS[i % DONUT_COLORS.length] +
+      circles += '<circle cx="100" cy="100" r="80" fill="none" style="stroke:' + DONUT_COLORS[i % DONUT_COLORS.length] +
         '" stroke-width="30" stroke-dasharray="' + seg.toFixed(1) + " " + C + '" stroke-dashoffset="' + (-off).toFixed(1) +
         '" transform="rotate(-90 100 100)"></circle>';
       off += seg;
@@ -328,6 +339,7 @@
   //    `mediakit`) → TOUTES les sections sont visibles tout de suite, sans attendre le
   //    réseau. C'est ce qui rend le PDF (rendu en CI) déterministe et jamais tronqué.
   var baked = window.MK || {};
+  applyTheme((baked.mediakit || {}).theme);
   paint(normalize(baked), true);
   onScroll();
 
@@ -363,7 +375,7 @@
         headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },
       })
         .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (rows) { if (rows && rows.length) { paint(normalize(rows[0]), false); onScroll(); } })
+        .then(function (rows) { if (rows && rows.length) { applyTheme((rows[0].mediakit || {}).theme); paint(normalize(rows[0]), false); onScroll(); } })
         .catch(function () {});
     } catch (e) {}
   }

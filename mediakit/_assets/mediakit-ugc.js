@@ -11,6 +11,16 @@
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppenZnZ3ppZ2dzd2hyYnV5aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5Mzk2NjcsImV4cCI6MjA5ODUxNTY2N30.5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU";
 
   var d = document.documentElement;
+  // Thème de couleurs choisi dans l'app (mediakit.theme / agence.theme). Déjà baké sur
+  // <html> par le build ; ré-appliqué ici depuis la donnée (bakée puis live).
+  // ?theme=<nom> dans l'URL = aperçu d'un thème avant de l'enregistrer.
+  var MK_THEMES = ["ivoire", "blanc", "bordeaux", "sauge"];
+  var themePreview = (function () { try { return new URLSearchParams(location.search).get("theme"); } catch (e) { return null; } })();
+  function applyTheme(t) {
+    var v = themePreview || t;
+    if (MK_THEMES.indexOf(v) >= 0) d.setAttribute("data-mk-theme", v);
+    else d.removeAttribute("data-mk-theme");
+  }
   d.classList.add("js");
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var CONTACT_EMAIL = "partnerships@ttpcreators.pro";
@@ -129,6 +139,7 @@
   function paint(x, animate) { kit.innerHTML = build(x); wireReveals(animate); }
 
   // 1) rendu immédiat depuis window.MK (baké, déterministe pour le PDF)
+  applyTheme(((window.MK || {}).mediakit || {}).theme);
   var baked = normalize(window.MK || {});
   paint(baked, false);
 
@@ -139,7 +150,7 @@
       headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },
     })
       .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (rows) { if (rows && rows[0]) paint(normalize(rows[0]), true); })
+      .then(function (rows) { if (rows && rows[0]) { applyTheme((rows[0].mediakit || {}).theme); paint(normalize(rows[0]), true); } })
       .catch(function () {});
   }
 })();
