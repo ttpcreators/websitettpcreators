@@ -44,7 +44,7 @@
       rows: [["Followers", "followers"], ["Taux d'engagement", "er"], ["Impressions — 30 jours", "impressions30j"]],
     },
   };
-  var DONUT_COLORS = ["#3d0000", "#e6d9d9", "#1a1a1a", "#8a2b3a", "#c98b96", "#5a1119"];
+  var DONUT_COLORS = ["#fafafa", "#737373", "#3f3f46", "#a3a3a3", "#525252", "#e5e5e5"];
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function num(v) { var n = parseFloat(String(v == null ? "" : v).replace(/\s/g, "").replace(",", ".")); return isFinite(n) ? n : 0; }

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap");
 
   @font-face {
     font-family: "Anton";
@@ -7,28 +8,34 @@
     src: url("anton.woff2") format("woff2");
   }
 
+  /* DA « Minuit » — alignée sur l'app TTP Suite (index.css .dark) :
+     fond #000 < surface #0a0a0a < tuile #141414, filets #222, texte #fafafa,
+     gris neutres, accent MONOCHROME (le blanc joue le rôle de l'ancien bordeaux).
+     Les noms de tokens historiques sont conservés (remappés) pour ne pas
+     toucher aux 500 lignes de géométrie web + print. */
   :root {
-    --deep: #3d0000;          /* bordeaux profond (sections sombres) */
-    --wine: #4d0a12;          /* bordeaux des grands titres sur blanc */
-    --rose: #e39aa8;          /* accent rosé, très parcimonieux */
-    --ink: #1c1517;           /* quasi-noir chaud (texte sur blanc) */
-    --muted: #8f868a;         /* gris chaud (labels) */
-    --line: #e7dede;          /* filets clairs */
-    --track: #ece3e3;         /* fond des barres */
-    --paper: #ffffff;
-    --on-deep: #f4ecec;
-    --on-deep-muted: rgba(244, 236, 236, .52);
-    --on-deep-line: rgba(244, 236, 236, .16);
+    --deep: #000000;          /* fond (hero, contact, couverture) */
+    --wine: #fafafa;          /* ex-bordeaux des titres → blanc Minuit */
+    --rose: #fafafa;          /* ex-accent rosé → accent monochrome */
+    --ink: #fafafa;           /* texte principal */
+    --muted: #a3a3a3;         /* gris labels (muted-foreground) */
+    --line: #222222;          /* filets */
+    --track: #262626;         /* fond des barres */
+    --paper: #0a0a0a;         /* surface (feuilles) */
+    --panel: #141414;         /* tuiles */
+    --on-deep: #fafafa;
+    --on-deep-muted: rgba(250, 250, 250, .55);
+    --on-deep-line: rgba(250, 250, 250, .14);
 
-    --mono: ui-monospace, "SF Mono", "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
-    --display: "Anton", "Arial Narrow", "Helvetica Neue Condensed", Impact, sans-serif;
+    --mono: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   * { box-sizing: border-box; }
 
   body {
     margin: 0;
-    background: #201013;
+    background: #000;
     color: var(--ink);
     font-family: var(--mono);
     -webkit-font-smoothing: antialiased;
@@ -51,16 +58,16 @@
   }
   .display {
     font-family: var(--display);
-    font-weight: 400;
-    letter-spacing: .01em;
-    line-height: .9;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: .95;
     text-transform: uppercase;
     text-wrap: balance;
     margin: 0;
   }
   .rule {
-    height: 2px;
-    background: var(--wine);
+    height: 1px;
+    background: var(--line);
     border: 0;
     flex: 1;
   }
@@ -83,7 +90,7 @@
   }
   .hero .eyebrow { color: var(--on-deep-muted); }
   .hero-name {
-    font-size: clamp(3.6rem, 11vw, 8.4rem);
+    font-size: clamp(2.8rem, 8vw, 6.2rem);
     color: #fff;
   }
   .hero-handle {
@@ -120,7 +127,7 @@
     color: var(--on-deep);
     padding: .62rem .95rem;
     border: 1px solid var(--on-deep-line);
-    border-radius: 2px;
+    border-radius: 999px;
   }
 
   .hero-media { position: relative; overflow: hidden; }
@@ -128,8 +135,8 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(120% 90% at 70% 20%, rgba(227,154,168,.12), transparent 60%),
-      linear-gradient(150deg, #5a1119 0%, #2c0709 100%);
+      radial-gradient(120% 90% at 70% 20%, rgba(250,250,250,.05), transparent 60%),
+      linear-gradient(150deg, #161616 0%, #050505 100%);
     display: grid;
     place-items: center;
   }
@@ -137,7 +144,7 @@
     content: "";
     position: absolute;
     inset: clamp(14px, 2vw, 26px);
-    border: 1px solid rgba(244, 236, 236, .28);
+    border: 1px solid rgba(250, 250, 250, .18);
     pointer-events: none;
   }
   .photo-note {
@@ -145,7 +152,7 @@
     font-size: .66rem;
     letter-spacing: .22em;
     text-transform: uppercase;
-    color: rgba(244, 236, 236, .5);
+    color: rgba(250, 250, 250, .45);
     text-align: center;
     padding: 0 1rem;
     line-height: 2;
@@ -157,6 +164,7 @@
     z-index: 2;
     background: var(--deep);
     color: var(--on-deep);
+    border: 1px solid var(--on-deep-line);
     font-size: .64rem;
     letter-spacing: .28em;
     text-transform: uppercase;
@@ -164,10 +172,11 @@
   }
 
   /* ======================================================= WHITE SECTIONS */
-  .sheet { padding: clamp(2.4rem, 5.5vw, 6rem) clamp(1.6rem, 6vw, 8rem); }
+  .sheet { padding: clamp(2.4rem, 5.5vw, 6rem) clamp(1.6rem, 6vw, 8rem); border-top: 1px solid var(--line); }
+  .contact { border-top: 1px solid var(--line); }
   .sec-head { display: flex; flex-direction: column; gap: 1rem; margin-bottom: clamp(2rem, 4vw, 3.2rem); }
   .sec-titlerow { display: flex; align-items: center; gap: 1.6rem; }
-  .sec-title { font-size: clamp(2.4rem, 6vw, 4.4rem); color: var(--wine); }
+  .sec-title { font-size: clamp(2rem, 4.6vw, 3.4rem); color: var(--wine); }
   .sec-tag {
     font-size: .68rem;
     letter-spacing: .26em;
@@ -212,12 +221,12 @@
   .gsplit-bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--track); }
   .gseg { height: 100%; }
   .gseg-f { background: var(--wine); }
-  .gseg-h { background: #bfa2a6; }
+  .gseg-h { background: #525252; }
   .gsplit-legend { display: flex; justify-content: space-between; gap: 1rem; font-size: .8rem; color: var(--ink); }
   .gl { display: flex; align-items: center; gap: .45rem; }
   .gdot { width: 9px; height: 9px; border-radius: 999px; flex: none; }
   .gdot-f { background: var(--wine); }
-  .gdot-h { background: #bfa2a6; }
+  .gdot-h { background: #525252; }
 
   /* Performance : donut des formats + KPI héro. */
   .perf-formats { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
@@ -241,8 +250,9 @@
   .plat-name { font-family: var(--display); font-size: clamp(1.9rem, 4vw, 2.8rem); color: var(--ink); text-transform: uppercase; line-height: 1; margin: .5rem 0 1.1rem; }
   .plat-kicker { font-size: .68rem; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); }
   .plat-intro { font-size: .9rem; line-height: 1.75; color: var(--ink); max-width: 44ch; margin: 0 0 clamp(1.6rem, 3vw, 2.4rem); }
-  .plat-tris { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.8rem; }
-  .tri { border-top: 2px solid var(--wine); padding-top: .8rem; }
+  /* Bandeau de chiffres à filets, comme l'Aperçu de l'app (StatsBento). */
+  .plat-tris { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 1.8rem; }
+  .tri { background: var(--paper); padding: 1rem 1.15rem; }
   .tri-num { font-family: var(--display); font-size: clamp(1.9rem, 4vw, 2.7rem); color: var(--wine); line-height: 1; }
   .tri-cap { font-size: .74rem; line-height: 1.5; color: var(--ink); margin-top: .5rem; }
   .plat-rows { display: flex; flex-direction: column; }
@@ -259,19 +269,19 @@
     background: #0e0e10;
     border-radius: 40px;
     padding: 11px;
-    box-shadow: 0 26px 60px -28px rgba(24, 18, 20, .34);
+    border: 1px solid var(--line);
     position: relative;
   }
   .phone-screen {
     width: 100%; height: 100%;
     border-radius: 30px;
-    background: linear-gradient(180deg, #f6f2f2, #efe6e6);
+    background: linear-gradient(180deg, #161616, #0a0a0a);
     display: grid;
     place-items: center;
   }
   .phone-screen span {
     font-size: .66rem; letter-spacing: .22em; text-transform: uppercase;
-    color: #b7a9aa; text-align: center; line-height: 2; padding: 0 1.6rem;
+    color: #737373; text-align: center; line-height: 2; padding: 0 1.6rem;
   }
   .phone::before {
     content: ""; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
@@ -288,8 +298,8 @@
     place-items: center;
     overflow: hidden;
     border: 1px solid var(--line);
-    border-radius: 10px;
-    background: #fff;
+    border-radius: 12px;
+    background: var(--panel);
   }
   .stat-shot img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
@@ -309,7 +319,7 @@
     font-family: var(--mono);
     font-size: .78rem;
     letter-spacing: .04em;
-    color: #b3a7a9;
+    color: #737373;
     text-align: center;
   }
 
@@ -322,7 +332,7 @@
   }
   .contact-text { padding: clamp(2.4rem, 5vw, 4.5rem); display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
   .contact .eyebrow { color: var(--on-deep-muted); }
-  .contact-title { font-size: clamp(3rem, 8vw, 6rem); color: #fff; }
+  .contact-title { font-size: clamp(2.4rem, 6vw, 4.6rem); color: #fff; }
   .contact-block { display: flex; flex-direction: column; gap: .3rem; }
   .contact-block .k { font-size: .66rem; letter-spacing: .26em; text-transform: uppercase; color: var(--on-deep-muted); }
   .contact-block .v { font-size: 1.02rem; letter-spacing: .04em; color: var(--on-deep); }
@@ -337,7 +347,7 @@
 
   .footer {
     grid-column: 1 / -1;
-    background: #2c0709;
+    background: #0a0a0a;
     padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.6rem, 5vw, 4.5rem);
     display: flex; flex-direction: column; gap: .5rem;
     border-top: 1px solid var(--on-deep-line);
@@ -348,14 +358,14 @@
   .pdf-btn {
     position: fixed; right: 22px; bottom: 22px; z-index: 50;
     font-family: var(--mono); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
-    color: #fff; background: var(--deep); text-decoration: none;
-    border: 1px solid rgba(255,255,255,.14);
-    padding: .95rem 1.4rem; border-radius: 3px; cursor: pointer;
+    color: #0a0a0a; background: #fafafa; text-decoration: none;
+    border: 1px solid #fafafa;
+    padding: .95rem 1.4rem; border-radius: 10px; cursor: pointer;
     box-shadow: 0 16px 40px -14px rgba(0,0,0,.6);
     display: inline-flex; align-items: center; gap: .6rem;
     transition: transform .15s ease, background .15s ease;
   }
-  .pdf-btn:hover { transform: translateY(-2px); background: #520606; }
+  .pdf-btn:hover { transform: translateY(-2px); background: #ffffff; }
   .pdf-btn:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
   .pdf-btn svg { width: 15px; height: 15px; }
 
@@ -385,14 +395,14 @@
 
   .progress {
     position: fixed; top: 0; left: 0; height: 3px; width: 0;
-    background: #b83a5a; z-index: 60;
+    background: #fafafa; z-index: 60;
     transition: width .12s linear;
   }
 
   .tag, .logo-cell span, .plat-row, .send, .pdf-btn { transition: all .2s ease; }
   .tag:hover { border-color: var(--rose); transform: translateY(-1px); }
   .logo-cell:hover span { color: var(--wine); }
-  .plat-row:hover { background: #faf6f6; }
+  .plat-row:hover { background: var(--panel); }
 
   html.js [data-reveal] {
     opacity: 0; transform: translateY(22px);
@@ -414,7 +424,7 @@
   @media print {
     @page { size: 338.67mm 190.5mm; margin: 0; }   /* 16:9 paysage */
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    html, body { background: #fff; margin: 0; width: 100%; }
+    html, body { background: #000; margin: 0; width: 100%; }
     .kit { max-width: none; width: 100%; }
     .pdf-btn, .progress { display: none !important; }
     [data-reveal] { opacity: 1 !important; transform: none !important; }
@@ -451,13 +461,13 @@
     .aud-group { gap: 4.5mm !important; }
     .aud-foot { margin-top: 9mm !important; padding-top: 4mm !important; }
     .plat-intro { margin-bottom: 7mm !important; }
-    .plat-tris { margin-bottom: 7mm !important; gap: 6mm !important; }
+    .plat-tris { margin-bottom: 7mm !important; gap: 1px !important; }
 
     /* Échelle typographique de la diapo 16:9 — plus affirmée, remplit mieux la diapo. */
-    .hero-name { font-size: 52pt; }
-    .contact-title { font-size: 50pt; }
-    .sec-title { font-size: 33pt; }
-    .plat-name { font-size: 22pt; margin: 3mm 0 !important; }
+    .hero-name { font-size: 38pt; }
+    .contact-title { font-size: 36pt; }
+    .sec-title { font-size: 24pt; }
+    .plat-name { font-size: 18pt; margin: 3mm 0 !important; }
     .big-stat { font-size: 24pt; }
     .kpi-hero .big-stat { font-size: 34pt; }
     .tri-num, .plat-row-val { font-size: 19pt; }
@@ -480,7 +490,7 @@
     .bar-track { height: 3mm !important; }
     .gsplit-bar { height: 3.8mm !important; }
     .gsplit { gap: 2.5mm !important; }
-    .tri { padding-top: 3mm !important; }
+    .tri { padding: 3mm 4mm !important; }
     .tri-cap { margin-top: 2mm !important; }
     .plat-row { padding: 3mm 0 !important; }
     .stat-cap { margin-top: 2mm !important; }
