@@ -64,9 +64,22 @@
       igER: has(ig.er) ? ig.er : "",
       tkER: has(tk.er) ? tk.er : "",
       xfoll: xfoll,
+      fromPrice: minPrice(mk),
     };
   }
 
+  // Plus petit prix numérique de la grille tarifaire (sauf si masquée) → « à partir de ».
+  function minPrice(mk) {
+    if (!mk || mk.hideRates || !Array.isArray(mk.rates)) return 0;
+    var best = 0;
+    mk.rates.forEach(function (r) {
+      var s = String((r && r.price) || "").replace(/[\s\u202f\u00a0]/g, "");
+      if (!/^[\d.,]+(€|eur)?(ht)?$/i.test(s)) return;
+      var n = num(s.replace(/(€|eur)?(ht)?$/i, ""));
+      if (n > 0 && (!best || n < best)) best = n;
+    });
+    return best;
+  }
   function statBlock(n, cap) {
     return '<div class="ag-stat"><div class="n tnum">' + esc(n) + '</div><div class="c">' + cap + "</div></div>";
   }
@@ -136,6 +149,7 @@
     if (has(c.igER)) stats += statBlock(c.igER, "Taux d'engagement<br>Instagram");
     if (has(c.tkER)) stats += statBlock(c.tkER, "Taux d'engagement<br>TikTok");
     if (c.xfoll > 0) stats += statBlock(fmtK(c.xfoll), "Followers<br>cross-plateformes");
+    if (c.fromPrice > 0) stats += statBlock(c.fromPrice.toLocaleString("fr-FR") + " €", "À partir de<br>(HT, par contenu)");
     var statsHTML = stats ? '<div class="ag-stats">' + stats + "</div>" : "";
     var niche = has(c.niche) ? '<span class="ag-niche">' + esc(c.niche) + "</span>" : "";
 

@@ -44,6 +44,13 @@
       rows: [["Followers", "followers"], ["Taux d'engagement", "er"], ["Impressions — 30 jours", "impressions30j"]],
     },
   };
+  // Moyennes par contenu (saisies dans l'app) : lignes ajoutées seulement si remplies.
+  var PLAT_AVG = {
+    instagram: [["Moyenne vues — réel", "avgViews"], ["Moyenne vues — story", "avgStoryViews"]],
+    tiktok: [["Moyenne vues — vidéo", "avgViews"], ["Moyenne likes — vidéo", "avgLikes"]],
+    youtube: [["Moyenne vues — vidéo", "avgViews"]],
+  };
+  var RATES_NOTE = "Tarifs indicatifs HT — des packages sont proposés selon le dispositif.";
   var DONUT_COLORS = ["#fafafa", "#737373", "#3f3f46", "#a3a3a3", "#525252", "#e5e5e5"];
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -56,6 +63,17 @@
   // N'affecte QUE l'affichage ; la recherche par nom (fetch public_mediakit) garde le nom RÉEL.
   var NAME_OVERRIDES = { "lucie botans": "LUCIE BOTS" };
   function displayName(n) { return NAME_OVERRIDES[String(n || "").trim().toLowerCase()] || n; }
+  // "1500" → { amount: "1 500 €", ht: true } ; texte libre ("Sur devis") gardé tel quel.
+  function fmtPrice(v) {
+    var s = String(v == null ? "" : v).trim();
+    var m = /^([\d\s.,\u202f\u00a0]+)\s*(€|eur)?\s*(ht)?$/i.exec(s);
+    if (!m) return { amount: s, ht: false };
+    var n = num(m[1].replace(/[\u202f\u00a0]/g, ""));
+    if (!n) return { amount: s, ht: false };
+    var txt;
+    try { txt = n.toLocaleString("fr-FR", { maximumFractionDigits: 2 }); } catch (e) { txt = String(n); }
+    return { amount: txt + " €", ht: true };
+  }
   function zero(n) { return (n < 10 ? "0" : "") + n; }
   function monthFR() { try { return new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" }); } catch (e) { return ""; } }
   function profileUrl(handle, platform) {
@@ -85,6 +103,8 @@
       photos: mk.photos || {},
       // Captures d'insights (6 max) saisies dans l'app — section masquée si vide.
       statsShots: (arr(mk.statsShots) || []).filter(Boolean).slice(0, 6),
+      rates: mk.hideRates ? [] : (arr(mk.rates) || []).filter(function (r) { return r && has(r.label) && has(r.price); }),
+      ratesNote: has(mk.ratesNote) ? mk.ratesNote : RATES_NOTE,
     };
   }
 
@@ -206,7 +226,8 @@
         ? '<div class="sec-head" data-reveal><p class="eyebrow">( 03 ) — Par plateforme</p><div class="sec-titlerow"><h2 class="display sec-title">Les chiffres</h2><hr class="rule"></div></div>'
         : "";
       var tris = lay.tris.map(function (t) { return '<div class="tri"><div class="tri-num tnum">' + val(p[t[1]]) + '</div><div class="tri-cap">' + esc(t[0]) + "</div></div>"; }).join("");
-      var rows = lay.rows.map(function (r) { return '<div class="plat-row"><span class="plat-row-label">' + esc(r[0]) + '</span><span class="plat-row-val tnum">' + val(p[r[1]]) + "</span></div>"; }).join("");
+      var rowDefs = lay.rows.concat((PLAT_AVG[p.key] || []).filter(function (r) { return has(p[r[1]]); }));
+      var rows = rowDefs.map(function (r) { return '<div class="plat-row"><span class="plat-row-label">' + esc(r[0]) + '</span><span class="plat-row-val tnum">' + val(p[r[1]]) + "</span></div>"; }).join("");
       var shot = data.photos[p.key];
       var phone = shot
         ? '<div class="phone"><div class="phone-screen"><img src="' + esc(shot) + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:30px"></div></div>'
@@ -216,7 +237,7 @@
         '<p class="plat-kicker">Plateforme ' + zero(i + 1) + " / " + zero(n) + "</p>" +
         '<div class="plat-name">' + esc(PLAT_LABEL[p.key] || p.key) + "</div>" +
         '<p class="plat-intro">' + esc(PLAT_INTRO[p.key] || "") + "</p>" +
-        '<div class="plat-tris">' + tris + '</div><div class="plat-rows">' + rows + "</div></div>" +
+        '<div class="plat-tris">' + tris + '</div><div class="plat-rows' + (rowDefs.length > 3 ? " two" : "") + '">' + rows + "</div></div>" +
         '<div class="plat-media phone-wrap">' + phone + "</div></div></section>";
     }).join("");
   }
@@ -249,9 +270,26 @@
       '<div class="logo-grid" data-reveal>' + cells + "</div></section>";
   }
 
+  function buildRates(data) {
+    var rates = data.rates;
+    if (!rates.length) return "";
+    var cells = rates.map(function (r) {
+      var p = fmtPrice(r.price);
+      return '<div class="rate"><span class="rate-label">' + esc(r.label) + "</span>" +
+        '<div><div class="rate-price tnum">' + esc(p.amount) + (p.ht ? "<small>HT</small>" : "") + "</div>" +
+        (has(r.detail) ? '<p class="rate-detail">' + esc(r.detail) + "</p>" : "") + "</div></div>";
+    }).join("");
+    return '<section class="sheet rates"><div class="sec-head" data-reveal>' +
+      '<p class="eyebrow">( 06 ) — Collaborer</p><div class="sec-titlerow">' +
+      '<h2 class="display sec-title">Tarifs</h2><hr class="rule"><span class="sec-tag">' +
+      rates.length + " prestation" + (rates.length > 1 ? "s" : "") + "</span></div></div>" +
+      '<div class="rates-grid" data-reveal>' + cells + "</div>" +
+      '<p class="rates-note">' + esc(data.ratesNote) + "</p></section>";
+  }
+
   function buildContact(data) {
     return '<section class="contact"><div class="contact-text" data-reveal>' +
-      '<p class="eyebrow">( 06 ) — Contact</p><h2 class="display contact-title">Let\'s<br>Work !</h2>' +
+      '<p class="eyebrow">( ' + (data.rates.length ? "07" : "06") + ' ) — Contact</p><h2 class="display contact-title">Let\'s<br>Work !</h2>' +
       '<div class="contact-block"><span class="k">Social Media</span><a class="v contact-link" href="https://instagram.com/ttpcreators" target="_blank" rel="noreferrer">@ttpcreators</a></div>' +
       '<div class="contact-block"><span class="k">Mobile</span><a class="v contact-link tnum" href="tel:+33766259803">07 66 25 98 03</a></div>' +
       '<div class="contact-block"><span class="k">Email</span><a class="v contact-link" href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a></div></div>' +
@@ -261,7 +299,7 @@
   }
 
   function build(data) {
-    return buildHero(data) + buildAudience(data) + buildPlatforms(data) + buildStats(data) + buildBrands(data) + buildContact(data);
+    return buildHero(data) + buildAudience(data) + buildPlatforms(data) + buildStats(data) + buildBrands(data) + buildRates(data) + buildContact(data);
   }
 
   var kit = document.getElementById("kit"), bar = document.getElementById("progress"), _io = null;
