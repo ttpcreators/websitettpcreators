@@ -6,6 +6,7 @@ import { asset } from '../data.js'
 // Services façon template « Ollef » : lignes géantes empilées (l'active en
 // encre, les autres estompées), image + légende à droite qui suivent la
 // sélection. Survol au desktop, défilement auto sinon.
+// Photos coulisses fournies par Marc (assets/services/), une par métier.
 
 const OFFER = [
   {
@@ -13,28 +14,28 @@ const OFFER = [
     label: 'Talent Management',
     caption:
       "Carrière, négociations, planning et revenus : on gère la structure, les créatrices se concentrent sur la création.",
-    photo: 'assets/creators/justine.jpg',
+    photo: 'assets/services/talent.jpg',
   },
   {
     key: 'production',
     label: 'Production',
     caption:
       "Direction artistique, tournage, montage — du contenu prêt à performer, pensé pour chaque plateforme.",
-    photo: 'assets/creators/margaux.jpg',
+    photo: 'assets/services/production.jpg',
   },
   {
     key: 'social',
     label: 'Social Media',
     caption:
       "Ligne éditoriale, formats, calendrier et lecture des performances : une croissance qui ne doit rien au hasard.",
-    photo: 'assets/creators/lucie.jpg',
+    photo: 'assets/services/social.jpg',
   },
   {
     key: 'partenariats',
     label: 'Partenariats',
     caption:
       "Sourcing, brief, activation et reporting — les bonnes marques connectées aux bonnes créatrices.",
-    photo: 'assets/creators/irina.jpg',
+    photo: 'assets/services/partenariats.jpg',
   },
 ]
 
