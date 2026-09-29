@@ -254,6 +254,69 @@ h2 {
   padding-right: 12px;
 }
 
+/* Liens centrés (desktop) + CTA souligné, façon Ollef */
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 34px);
+}
+
+.nav-link {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  transition: opacity 0.25s;
+}
+
+.nav-link:hover {
+  opacity: 0.6;
+}
+
+.nav-cta2 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity 0.25s;
+}
+
+.nav-cta2:hover {
+  opacity: 0.6;
+}
+
+/* Mode sombre : la nav devient claire au-dessus du hero noir */
+.navbar-dark .nav-link,
+.navbar-dark .nav-cta2 {
+  color: #f4f4f2;
+}
+
+.navbar-dark .menu-btn {
+  background: #f4f4f2;
+}
+
+.navbar-dark .menu-btn-circle {
+  background: #0a0a0b;
+  color: #f4f4f2;
+}
+
+.navbar-dark .menu-btn-label {
+  color: #0a0a0b;
+}
+
+@media (min-width: 900px) {
+  .nav-center {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: none;
+  }
+}
+
 /* ── Menu plein écran ──────────────────────────────────── */
 
 .overlay {
@@ -336,131 +399,88 @@ h2 {
   color: var(--ink);
 }
 
-/* ── Hero (motion design épuré) ────────────────────────── */
+/* ── Hero (éditorial sombre, direction « Ollef ») ──────── */
 
 .hero {
   position: relative;
   min-height: 100svh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #ffffff;
-  padding: 110px 0 90px;
-}
-
-/* halos de lumière ambiante */
-.hero-aurora {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* pas de filter:blur (très coûteux en GPU) : les dégradés radiaux
-   s'estompent déjà tout seuls — même rendu, bien plus fluide */
-.aur {
-  position: absolute;
-  display: block;
-  border-radius: 50%;
-  will-change: transform;
-}
-
-.aur-1 {
-  width: clamp(320px, 40vw, 560px);
-  height: clamp(320px, 40vw, 560px);
-  left: 12%;
-  top: 6%;
-  background: radial-gradient(circle, rgba(184, 58, 90, 0.28), transparent 65%);
-}
-
-.aur-2 {
-  width: clamp(380px, 46vw, 660px);
-  height: clamp(380px, 46vw, 660px);
-  right: 6%;
-  top: 26%;
-  background: radial-gradient(circle, rgba(61, 0, 0, 0.2), transparent 65%);
-}
-
-.aur-3 {
-  width: clamp(300px, 36vw, 520px);
-  height: clamp(300px, 36vw, 520px);
-  left: 26%;
-  bottom: 0%;
-  background: radial-gradient(circle, rgba(214, 178, 166, 0.34), transparent 65%);
-}
-
-.hero-center {
-  position: relative;
-  z-index: 10;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 0 20px;
-  max-width: 1100px;
+  justify-content: space-between;
+  background: #0a0a0b;
+  color: #f4f4f2;
+  overflow: hidden;
+  padding: calc(74px + 5vh) clamp(20px, 3.4vw, 48px) clamp(16px, 2.6vh, 30px);
 }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 13px;
-  color: var(--muted);
+.hero-top {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.hero-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
+.hero-statement {
+  width: min(620px, 100%);
+  font-size: clamp(21px, 2.5vw, 33px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: #e9e9e6;
+  text-wrap: balance;
 }
 
-.hero-h1 {
-  margin-top: 22px;
-  font-size: clamp(2.1rem, 8.4vw, 6.6rem);
+.hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.hero-wordmark {
+  font-size: clamp(7.5rem, 30vw, 29rem);
   font-weight: 600;
-  /* Inter Variable, tracking -77 (outil de design) = -0.077em */
-  letter-spacing: -0.077em;
+  letter-spacing: -0.055em;
   font-optical-sizing: auto;
-  line-height: 1.05;
-  color: var(--ink);
+  line-height: 0.78;
+  color: #f4f4f2;
+  user-select: none;
   white-space: nowrap;
+  margin-left: -0.04em;
 }
 
-/* machine à écrire : le fantôme réserve la largeur, le tapé se superpose */
-.hero-h1-type {
-  position: relative;
+.hero-r {
   display: inline-block;
+  font-size: 0.13em;
+  font-weight: 600;
+  letter-spacing: 0;
+  vertical-align: top;
+  transform: translateY(0.55em);
+  margin-left: 0.12em;
 }
 
-.hh-ghost {
-  visibility: hidden;
-}
-
-.hh-typed {
-  position: absolute;
-  left: 0;
-  top: 0;
+.hero-scroll {
+  flex-shrink: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #cfcfcb;
   white-space: nowrap;
+  padding-bottom: 0.5em;
+  transition: color 0.25s;
 }
 
-.hero-caret {
-  display: inline-block;
-  width: 0.05em;
-  min-width: 3px;
-  height: 0.74em;
-  margin-left: 0.05em;
-  background: var(--accent);
-  vertical-align: -0.04em;
-  animation: caret-blink 1s steps(2, start) infinite;
+.hero-scroll:hover {
+  color: #ffffff;
 }
 
-@keyframes caret-blink {
-  50% {
-    opacity: 0;
-  }
+/* dégradé bordeaux (utilisé par la galerie parallax) */
+.hh-grad {
+  background: linear-gradient(105deg, #5a0f26 0%, #8c1d3f 55%, #3d0000 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nobr {
+  white-space: nowrap;
 }
 
 .sr-only {
@@ -475,78 +495,28 @@ h2 {
   border: 0;
 }
 
-/* reflet dégradé qui traverse lentement « Process. » */
-.hh-grad {
-  background: linear-gradient(
-    100deg,
-    #0b0b0d 0%,
-    #3d0000 32%,
-    #b83a5a 50%,
-    #3d0000 68%,
-    #0b0b0d 100%
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: hh-sheen 7s ease-in-out infinite;
-}
-
-@keyframes hh-sheen {
-  0%,
-  100% {
-    background-position: 0% 50%;
+@media (max-width: 767px) {
+  .hero {
+    padding-top: calc(66px + 3vh);
   }
-  50% {
-    background-position: 100% 50%;
+
+  .hero-statement {
+    font-size: 19px;
   }
-}
 
-.hero-lead {
-  margin-top: 26px;
-  font-size: 17px;
-  line-height: 1.6;
-  color: rgba(11, 11, 13, 0.6);
-  max-width: 68ch;
-}
+  .hero-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
 
-/* segment insécable : passe à la ligne en entier, jamais coupé au milieu */
-.nobr {
-  white-space: nowrap;
-}
+  .hero-wordmark {
+    font-size: clamp(6rem, 38vw, 11rem);
+  }
 
-.hero-ctas {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 34px;
-  flex-wrap: wrap;
-}
-
-.hero-cue {
-  position: absolute;
-  bottom: 26px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--faint);
-  transition: color 0.25s;
-}
-
-.hero-cue:hover {
-  color: var(--ink);
-}
-
-.hero-cue-ic {
-  display: flex;
+  .hero-scroll {
+    align-self: flex-end;
+  }
 }
 
 /* ── Bande clients (sombre) ────────────────────────────── */

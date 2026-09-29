@@ -1,168 +1,55 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { ChevronDown } from 'lucide-react'
-import BorderBeam from './BorderBeam.jsx'
+import { motion, useReducedMotion } from 'motion/react'
 
-// Hero « motion design » : titre « Trust The Process. » (initiales TTP)
-// tapé à la machine avec curseur bordeaux, reflet dégradé animé sur
-// « Process. », halos ambiants, fondu/rétrécissement au scroll.
+// Hero éditorial sombre (direction template « Ollef » choisie par Marc) :
+// nav minimale, paragraphe-mission en haut à droite, logotype géant TTP®
+// en bas, « Scroller pour explorer ». Fond noir, typo Inter Variable serrée.
 
-const EASE_SOFT = [0.22, 1, 0.36, 1]
-
-const TITLE = 'Trust The Process.'
-const GRAD_FROM = TITLE.indexOf('Process') // début de la partie en dégradé
-
-// Effet machine à écrire : un fantôme invisible réserve la largeur finale
-// (le bloc centré ne bouge pas), le texte tapé se superpose par-dessus.
-function TypeTitle({ reduce, startDelay = 150, speed = 55 }) {
-  const [n, setN] = useState(reduce ? TITLE.length : 0)
-  const [done, setDone] = useState(reduce)
-
-  useEffect(() => {
-    if (reduce) return
-    let interval
-    let endTimeout
-    const start = setTimeout(() => {
-      let i = 0
-      interval = setInterval(() => {
-        i += 1
-        setN(i)
-        if (i >= TITLE.length) {
-          clearInterval(interval)
-          endTimeout = setTimeout(() => setDone(true), 900)
-        }
-      }, speed)
-    }, startDelay)
-    return () => {
-      clearTimeout(start)
-      clearTimeout(endTimeout)
-      if (interval) clearInterval(interval)
-    }
-  }, [reduce, startDelay, speed])
-
-  const typed = TITLE.slice(0, n)
-  const head = typed.slice(0, GRAD_FROM)
-  const tail = typed.slice(GRAD_FROM)
-
-  return (
-    <h1 className="hero-h1 hero-h1-type">
-      <span className="hh-ghost" aria-hidden="true">
-        {TITLE}
-      </span>
-      <span className="hh-typed" aria-hidden="true">
-        {head}
-        {tail && <span className="hh-grad">{tail}</span>}
-        {!done && <span className="hero-caret" />}
-      </span>
-      <span className="sr-only">{TITLE}</span>
-    </h1>
-  )
-}
-
-// Bloc qui apparaît en fondu + léger déflou, sans découpe par mot
-function BlurIn({ children, delay, reduce, className, y = 14 }) {
-  return (
-    <motion.div
-      className={className}
-      initial={reduce ? false : { opacity: 0, y, filter: 'blur(8px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{ delay, duration: 0.9, ease: EASE_SOFT }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-function Aurora({ reduce }) {
-  const drift = (path, duration) =>
-    reduce
-      ? {}
-      : {
-          animate: path,
-          transition: { duration, repeat: Infinity, ease: 'easeInOut' },
-        }
-  return (
-    <div className="hero-aurora" aria-hidden="true">
-      <motion.span
-        className="aur aur-1"
-        {...drift({ x: [0, 70, -40, 0], y: [0, -50, 30, 0], scale: [1, 1.12, 0.95, 1] }, 24)}
-      />
-      <motion.span
-        className="aur aur-2"
-        {...drift({ x: [0, -60, 40, 0], y: [0, 40, -30, 0], scale: [1, 0.94, 1.1, 1] }, 30)}
-      />
-      <motion.span
-        className="aur aur-3"
-        {...drift({ x: [0, 50, -50, 0], y: [0, -30, 20, 0], scale: [1, 1.08, 0.96, 1] }, 20)}
-      />
-    </div>
-  )
-}
+const EASE = [0.22, 1, 0.36, 1]
 
 export default function Hero() {
   const reduce = useReducedMotion()
-  const ref = useRef(null)
 
-  // au scroll : le bloc central rétrécit et s'estompe, façon page produit Apple
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  })
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92])
-  const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0])
-  const y = useTransform(scrollYProgress, [0, 1], [0, -60])
-  const contentStyle = reduce ? {} : { scale, opacity, y }
-
-  const scrollDown = () =>
-    window.scrollTo({ top: window.innerHeight * 0.96, behavior: 'smooth' })
+  const scrollDown = () => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+  }
 
   return (
-    <section className="hero" id="hero" ref={ref}>
-      <Aurora reduce={reduce} />
-
-      <motion.div className="hero-center" style={contentStyle}>
-        <BlurIn className="hero-eyebrow" delay={0.05} reduce={reduce}>
-          <span className="hero-dot" />
-          <span>Agence de talent management</span>
-        </BlurIn>
-
-        <TypeTitle reduce={reduce} />
-
-        <BlurIn className="hero-lead" delay={1.2} reduce={reduce}>
-          L'agence qui accompagne tes créateurs préférés.
-          <br />
-          Image, partenariats, croissance.
-        </BlurIn>
-
-        <BlurIn className="hero-ctas" delay={1.45} reduce={reduce} y={10}>
-          <a className="btn btn-dark" href="#roster">
-            Découvrir le roster
-          </a>
-          <a className="btn btn-ghost" href="#contact">
-            Travailler avec nous
-            <BorderBeam />
-          </a>
-        </BlurIn>
-      </motion.div>
-
-      <motion.button
-        className="hero-cue"
-        type="button"
-        aria-label="Faire défiler"
-        onClick={scrollDown}
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.9, duration: 1 }}
-      >
-        <span>Découvrir</span>
-        <motion.span
-          className="hero-cue-ic"
-          animate={reduce ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+    <section className="hero" id="hero">
+      <div className="hero-top">
+        <motion.p
+          className="hero-statement"
+          initial={reduce ? false : { opacity: 0, y: 26 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 1, ease: EASE }}
         >
-          <ChevronDown size={16} strokeWidth={2} />
-        </motion.span>
-      </motion.button>
+          On transforme les créatrices en marques. Chaque détail — image, contenus,
+          partenariats — est façonné pour connecter les bonnes marques aux bonnes
+          créatrices, et faire durer ce qui marche.
+        </motion.p>
+      </div>
+
+      <div className="hero-bottom">
+        <motion.h1
+          className="hero-wordmark"
+          initial={reduce ? false : { opacity: 0, y: '16%' }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 1.2, ease: EASE }}
+        >
+          TTP<span className="hero-r">®</span>
+        </motion.h1>
+
+        <motion.button
+          type="button"
+          className="hero-scroll"
+          onClick={scrollDown}
+          aria-label="Faire défiler vers le contenu"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.9, ease: EASE }}
+        >
+          Scroller pour explorer ↓
+        </motion.button>
+      </div>
     </section>
   )
 }
