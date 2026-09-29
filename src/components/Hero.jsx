@@ -22,9 +22,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 1, ease: EASE }}
         >
-          On transforme les créatrices en marques. Chaque détail — image, contenus,
-          partenariats — est façonné pour connecter les bonnes marques aux bonnes
-          créatrices, et faire durer ce qui marche.
+          On transforme les créateurs en marques. Chaque détail — image, contenus,
+          partenariats — est façonné pour connecter les bonnes marques aux bons
+          créateurs, et faire durer ce qui marche.
         </motion.p>
       </div>
 

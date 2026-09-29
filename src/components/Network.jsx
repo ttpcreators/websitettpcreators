@@ -14,7 +14,7 @@ export default function Network() {
               on connecte les talents au monde.
             </h2>
             <p className="lead">
-              Nos créatrices collaborent avec des marques partout dans le monde. Campagnes locales
+              Nos créateurs collaborent avec des marques partout dans le monde. Campagnes locales
               ou activations internationales, on relie les bons talents aux bons marchés.
             </p>
           </Reveal>

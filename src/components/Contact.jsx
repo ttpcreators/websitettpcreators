@@ -10,7 +10,7 @@ import { CONTACT_EMAIL } from '../data.js'
 const FORM_ENDPOINT = ''
 
 export default function Contact() {
-  const [profil, setProfil] = useState('Créatrice')
+  const [profil, setProfil] = useState('Créateur')
   const [note, setNote] = useState(null) // { ok: bool, text: string }
   const [busy, setBusy] = useState(false)
 
@@ -75,7 +75,7 @@ export default function Contact() {
             <Eyebrow n="07">Contact</Eyebrow>
             <h2>Parlons de ton projet.</h2>
             <p className="lead">
-              Créatrice qui cherche une vraie structure, ou marque qui veut activer des talents :
+              Créateur qui cherche une vraie structure, ou marque qui veut activer des talents :
               on répond sous 48 h.
             </p>
             <div className="contact-info">
@@ -114,7 +114,7 @@ export default function Contact() {
             <div className="field">
               <span>Tu es</span>
               <div className="seg" role="group" aria-label="Ton profil">
-                {['Créatrice', 'Marque'].map((p) => (
+                {['Créateur', 'Marque'].map((p) => (
                   <button
                     key={p}
                     type="button"

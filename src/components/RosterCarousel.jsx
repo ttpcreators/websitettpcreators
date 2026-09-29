@@ -129,7 +129,7 @@ export default function RosterCarousel({ creators, autoplay = true }) {
             )}
             <p className="rt-desc">
               {NICHE_DESC[String(current.niche || '').toLowerCase()] ||
-                'Une créatrice accompagnée par TTP Creators, de la stratégie aux campagnes.'}
+                'Un créateur accompagné par TTP Creators, de la stratégie aux campagnes.'}
             </p>
             <div className="rt-actions">
               {hasSocial && (
@@ -166,7 +166,7 @@ export default function RosterCarousel({ creators, autoplay = true }) {
             className="rt-arrow rt-arrow-prev"
             type="button"
             onClick={goPrev}
-            aria-label="Créatrice précédente"
+            aria-label="Créateur précédent"
           >
             <ArrowLeft size={18} />
           </button>
@@ -174,7 +174,7 @@ export default function RosterCarousel({ creators, autoplay = true }) {
             className="rt-arrow rt-arrow-next"
             type="button"
             onClick={goNext}
-            aria-label="Créatrice suivante"
+            aria-label="Créateur suivant"
           >
             <ArrowRight size={18} />
           </button>

@@ -102,12 +102,12 @@ export default function About() {
             <h2 className="about-title">
               Une agence pensée comme un studio,
               <br />
-              au service des créatrices.
+              au service des créateurs.
             </h2>
             <p className="lead">
               TTP Creators structure les talents, construit leur image et négocie leurs
               partenariats. Une seule équipe, de la stratégie à la production — entre{' '}
-              <Tooltip content="Deux villes, deux marchés : la France et la Suisse. Campagnes locales ou activations internationales, nos créatrices couvrent les deux.">
+              <Tooltip content="Deux villes, deux marchés : la France et la Suisse. Campagnes locales ou activations internationales, nos créateurs couvrent les deux.">
                 <b className="tt-word">Lyon et Genève</b>
               </Tooltip>
               .

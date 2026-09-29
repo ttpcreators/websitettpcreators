@@ -29,7 +29,7 @@ export default function Story() {
                 <b className="tt-word">TTP Agency</b>
               </Tooltip>
               , une agence de communication. À force de construire des marques et des campagnes,
-              une évidence s'impose : ce sont désormais les créatrices et créateurs qui façonnent
+              une évidence s'impose : ce sont désormais les créateurs qui façonnent
               la culture.
             </p>
             <p className="lead">

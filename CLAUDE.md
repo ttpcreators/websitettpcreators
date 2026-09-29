@@ -40,6 +40,8 @@ npm run build      # tsc absent : vite build seul, dist/
 - Titre hero : « Trust The Process. » — le deuxième T MAJUSCULE (initiales = TTP), une seule
   ligne, effet machine à écrire.
 - Navbar : logo seul (pas de texte « TTP Creators »).
+- Vocabulaire : dire **« créateurs »** (masculin générique), jamais « créatrices », dans tous
+  les textes visibles du site (décision Marc 2026-09-29 — garder une image ouverte du roster).
 - Loaders/effets décoratifs refusés dans la section Méthode ; le AiLoader ne sert QUE dans le
   formulaire de contact pendant l'envoi.
 

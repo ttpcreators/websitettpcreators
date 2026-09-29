@@ -18,7 +18,7 @@ function UniversCard({ creators, niche, desc }) {
       </span>
       <span className="tt-univers-txt">
         <b>
-          {list.length} créatrice{list.length > 1 ? 's' : ''} {niche}
+          {list.length} créateur{list.length > 1 ? 's' : ''} {niche}
         </b>
         <span>{desc}</span>
       </span>
@@ -62,12 +62,12 @@ export default function Roster() {
             <Eyebrow n="05">Le roster</Eyebrow>
             <Reveal>
               <h2 className="sec-title" style={{ marginBottom: 0 }}>
-                Nos créatrices.
+                Nos créateurs.
               </h2>
             </Reveal>
           </div>
           <Reveal className="roster-sub" delay={0.1}>
-            {count === 8 ? 'Huit' : count} créatrice{count > 1 ? 's' : ''}, deux univers :{' '}
+            {count === 8 ? 'Huit' : count} créateur{count > 1 ? 's' : ''}, deux univers :{' '}
             <Tooltip
               content={
                 <UniversCard

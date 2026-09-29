@@ -38,7 +38,7 @@ export const CLIENTS = [
 export const PILLARS = [
   {
     title: "Talent d'abord",
-    text: "Une créatrice n'est pas une audience : c'est une marque. On construit une identité qui dure, pas des pics de vues.",
+    text: "Un créateur n'est pas une audience : c'est une marque. On construit une identité qui dure, pas des pics de vues.",
   },
   {
     title: 'Studio intégré',
@@ -98,7 +98,7 @@ export const STEPS = [
 export const STATS = [
   { target: 50, prefix: '+', label: 'Campagnes livrées' },
   { target: 99, suffix: '%', label: 'Satisfaction clients' },
-  { target: 8, pad: 2, label: 'Créatrices signées' },
+  { target: 8, pad: 2, label: 'Créateurs signés' },
   { target: 5, pad: 2, label: 'Plateformes couvertes' },
 ]
 
@@ -122,6 +122,6 @@ export const TIMELINE = [
   {
     year: "Aujourd'hui",
     title: 'TTP Creators',
-    text: 'Le talent management comme évidence : les créatrices au cœur des marques.',
+    text: 'Le talent management comme évidence : les créateurs au cœur des marques.',
   },
 ]

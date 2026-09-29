@@ -13,7 +13,7 @@ const OFFER = [
     key: 'talent',
     label: 'Talent Management',
     caption:
-      "Carrière, négociations, planning et revenus : on gère la structure, les créatrices se concentrent sur la création.",
+      "Carrière, négociations, planning et revenus : on gère la structure, les créateurs se concentrent sur la création.",
     photo: 'assets/services/talent.jpg',
   },
   {
@@ -34,7 +34,7 @@ const OFFER = [
     key: 'partenariats',
     label: 'Partenariats',
     caption:
-      "Sourcing, brief, activation et reporting — les bonnes marques connectées aux bonnes créatrices.",
+      "Sourcing, brief, activation et reporting — les bonnes marques connectées aux bons créateurs.",
     photo: 'assets/services/partenariats.jpg',
   },
 ]
