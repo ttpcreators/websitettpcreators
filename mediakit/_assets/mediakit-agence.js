@@ -40,12 +40,21 @@
 
   function monthFR() { try { return new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" }); } catch (e) { return ""; } }
 
-  // Followers : "406900" → "407K" ; 1 240 000 → "1,2M".
-  function fmtK(n) {
-    if (n >= 1e6) return String((n / 1e6).toFixed(1)).replace(".", ",").replace(",0", "") + "M";
-    if (n >= 1e3) return Math.round(n / 1e3) + "K";
-    return String(Math.round(n));
+  // Grands nombres (format voulu par Marc) : 1 300 → « 1,3K », 45 800 → « 45,8K », 919 000 → « 919K »,
+  // 1 000 000 → « 1M », 2,4 milliards → « 2,4Md ». Une décimale sous 100, unité collée.
+  function compactParts(n) {
+    if (!isFinite(n)) return null;
+    var a = Math.abs(n), sign = n < 0 ? "-" : "", units = [[1e9, "Md"], [1e6, "M"], [1e3, "K"]];
+    function one(x) { return String(x >= 100 ? Math.round(x) : Math.round(x * 10) / 10).replace(".", ","); }
+    for (var i = 0; i < units.length; i++) {
+      if (a < units[i][0] && Math.round(a) < units[i][0]) continue;
+      var x = a / units[i][0], r = x >= 100 ? Math.round(x) : Math.round(x * 10) / 10;
+      if (r >= 1000 && i > 0) return { n: sign + one(a / units[i - 1][0]), u: units[i - 1][1] };
+      return { n: sign + one(x), u: units[i][1] };
+    }
+    return { n: sign + String(Math.round(a)), u: "" };
   }
+  function fmtK(n) { var c = compactParts(n); return c ? c.n + c.u : ""; }
 
   function profileUrl(handle, platform) {
     var h = String(handle || "").replace(/^@/, "").trim();

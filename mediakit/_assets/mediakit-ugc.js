@@ -27,6 +27,27 @@
   var NAME_OVERRIDES = { "lucie botans": "LUCIE BOTS" };
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  // Grands nombres (format voulu par Marc) : 1 300 → « 1,3K », 45 800 → « 45,8K », 919 000 → « 919K »,
+  // 1 000 000 → « 1M », 2,4 milliards → « 2,4Md ». Une décimale sous 100, unité collée.
+  function compactParts(n) {
+    if (!isFinite(n)) return null;
+    var a = Math.abs(n), sign = n < 0 ? "-" : "", units = [[1e9, "Md"], [1e6, "M"], [1e3, "K"]];
+    function one(x) { return String(x >= 100 ? Math.round(x) : Math.round(x * 10) / 10).replace(".", ","); }
+    for (var i = 0; i < units.length; i++) {
+      if (a < units[i][0] && Math.round(a) < units[i][0]) continue;
+      var x = a / units[i][0], r = x >= 100 ? Math.round(x) : Math.round(x * 10) / 10;
+      if (r >= 1000 && i > 0) return { n: sign + one(a / units[i - 1][0]), u: units[i - 1][1] };
+      return { n: sign + one(x), u: units[i][1] };
+    }
+    return { n: sign + String(Math.round(a)), u: "" };
+  }
+  // « 45800 » → « 45,8K » ; un texte libre (« 45,8k sur TikTok ») est gardé tel quel.
+  function fmtFollowers(v) {
+    var t = String(v).trim().replace(/[\s\u202f\u00a0]/g, "");
+    if (!/^\d+([.,]\d+)?$/.test(t)) return String(v);
+    var c = compactParts(parseFloat(t.replace(",", ".")));
+    return c ? c.n + c.u : String(v);
+  }
   function has(v) { return v != null && String(v).trim() !== ""; }
   function arr(a) { return Array.isArray(a) ? a.filter(function (x) { return has(x); }) : []; }
   function displayName(n) { return NAME_OVERRIDES[String(n || "").trim().toLowerCase()] || n; }
@@ -109,7 +130,7 @@
   function buildContact(x) {
     var meta = "";
     if (has(x.handle)) meta += '<div class="u-cline"><div class="k">Réseau</div><a class="v" href="https://instagram.com/' + esc(x.handle) + '" target="_blank" rel="noreferrer">@' + esc(x.handle) + "</a></div>";
-    if (has(x.followers)) meta += '<div class="u-cline"><div class="k">Communauté (indicatif)</div><span class="v">' + esc(x.followers) + "</span></div>";
+    if (has(x.followers)) meta += '<div class="u-cline"><div class="k">Communauté (indicatif)</div><span class="v">' + esc(fmtFollowers(x.followers)) + "</span></div>";
     meta += '<div class="u-cline"><div class="k">Email</div><a class="v" href="mailto:' + CONTACT_EMAIL + '">' + CONTACT_EMAIL + "</a></div>";
     return '<section class="u-slide u-contact">' +
       '<div data-reveal><p class="eyebrow">Contact</p><h2 class="display u-contact-title">Travaillons<br>ensemble</h2></div>' +

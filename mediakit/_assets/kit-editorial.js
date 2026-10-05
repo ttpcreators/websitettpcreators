@@ -54,15 +54,22 @@
   function frNum(n, digits) {
     try { return n.toLocaleString("fr-FR", { maximumFractionDigits: digits == null ? 1 : digits }); } catch (e) { return String(n); }
   }
-  // 45800 → { n: "45,8", u: "k" } ; 1013643 → { n: "1", u: "M" } ; 8400 → { n: "8 400", u: "" }
-  function compact(v) {
-    var n = num(v);
+  // Grands nombres (format voulu par Marc) : 1 300 → « 1,3K », 45 800 → « 45,8K », 919 000 → « 919K »,
+  // 1 000 000 → « 1M », 2,4 milliards → « 2,4Md ». Une décimale sous 100, unité collée.
+  function compactParts(n) {
     if (!isFinite(n)) return null;
-    if (n >= 1e6) return { n: frNum(n / 1e6, n >= 1e7 ? 0 : 1), u: "M" };
-    if (n >= 1e4) return { n: frNum(n / 1e3, n >= 1e5 ? 0 : 1), u: "k" };
-    return { n: frNum(n, 0), u: "" };
+    var a = Math.abs(n), sign = n < 0 ? "-" : "", units = [[1e9, "Md"], [1e6, "M"], [1e3, "K"]];
+    function one(x) { return String(x >= 100 ? Math.round(x) : Math.round(x * 10) / 10).replace(".", ","); }
+    for (var i = 0; i < units.length; i++) {
+      if (a < units[i][0] && Math.round(a) < units[i][0]) continue;
+      var x = a / units[i][0], r = x >= 100 ? Math.round(x) : Math.round(x * 10) / 10;
+      if (r >= 1000 && i > 0) return { n: sign + one(a / units[i - 1][0]), u: units[i - 1][1] };
+      return { n: sign + one(x), u: units[i][1] };
+    }
+    return { n: sign + String(Math.round(a)), u: "" };
   }
-  function compactTxt(v) { var c = compact(v); return c ? c.n + (c.u ? " " + c.u : "") : ""; }
+  function compact(v) { return compactParts(num(v)); }
+  function compactTxt(v) { var c = compact(v); return c ? c.n + c.u : ""; }
   // "7,80%" → "7,80 %" ; "79.7" → "79,7 %"
   function pct(v) {
     var s = String(v == null ? "" : v).trim();
