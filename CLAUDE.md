@@ -87,16 +87,25 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
   `sauge` = encre d'accent (nom en italique, grands chiffres) ; `ivoire` = papier ; `minuit` =
   page noire (`kit_theme_attr` dans `_build_mediakits.py`, sélecteur `kind="creator"` dans l'app).
   Textes visibles neutres (« Qui suit Prénom », « Ces marques lui ont fait confiance »).
-- **Deck agence et kits UGC** : gardent `mediakit.css` (DA **« Minuit »** alignée sur l'app TTP
+- **Deck AGENCE** (`/mediakit/agence/`) : même direction « Éditorial » depuis 2026-10-05.
+  Moteur `_assets/agence-editorial.js` + `agence-editorial.css`, chargé APRÈS `kit-editorial.css`
+  (polices, thèmes, page 16:9, pages marques et contact réutilisées). Pages : couverture (mosaïque
+  des portraits du roster), l'agence (titre, accroche, piliers, chiffres), partenaires (marques
+  en « générique », liste `CLIENTS` du build), 1 page par créateur (lien « Voir son media kit
+  complet » vers son slug, baké par le build), casting « Qui fait quoi », concepts, contact
+  (photo d'agence). Contenu éditable dans l'app (blob `agency_mediakit`) ; les anciens textes
+  par défaut « créatrices » enregistrés en base sont remplacés à l'affichage (table `LEGACY`,
+  idem dans l'app) tant qu'ils n'ont pas été modifiés. Thèmes = ceux des kits créateurs.
+- **Kits UGC** : gardent `mediakit.css` (DA **« Minuit »** alignée sur l'app TTP
   Suite depuis 2026-09-29 : fond #000, surface #0a0a0a, filets #222, texte #fafafa, Inter — les
   tokens historiques `--deep/--wine/--rose/--ink…` y sont REMAPPÉS vers cette palette, ne pas les
-  réinterpréter comme du bordeaux). Tout vit dans `mediakit/` (`mediakit.js` = ancien moteur
-  créateur, plus utilisé par les pages créateurs ; `_build_mediakits.py`
-  = 1 shell/créatrice depuis la vue anon `public_mediakit`, `_render_pdfs.py` = PDF 16:9). Les PDF
+  réinterpréter comme du bordeaux). Tout vit dans `mediakit/` (`mediakit.js` et
+  `mediakit-agence.js/.css` = anciens moteurs, plus utilisés ; `_build_mediakits.py`
+  = 1 shell/créateur depuis la vue anon `public_mediakit`, `_render_pdfs.py` = PDF 16:9). Les PDF
   sont gitignorés (régénérés en CI). Détails : la doc media kit côté app + la vue `public_mediakit`.
-- **Thèmes de couleurs du deck agence / UGC** (depuis 2026-09-29) : `minuit` (défaut) · `ivoire` · `blanc` ·
-  `bordeaux` · `sauge`, choisis dans l'app (`theme` du blob agence ; `mediakit.theme` pour l'UGC).
-  Palettes = blocs `:root[data-mk-theme="…"]` de `mediakit.css` (tokens uniquement, + `--canvas`,
+- **Thèmes des kits UGC** : `minuit` (défaut) · `ivoire` · `blanc` · `bordeaux` · `sauge`
+  (`mediakit.theme`, même valeur que le kit créateur). Palettes = blocs
+  `:root[data-mk-theme="…"]` de `mediakit.css` (tokens uniquement, + `--canvas`,
   `--d1…--d6` pour l'anneau). L'attribut est baké sur `<html>` par `_build_mediakits.py` (PDF CI) puis
   ré-appliqué par les JS ; `?theme=<nom>` = aperçu. Toute couleur ajoutée doit passer par un token.
 - GitHub Pages est **sensible à la casse** des noms de fichiers (et macOS non) : renommage de
