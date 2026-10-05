@@ -23,7 +23,7 @@
   var PLAT_LABEL = { instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube", snapchat: "Snapchat", x: "X" };
   // Lignes affichées sous le grand chiffre (abonnés), dans cet ordre, seulement si remplies.
   var PLAT_ROWS = {
-    instagram: [["Impressions, 30 jours", "impressions30j"], ["Taux d'engagement", "er"], ["Non-abonnés touchés", "nonFollowersPct"], ["Tranche d'âge principale", "ageBracket"], ["Vues moyennes par réel", "avgViews"], ["Vues moyennes par story", "avgStoryViews"], ["Meilleur format", "bestFormatPct"]],
+    instagram: [["Comptes touchés, 30 jours", "impressions30j"], ["Vues des réels, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Non-abonnés touchés", "nonFollowersPct"], ["Tranche d'âge principale", "ageBracket"], ["Vues moyennes par réel", "avgViews"], ["Vues moyennes par story", "avgStoryViews"], ["Meilleur format", "bestFormatPct"]],
     tiktok: [["Vues, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Nouveaux spectateurs, 30 jours", "newViewers30j"], ["J'aime cumulés", "likesTotal"], ["Tranche d'âge principale", "ageBracket"], ["Vues moyennes par vidéo", "avgViews"], ["J'aime moyens par vidéo", "avgLikes"]],
     youtube: [["Vues, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Abonnés gagnés, 30 jours", "newViewers30j"], ["Heures de visionnage", "watchHours"], ["Tranche d'âge principale", "ageBracket"], ["Vues moyennes par vidéo", "avgViews"]],
     snapchat: [["Vues de story, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Abonnés gagnés, 30 jours", "newViewers30j"], ["Portée", "reach"], ["Tranche d'âge principale", "ageBracket"]],
@@ -174,7 +174,11 @@
     var label = PLAT_LABEL[p.key] || p.key;
     var big = compact(p.followers);
     var rows = (PLAT_ROWS[p.key] || PLAT_ROWS.instagram).filter(function (r) { return has(p[r[1]]); })
-      .map(function (r) { return [r[0], fmtVal(r[1], p[r[1]])]; }).filter(function (r) { return r[1]; })
+      .map(function (r) {
+        // « Meilleur format » : soit un nom (« Réels »), soit la part des réels en % (« 67 »).
+        if (r[1] === "bestFormatPct" && isFinite(num(String(p[r[1]]).replace("%", "")))) return ["Part des réels", pct(p[r[1]])];
+        return [r[0], fmtVal(r[1], p[r[1]])];
+      }).filter(function (r) { return r[1]; })
       .slice(0, solo ? 6 : 5);
     return '<div class="col"><h3>' + esc(label) + "</h3>" +
       (solo && PLAT_INTRO[p.key] ? '<p class="intro">' + esc(PLAT_INTRO[p.key]) + "</p>" : "") +
@@ -237,13 +241,17 @@
       if (data.photos[k]) items.push([data.photos[k], "Profil " + PLAT_LABEL[k]]);
     });
     data.statsShots.forEach(function (u) { items.push([u, "Statistiques"]); });
-    items = items.slice(0, 6);
     if (!items.length) return "";
-    return '<section class="pg p-shots"><header><h3>En capture, <i>sans retouche</i></h3>' +
-      '<p class="kicker">Profils et statistiques des plateformes</p></header>' +
-      '<div class="prints">' + items.map(function (it) {
-        return '<figure><div class="frame"><img src="' + esc(it[0]) + '" alt="' + esc(it[1]) + '" loading="lazy"></div><figcaption>' + esc(it[1]) + "</figcaption></figure>";
-      }).join("") + "</div></section>";
+    // 6 images par page au plus : au-delà (profils + 6 captures), une 2e page « En capture ».
+    var out = "";
+    for (var i = 0; i < items.length; i += 6) {
+      out += '<section class="pg p-shots"><header><h3>En capture, <i>sans retouche</i></h3>' +
+        '<p class="kicker">Profils et statistiques des plateformes</p></header>' +
+        '<div class="prints">' + items.slice(i, i + 6).map(function (it) {
+          return '<figure><div class="frame"><img src="' + esc(it[0]) + '" alt="' + esc(it[1]) + '" loading="lazy"></div><figcaption>' + esc(it[1]) + "</figcaption></figure>";
+        }).join("") + "</div></section>";
+    }
+    return out;
   }
 
   // ── 5 · Marques et tarifs ──────────────────────────────────────────────────
