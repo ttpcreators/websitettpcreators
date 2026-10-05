@@ -3,7 +3,7 @@
 Génère une page media kit par créatrice : mediakit/<slug>/index.html.
 
 Chaque page est un shell léger qui référence les assets partagés
-(_assets/mediakit.css + mediakit.js + anton.woff2) et bake window.MK
+(_assets/kit-editorial.css + kit-editorial.js, direction « Éditorial ») et bake window.MK
 (nom, handle, plateforme, photo) pour un rendu immédiat ; le moteur lit
 ensuite public_mediakit (anon) par NOM pour le contenu à jour.
 
@@ -109,6 +109,15 @@ def theme_attr(t):
     return ' data-mk-theme="%s"' % t if t in MK_THEMES else ""
 
 
+# Pages créateurs : direction « Éditorial » (kit-editorial.css/js, 2026-10-05). Page blanche
+# par défaut (« blanc » = sans attribut) ; les autres thèmes changent l'encre ou le papier.
+KIT_THEMES = ("bordeaux", "sauge", "ivoire", "minuit")
+
+
+def kit_theme_attr(t):
+    return ' data-mk-theme="%s"' % t if t in KIT_THEMES else ""
+
+
 def shell(c, slug):
     name = c.get("name") or ""      # nom RÉEL (clé : baked window.MK, slug, fetch)
     disp = display_name(name)       # nom AFFICHÉ (titre / nom de fichier / méta)
@@ -142,7 +151,7 @@ def shell(c, slug):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png?v=2">
 <link rel="apple-touch-icon" href="../../assets/favicon-180.png?v=2">
-<link rel="stylesheet" href="../_assets/mediakit.css">
+<link rel="stylesheet" href="../_assets/kit-editorial.css">
 </head>
 <body>
 <div class="kit" id="kit"></div>
@@ -156,10 +165,10 @@ def shell(c, slug):
 </a>
 <div class="progress" id="progress" aria-hidden="true"></div>
 <script>window.MK = {baked};</script>
-<script src="../_assets/mediakit.js"></script>
+<script src="../_assets/kit-editorial.js"></script>
 </body>
 </html>
-""".format(theme=theme_attr(mk.get("theme")), title=esc(disp.title() if disp.isupper() else disp), desc=esc(desc),
+""".format(theme=kit_theme_attr(mk.get("theme")), title=esc(disp.title() if disp.isupper() else disp), desc=esc(desc),
            canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
 
 

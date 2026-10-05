@@ -75,15 +75,27 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
   réautoriser, NE PAS la supprimer, NE PAS déployer depuis elle.
 - ⚠️ NE PAS désactiver le workflow via l'API Actions : l'entité (par chemin de fichier) est
   partagée entre branches — ça tuerait aussi les déploiements de production.
-- **Media kit** : DA **« Minuit »** alignée sur l'app TTP Suite depuis 2026-09-29 (fond #000,
-  surface #0a0a0a, filets #222, texte #fafafa, Inter, bandeaux de chiffres à filets — les
-  tokens historiques `--deep/--wine/--rose/--ink…` de `mediakit.css` sont REMAPPÉS vers cette
-  palette, ne pas les réinterpréter comme du bordeaux). Tout vit dans `mediakit/` (moteur
-  `mediakit.js` générique, `_build_mediakits.py`
+- **Media kits CRÉATEURS** : direction **« Éditorial »** choisie par Marc le 2026-10-05 (parmi 3
+  directions maquettées) : page blanche, encre noire, grand serif **Instrument Serif** + **Instrument
+  Sans** (woff2 auto-hébergés dans `_assets/`), photo posée comme un tirage, chiffres composés comme
+  dans un article, marques en « crédits », tarifs à points de conduite, aucune case vide ni « — »
+  (donnée absente = ligne masquée). Moteur `_assets/kit-editorial.js` + `kit-editorial.css` :
+  une section = une page 16:9 en unités `cqw` (même rendu web ordinateur et PDF), colonne sur
+  téléphone (`@media screen` uniquement, sinon le PDF prendrait la mise en page téléphone).
+  Pages : couverture, plateformes (2 par page), audience, « En capture » (captures de profils +
+  stats), marques et tarifs, contact. Thèmes créateurs : sans attribut = blanc ; `bordeaux`/
+  `sauge` = encre d'accent (nom en italique, grands chiffres) ; `ivoire` = papier ; `minuit` =
+  page noire (`kit_theme_attr` dans `_build_mediakits.py`, sélecteur `kind="creator"` dans l'app).
+  Textes visibles neutres (« Qui suit Prénom », « Ces marques lui ont fait confiance »).
+- **Deck agence et kits UGC** : gardent `mediakit.css` (DA **« Minuit »** alignée sur l'app TTP
+  Suite depuis 2026-09-29 : fond #000, surface #0a0a0a, filets #222, texte #fafafa, Inter — les
+  tokens historiques `--deep/--wine/--rose/--ink…` y sont REMAPPÉS vers cette palette, ne pas les
+  réinterpréter comme du bordeaux). Tout vit dans `mediakit/` (`mediakit.js` = ancien moteur
+  créateur, plus utilisé par les pages créateurs ; `_build_mediakits.py`
   = 1 shell/créatrice depuis la vue anon `public_mediakit`, `_render_pdfs.py` = PDF 16:9). Les PDF
   sont gitignorés (régénérés en CI). Détails : la doc media kit côté app + la vue `public_mediakit`.
-- **Thèmes de couleurs des media kits** (depuis 2026-09-29) : `minuit` (défaut) · `ivoire` · `blanc` ·
-  `bordeaux` · `sauge`, choisis dans l'app (`mediakit.theme` par créatrice, `theme` du blob agence).
+- **Thèmes de couleurs du deck agence / UGC** (depuis 2026-09-29) : `minuit` (défaut) · `ivoire` · `blanc` ·
+  `bordeaux` · `sauge`, choisis dans l'app (`theme` du blob agence ; `mediakit.theme` pour l'UGC).
   Palettes = blocs `:root[data-mk-theme="…"]` de `mediakit.css` (tokens uniquement, + `--canvas`,
   `--d1…--d6` pour l'anneau). L'attribut est baké sur `<html>` par `_build_mediakits.py` (PDF CI) puis
   ré-appliqué par les JS ; `?theme=<nom>` = aperçu. Toute couleur ajoutée doit passer par un token.
