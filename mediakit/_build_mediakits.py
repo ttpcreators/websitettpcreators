@@ -25,7 +25,7 @@ SB_KEY = ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6
           "5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU")
 
 ROOT = os.path.dirname(os.path.abspath(__file__))         # …/mediakit
-OG_FALLBACK = "https://ttpcreators.pro/og-image.png"
+OG_FALLBACK = "https://ttpcreators.pro/og-ttp.jpg"
 # Version du build → nom de PDF versionné (media-kit-<build>.pdf). URL unique à chaque
 # déploiement ⇒ aucun edge CDN / proxy ne peut servir un PDF périmé (le query string, lui,
 # est ignoré par Fastly). En CI = SHA du commit ; en local = "dev". DOIT correspondre à
