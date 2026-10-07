@@ -6,3 +6,5 @@ dist
 # Media kit PDFs — générés en CI (Chrome headless), jamais versionnés
 mediakit/*/media-kit*.pdf
 mediakit/*/apercu-*.jpg
+mediakit/*/en/media-kit*.pdf
+mediakit/*/en/apercu-*.jpg

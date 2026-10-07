@@ -66,6 +66,14 @@ def ugc_slugs():
     return out
 
 
+def en_slugs():
+    """Pages ayant leur version anglaise (mediakit/<slug>/en/index.html, agence comprise)."""
+    out = []
+    for p in sorted(glob.glob(os.path.join(MK, "*", "en", "index.html"))):
+        out.append(os.path.basename(os.path.dirname(os.path.dirname(p))))
+    return out
+
+
 def render(url_path, out_file, label):
     """Rend l'URL `url_path` (relative au serveur local) en PDF `out_file`."""
     url = "http://127.0.0.1:%d/%s" % (PORT, url_path)
@@ -90,13 +98,14 @@ def render(url_path, out_file, label):
 OG_MIN_BYTES = 15000   # une carte 1200×630 avec photo pèse bien plus
 
 
-def render_og(slug):
+def render_og(slug, sub=""):
     """Carte d'aperçu de partage (WhatsApp, iMessage, LinkedIn…) : la page en mode ?og=1
-    capturée en JPEG 1200×630 → mediakit/<slug>/apercu-<build>.jpg (og:image du shell).
+    capturée en JPEG 1200×630 → mediakit/<slug>/[en/]apercu-<build>.jpg (og:image du shell).
     Si la capture échoue, on pose l'image générale du site sous ce nom : un aperçu
     générique vaut mieux qu'un aperçu cassé."""
-    out = os.path.join(MK, slug, "apercu-%s.jpg" % BUILD)
-    url = "http://127.0.0.1:%d/mediakit/%s/?og=1" % (PORT, slug)
+    out = os.path.join(MK, slug, sub, "apercu-%s.jpg" % BUILD)
+    url = "http://127.0.0.1:%d/mediakit/%s/%s?og=1" % (PORT, slug, sub)
+    slug = slug + (" (en)" if sub else "")
     cmd = [
         CHROME, "--headless", "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
         "--force-device-scale-factor=1", "--window-size=1200,630",
@@ -131,12 +140,15 @@ def main():
         1 for s in ugc
         if render("mediakit/%s/ugc/" % s, os.path.join(MK, s, "ugc", "media-kit-ugc-%s.pdf" % BUILD), s + " (ugc)")
     )
-    print("PDF paysage générés : %d/%d (+ %d/%d UGC)" % (ok, len(names), ok_ugc, len(ugc)))
+    en = en_slugs()
+    ok_en = sum(1 for s in en if render("mediakit/%s/en/" % s, os.path.join(MK, s, "en", "media-kit-%s.pdf" % BUILD), s + " (en)"))
+    print("PDF paysage générés : %d/%d (+ %d/%d en anglais, + %d/%d UGC)" % (ok, len(names), ok_en, len(en), ok_ugc, len(ugc)))
     # Seules les pages du moteur actuel déclarent une carte (les anciens shells encore en
     # ligne, créateurs retirés de l'app, gardent leur photo comme aperçu).
     og_names = [s for s in names if "apercu-" in open(os.path.join(MK, s, "index.html"), encoding="utf-8").read()]
     ok_og = sum(1 for s in og_names if render_og(s))
-    print("Aperçus de partage générés : %d/%d" % (ok_og, len(og_names)))
+    ok_og_en = sum(1 for s in en if render_og(s, "en/"))
+    print("Aperçus de partage générés : %d/%d (+ %d/%d en anglais)" % (ok_og, len(og_names), ok_og_en, len(en)))
     # Ne jamais faire échouer le déploiement : les shells + le repli window.print()
     # couvrent l'absence d'un PDF. On sort toujours 0.
     sys.exit(0)

@@ -115,6 +115,14 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
   `:root[data-mk-theme="…"]` de `mediakit.css` (tokens uniquement, + `--canvas`,
   `--d1…--d6` pour l'anneau). L'attribut est baké sur `<html>` par `_build_mediakits.py` (PDF CI) puis
   ré-appliqué par les JS ; `?theme=<nom>` = aperçu. Toute couleur ajoutée doit passer par un token.
+- **Version anglaise des media kits** (depuis 2026-10-07) : chaque kit existe aussi en anglais à
+  `/mediakit/<slug>/en/` (deck agence : `/mediakit/agence/en/`), généré par `_build_mediakits.py`
+  (`<html lang="en">`, hreflang, sélecteur FR / EN en bas à gauche, PDF + carte d'aperçu propres).
+  `_assets/mk-i18n.js` (chargé avant les moteurs) donne la langue et traduit les valeurs saisies en
+  français (formats, pays, villes, étiquettes, tarifs, précisions du casting). Textes libres anglais
+  saisis dans l'app : `bioEn`, `ratesNoteEn` (créateur) ; `introEn`, `pillarsEn` (même position que
+  `pillars`), `kpis.*LabelEn`, `concepts[].titleEn/textEn/highlightsEn` (agence). Jamais de français
+  sur une page anglaise : un texte libre sans traduction est omis (bio) ou remplacé par le défaut anglais.
 - GitHub Pages est **sensible à la casse** des noms de fichiers (et macOS non) : renommage de
   casse ⇒ `git mv -f` obligatoire. Les uploads web des fondateurs arrivent avec des noms
   arbitraires (`IMG_1234.jpg`, majuscules) → renommer/compresser (`sips`) puis commit.

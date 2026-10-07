@@ -36,9 +36,38 @@ MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août
         "septembre", "octobre", "novembre", "décembre"]
 
 
+MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
+          "September", "October", "November", "December"]
+
+
 def mois_fr():
     t = time.localtime()
     return "%s %d" % (MOIS[t.tm_mon - 1], t.tm_year)
+
+
+def month_en():
+    t = time.localtime()
+    return "%s %d" % (MONTHS[t.tm_mon - 1], t.tm_year)
+
+
+# ── Version anglaise (marques étrangères) ─────────────────────────────────────
+# Chaque media kit (et le deck agence) existe aussi en anglais dans le sous-dossier
+# en/ : même moteur, <html lang="en">, son propre PDF et sa propre carte d'aperçu.
+# mk-i18n.js lit la langue de la page ; les textes libres anglais (bioEn, introEn…)
+# se saisissent dans l'app.
+def lang_links(canonical_fr, lang):
+    """hreflang (Google) + sélecteur FR / EN affiché en bas à gauche de la page."""
+    en = canonical_fr + "en/"
+    head = ('<link rel="alternate" hreflang="fr" href="%s">\n'
+            '<link rel="alternate" hreflang="en" href="%s">\n'
+            '<link rel="alternate" hreflang="x-default" href="%s">') % (canonical_fr, en, canonical_fr)
+    if lang == "en":
+        nav = ('<nav class="lang-switch" aria-label="Language"><a href="../" hreflang="fr" lang="fr">FR</a>'
+               '<a href="./" aria-current="page">EN</a></nav>')
+    else:
+        nav = ('<nav class="lang-switch" aria-label="Langue"><a href="./" aria-current="page">FR</a>'
+               '<a href="en/" hreflang="en" lang="en">EN</a></nav>')
+    return head, nav
 
 
 def de(nom):
@@ -49,9 +78,10 @@ def de(nom):
 # Aperçu de partage (WhatsApp, iMessage, LinkedIn…) : carte 1200×630 capturée en CI par
 # _render_pdfs.py depuis la page en mode ?og=1 → mediakit/<slug>/apercu-<build>.jpg.
 # Nom versionné comme le PDF : une URL neuve à chaque déploiement, jamais servie périmée.
-def og_tags(title, desc, url, image, alt, kind="profile"):
+def og_tags(title, desc, url, image, alt, kind="profile", lang="fr"):
     return """<meta property="og:site_name" content="TTP Creators">
-<meta property="og:locale" content="fr_FR">
+<meta property="og:locale" content="{locale}">
+<meta property="og:locale:alternate" content="{alt_locale}">
 <meta property="og:type" content="{kind}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
@@ -65,11 +95,13 @@ def og_tags(title, desc, url, image, alt, kind="profile"):
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="{image}">""".format(kind=kind, title=esc(title), desc=esc(desc), url=esc(url), image=esc(image), alt=esc(alt))
+<meta name="twitter:image" content="{image}">""".format(kind=kind, title=esc(title), desc=esc(desc), url=esc(url), image=esc(image), alt=esc(alt),
+                                                       locale="en_US" if lang == "en" else "fr_FR",
+                                                       alt_locale="fr_FR" if lang == "en" else "en_US")
 
 
-def apercu(slug):
-    return "https://ttpcreators.pro/mediakit/%s/apercu-%s.jpg" % (slug, BUILD)
+def apercu(slug, lang="fr"):
+    return "https://ttpcreators.pro/mediakit/%s/%sapercu-%s.jpg" % (slug, "en/" if lang == "en" else "", BUILD)
 
 
 def slugify(s):
@@ -157,7 +189,7 @@ def kit_theme_attr(t):
     return ' data-mk-theme="%s"' % t if t in KIT_THEMES else ""
 
 
-def shell(c, slug):
+def shell(c, slug, lang="fr"):
     name = c.get("name") or ""      # nom RÉEL (clé : baked window.MK, slug, fetch)
     disp = display_name(name)       # nom AFFICHÉ (titre / nom de fichier / méta)
     mk = c.get("mediakit") or {}
@@ -170,41 +202,57 @@ def shell(c, slug):
     # fetch Supabase live (qui pouvait échouer → PDF tronqué à 2 pages, ex. Léna). Le fetch
     # live reste ensuite comme rafraîchissement pour la page web.
     baked = json.dumps({"name": name, "handle": handle, "platform": platform, "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
-    canonical = "https://ttpcreators.pro/mediakit/%s/" % slug
+    base = "https://ttpcreators.pro/mediakit/%s/" % slug
+    en = lang == "en"
+    canonical = base + ("en/" if en else "")
     title = disp.title() if disp.isupper() else disp
-    desc = "Audience, chiffres et marques partenaires %s%s. Media kit TTP Creators, %s." % (
-        de(title), (" (" + niche + ")") if niche else "", mois_fr())
-    og = og_tags(title + " · Media kit", desc, canonical, apercu(slug), "Couverture du media kit " + de(title))
+    if en:
+        desc = "Audience, key figures and partner brands of %s%s. TTP Creators media kit, %s." % (
+            title, (" (" + niche + ")") if niche else "", month_en())
+        og = og_tags(title + " · Media kit", desc, canonical, apercu(slug, "en"), title + "'s media kit cover", lang="en")
+    else:
+        desc = "Audience, chiffres et marques partenaires %s%s. Media kit TTP Creators, %s." % (
+            de(title), (" (" + niche + ")") if niche else "", mois_fr())
+        og = og_tags(title + " · Media kit", desc, canonical, apercu(slug), "Couverture du media kit " + de(title))
+    hreflang, nav = lang_links(base, lang)
+    up = "../" if en else ""   # la page anglaise est un dossier plus bas
     return """<!doctype html>
-<html lang="fr"{theme}>
+<html lang="{lang}"{theme}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} · Media kit TTP Creators</title>
+<title>{title} · {title_suffix}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
+{hreflang}
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="../../assets/favicon-180.png?v=2">
-<link rel="stylesheet" href="../_assets/kit-editorial.css">
+<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=2">
+<link rel="stylesheet" href="{up}../_assets/kit-editorial.css">
 </head>
 <body>
 <div class="kit" id="kit"></div>
-<a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="Media Kit - {title}.pdf" aria-label="Télécharger le media kit en PDF">
+<a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="Media Kit - {title}{file_suffix}.pdf" aria-label="{pdf_aria}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
     <polyline points="7 10 12 15 17 10"></polyline>
     <line x1="12" y1="15" x2="12" y2="3"></line>
   </svg>
-  Télécharger en PDF
+  {pdf_label}
 </a>
+{nav}
 <div class="progress" id="progress" aria-hidden="true"></div>
 <script>window.MK = {baked};</script>
-<script src="../_assets/kit-editorial.js"></script>
+<script src="{up}../_assets/mk-i18n.js"></script>
+<script src="{up}../_assets/kit-editorial.js"></script>
 </body>
 </html>
-""".format(theme=kit_theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc),
-           canonical=canonical, og=og, baked=baked, build=BUILD)
+""".format(lang="en" if en else "fr", theme=kit_theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc),
+           title_suffix="TTP Creators media kit" if en else "Media kit TTP Creators",
+           canonical=canonical, hreflang=hreflang, og=og, baked=baked, build=BUILD, up=up, nav=nav,
+           file_suffix=" (EN)" if en else "",
+           pdf_aria="Download the media kit as a PDF" if en else "Télécharger le media kit en PDF",
+           pdf_label="Download PDF" if en else "Télécharger en PDF")
 
 
 def ugc_shell(c, slug):
@@ -252,7 +300,7 @@ def ugc_shell(c, slug):
 """.format(theme=theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc), canonical=canonical, og=og, baked=baked, build=BUILD)
 
 
-def agency_shell(creators, agency=None, slugs=None):
+def agency_shell(creators, agency=None, slugs=None, lang="fr"):
     """Deck MEDIA KIT AGENCE (mediakit/agence/index.html), direction « Éditorial ».
 
     Bake window.MK_AGENCY (tous les créateurs actifs + marques + piliers + contenu
@@ -274,39 +322,57 @@ def agency_shell(creators, agency=None, slugs=None):
         {"creators": slim, "clients": CLIENTS, "pillars": PILLARS, "agency": agency or {}},
         ensure_ascii=False,
     )
-    desc = "Media kit de l'agence TTP Creators : le roster complet, ses créateurs Sport & Lifestyle, audiences et marques partenaires."
+    en = lang == "en"
+    base = "https://ttpcreators.pro/mediakit/agence/"
+    canonical = base + ("en/" if en else "")
+    if en:
+        desc = "TTP Creators agency media kit: the full roster of Sport & Lifestyle creators, their audiences and partner brands."
+    else:
+        desc = "Media kit de l'agence TTP Creators : le roster complet, ses créateurs Sport & Lifestyle, audiences et marques partenaires."
+    hreflang, nav = lang_links(base, lang)
+    up = "../" if en else ""
     return """<!doctype html>
-<html lang="fr"{theme}>
+<html lang="{lang}"{theme}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Media kit agence · TTP Creators</title>
+<title>{page_title}</title>
 <meta name="description" content="{desc}">
-<link rel="canonical" href="https://ttpcreators.pro/mediakit/agence/">
+<link rel="canonical" href="{canonical}">
+{hreflang}
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="../../assets/favicon-180.png?v=2">
-<link rel="stylesheet" href="../_assets/kit-editorial.css">
-<link rel="stylesheet" href="../_assets/agence-editorial.css">
+<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=2">
+<link rel="stylesheet" href="{up}../_assets/kit-editorial.css">
+<link rel="stylesheet" href="{up}../_assets/agence-editorial.css">
 </head>
 <body>
 <div class="kit" id="kit"></div>
-<a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="TTP Creators - Media Kit Agence.pdf" aria-label="Télécharger le media kit agence en PDF">
+<a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="{pdf_name}" aria-label="{pdf_aria}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
     <polyline points="7 10 12 15 17 10"></polyline>
     <line x1="12" y1="15" x2="12" y2="3"></line>
   </svg>
-  Télécharger en PDF
+  {pdf_label}
 </a>
+{nav}
 <div class="progress" id="progress" aria-hidden="true"></div>
 <script>window.MK_AGENCY = {baked};</script>
-<script src="../_assets/agence-editorial.js"></script>
+<script src="{up}../_assets/mk-i18n.js"></script>
+<script src="{up}../_assets/agence-editorial.js"></script>
 </body>
 </html>
-""".format(theme=kit_theme_attr((agency or {}).get("theme")), desc=esc(desc), build=BUILD, baked=baked,
-           og=og_tags("Media kit agence · TTP Creators", desc, "https://ttpcreators.pro/mediakit/agence/",
-                      apercu("agence"), "Couverture du media kit de l'agence TTP Creators", kind="website"))
+""".format(lang="en" if en else "fr", theme=kit_theme_attr((agency or {}).get("theme")), desc=esc(desc), build=BUILD,
+           baked=baked, canonical=canonical, hreflang=hreflang, nav=nav, up=up,
+           page_title="Agency media kit · TTP Creators" if en else "Media kit agence · TTP Creators",
+           pdf_name="TTP Creators - Agency Media Kit.pdf" if en else "TTP Creators - Media Kit Agence.pdf",
+           pdf_aria="Download the agency media kit as a PDF" if en else "Télécharger le media kit agence en PDF",
+           pdf_label="Download PDF" if en else "Télécharger en PDF",
+           og=og_tags("Agency media kit · TTP Creators" if en else "Media kit agence · TTP Creators", desc, canonical,
+                      apercu("agence", lang),
+                      "TTP Creators agency media kit cover" if en else "Couverture du media kit de l'agence TTP Creators",
+                      kind="website", lang=lang))
 
 
 def write_sitemap(slugs, ugc=None):
@@ -319,6 +385,7 @@ def write_sitemap(slugs, ugc=None):
     """
     urls = ["https://ttpcreators.pro/", "https://ttpcreators.pro/mentions-legales/"]
     urls += ["https://ttpcreators.pro/mediakit/%s/" % s for s in slugs]
+    urls += ["https://ttpcreators.pro/mediakit/%s/en/" % s for s in slugs]
     urls += ["https://ttpcreators.pro/mediakit/%s/ugc/" % s for s in (ugc or [])]
     today = time.strftime("%Y-%m-%d")
     body = "".join("  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n" % (u, today) for u in urls)
@@ -348,6 +415,9 @@ def main():
         os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(shell(c, slug))
+        os.makedirs(os.path.join(d, "en"), exist_ok=True)
+        with open(os.path.join(d, "en", "index.html"), "w", encoding="utf-8") as f:
+            f.write(shell(c, slug, "en"))
         out.append((c.get("name"), slug))
         # Page UGC séparée — seulement si le créateur l'a activée dans l'app.
         if (mk.get("ugc") or {}).get("enabled"):
@@ -363,8 +433,11 @@ def main():
     os.makedirs(ag_dir, exist_ok=True)
     with open(os.path.join(ag_dir, "index.html"), "w", encoding="utf-8") as f:
         f.write(agency_shell(creators, agency, dict(out)))
+    os.makedirs(os.path.join(ag_dir, "en"), exist_ok=True)
+    with open(os.path.join(ag_dir, "en", "index.html"), "w", encoding="utf-8") as f:
+        f.write(agency_shell(creators, agency, dict(out), "en"))
 
-    print("Pages générées : %d + 1 (agence)" % len(out))
+    print("Pages générées : %d + 1 (agence), chacune en français et en anglais (/en/)" % len(out))
     for name, slug in out:
         print("  /mediakit/%-20s ← %s" % (slug + "/", name))
     print("  /mediakit/agence/           ← Media Kit Agence (%d créateurs bakés)" % len(creators))

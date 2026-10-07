@@ -10,6 +10,10 @@
   var SB_URL = "https://zizvggziggswhrbuyhuo.supabase.co";
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppenZnZ3ppZ2dzd2hyYnV5aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5Mzk2NjcsImV4cCI6MjA5ODUxNTY2N30.5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU";
   var d = document.documentElement;
+  // Langue de la page (mk-i18n.js, chargé avant) : FR par défaut, EN sur les pages /en/.
+  var I = window.MKI18N || { en: false, locale: "fr-FR", val: function (s) { return s; }, L: function (fr) { return fr; },
+    list: function (xs) { return xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " et " + xs[xs.length - 1]; } };
+  var EN = !!I.en, L = I.L, tv = I.val;
 
   // Thème choisi dans l'app (mediakit.theme) ; ?theme=<nom> = aperçu.
   var THEMES = ["blanc", "bordeaux", "sauge", "ivoire", "minuit"];
@@ -26,21 +30,36 @@
 
   var PLAT_LABEL = { instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube", snapchat: "Snapchat", x: "X" };
   // Lignes affichées sous le grand chiffre (abonnés), dans cet ordre, seulement si remplies.
-  var PLAT_ROWS = {
+  var PLAT_ROWS_FR = {
     instagram: [["Comptes touchés, 30 jours", "impressions30j"], ["Vues des réels, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Non-abonnés touchés", "nonFollowersPct"], ["Tranche d'âge principale", "ageBracket"], ["Vues moyennes par réel", "avgViews"], ["Vues moyennes par story", "avgStoryViews"], ["Meilleur format", "bestFormatPct"]],
     tiktok: [["Vues, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Nouveaux spectateurs, 30 jours", "newViewers30j"], ["J'aime cumulés", "likesTotal"], ["Tranche d'âge principale", "ageBracket"], ["Vues moyennes par vidéo", "avgViews"], ["J'aime moyens par vidéo", "avgLikes"]],
     youtube: [["Vues, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Abonnés gagnés, 30 jours", "newViewers30j"], ["Heures de visionnage", "watchHours"], ["Tranche d'âge principale", "ageBracket"], ["Vues moyennes par vidéo", "avgViews"]],
     snapchat: [["Vues de story, 30 jours", "views30j"], ["Taux d'engagement", "er"], ["Abonnés gagnés, 30 jours", "newViewers30j"], ["Portée", "reach"], ["Tranche d'âge principale", "ageBracket"]],
     x: [["Impressions, 30 jours", "impressions30j"], ["Taux d'engagement", "er"], ["Tranche d'âge principale", "ageBracket"]],
   };
-  var PLAT_INTRO = {
+  var PLAT_ROWS_EN = {
+    instagram: [["Accounts reached, 30 days", "impressions30j"], ["Reel views, 30 days", "views30j"], ["Engagement rate", "er"], ["Non-followers reached", "nonFollowersPct"], ["Main age group", "ageBracket"], ["Average views per Reel", "avgViews"], ["Average views per Story", "avgStoryViews"], ["Best format", "bestFormatPct"]],
+    tiktok: [["Views, 30 days", "views30j"], ["Engagement rate", "er"], ["New viewers, 30 days", "newViewers30j"], ["Total likes", "likesTotal"], ["Main age group", "ageBracket"], ["Average views per video", "avgViews"], ["Average likes per video", "avgLikes"]],
+    youtube: [["Views, 30 days", "views30j"], ["Engagement rate", "er"], ["Subscribers gained, 30 days", "newViewers30j"], ["Watch time (hours)", "watchHours"], ["Main age group", "ageBracket"], ["Average views per video", "avgViews"]],
+    snapchat: [["Story views, 30 days", "views30j"], ["Engagement rate", "er"], ["Subscribers gained, 30 days", "newViewers30j"], ["Reach", "reach"], ["Main age group", "ageBracket"]],
+    x: [["Impressions, 30 days", "impressions30j"], ["Engagement rate", "er"], ["Main age group", "ageBracket"]],
+  };
+  var PLAT_ROWS = EN ? PLAT_ROWS_EN : PLAT_ROWS_FR;
+  var PLAT_INTRO = EN ? {
+    instagram: "Authentic, carefully crafted content, designed to build a lasting bond with a loyal community.",
+    tiktok: "Short, spontaneous formats, driven by an engaged and fast-growing audience.",
+    youtube: "Long-form content that builds trust with an attentive audience.",
+    snapchat: "Everyday closeness, with a direct and highly engaged connection.",
+    x: "Responsive takes on the topics of the moment.",
+  } : {
     instagram: "Une création à la fois authentique et soignée, pensée pour tisser un lien durable avec une communauté fidèle.",
     tiktok: "Des formats courts et spontanés, portés par une audience engagée et en pleine croissance.",
     youtube: "Un format long qui installe une relation de confiance avec une audience attentive.",
     snapchat: "Une proximité au quotidien, avec un lien direct et très engagé.",
     x: "Une prise de parole réactive sur les sujets du moment.",
   };
-  var RATES_NOTE = "Tarifs indicatifs hors taxes. Des packs sur mesure sont proposés selon le dispositif.";
+  var RATES_NOTE = L("Tarifs indicatifs hors taxes. Des packs sur mesure sont proposés selon le dispositif.",
+    "Indicative rates, excluding VAT. Custom packages are available depending on the campaign.");
   var NAME_OVERRIDES = { "lucie botans": "LUCIE BOTS" };
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -56,14 +75,15 @@
     return n;
   }
   function frNum(n, digits) {
-    try { return n.toLocaleString("fr-FR", { maximumFractionDigits: digits == null ? 1 : digits }); } catch (e) { return String(n); }
+    try { return n.toLocaleString(I.locale, { maximumFractionDigits: digits == null ? 1 : digits }); } catch (e) { return String(n); }
   }
   // Grands nombres (format voulu par Marc) : 1 300 → « 1,3K », 45 800 → « 45,8K », 919 000 → « 919K »,
   // 1 000 000 → « 1M », 2,4 milliards → « 2,4Md ». Une décimale sous 100, unité collée.
   function compactParts(n) {
     if (!isFinite(n)) return null;
-    var a = Math.abs(n), sign = n < 0 ? "-" : "", units = [[1e9, "Md"], [1e6, "M"], [1e3, "K"]];
-    function one(x) { return String(x >= 100 ? Math.round(x) : Math.round(x * 10) / 10).replace(".", ","); }
+    // En anglais : « 1.3K », « 2.4B ».
+    var a = Math.abs(n), sign = n < 0 ? "-" : "", units = [[1e9, EN ? "B" : "Md"], [1e6, "M"], [1e3, "K"]];
+    function one(x) { var s = String(x >= 100 ? Math.round(x) : Math.round(x * 10) / 10); return EN ? s : s.replace(".", ","); }
     for (var i = 0; i < units.length; i++) {
       if (a < units[i][0] && Math.round(a) < units[i][0]) continue;
       var x = a / units[i][0], r = x >= 100 ? Math.round(x) : Math.round(x * 10) / 10;
@@ -80,6 +100,8 @@
     if (!s) return "";
     var n = num(s.replace("%", ""));
     if (!isFinite(n)) return s;
+    // Anglais : "7.80%" (point décimal, sans espace).
+    if (EN) { var r = s.replace("%", "").trim().replace(",", "."); return (/^[\d.]+$/.test(r) ? r : frNum(n)) + "%"; }
     var raw = s.replace("%", "").trim().replace(".", ",");
     return (/^[\d,]+$/.test(raw) ? raw : frNum(n)) + " %";
   }
@@ -87,7 +109,7 @@
   function fmtVal(key, v) {
     var s = String(v).trim();
     if (/er$|Pct$/.test(key) && key !== "bestFormatPct") return pct(s);
-    if (key === "ageBracket") return s.replace(/\s*-\s*/, "–") + (/\d$/.test(s) ? " ans" : "");
+    if (key === "ageBracket") return s.replace(/\s*-\s*/, "–") + (/\d$/.test(s) && !EN ? " ans" : "");
     if (/^[\d\s.,  ]+[km]?$/i.test(s)) return compactTxt(s);
     return s;
   }
@@ -99,7 +121,7 @@
   function displayName(n) { return titleCase(NAME_OVERRIDES[String(n || "").trim().toLowerCase()] || n); }
   function firstName(n) { return String(n || "").trim().split(/\s+/)[0] || ""; }
   function monthFR() {
-    try { var s = new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" }); return s.charAt(0).toUpperCase() + s.slice(1); } catch (e) { return ""; }
+    try { var s = new Date().toLocaleDateString(I.locale, { month: "long", year: "numeric" }); return s.charAt(0).toUpperCase() + s.slice(1); } catch (e) { return ""; }
   }
   function profileUrl(handle, platform) {
     var h = String(handle || "").replace(/^@/, "").trim(), p = String(platform || "").toLowerCase();
@@ -115,7 +137,7 @@
     if (!m) return { amount: s, ht: false };
     var n = num(m[1]);
     if (!isFinite(n) || !n) return { amount: s, ht: false };
-    return { amount: frNum(n, 2) + " €", ht: true };
+    return { amount: EN ? "€" + frNum(n, 2) : frNum(n, 2) + " €", ht: true };
   }
   function bg(url) { return url ? ' style="background-image:url(&quot;' + esc(url) + '&quot;)"' : ""; }
 
@@ -127,15 +149,16 @@
       handle: String(mk.handle || (row && row.handle) || "").replace(/^@/, ""),
       platform: String((row && row.platform) || "instagram").toLowerCase(),
       photoUrl: (row && row.photo_url) || null,
-      bio: String(mk.bio || "").trim(),
-      tags: (arr(mk.tags) || []).map(function (t) { return String(t).trim(); }).filter(Boolean),
+      // En anglais : la bio anglaise saisie dans l'app ; sans elle, pas de bio (jamais de français).
+      bio: String((EN ? (I.bioEn ? I.bioEn(mk) : mk.bioEn) : mk.bio) || "").trim(),
+      tags: (arr(mk.tags) || []).map(function (t) { return tv(String(t).trim()); }).filter(Boolean),
       audience: { age: arr(au.age) || [], gender: au.gender || {}, pays: arr(au.pays) || [], villes: arr(au.villes) || [], formats: arr(au.formats) || [] },
       platforms: platforms,
       brands: (arr(mk.brands) || []).filter(function (b) { return b && has(b.name); }),
       photos: mk.photos || {},
       statsShots: (arr(mk.statsShots) || []).filter(Boolean),
       rates: mk.hideRates ? [] : (arr(mk.rates) || []).filter(function (r) { return r && has(r.label) && has(r.price); }),
-      ratesNote: has(mk.ratesNote) ? mk.ratesNote : RATES_NOTE,
+      ratesNote: EN ? (has(mk.ratesNoteEn) ? mk.ratesNoteEn : RATES_NOTE) : (has(mk.ratesNote) ? mk.ratesNote : RATES_NOTE),
     };
   }
 
@@ -146,15 +169,16 @@
     if (withF.length) {
       var total = withF.reduce(function (a, p) { return a + num(p.followers); }, 0);
       var names = withF.map(function (p) { return PLAT_LABEL[p.key] || p.key; });
-      figs.push([compactTxt(total), "abonnés" + (names.length > 1 ? ", " + names.join(" et ") : " sur " + names[0])]);
+      figs.push([compactTxt(total), EN ? "followers" + (names.length > 1 ? ", " + I.list(names) : " on " + names[0])
+        : "abonnés" + (names.length > 1 ? ", " + names.join(" et ") : " sur " + names[0])]);
     }
     var withEr = pls.filter(function (p) { return isFinite(num(String(p.er || "").replace("%", ""))); })
       .sort(function (a, b) { return num(String(b.er).replace("%", "")) - num(String(a.er).replace("%", "")); });
-    if (withEr.length) figs.push([pct(withEr[0].er), "d'engagement sur " + (PLAT_LABEL[withEr[0].key] || withEr[0].key)]);
+    if (withEr.length) figs.push([pct(withEr[0].er), L("d'engagement sur ", "engagement on ") + (PLAT_LABEL[withEr[0].key] || withEr[0].key)]);
     for (var i = 0; i < pls.length && figs.length < 3; i++) {
       var p = pls[i];
-      if (has(p.impressions30j)) { figs.push([compactTxt(p.impressions30j), "impressions " + (PLAT_LABEL[p.key] || "") + ", 30 jours"]); break; }
-      if (has(p.views30j)) { figs.push([compactTxt(p.views30j), "vues " + (PLAT_LABEL[p.key] || "") + ", 30 jours"]); break; }
+      if (has(p.impressions30j)) { figs.push([compactTxt(p.impressions30j), EN ? (PLAT_LABEL[p.key] || "") + " impressions, 30 days" : "impressions " + (PLAT_LABEL[p.key] || "") + ", 30 jours"]); break; }
+      if (has(p.views30j)) { figs.push([compactTxt(p.views30j), EN ? (PLAT_LABEL[p.key] || "") + " views, 30 days" : "vues " + (PLAT_LABEL[p.key] || "") + ", 30 jours"]); break; }
     }
     return figs.filter(function (f) { return f[0]; }).slice(0, 3);
   }
@@ -180,13 +204,13 @@
     var rows = (PLAT_ROWS[p.key] || PLAT_ROWS.instagram).filter(function (r) { return has(p[r[1]]); })
       .map(function (r) {
         // « Meilleur format » : soit un nom (« Réels »), soit la part des réels en % (« 67 »).
-        if (r[1] === "bestFormatPct" && isFinite(num(String(p[r[1]]).replace("%", "")))) return ["Part des réels", pct(p[r[1]])];
-        return [r[0], fmtVal(r[1], p[r[1]])];
+        if (r[1] === "bestFormatPct" && isFinite(num(String(p[r[1]]).replace("%", "")))) return [L("Part des réels", "Share of Reels"), pct(p[r[1]])];
+        return [r[0], r[1] === "bestFormatPct" ? tv(String(p[r[1]]).trim()) : fmtVal(r[1], p[r[1]])];
       }).filter(function (r) { return r[1]; })
       .slice(0, solo ? 6 : 5);
     return '<div class="col"><h3>' + esc(label) + "</h3>" +
       (solo && PLAT_INTRO[p.key] ? '<p class="intro">' + esc(PLAT_INTRO[p.key]) + "</p>" : "") +
-      (big ? '<div class="big tnum">' + esc(big.n) + (big.u ? "<small>" + big.u + "</small>" : "") + '</div><div class="under">abonnés</div>' : "") +
+      (big ? '<div class="big tnum">' + esc(big.n) + (big.u ? "<small>" + big.u + "</small>" : "") + '</div><div class="under">' + L("abonnés", "followers") + "</div>" : "") +
       (rows.length ? "<dl>" + rows.map(function (r) { return "<div><dt>" + esc(r[0]) + '</dt><dd class="tnum">' + esc(r[1]) + "</dd></div>"; }).join("") + "</dl>" : "") +
       "</div>";
   }
@@ -205,9 +229,9 @@
   // ── 3 · Audience ───────────────────────────────────────────────────────────
   function rows(list, key) {
     return list.filter(function (r) { return r && has(r[key]) && has(r.pct); }).map(function (r) {
-      var label = String(r[key]).trim().replace(/\s*-\s*/, "–");
+      var label = tv(String(r[key]).trim()).replace(/\s*-\s*/, "–");
       if (/^Reunion$/i.test(label)) label = "La Réunion";
-      if (key === "label" && /^\d+–\d+$|^\d+\+$/.test(label)) label += " ans";
+      if (key === "label" && /^\d+–\d+$|^\d+\+$/.test(label) && !EN) label += " ans";
       return '<div class="row">' + esc(label) + '<span class="lead"></span><b class="tnum">' + esc(pct(r.pct)) + "</b></div>";
     }).join("");
   }
@@ -217,24 +241,24 @@
     if (has(gf) && !has(gh)) gh = String(Math.max(0, 100 - num(gf)));
     else if (has(gh) && !has(gf)) gf = String(Math.max(0, 100 - num(gh)));
     var left = "";
-    if (a.age.length) left += "<h4>Âge</h4>" + rows(a.age, "label");
-    if (a.formats.length) left += '<h4 class="' + (left ? "gap" : "") + '">Formats regardés</h4>' + rows(a.formats, "label");
+    if (a.age.length) left += "<h4>" + L("Âge", "Age") + "</h4>" + rows(a.age, "label");
+    if (a.formats.length) left += '<h4 class="' + (left ? "gap" : "") + '">' + L("Formats regardés", "Formats watched") + "</h4>" + rows(a.formats, "label");
     if (left) cols.push("<div>" + left + "</div>");
     if (has(gf) || has(gh)) {
-      var g = [[num(gh), "hommes"], [num(gf), "femmes"]].filter(function (x) { return isFinite(x[0]); }).sort(function (x, y) { return y[0] - x[0]; });
-      cols.push("<div><h4>Genre</h4><div class=\"split\">" + g.map(function (x) {
-        return '<div><b class="tnum">' + esc(pct(String(x[0])).replace(" %", "")) + "</b>% " + x[1] + "</div>";
+      var g = [[num(gh), L("hommes", "men")], [num(gf), L("femmes", "women")]].filter(function (x) { return isFinite(x[0]); }).sort(function (x, y) { return y[0] - x[0]; });
+      cols.push("<div><h4>" + L("Genre", "Gender") + "</h4><div class=\"split\">" + g.map(function (x) {
+        return '<div><b class="tnum">' + esc(pct(String(x[0])).replace(/\s?%$/, "")) + "</b>% " + x[1] + "</div>";
       }).join("") + "</div></div>");
     }
     var right = "";
-    if (a.pays.length) right += "<h4>Pays</h4>" + rows(a.pays, "name");
-    if (a.villes.length) right += '<h4 class="' + (right ? "gap" : "") + '">Villes</h4>' + rows(a.villes, "name");
+    if (a.pays.length) right += "<h4>" + L("Pays", "Countries") + "</h4>" + rows(a.pays, "name");
+    if (a.villes.length) right += '<h4 class="' + (right ? "gap" : "") + '">' + L("Villes", "Cities") + "</h4>" + rows(a.villes, "name");
     if (right) cols.push("<div>" + right + "</div>");
     if (!cols.length) return "";
     var main = data.platforms.filter(function (p) { return p.key === data.platform; })[0] || data.platforms[0] || {};
     var src = PLAT_LABEL[main.key] || PLAT_LABEL[data.platform] || "Instagram";
-    return '<section class="pg p-aud"><header><h3>Qui suit ' + esc(firstName(data.name)) + ", <i>et où</i></h3>" +
-      '<p class="kicker">' + esc(src) + " · 30 derniers jours</p></header>" +
+    return '<section class="pg p-aud"><header><h3>' + L("Qui suit ", "Who follows ") + esc(firstName(data.name)) + L(", <i>et où</i>", ", <i>and where</i>") + "</h3>" +
+      '<p class="kicker">' + esc(src) + L(" · 30 derniers jours", " · last 30 days") + "</p></header>" +
       '<div class="cols">' + cols.join("") + "</div></section>";
   }
 
@@ -242,15 +266,15 @@
   function buildShots(data) {
     var items = [];
     ["instagram", "tiktok", "youtube"].forEach(function (k) {
-      if (data.photos[k]) items.push([data.photos[k], "Profil " + PLAT_LABEL[k]]);
+      if (data.photos[k]) items.push([data.photos[k], EN ? PLAT_LABEL[k] + " profile" : "Profil " + PLAT_LABEL[k]]);
     });
-    data.statsShots.forEach(function (u) { items.push([u, "Statistiques"]); });
+    data.statsShots.forEach(function (u) { items.push([u, L("Statistiques", "Insights")]); });
     if (!items.length) return "";
     // 6 images par page au plus : au-delà (profils + 6 captures), une 2e page « En capture ».
     var out = "";
     for (var i = 0; i < items.length; i += 6) {
-      out += '<section class="pg p-shots"><header><h3>En capture, <i>sans retouche</i></h3>' +
-        '<p class="kicker">Profils et statistiques des plateformes</p></header>' +
+      out += '<section class="pg p-shots"><header><h3>' + L("En capture, <i>sans retouche</i>", "Screenshots, <i>unedited</i>") + "</h3>" +
+        '<p class="kicker">' + L("Profils et statistiques des plateformes", "Platform profiles and insights") + "</p></header>" +
         '<div class="prints">' + items.slice(i, i + 6).map(function (it) {
           return '<figure><div class="frame"><img src="' + esc(it[0]) + '" alt="' + esc(it[1]) + '" loading="lazy"></div><figcaption>' + esc(it[1]) + "</figcaption></figure>";
         }).join("") + "</div></section>";
@@ -264,15 +288,15 @@
     if (!brands.length && !rates.length) return "";
     var left = "", right = "";
     if (brands.length) {
-      left = '<p class="kicker">Collaborations</p><h3>Ces marques lui ont fait confiance</h3>' +
+      left = '<p class="kicker">Collaborations</p><h3>' + (EN ? "Brands that trusted " + esc(firstName(data.name)) : "Ces marques lui ont fait confiance") + "</h3>" +
         '<p class="credits' + (brands.length > 12 ? " long" : "") + '">' +
         brands.map(function (b) { return "<span>" + esc(String(b.name).trim()) + "</span>"; }).join(" ") + "</p>";
     }
     if (rates.length) {
-      right = '<p class="kicker">Tarifs indicatifs</p><div class="rates">' + rates.map(function (r) {
-        var p = fmtPrice(r.price);
-        return '<div class="rate">' + esc(r.label) + '<span class="lead"></span><b class="tnum">' + esc(p.amount) + (p.ht ? "<small>HT</small>" : "") + "</b></div>" +
-          (has(r.detail) ? '<p class="rate-detail">' + esc(r.detail) + "</p>" : "");
+      right = '<p class="kicker">' + L("Tarifs indicatifs", "Indicative rates") + '</p><div class="rates">' + rates.map(function (r) {
+        var p = fmtPrice(r.price), detail = EN ? r.detailEn : r.detail;
+        return '<div class="rate">' + esc(EN && has(r.labelEn) ? r.labelEn : tv(r.label)) + '<span class="lead"></span><b class="tnum">' + esc(p.amount) + (p.ht ? "<small>" + L("HT", "excl. VAT") + "</small>" : "") + "</b></div>" +
+          (has(detail) ? '<p class="rate-detail">' + esc(detail) + "</p>" : "");
       }).join("") + '</div><p class="note">' + esc(data.ratesNote) + "</p>";
     }
     var one = !left || !right;
@@ -283,12 +307,12 @@
   // ── 6 · Contact ────────────────────────────────────────────────────────────
   function buildContact(data) {
     return '<section class="pg p-contact"><div class="txt"><p class="kicker">Contact</p>' +
-      "<h2>Travaillons<i>ensemble</i></h2>" +
+      "<h2>" + L("Travaillons<i>ensemble</i>", "Let’s work<i>together</i>") + "</h2>" +
       '<div class="ways">' +
-      '<div><span>E-mail</span><a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a></div>' +
-      '<div><span>Téléphone</span><a class="tnum" href="tel:+33766259803">07 66 25 98 03</a></div>' +
+      '<div><span>' + L("E-mail", "Email") + '</span><a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a></div>' +
+      '<div><span>' + L("Téléphone", "Phone") + '</span><a class="tnum" href="tel:+33766259803">' + L("07 66 25 98 03", "+33 7 66 25 98 03") + "</a></div>" +
       '<div><span>Instagram</span><a href="https://instagram.com/ttpcreators" target="_blank" rel="noreferrer">@ttpcreators</a></div></div>' +
-      '<div class="foot"><span>TTP Creators · Talent management · Lyon et Genève</span><span>Media kit ' + esc(data.name) + ' · <span class="js-month">' + monthFR() + "</span></span></div></div>" +
+      '<div class="foot"><span>TTP Creators · Talent management · ' + L("Lyon et Genève", "Lyon & Geneva") + "</span><span>Media kit " + esc(data.name) + ' · <span class="js-month">' + monthFR() + "</span></span></div></div>" +
       '<div class="ph" role="img" aria-label="' + esc(data.name) + '"' + bg(data.photos.contact || data.photos.hero || data.photoUrl) + "></div></section>";
   }
 
