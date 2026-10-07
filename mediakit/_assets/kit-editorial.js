@@ -14,6 +14,10 @@
   // Thème choisi dans l'app (mediakit.theme) ; ?theme=<nom> = aperçu.
   var THEMES = ["blanc", "bordeaux", "sauge", "ivoire", "minuit"];
   var themePreview = (function () { try { return new URLSearchParams(location.search).get("theme"); } catch (e) { return null; } })();
+  // ?og=1 : carte d'aperçu de partage 1200×630 (WhatsApp, iMessage, LinkedIn…), capturée en
+  // image par la CI (_render_pdfs.py → apercu-<build>.jpg, déclarée en og:image par le shell).
+  var OG = (function () { try { return new URLSearchParams(location.search).get("og") === "1"; } catch (e) { return false; } })();
+  if (OG) d.classList.add("og");
   function applyTheme(t) {
     var v = themePreview || t;
     if (THEMES.indexOf(v) >= 0 && v !== "blanc") d.setAttribute("data-mk-theme", v);
@@ -292,10 +296,40 @@
     return buildCover(data) + buildPlatforms(data) + buildAudience(data) + buildShots(data) + buildBrands(data) + buildContact(data);
   }
 
+  // ── Aperçu de partage (?og=1) : la couverture resserrée en carte 1200×630 ───
+  function buildOg(data) {
+    var parts = data.name.split(/\s+/), first = parts[0] || "", rest = parts.slice(1).join(" ");
+    var meta = [];
+    if (has(data.handle)) meta.push("@" + esc(data.handle));
+    data.tags.slice(0, 2).forEach(function (t) { meta.push(esc(t)); });
+    var figs = coverFigs(data);
+    return '<section class="og-card">' +
+      '<div class="ph"' + bg(data.photos.hero || data.photoUrl) + "></div>" +
+      '<div class="txt"><p class="kicker">TTP Creators · Media kit · ' + monthFR() + "</p>" +
+      '<h1 class="name">' + esc(first) + (rest ? "<i>" + esc(rest) + "</i>" : "") + "</h1>" +
+      (meta.length ? '<p class="meta">' + meta.join(" · ") + "</p>" : "") +
+      (figs.length ? '<div class="figs">' + figs.map(function (f) { return '<div><b class="tnum">' + esc(f[0]) + "</b>" + esc(f[1]) + "</div>"; }).join("") + "</div>" : "") +
+      "</div></section>";
+  }
+  // Le nom doit tenir sur la carte : on réduit la taille jusqu'à ce qu'il rentre (polices chargées).
+  function fitOgName() {
+    var n = kit.querySelector(".og-card .name");
+    if (!n) return;
+    var size = 132;
+    n.style.fontSize = size + "px";
+    while (size > 56 && n.scrollWidth > n.clientWidth + 1) { size -= 4; n.style.fontSize = size + "px"; }
+  }
+
   var kit = document.getElementById("kit"), bar = document.getElementById("progress");
   function paint(data) {
+    if (OG) {
+      kit.innerHTML = buildOg(data);
+      fitOgName();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitOgName);
+      return;
+    }
     kit.innerHTML = build(data);
-    if (data.name) document.title = "Media Kit — " + data.name + " · TTP Creators";
+    if (data.name) document.title = data.name + " · Media kit TTP Creators";
   }
   function onScroll() {
     var h = d.scrollHeight - d.clientHeight, top = d.scrollTop || document.body.scrollTop || 0;
@@ -326,9 +360,10 @@
     } catch (e) {}
   })();
 
-  // 2) Contenu à jour (page web) : ligne lue par NOM réel.
+  // 2) Contenu à jour (page web) : ligne lue par NOM réel. (Pas pour l'aperçu : il doit
+  // rester identique à la donnée bakée du build.)
   var name = baked.name || "";
-  if (name) {
+  if (name && !OG) {
     try {
       fetch(SB_URL + "/rest/v1/public_mediakit?select=name,handle,platform,photo_url,mediakit&name=eq." + encodeURIComponent(name), {
         headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },

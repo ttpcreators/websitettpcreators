@@ -25,12 +25,51 @@ SB_KEY = ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6
           "5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU")
 
 ROOT = os.path.dirname(os.path.abspath(__file__))         # …/mediakit
-OG_FALLBACK = "https://ttpcreators.pro/og-ttp.jpg"
 # Version du build → nom de PDF versionné (media-kit-<build>.pdf). URL unique à chaque
 # déploiement ⇒ aucun edge CDN / proxy ne peut servir un PDF périmé (le query string, lui,
 # est ignoré par Fastly). En CI = SHA du commit ; en local = "dev". DOIT correspondre à
 # la même valeur dans _render_pdfs.py (tous deux lisent GITHUB_SHA dans le même job CI).
 BUILD = (os.environ.get("GITHUB_SHA") or "dev")[:12]
+
+
+MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août",
+        "septembre", "octobre", "novembre", "décembre"]
+
+
+def mois_fr():
+    t = time.localtime()
+    return "%s %d" % (MOIS[t.tm_mon - 1], t.tm_year)
+
+
+def de(nom):
+    """« de Candice » / « d'Ana » (élision devant une voyelle)."""
+    return ("d'" if re.match(r"[AEIOUYÀÂÉÈÊÎÔÛaeiouyàâéèêîôû]", nom or "") else "de ") + (nom or "")
+
+
+# Aperçu de partage (WhatsApp, iMessage, LinkedIn…) : carte 1200×630 capturée en CI par
+# _render_pdfs.py depuis la page en mode ?og=1 → mediakit/<slug>/apercu-<build>.jpg.
+# Nom versionné comme le PDF : une URL neuve à chaque déploiement, jamais servie périmée.
+def og_tags(title, desc, url, image, alt, kind="profile"):
+    return """<meta property="og:site_name" content="TTP Creators">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:type" content="{kind}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{image}">
+<meta property="og:image:secure_url" content="{image}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{alt}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{image}">""".format(kind=kind, title=esc(title), desc=esc(desc), url=esc(url), image=esc(image), alt=esc(alt))
+
+
+def apercu(slug):
+    return "https://ttpcreators.pro/mediakit/%s/apercu-%s.jpg" % (slug, BUILD)
 
 
 def slugify(s):
@@ -132,23 +171,19 @@ def shell(c, slug):
     # live reste ensuite comme rafraîchissement pour la page web.
     baked = json.dumps({"name": name, "handle": handle, "platform": platform, "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
     canonical = "https://ttpcreators.pro/mediakit/%s/" % slug
-    desc = "Media kit de %s%s — audience, statistiques et collaborations. TTP Creators." % (
-        disp.title() if disp.isupper() else disp, (" · " + niche) if niche else "")
-    og_img = photo or OG_FALLBACK
+    title = disp.title() if disp.isupper() else disp
+    desc = "Audience, chiffres et marques partenaires %s%s. Media kit TTP Creators, %s." % (
+        de(title), (" (" + niche + ")") if niche else "", mois_fr())
+    og = og_tags(title + " · Media kit", desc, canonical, apercu(slug), "Couverture du media kit " + de(title))
     return """<!doctype html>
 <html lang="fr"{theme}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Media Kit — {title} · TTP Creators</title>
+<title>{title} · Media kit TTP Creators</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
-<meta property="og:type" content="profile">
-<meta property="og:title" content="Media Kit — {title}">
-<meta property="og:description" content="{desc}">
-<meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{og_img}">
-<meta name="twitter:card" content="summary_large_image">
+{og}
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png?v=2">
 <link rel="apple-touch-icon" href="../../assets/favicon-180.png?v=2">
 <link rel="stylesheet" href="../_assets/kit-editorial.css">
@@ -168,8 +203,8 @@ def shell(c, slug):
 <script src="../_assets/kit-editorial.js"></script>
 </body>
 </html>
-""".format(theme=kit_theme_attr(mk.get("theme")), title=esc(disp.title() if disp.isupper() else disp), desc=esc(desc),
-           canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
+""".format(theme=kit_theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc),
+           canonical=canonical, og=og, baked=baked, build=BUILD)
 
 
 def ugc_shell(c, slug):
@@ -185,22 +220,17 @@ def ugc_shell(c, slug):
     baked = json.dumps({"name": name, "handle": handle, "platform": c.get("platform") or "instagram",
                         "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
     canonical = "https://ttpcreators.pro/mediakit/%s/ugc/" % slug
-    desc = "Media kit UGC de %s — personnalité, quotidien, matériel et portfolio de contenus. TTP Creators." % title
-    og_img = photo or OG_FALLBACK
+    desc = "Media kit UGC %s : personnalité, quotidien, matériel et portfolio de contenus. TTP Creators." % de(title)
+    og = og_tags(title + " · Media kit UGC", desc, canonical, apercu(slug), "Couverture du media kit " + de(title))
     return """<!doctype html>
 <html lang="fr"{theme}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Media Kit UGC — {title} · TTP Creators</title>
+<title>{title} · Media kit UGC TTP Creators</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
-<meta property="og:type" content="profile">
-<meta property="og:title" content="Media Kit UGC — {title}">
-<meta property="og:description" content="{desc}">
-<meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{og_img}">
-<meta name="twitter:card" content="summary_large_image">
+{og}
 <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png?v=2">
 <link rel="apple-touch-icon" href="../../../assets/favicon-180.png?v=2">
 <link rel="stylesheet" href="../../_assets/mediakit-ugc.css">
@@ -219,7 +249,7 @@ def ugc_shell(c, slug):
 <script src="../../_assets/mediakit-ugc.js"></script>
 </body>
 </html>
-""".format(theme=theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc), canonical=canonical, og_img=esc(og_img), baked=baked, build=BUILD)
+""".format(theme=theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc), canonical=canonical, og=og, baked=baked, build=BUILD)
 
 
 def agency_shell(creators, agency=None, slugs=None):
@@ -253,12 +283,7 @@ def agency_shell(creators, agency=None, slugs=None):
 <title>Media kit agence · TTP Creators</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="https://ttpcreators.pro/mediakit/agence/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Media kit agence · TTP Creators">
-<meta property="og:description" content="{desc}">
-<meta property="og:url" content="https://ttpcreators.pro/mediakit/agence/">
-<meta property="og:image" content="{og}">
-<meta name="twitter:card" content="summary_large_image">
+{og}
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png?v=2">
 <link rel="apple-touch-icon" href="../../assets/favicon-180.png?v=2">
 <link rel="stylesheet" href="../_assets/kit-editorial.css">
@@ -279,7 +304,9 @@ def agency_shell(creators, agency=None, slugs=None):
 <script src="../_assets/agence-editorial.js"></script>
 </body>
 </html>
-""".format(theme=kit_theme_attr((agency or {}).get("theme")), desc=esc(desc), og=OG_FALLBACK, build=BUILD, baked=baked)
+""".format(theme=kit_theme_attr((agency or {}).get("theme")), desc=esc(desc), build=BUILD, baked=baked,
+           og=og_tags("Media kit agence · TTP Creators", desc, "https://ttpcreators.pro/mediakit/agence/",
+                      apercu("agence"), "Couverture du media kit de l'agence TTP Creators", kind="website"))
 
 
 def write_sitemap(slugs, ugc=None):

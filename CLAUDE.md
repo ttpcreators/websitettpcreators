@@ -96,6 +96,13 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
   (photo d'agence). Contenu éditable dans l'app (blob `agency_mediakit`) ; les anciens textes
   par défaut « créatrices » enregistrés en base sont remplacés à l'affichage (table `LEGACY`,
   idem dans l'app) tant qu'ils n'ont pas été modifiés. Thèmes = ceux des kits créateurs.
+- **Aperçus de partage des media kits** (2026-10-07) : chaque kit créateur et le deck agence ont
+  leur carte 1200×630 (og:image) dans le style Éditorial : page en mode `?og=1` (`buildOg` dans
+  `kit-editorial.js` / `agence-editorial.js`, styles `.og-card`), capturée en JPEG par
+  `_render_pdfs.py` (`render_og`) → `mediakit/<slug>/apercu-<build>.jpg` (nom versionné comme le
+  PDF, gitignoré). Balises og/twitter complètes via `og_tags()` de `_build_mediakits.py` ; le kit
+  UGC reprend la carte de son kit principal. Capture ratée → copie de `og-ttp.jpg` (image de
+  l'accueil). Les anciens shells (créateurs retirés de l'app) n'ont pas de carte.
 - **Kits UGC** : gardent `mediakit.css` (DA **« Minuit »** alignée sur l'app TTP
   Suite depuis 2026-09-29 : fond #000, surface #0a0a0a, filets #222, texte #fafafa, Inter — les
   tokens historiques `--deep/--wine/--rose/--ink…` y sont REMAPPÉS vers cette palette, ne pas les

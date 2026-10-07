@@ -18,6 +18,9 @@
   // Thème choisi dans l'app (agence.theme) ; ?theme=<nom> = aperçu. Mêmes thèmes que les kits créateurs.
   var THEMES = ["blanc", "bordeaux", "sauge", "ivoire", "minuit"];
   var themePreview = (function () { try { return new URLSearchParams(location.search).get("theme"); } catch (e) { return null; } })();
+  // ?og=1 : carte d'aperçu de partage 1200×630, capturée en image par la CI (comme les kits créateurs).
+  var OG = (function () { try { return new URLSearchParams(location.search).get("og") === "1"; } catch (e) { return false; } })();
+  if (OG) d.classList.add("og");
   function applyTheme(t) {
     var v = themePreview || t;
     if (THEMES.indexOf(v) >= 0 && v !== "blanc") d.setAttribute("data-mk-theme", v);
@@ -345,12 +348,47 @@
     }
     var xtot = shown.reduce(function (a, c) { return a + c.xfoll; }, 0);
     var ag = agencyData();
+    if (OG) return buildOg(ag, shown, xtot > 0 ? compactTxt(xtot) : "");
     return buildCover(ag, shown) + buildIntro(ag, { creators: shown.length, followers: xtot > 0 ? compactTxt(xtot) : "" }) + buildBrands() +
       shown.map(buildTalent).join("") + buildCasting(shown) + ag.concepts.map(buildConcept).join("") + buildContact(ag);
   }
 
+  // ── Aperçu de partage (?og=1) : la couverture du deck resserrée en carte 1200×630 ──
+  function buildOg(ag, creators, followers) {
+    var withPh = creators.filter(function (c) { return c.photoUrl; }).slice(0, 8);
+    var top = withPh.length <= 4 ? withPh.length : Math.ceil(withPh.length / 2);
+    var rows = [withPh.slice(0, top), withPh.slice(top)].filter(function (r) { return r.length; });
+    var mosaic = rows.length ? '<div class="mosaic">' + rows.map(function (r) {
+      return '<div class="r">' + r.map(function (c) { return '<div class="ph"' + bg(c.photoUrl) + "></div>"; }).join("") + "</div>";
+    }).join("") + "</div>" : "";
+    var figs = [
+      [has(ag.kpis.creatorsOverride) ? ag.kpis.creatorsOverride : (creators.length ? String(creators.length) : ""), "créateurs"],
+      [has(ag.kpis.followersOverride) ? ag.kpis.followersOverride : followers, "abonnés cumulés"],
+      [ag.kpis.platforms, ag.kpis.platformsLabel],
+    ].filter(function (f) { return has(f[0]); });
+    return '<section class="og-card og-agence"' + (mosaic ? "" : ' style="grid-template-columns:1fr"') + ">" +
+      '<div class="txt"><p class="kicker">Media kit agence · ' + monthFR() + "</p>" +
+      '<h1 class="name">TTP<i>Creators</i></h1>' +
+      '<p class="meta">Talent management · Lyon et Genève</p>' +
+      (figs.length ? '<div class="figs">' + figs.map(function (f) { return '<div><b class="tnum">' + esc(figNum(f[0])) + "</b>" + esc(f[1]) + "</div>"; }).join("") + "</div>" : "") +
+      "</div>" + mosaic + "</section>";
+  }
+  function fitOgName() {
+    var n = kit.querySelector(".og-card .name");
+    if (!n) return;
+    var size = 132;
+    n.style.fontSize = size + "px";
+    while (size > 56 && n.scrollWidth > n.clientWidth + 1) { size -= 4; n.style.fontSize = size + "px"; }
+  }
+
   var kit = document.getElementById("kit"), bar = document.getElementById("progress");
-  function paint() { kit.innerHTML = build(); }
+  function paint() {
+    kit.innerHTML = build();
+    if (OG) {
+      fitOgName();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitOgName);
+    }
+  }
   function onScroll() {
     var h = d.scrollHeight - d.clientHeight, top = d.scrollTop || document.body.scrollTop || 0;
     if (bar) bar.style.width = (h > 0 ? (top / h) * 100 : 0) + "%";
@@ -381,14 +419,15 @@
   })();
 
   // 2) Contenu à jour (page web) : créateurs actifs + contenu agence édité dans l'app.
+  // (Pas pour l'aperçu de partage : il reste identique à la donnée bakée du build.)
   var H = { headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY } };
-  try {
+  if (!OG) try {
     fetch(SB_URL + "/rest/v1/public_mediakit?select=name,handle,niche,platform,photo_url,mediakit,sort_order&order=sort_order", H)
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (rows) { if (rows && rows.length) { window.MK_AGENCY.creators = rows; paint(); onScroll(); } })
       .catch(function () {});
   } catch (e) {}
-  try {
+  if (!OG) try {
     fetch(SB_URL + "/rest/v1/public_agency_mediakit?select=data&limit=1", H)
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (rows) {

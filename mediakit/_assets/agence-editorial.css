@@ -148,3 +148,9 @@
   .p-contact.one .txt { max-width: none; }
   .p-brands.ag .credits, .p-brands.ag .credits.long { font-size: 34px; margin-top: 22px; }
 }
+
+/* ── Aperçu de partage (?og=1) : couverture du deck en carte 1200×630 ─────────
+ * Base commune dans kit-editorial.css (.og-card) ; ici, le texte à gauche et la
+ * mosaïque des portraits à droite, comme sur la couverture. */
+.og-card.og-agence { grid-template-columns: 1fr 640px; }
+.og-agence .mosaic { height: 630px; }

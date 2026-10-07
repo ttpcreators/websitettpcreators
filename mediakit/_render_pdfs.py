@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Rend chaque page media kit en PDF paysage 16:9 : <base>/mediakit/<slug>/media-kit.pdf.
+Rend chaque page media kit en PDF paysage 16:9 : <base>/mediakit/<slug>/media-kit.pdf,
+puis son aperçu de partage 1200×630 (mode ?og=1) : <base>/mediakit/<slug>/apercu-<build>.jpg.
 
 Lancé en CI après le build React + la génération des pages media kit, AVANT
 l'upload Pages. Le bouton « Télécharger en PDF » des pages pointe directement
@@ -19,6 +20,7 @@ Nécessite Google Chrome (préinstallé sur ubuntu-latest ; override CHROME_BIN)
 import functools
 import glob
 import os
+import shutil
 import subprocess
 import sys
 import threading
@@ -85,6 +87,36 @@ def render(url_path, out_file, label):
     return False
 
 
+OG_MIN_BYTES = 15000   # une carte 1200×630 avec photo pèse bien plus
+
+
+def render_og(slug):
+    """Carte d'aperçu de partage (WhatsApp, iMessage, LinkedIn…) : la page en mode ?og=1
+    capturée en JPEG 1200×630 → mediakit/<slug>/apercu-<build>.jpg (og:image du shell).
+    Si la capture échoue, on pose l'image générale du site sous ce nom : un aperçu
+    générique vaut mieux qu'un aperçu cassé."""
+    out = os.path.join(MK, slug, "apercu-%s.jpg" % BUILD)
+    url = "http://127.0.0.1:%d/mediakit/%s/?og=1" % (PORT, slug)
+    cmd = [
+        CHROME, "--headless", "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
+        "--force-device-scale-factor=1", "--window-size=1200,630",
+        "--virtual-time-budget=12000", "--screenshot=" + out, url,
+    ]
+    try:
+        subprocess.run(cmd, capture_output=True, timeout=90)
+    except Exception as e:
+        print("  ✗ %-24s (chrome: %s)" % (slug + " (aperçu)", e))
+    if os.path.exists(out) and os.path.getsize(out) >= OG_MIN_BYTES:
+        print("  ✓ %-24s %d Ko" % (slug + " (aperçu)", os.path.getsize(out) // 1024))
+        return True
+    for fb in (os.path.join(BASE, "og-ttp.jpg"), os.path.join(REPO, "public", "og-ttp.jpg")):
+        if os.path.exists(fb):
+            shutil.copyfile(fb, out)
+            break
+    print("  ✗ %-24s (capture ratée : image générale du site à la place)" % (slug + " (aperçu)"))
+    return False
+
+
 def main():
     if not os.path.isdir(MK):
         print("Aucun dossier %s — rien à rendre." % MK)
@@ -100,6 +132,11 @@ def main():
         if render("mediakit/%s/ugc/" % s, os.path.join(MK, s, "ugc", "media-kit-ugc-%s.pdf" % BUILD), s + " (ugc)")
     )
     print("PDF paysage générés : %d/%d (+ %d/%d UGC)" % (ok, len(names), ok_ugc, len(ugc)))
+    # Seules les pages du moteur actuel déclarent une carte (les anciens shells encore en
+    # ligne, créateurs retirés de l'app, gardent leur photo comme aperçu).
+    og_names = [s for s in names if "apercu-" in open(os.path.join(MK, s, "index.html"), encoding="utf-8").read()]
+    ok_og = sum(1 for s in og_names if render_og(s))
+    print("Aperçus de partage générés : %d/%d" % (ok_og, len(og_names)))
     # Ne jamais faire échouer le déploiement : les shells + le repli window.print()
     # couvrent l'absence d'un PDF. On sort toujours 0.
     sys.exit(0)
