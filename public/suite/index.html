@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>TTP Suite — l'outil de l'agence TTP Creators</title>
+    <meta
+      name="description"
+      content="TTP Suite est l'application de travail de l'agence TTP Creators : collaborations entre créateurs et marques, media kits, tarifs et bilans de campagne. Accès sur invitation."
+    />
+    <link rel="canonical" href="https://ttpcreators.pro/suite/" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" type="image/png" href="../assets/favicon.png" />
+    <link rel="apple-touch-icon" href="../assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0b0b0d;
+        --accent: #3d0000;
+        --muted: #6b6b73;
+        --line: #e8e6e6;
+        --paper: #fff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-weight: 400;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 720px; margin: 0 auto; padding: clamp(2rem, 6vw, 5rem) clamp(1.2rem, 5vw, 2rem) 5rem; }
+      .back {
+        display: inline-flex; align-items: center; gap: .45rem;
+        font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 500;
+        color: var(--muted); text-decoration: none; margin-bottom: 2.5rem;
+        transition: color .15s ease;
+      }
+      .back:hover { color: var(--accent); }
+      .logo { height: 26px; width: auto; display: block; margin-bottom: 2rem; }
+      h1 {
+        font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.1; letter-spacing: -.02em;
+        font-weight: 600; margin: 0 0 .6rem;
+      }
+      .updated { color: var(--muted); font-size: .82rem; margin: 0 0 3rem; }
+      h2 {
+        font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+        color: var(--accent); margin: 2.8rem 0 .9rem; padding-bottom: .6rem;
+        border-bottom: 1px solid var(--line);
+      }
+      p { margin: 0 0 1rem; }
+      a { color: var(--accent); }
+      dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.6rem; }
+      dt { color: var(--muted); font-size: .88rem; }
+      dd { margin: 0; font-size: .95rem; }
+      @media (max-width: 520px) {
+        dl { grid-template-columns: 1fr; gap: .1rem; }
+        dd { margin-bottom: .7rem; }
+      }
+      .note { color: var(--muted); font-size: .86rem; }
+      footer {
+        margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+        color: var(--muted); font-size: .8rem;
+        display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between;
+      }
+      ul { margin: 0 0 1rem; padding-left: 1.1rem; }
+      li { margin: 0 0 .45rem; }
+      .lang { display: inline-flex; gap: .4rem; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 500; margin: 0 0 2.5rem; }
+      .lang a { color: var(--muted); text-decoration: none; }
+      .lang a:hover { color: var(--accent); }
+      .en { margin-top: 5rem; padding-top: 1rem; border-top: 2px solid var(--ink); }
+      .cta { display: inline-block; margin: .4rem 0 1rem; padding: .7rem 1.2rem; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; font-size: .9rem; font-weight: 500; }
+      .cta:hover { border-color: var(--accent); color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="/">← Retour au site</a>
+      <img src="../assets/logo-dark.png" alt="TTP Creators" class="logo" />
+
+      <h1>TTP Suite</h1>
+      <p class="updated">L'application de travail de l'agence <strong>TTP Creators</strong> : app.ttpcreators.pro</p>
+      <p class="lang"><a href="#en">English version ↓</a></p>
+
+      <h2>Ce que c'est</h2>
+      <p>
+        TTP Suite est l'outil interne de <strong>TTP Creators</strong>, agence de talent management
+        Sport &amp; Lifestyle (Lyon · Genève). L'équipe de l'agence et les créateurs qu'elle représente
+        y gèrent ensemble les collaborations avec les marques : prospection, suivi des échanges,
+        planning, contrats, factures, media kits, tarifs et bilans de campagne.
+      </p>
+      <p>
+        L'application n'est pas ouverte au public : l'accès se fait <strong>sur invitation</strong>
+        (équipe de l'agence et créateurs représentés).
+      </p>
+      <a class="cta" href="https://app.ttpcreators.pro">Se connecter à TTP Suite</a>
+
+      <h2>Connecter ses comptes (créateurs représentés)</h2>
+      <p>
+        Depuis son espace, chaque créateur peut <strong>choisir</strong> de connecter son compte Instagram,
+        TikTok ou sa chaîne YouTube. L'accès est <strong>en lecture seule</strong> : ses statistiques arrivent
+        toutes seules, sans captures d'écran à envoyer.
+      </p>
+      <dl>
+        <dt>Ce qui est lu</dt>
+        <dd>Pour YouTube : le nom et les abonnés de la chaîne, les chiffres des vidéos récentes (vues, j'aime, commentaires) et les statistiques YouTube Studio (vues et temps de visionnage sur 30 jours, abonnés gagnés, répartition de l'audience par âge, genre et pays, en pourcentages).</dd>
+        <dt>À quoi ça sert</dt>
+        <dd>Tenir à jour son media kit, calculer des tarifs justes à partir de ses vraies vues, retrouver les vidéos publiées pour une collaboration et préparer les bilans envoyés aux marques.</dd>
+        <dt>Ce que nous ne faisons jamais</dt>
+        <dd>Publier, modifier, commenter ou supprimer quoi que ce soit sur ses comptes ; revendre ou céder ses données ; les utiliser pour de la publicité.</dd>
+        <dt>Se déconnecter</dt>
+        <dd>À tout moment depuis son espace («&nbsp;Déconnecter&nbsp;») : l'accès est retiré et ses données YouTube sont effacées. Il peut aussi retirer l'accès depuis la <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">page de sécurité de son compte Google</a>.</dd>
+      </dl>
+
+      <h2>Données et contact</h2>
+      <p>
+        Le détail des données traitées est dans notre <a href="/confidentialite/">politique de confidentialité</a>
+        et nos <a href="/conditions/">conditions d'utilisation</a>. TTP Suite utilise les services d'API YouTube
+        (<a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">conditions d'utilisation de YouTube</a>,
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">règles de confidentialité de Google</a>).
+        Une question : <a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a>.
+      </p>
+
+      <section class="en" id="en" lang="en">
+        <h1>TTP Suite</h1>
+        <p class="updated">The internal app of the <strong>TTP Creators</strong> agency: app.ttpcreators.pro</p>
+
+        <h2>What it is</h2>
+        <p>TTP Suite is the internal tool of <strong>TTP Creators</strong>, a sport &amp; lifestyle talent management agency (Lyon · Geneva). The agency team and the creators it represents use it together to manage brand partnerships: prospecting, follow-ups, planning, contracts, invoices, media kits, rates and campaign reports.</p>
+        <p>The app is not open to the public: access is <strong>by invitation only</strong> (agency team and represented creators).</p>
+        <a class="cta" href="https://app.ttpcreators.pro">Sign in to TTP Suite</a>
+
+        <h2>Connecting accounts (represented creators)</h2>
+        <p>From their own space, each creator can <strong>choose</strong> to connect their Instagram account, TikTok account or YouTube channel. Access is <strong>read-only</strong>: their statistics are updated automatically, with no screenshots to send.</p>
+        <ul>
+          <li><strong>What we read</strong> — for YouTube: channel name and subscriber count, metrics of recent videos (views, likes, comments) and YouTube Studio analytics (views and watch time over 30 days, subscribers gained, aggregated audience breakdown by age, gender and country, as percentages).</li>
+          <li><strong>What it is used for</strong> — keeping the creator's media kit up to date, setting fair rates based on real views, finding the videos published for a brand partnership and preparing the campaign reports sent to brands.</li>
+          <li><strong>What we never do</strong> — post, edit, comment on or delete anything on their accounts; sell or share their data; use it for advertising.</li>
+          <li><strong>Disconnecting</strong> — at any time from their space (“Disconnect”): access is revoked and their YouTube data is deleted. They can also remove access from their <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">Google Account security page</a>.</li>
+        </ul>
+
+        <h2>Data and contact</h2>
+        <p>Details are in our <a href="/confidentialite/#en">privacy policy</a> and <a href="/conditions/">terms of service</a>. TTP Suite uses YouTube API Services (<a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a>, <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>). TTP Suite's use and transfer of information received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements. Contact: <a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a>.</p>
+      </section>
+
+      <footer>
+        <span>© 2026 TTP Creators</span>
+        <span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions</a></span>
+      </footer>
+    </div>
+  </body>
+</html>
