@@ -226,8 +226,8 @@ def shell(c, slug, lang="fr"):
 <link rel="canonical" href="{canonical}">
 {hreflang}
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=3">
+<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=3">
 <link rel="stylesheet" href="{up}../_assets/kit-editorial.css">
 </head>
 <body>
@@ -279,8 +279,8 @@ def ugc_shell(c, slug):
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="../../../assets/favicon-180.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png?v=3">
+<link rel="apple-touch-icon" href="../../../assets/favicon-180.png?v=3">
 <link rel="stylesheet" href="../../_assets/mediakit-ugc.css">
 </head>
 <body>
@@ -341,8 +341,8 @@ def agency_shell(creators, agency=None, slugs=None, lang="fr"):
 <link rel="canonical" href="{canonical}">
 {hreflang}
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=3">
+<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=3">
 <link rel="stylesheet" href="{up}../_assets/kit-editorial.css">
 <link rel="stylesheet" href="{up}../_assets/agence-editorial.css">
 </head>
