@@ -49,6 +49,8 @@
     // Tarifs (intitulés proposés par l'app)
     "story instagram": "Instagram Story", "post instagram": "Instagram Post", "reel instagram": "Instagram Reel",
     "video tiktok": "TikTok Video", "contenu ugc": "UGC Content", "pack sur mesure": "Custom Package",
+    "carrousel instagram": "Instagram Carousel", "story tiktok": "TikTok Story", "integration youtube": "YouTube Integration",
+    "video youtube dediee": "Dedicated YouTube Video", "short youtube": "YouTube Short", "story snapchat": "Snapchat Story", "post x": "X Post",
     // Précisions du casting
     "quotidien": "Daily", "peau seche": "Dry skin", "peau sensible": "Sensitive skin", "peau grasse": "Oily skin",
     "peau mixte": "Combination skin", "experte": "Expert", "expert": "Expert", "healthy": "Healthy",
