@@ -64,7 +64,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .p-cover .figs b { display: block; font-family: var(--serif); font-weight: 400; font-size: 2.6cqw; color: var(--ink); line-height: 1; margin-bottom: .45cqw; white-space: nowrap; }
 
 /* ── 2 · Plateformes ──────────────────────────────────────────────────────── */
-.p-plat { display: grid; grid-template-columns: 1fr 1fr 22%; }
+.p-plat { display: grid; grid-template-columns: 1fr 1fr; }
 .p-plat.solo { grid-template-columns: 1fr 34%; }
 .p-plat .col { padding: 4.4cqw 3.6cqw 4cqw 4.6cqw; display: flex; flex-direction: column; min-width: 0; }
 .p-plat .col + .col { padding-left: 3.2cqw; }
@@ -76,7 +76,6 @@ h1, h2, h3, h4, p { margin: 0; }
 .p-plat dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 1cqw; font-size: 1.1cqw; border-top: 1px solid var(--soft); padding-top: 1cqw; }
 .p-plat dt { color: var(--grey); }
 .p-plat dd { margin: 0; font-family: var(--serif); font-size: 1.9cqw; white-space: nowrap; }
-.p-plat .ph { background-size: 330%; background-position: 46% 16%; }
 .p-plat.solo .ph { background-size: 210%; background-position: 46% 20%; }
 .p-plat .intro { font-family: var(--serif); font-size: 1.45cqw; line-height: 1.4; max-width: 40ch; margin-top: 1.4cqw; color: var(--ink); }
 

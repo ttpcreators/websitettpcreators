@@ -220,8 +220,9 @@
     var photo = data.photos.contact || data.photos.hero || data.photoUrl, out = "";
     for (var i = 0; i < pls.length; i += 2) {
       var pair = pls.slice(i, i + 2), solo = pair.length === 1;
+      // Portrait à côté d'un seul réseau ; à deux, la colonne trop étroite coupait le visage.
       out += '<section class="pg p-plat' + (solo ? " solo" : "") + '">' + pair.map(function (p) { return platCol(p, solo); }).join("") +
-        '<div class="ph" role="img" aria-label="Portrait"' + bg(photo) + "></div></section>";
+        (solo ? '<div class="ph" role="img" aria-label="Portrait"' + bg(photo) + "></div>" : "") + "</section>";
     }
     return out;
   }
