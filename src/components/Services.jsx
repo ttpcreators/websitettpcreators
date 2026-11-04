@@ -15,28 +15,28 @@ const OFFER = [
     label: 'Talent Management',
     caption:
       "Carrière, négociations, planning et revenus : on gère la structure, les créateurs se concentrent sur la création.",
-    photo: 'assets/services/talent.jpg',
+    photo: 'assets/services/talent.webp',
   },
   {
     key: 'production',
     label: 'Production',
     caption:
       "Direction artistique, tournage, montage — du contenu prêt à performer, pensé pour chaque plateforme.",
-    photo: 'assets/services/production.jpg',
+    photo: 'assets/services/production.webp',
   },
   {
     key: 'social',
     label: 'Social Media',
     caption:
       "Ligne éditoriale, formats, calendrier et lecture des performances : une croissance qui ne doit rien au hasard.",
-    photo: 'assets/services/social.jpg',
+    photo: 'assets/services/social.webp',
   },
   {
     key: 'partenariats',
     label: 'Partenariats',
     caption:
       "Sourcing, brief, activation et reporting — les bonnes marques connectées aux bons créateurs.",
-    photo: 'assets/services/partenariats.jpg',
+    photo: 'assets/services/partenariats.webp',
   },
 ]
 

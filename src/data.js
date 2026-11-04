@@ -103,14 +103,14 @@ export const STATS = [
 ]
 
 export const ROSTER_FALLBACK = [
-  { name: 'Mathilde Viot', handle: '@mathild.e_', niche: 'Sport', photo: 'assets/creators/mathilde.jpg' },
-  { name: 'Margaux Bekhdadi', handle: '@maybefeelgood_', niche: 'Sport', photo: 'assets/creators/margaux.jpg' },
-  { name: 'Candice Maissa', handle: '@candicemaissa', niche: 'Lifestyle', photo: 'assets/creators/candice.jpg' },
-  { name: 'Justine Flotte', handle: '@jufrasca__', niche: 'Lifestyle', photo: 'assets/creators/justine.jpg' },
-  { name: 'Léna Pasquale', handle: '@lenaa.psl', niche: 'Sport', photo: 'assets/creators/lena.jpg' },
-  { name: 'Irina Sambucini', handle: '@irina.smb', niche: 'Lifestyle', photo: 'assets/creators/irina.jpg' },
-  { name: 'Lucie Botans', handle: '@lucie.bots', niche: 'Lifestyle', photo: 'assets/creators/lucie.jpg' },
-  { name: 'Beverly Filoni', handle: '@beverly.filoni', niche: 'Lifestyle', photo: 'assets/creators/beverly.jpg' },
+  { name: 'Mathilde Viot', handle: '@mathild.e_', niche: 'Sport', photo: 'assets/creators/mathilde.webp' },
+  { name: 'Margaux Bekhdadi', handle: '@maybefeelgood_', niche: 'Sport', photo: 'assets/creators/margaux.webp' },
+  { name: 'Candice Maissa', handle: '@candicemaissa', niche: 'Lifestyle', photo: 'assets/creators/candice.webp' },
+  { name: 'Justine Flotte', handle: '@jufrasca__', niche: 'Lifestyle', photo: 'assets/creators/justine.webp' },
+  { name: 'Léna Pasquale', handle: '@lenaa.psl', niche: 'Sport', photo: 'assets/creators/lena.webp' },
+  { name: 'Irina Sambucini', handle: '@irina.smb', niche: 'Lifestyle', photo: 'assets/creators/irina.webp' },
+  { name: 'Lucie Botans', handle: '@lucie.bots', niche: 'Lifestyle', photo: 'assets/creators/lucie.webp' },
+  { name: 'Beverly Filoni', handle: '@beverly.filoni', niche: 'Lifestyle', photo: 'assets/creators/beverly.webp' },
 ]
 
 export const TIMELINE = [

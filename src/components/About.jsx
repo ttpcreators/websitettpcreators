@@ -10,8 +10,8 @@ import { useOnScreen } from '../lib/onScreen.js'
 // public/assets/about/), un placeholder à initiales prend le relais.
 const FOUNDERS = [
   // pos = object-position : ajuste le cadrage vertical de chaque photo
-  { name: 'Marc Maher', role: 'Co-founder', photo: 'assets/about/marc.jpg', pos: 'center 62%' },
-  { name: 'Gianni', role: 'Co-founder', photo: 'assets/about/gianni.jpg', pos: 'center 30%' },
+  { name: 'Marc Maher', role: 'Co-founder', photo: 'assets/about/marc.webp', pos: 'center 62%' },
+  { name: 'Gianni', role: 'Co-founder', photo: 'assets/about/gianni.webp', pos: 'center 30%' },
 ]
 
 const initials = (name) =>
