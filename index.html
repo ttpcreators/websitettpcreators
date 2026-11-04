@@ -46,10 +46,19 @@
     <link rel="shortcut icon" href="favicon.ico?v=3" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Police chargée sans bloquer l'affichage (display=swap : texte visible tout de suite). -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <!--
       Données structurées schema.org (JSON-LD). INVISIBLE sur la page, lu par les
       moteurs : c'est la façon LÉGITIME de déclarer l'entité « TTP Creators » et ses
