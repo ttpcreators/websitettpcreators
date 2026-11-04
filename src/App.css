@@ -102,6 +102,22 @@ h2 {
 .bb-beam {
   position: absolute;
   aspect-ratio: 1;
+  animation: bb-run 5s linear infinite;
+}
+
+@keyframes bb-run {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* Animation en boucle hors écran ou onglet caché : en pause (lib/onScreen.js). */
+[data-paused],
+[data-paused] * {
+  animation-play-state: paused !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
