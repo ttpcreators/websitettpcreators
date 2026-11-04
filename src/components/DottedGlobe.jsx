@@ -184,32 +184,52 @@ export default function DottedGlobe({ width = 520, className = '' }) {
       try {
         const response = await fetch(asset('assets/geo/ne_110m_land.json'))
         if (!response.ok) throw new Error('Failed to load land data')
-        landFeatures = await response.json()
-        landFeatures.features.forEach((feature) => {
+        const land = await response.json()
+        // Trame calculée par morceaux (un pays à la fois, en rendant la main au
+        // navigateur entre deux) : plus de gros blocage du fil principal.
+        for (const feature of land.features) {
+          if (disposed) return
           generateDotsInPolygon(feature, 16).forEach((d) => allDots.push(d))
-        })
+          await new Promise((r) => setTimeout(r, 0))
+        }
+        if (disposed) return
+        landFeatures = land
         render()
       } catch {
         setError(true)
       }
     }
 
-    // le globe ne se redessine que lorsqu'il est visible à l'écran
-    let onScreen = true
-    const io = new IntersectionObserver(([entry]) => {
-      onScreen = entry.isIntersecting
-    })
-    io.observe(wrap)
-
     const rotate = () => {
-      if (autoRotate && onScreen) {
+      if (autoRotate) {
         rotation[0] += rotationSpeed
         projection.rotate(rotation)
         render()
       }
     }
 
-    const rotationTimer = reduceMotion ? null : timer(rotate)
+    // La rotation (une image à chaque rafraîchissement d'écran) ne tourne QUE quand
+    // le globe est à l'écran : hors écran, la boucle est arrêtée, pas seulement le dessin.
+    // Les données du globe ne sont chargées qu'à son approche (bas de page).
+    let rotationTimer = null
+    let loaded = false
+    let disposed = false
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || loaded) return
+        loaded = true
+        near.disconnect()
+        loadWorldData()
+      },
+      { rootMargin: '600px 0px' },
+    )
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !rotationTimer && !reduceMotion) rotationTimer = timer(rotate)
+      else if (!entry.isIntersecting && rotationTimer) {
+        rotationTimer.stop()
+        rotationTimer = null
+      }
+    })
 
     const handleMouseDown = (event) => {
       autoRotate = false
@@ -246,11 +266,14 @@ export default function DottedGlobe({ width = 520, className = '' }) {
     ro.observe(wrap)
 
     setup()
-    loadWorldData()
+    near.observe(wrap)
+    io.observe(wrap)
 
     return () => {
+      disposed = true
       if (rotationTimer) rotationTimer.stop()
       ro.disconnect()
+      near.disconnect()
       io.disconnect()
       canvas.removeEventListener('mousedown', handleMouseDown)
     }
