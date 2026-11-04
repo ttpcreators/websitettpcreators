@@ -1,12 +1,15 @@
 import { CLIENTS, asset } from '../data.js'
+import { useOnScreen } from '../lib/onScreen.js'
 
 // Bande logos clients : défilement continu, logos teintés en bordeaux via
 // mask CSS (les PNG source sont blancs — le logo sert de pochoir).
+// En pause hors écran ou onglet caché.
 export default function Clients() {
   const track = [...CLIENTS, ...CLIENTS]
+  const [ref, on] = useOnScreen()
   return (
     <section className="clients" aria-label="Ils nous font confiance">
-      <div className="marquee">
+      <div className="marquee" ref={ref} data-paused={on ? undefined : ''}>
         <div className="marquee-track">
           {track.map((c, i) => {
             const url = asset(`assets/clients/${c.file}`)

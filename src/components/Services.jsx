@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import Reveal from './Reveal.jsx'
 import { asset } from '../data.js'
+import { useOnScreen } from '../lib/onScreen.js'
 
 // Services façon template « Ollef » : lignes géantes empilées (l'active en
 // encre, les autres estompées), image + légende à droite qui suivent la
@@ -42,18 +43,19 @@ const OFFER = [
 export default function Services() {
   const [active, setActive] = useState(0)
   const [hovered, setHovered] = useState(false)
+  const [ref, on] = useOnScreen()
 
-  // Défilement auto tant que la souris n'est pas sur la liste.
+  // Défilement auto tant que la souris n'est pas sur la liste et que la section est à l'écran.
   useEffect(() => {
-    if (hovered) return
+    if (hovered || !on) return
     const id = setInterval(() => setActive((i) => (i + 1) % OFFER.length), 3500)
     return () => clearInterval(id)
-  }, [hovered])
+  }, [hovered, on])
 
   const current = OFFER[active]
 
   return (
-    <section className="sec svc2" id="services">
+    <section className="sec svc2" id="services" ref={ref}>
       <div className="wrap">
         <Reveal className="svc2-label">(Services)</Reveal>
         <div className="svc2-grid">

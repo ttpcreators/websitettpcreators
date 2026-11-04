@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { InstagramIcon, TikTokIcon } from './icons.jsx'
 import { igUser, initials } from '../lib/format.js'
+import { useOnScreen } from '../lib/onScreen.js'
 
 // Carousel du roster : pile de photos qui tournent (rotation aléatoire,
 // fondu, profondeur) + fiche créatrice animée. Porté depuis la version
@@ -24,6 +25,7 @@ export default function RosterCarousel({ creators, autoplay = true }) {
   // à zéro, sinon le timer peut tomber juste après un clic (saut de +2)
   const [resetToken, setResetToken] = useState(0)
   const count = creators.length
+  const [ref, on] = useOnScreen()
 
   const handleNext = useCallback(() => {
     setActive((prev) => (prev + 1) % count)
@@ -42,10 +44,11 @@ export default function RosterCarousel({ creators, autoplay = true }) {
   }
 
   useEffect(() => {
-    if (!autoplay || paused || count < 2) return
+    // Défilement auto seulement quand le carrousel est à l'écran.
+    if (!autoplay || paused || !on || count < 2) return
     const interval = setInterval(handleNext, 5000)
     return () => clearInterval(interval)
-  }, [autoplay, paused, handleNext, count, resetToken])
+  }, [autoplay, paused, on, handleNext, count, resetToken])
 
   // si la liste change (arrivée des données Supabase), on repart au début
   useEffect(() => {
@@ -61,6 +64,7 @@ export default function RosterCarousel({ creators, autoplay = true }) {
 
   return (
     <div
+      ref={ref}
       className="rt"
       onMouseEnter={() => {
         if (window.matchMedia('(hover: hover)').matches) setPaused(true)

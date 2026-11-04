@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useOnScreen } from '../lib/onScreen.js'
 
 // « Border beam » : un segment dégradé qui parcourt le contour du bouton
@@ -8,8 +7,7 @@ import { useOnScreen } from '../lib/onScreen.js'
 // À placer DANS un élément en position:relative (les .btn le sont).
 // Animation CSS (plus de boucle JavaScript), en pause hors écran.
 export default function BorderBeam({ size = 20, duration = 5, radius = 22, color = '#8c1d3f' }) {
-  const ref = useRef(null)
-  const on = useOnScreen(ref)
+  const [ref, on] = useOnScreen()
   return (
     <div className="bb" aria-hidden="true" ref={ref} data-paused={on ? undefined : ''}>
       <div

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import Reveal, { Eyebrow } from './Reveal.jsx'
 import { Tooltip } from './TooltipCard.jsx'
 import { PILLARS, asset } from '../data.js'
+import { useOnScreen } from '../lib/onScreen.js'
 
 // Les deux co-fondateurs : rotation auto toutes les 4 s + clic pour changer.
 // Si une photo manque (ex. gianni.jpg pas encore déposée dans
@@ -26,11 +27,14 @@ function FounderPhoto() {
   const [resetToken, setResetToken] = useState(0)
   const [broken, setBroken] = useState({})
   const f = FOUNDERS[idx]
+  const [phRef, on] = useOnScreen()
 
+  // Défilement auto seulement quand la photo est à l'écran.
   useEffect(() => {
+    if (!on) return
     const id = setInterval(() => setIdx((i) => (i + 1) % FOUNDERS.length), 4000)
     return () => clearInterval(id)
-  }, [resetToken])
+  }, [resetToken, on])
 
   // clic = fondateur suivant + remise à zéro du chrono (pas de double saut)
   const next = () => {
@@ -52,7 +56,7 @@ function FounderPhoto() {
       }}
       aria-label={`Co-fondateurs de TTP Creators — cliquer pour voir le suivant (affiché : ${f.name})`}
     >
-      <span className="about-ph" aria-hidden="true">
+      <span className="about-ph" aria-hidden="true" ref={phRef}>
         {initials(f.name)}
       </span>
 
