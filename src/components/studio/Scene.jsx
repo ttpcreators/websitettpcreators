@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Environment, Lightformer, MeshReflectorMaterial, RoundedBox } from '@react-three/drei'
+import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial, RoundedBox, SoftShadows } from '@react-three/drei'
+import { Bloom, EffectComposer, Noise, ToneMapping, Vignette } from '@react-three/postprocessing'
+import { ToneMappingMode } from 'postprocessing'
 import * as THREE from 'three'
 
 // Le studio TTP en 3D : une pièce blanche baignée de soleil (ombre de fenêtre
@@ -11,7 +13,7 @@ import * as THREE from 'three'
 
 const WALL = '#eceae5'
 const FLOOR = '#dcd9d3'
-const METAL = { color: '#cfcfcc', metalness: 0.75, roughness: 0.3 }
+const METAL = { color: '#c9c9c6', metalness: 0.8, roughness: 0.42 }
 const ACCENT = '#3d0000'
 const INK = '#141416'
 
@@ -42,6 +44,73 @@ function canvasTexture(w, h, draw) {
     fn(ctx, w, h)
     t.needsUpdate = true
   }
+  return t
+}
+
+// Grain et matières : de petites textures dessinées une fois (bruit, plâtre,
+// métal brossé, toile) pour casser l'aspect « plastique lisse ».
+let seed = 7
+const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647
+const TEX = {}
+function grain(name, { size = 256, base = 128, amp = 46, streak = false, repeat = [1, 1], data = true } = {}) {
+  if (TEX[name]) return TEX[name]
+  const t = canvasTexture(size, size, (ctx, w, h) => {
+    const img = ctx.createImageData(w, h)
+    for (let y = 0; y < h; y++) {
+      const row = rnd() - 0.5
+      for (let x = 0; x < w; x++) {
+        const n = streak ? row * amp + (rnd() - 0.5) * amp * 0.35 : (rnd() - 0.5) * amp
+        const v = Math.max(0, Math.min(255, base + n))
+        const i = (y * w + x) * 4
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v
+        img.data[i + 3] = 255
+      }
+    }
+    ctx.putImageData(img, 0, 0)
+    // taches douces (plâtre, béton)
+    if (!streak) {
+      for (let k = 0; k < 40; k++) {
+        ctx.fillStyle = `rgba(${rnd() > 0.5 ? 255 : 0},${rnd() > 0.5 ? 255 : 0},0,0)`
+        const g = ctx.createRadialGradient(rnd() * w, rnd() * h, 0, rnd() * w, rnd() * h, w * (0.1 + rnd() * 0.25))
+        const a = 0.05 + rnd() * 0.06
+        g.addColorStop(0, `rgba(${rnd() > 0.5 ? 255 : 0},${rnd() > 0.5 ? 255 : 0},${rnd() > 0.5 ? 255 : 0},${a})`)
+        g.addColorStop(1, 'rgba(128,128,128,0)')
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, w, h)
+      }
+    }
+  })
+  if (data) t.colorSpace = THREE.NoColorSpace
+  t.wrapS = t.wrapT = THREE.RepeatWrapping
+  t.repeat.set(repeat[0], repeat[1])
+  TEX[name] = t
+  return t
+}
+
+// tranche de livre : couleur, bandes, petit titre
+function spine(color, i) {
+  const key = `spine-${color}-${i}`
+  if (TEX[key]) return TEX[key]
+  const dark = new THREE.Color(color).getHSL({}).l < 0.45
+  const t = canvasTexture(64, 512, (ctx, w, h) => {
+    ctx.fillStyle = color
+    ctx.fillRect(0, 0, w, h)
+    for (let k = 0; k < 2200; k++) {
+      ctx.fillStyle = `rgba(${dark ? 255 : 0},${dark ? 255 : 0},${dark ? 255 : 0},${rnd() * 0.05})`
+      ctx.fillRect(rnd() * w, rnd() * h, 1, 2)
+    }
+    const ink = dark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)'
+    ctx.fillStyle = ink
+    const style = i % 3
+    if (style === 0) {
+      ctx.fillRect(0, 40, w, 3)
+      ctx.fillRect(0, h - 46, w, 3)
+    } else if (style === 1) {
+      ctx.fillRect(w * 0.2, 70, w * 0.6, 120)
+    }
+    ctx.fillRect(w * 0.35, h * 0.55, w * 0.3, h * 0.25)
+  })
+  TEX[key] = t
   return t
 }
 
@@ -116,7 +185,12 @@ function Room() {
     <group>
       <mesh position={[0, 3, -0.45]} receiveShadow>
         <planeGeometry args={[24, 8]} />
-        <meshStandardMaterial color={WALL} roughness={0.95} />
+        <meshStandardMaterial
+          color={WALL}
+          roughness={0.95}
+          bumpMap={grain('platre', { size: 512, amp: 60, repeat: [10, 3.5] })}
+          bumpScale={0.6}
+        />
       </mesh>
       {/* plinthe */}
       <mesh position={[0, 0.05, -0.44]} receiveShadow>
@@ -136,6 +210,7 @@ function Room() {
           maxDepthThreshold={1.2}
           color={FLOOR}
           metalness={0.15}
+          roughnessMap={grain('beton', { size: 512, base: 150, amp: 70, repeat: [6, 4] })}
         />
       </mesh>
     </group>
@@ -191,19 +266,29 @@ function Bay({ x, w, levels }) {
       {posts.map(([px, pz], i) => (
         <mesh key={i} position={[px, top / 2, pz]} castShadow>
           <cylinderGeometry args={[0.009, 0.009, top + 0.02, 10]} />
-          <meshStandardMaterial {...METAL} />
+          <meshStandardMaterial {...METAL} roughnessMap={grain('brosse', { streak: true, amp: 90 })} />
         </mesh>
       ))}
       {levels.map((y) => (
         <group key={y}>
+          <ContactShadows
+            frames={1}
+            position={[x + w / 2, y + 0.0065, -DEPTH / 2]}
+            scale={[w, DEPTH]}
+            far={0.35}
+            blur={2.2}
+            opacity={0.7}
+            resolution={256}
+            color="#1c1915"
+          />
           <mesh position={[x + w / 2, y, -DEPTH / 2]} castShadow receiveShadow>
             <boxGeometry args={[w, 0.012, DEPTH]} />
-            <meshStandardMaterial {...METAL} roughness={0.4} />
+            <meshStandardMaterial {...METAL} roughness={0.5} roughnessMap={grain('brosse', { streak: true, amp: 90 })} />
           </mesh>
           {/* tringle avant */}
           <mesh position={[x + w / 2, y + 0.03, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
             <cylinderGeometry args={[0.005, 0.005, w, 8]} />
-            <meshStandardMaterial {...METAL} />
+            <meshStandardMaterial {...METAL} roughnessMap={grain('brosse', { streak: true, amp: 90 })} />
           </mesh>
         </group>
       ))}
@@ -229,7 +314,12 @@ function Books({ x, y, colors, lean = 0 }) {
             receiveShadow
           >
             <boxGeometry args={[w, h, 0.2]} />
-            <meshStandardMaterial color={c} roughness={0.85} />
+            <meshStandardMaterial attach="material-0" color={c} roughness={0.9} />
+            <meshStandardMaterial attach="material-1" color={c} roughness={0.9} />
+            <meshStandardMaterial attach="material-2" color="#efeadf" roughness={1} bumpMap={grain('pages', { streak: true, amp: 120 })} bumpScale={0.4} />
+            <meshStandardMaterial attach="material-3" color="#efeadf" roughness={1} />
+            <meshStandardMaterial attach="material-4" map={spine(c, i)} roughness={0.85} bumpMap={grain('toile', { amp: 80, repeat: [1, 6] })} bumpScale={0.3} />
+            <meshStandardMaterial attach="material-5" color={c} roughness={0.9} />
           </mesh>
         )
       })}
@@ -243,7 +333,7 @@ function Dumbbell({ position, rotation = [0, 0, 0] }) {
     <group position={position} rotation={rotation}>
       <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
         <cylinderGeometry args={[0.012, 0.012, 0.26, 12]} />
-        <meshStandardMaterial {...METAL} />
+        <meshStandardMaterial {...METAL} roughnessMap={grain('brosse', { streak: true, amp: 90 })} />
       </mesh>
       {[-0.1, 0.1].map((dx) => (
         <mesh key={dx} position={[dx, 0, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
@@ -260,22 +350,31 @@ function Kettlebell({ position }) {
     <group position={position}>
       <mesh position={[0, 0.07, 0]} castShadow>
         <sphereGeometry args={[0.075, 32, 24]} />
-        <meshStandardMaterial color={ACCENT} roughness={0.35} metalness={0.3} />
+        <meshStandardMaterial color="#4a0a0d" roughness={0.75} metalness={0.2} roughnessMap={grain('poudre', { amp: 70 })} />
       </mesh>
       <mesh position={[0, 0.15, 0]} castShadow>
         <torusGeometry args={[0.045, 0.012, 12, 32, Math.PI]} />
-        <meshStandardMaterial color={ACCENT} roughness={0.35} metalness={0.3} />
+        <meshStandardMaterial color="#4a0a0d" roughness={0.75} metalness={0.2} roughnessMap={grain('poudre', { amp: 70 })} />
       </mesh>
     </group>
   )
 }
 
+// médecine-ball : caoutchouc mat avec ses coutures
 function Ball({ position }) {
   return (
-    <mesh position={position} castShadow>
-      <icosahedronGeometry args={[0.085, 1]} />
-      <meshStandardMaterial color="#f4f3ef" roughness={0.55} flatShading />
-    </mesh>
+    <group position={position}>
+      <mesh castShadow>
+        <sphereGeometry args={[0.085, 48, 32]} />
+        <meshStandardMaterial color="#2a2a2c" roughness={0.85} bumpMap={grain('caoutchouc', { amp: 110, repeat: [3, 2] })} bumpScale={0.5} />
+      </mesh>
+      {[0, Math.PI / 2].map((r) => (
+        <mesh key={r} rotation={[r, 0, Math.PI / 2]}>
+          <torusGeometry args={[0.0855, 0.0018, 6, 64]} />
+          <meshStandardMaterial color="#111" roughness={0.6} />
+        </mesh>
+      ))}
+    </group>
   )
 }
 
@@ -319,7 +418,7 @@ function Lamp({ position, night }) {
   const bulb = useRef()
   useFrame((_, dt) => {
     light.current.intensity = damp(light.current.intensity, night ? 3.2 : 0.4, 3, dt)
-    bulb.current.emissiveIntensity = damp(bulb.current.emissiveIntensity, night ? 0.9 : 0, 3, dt)
+    bulb.current.emissiveIntensity = damp(bulb.current.emissiveIntensity, night ? 0.6 : 0, 3, dt)
   })
   return (
     <group position={position}>
@@ -511,8 +610,9 @@ function WallClock({ position }) {
 
 /* ── les créateurs encadrés ───────────────────────────── */
 
-function CreatorFrame({ tex, index, cur, focus, selected, onPick }) {
+function CreatorFrame({ tex, index, cur, focus, selected, onPick, night }) {
   const g = useRef()
+  const photo = useRef()
   const { hover, bind } = useHoverCursor()
   useFrame((_, dt) => {
     const x = ROW.cx + (index - cur.current) * ROW.step
@@ -526,6 +626,14 @@ function CreatorFrame({ tex, index, cur, focus, selected, onPick }) {
     g.current.scale.setScalar(damp(g.current.scale.x, s, 9, dt))
     g.current.visible = g.current.scale.x > 0.01
     g.current.rotation.x = damp(g.current.rotation.x, pick ? 0 : -0.1, 7, dt)
+    // de jour la photo reçoit moins de lumière (sinon elle « brûle »), de nuit
+    // elle garde un éclat propre, comme un tirage éclairé par la lampe
+    const m = photo.current
+    if (m) {
+      const c = damp(m.color.r, night ? 0.55 : 0.62, 3, dt)
+      m.color.setScalar(c)
+      m.emissiveIntensity = damp(m.emissiveIntensity, night ? 0.42 : 0.12, 3, dt)
+    }
   })
   return (
     <group ref={g} position={[0, ROW.y, -0.12]} {...bind} onClick={(e) => (e.stopPropagation(), onPick(index))}>
@@ -538,7 +646,16 @@ function CreatorFrame({ tex, index, cur, focus, selected, onPick }) {
         <mesh position={[0, 0, 0.0095]}>
           <planeGeometry args={[FRAME.w, FRAME.h]} />
           {tex ? (
-            <meshStandardMaterial key={tex.uuid} map={tex} roughness={0.55} />
+            <meshStandardMaterial
+              ref={photo}
+              key={tex.uuid}
+              map={tex}
+              emissiveMap={tex}
+              emissive="#ffffff"
+              emissiveIntensity={0.12}
+              color="#9e9e9e"
+              roughness={0.85}
+            />
           ) : (
             <meshStandardMaterial key="vide" color="#d9d6cf" />
           )}
@@ -637,7 +754,9 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
         <Lightformer intensity={0.5} position={[4, 1, 1]} rotation-y={-Math.PI / 2} scale={[4, 2, 1]} />
       </Environment>
 
+      <SoftShadows size={22} samples={12} focus={0.6} />
       <Room />
+      <ContactShadows frames={1} position={[0, 0.002, -0.2]} scale={[3.4, 0.9]} far={1.4} blur={2.8} opacity={0.6} resolution={512} color="#1c1915" />
       {BAYS.map((b) => (
         <Bay key={b.x} {...b} />
       ))}
@@ -679,6 +798,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
           cur={cur}
           focus={focus}
           selected={i === index}
+          night={night}
           onPick={onPickCreator}
         />
       ))}
@@ -717,6 +837,12 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <WallClock position={[0.95, 1.62, -0.42]} />
 
       <CameraRig focus={focus} ready={ready} />
+      <EffectComposer multisampling={4} enableNormalPass={false}>
+                <Bloom intensity={night ? 0.22 : 0} luminanceThreshold={0.97} mipmapBlur />
+        <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
+        <Vignette offset={0.3} darkness={0.32} />
+        <Noise opacity={0.035} premultiply />
+      </EffectComposer>
     </>
   )
 }
