@@ -2163,89 +2163,51 @@ a.ci:hover b {
     display: none;
   }
 }
-/* Animation d'ouverture */
+/* Animation d'ouverture : monogramme + « Trust The Process », une seule couleur */
 .intro {
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
+  display: grid;
+  place-items: center;
+  background: #f3f1ec;
   cursor: pointer;
 }
 
-.intro-word {
+.intro-inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  font-size: clamp(2.4rem, 7vw, 6rem);
-  font-weight: 600;
-  letter-spacing: -0.045em;
-  color: var(--ink);
-  white-space: nowrap;
+  gap: 22px;
 }
 
-.intro-ch {
+.intro-logo {
+  width: clamp(80px, 11vw, 128px);
+  height: auto;
+  will-change: clip-path, transform, filter;
+}
+
+.intro-words {
+  display: flex;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(61, 0, 0, 0.72);
+  margin-right: -0.42em; /* compense l'espacement de la dernière lettre */
+}
+
+.intro-words span {
   display: inline-block;
-  overflow: hidden;
-  max-width: 0.8em;
-  opacity: 0;
-  transform: translateY(0.18em);
-  transition:
-    opacity 0.25s,
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    max-width 0.7s cubic-bezier(0.76, 0, 0.24, 1),
-    color 0.4s;
 }
 
-.intro-ch.is-on {
-  opacity: 1;
-  transform: none;
+.intro-rule {
+  display: block;
+  width: 72px;
+  height: 1px;
+  background: rgba(61, 0, 0, 0.45);
+  transform-origin: left center;
 }
-
-.intro-ch.is-key {
-  color: var(--accent);
-}
-
-.is-fold .intro-ch:not(.is-key) {
-  max-width: 0;
-  opacity: 0;
-}
-
-.is-fold .intro-ch.is-key {
-  color: var(--ink);
-}
-
-.intro-caret {
-  width: 0.06em;
-  height: 0.9em;
-  margin-left: 0.06em;
-  background: var(--accent);
-  animation: intro-blink 0.9s steps(1) infinite;
-  transition: opacity 0.3s;
-}
-
-.intro-caret.is-off {
-  opacity: 0;
-  animation: none;
-}
-
-@keyframes intro-blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-.intro-tag {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--faint);
-  white-space: nowrap;
-}
-
-
 
 /* bouton jour / nuit */
 .studio-mode {
@@ -2384,4 +2346,25 @@ html[data-nav-dark] .navbar .brand-logo {
 
 .studio.is-night .studio-card {
   background: rgba(18, 18, 20, 0.7);
+}
+
+/* voile doux derrière le titre : il reste lisible quel que soit le décor */
+.studio-ui::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(42vh, 340px);
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(236, 234, 229, 0.92) 0%, rgba(236, 234, 229, 0.6) 45%, rgba(236, 234, 229, 0) 100%);
+  transition: opacity 0.6s;
+}
+
+.studio-ui.is-focus::before {
+  opacity: 0;
+}
+
+.studio.is-night .studio-ui::before {
+  background: linear-gradient(to top, rgba(14, 12, 12, 0.9) 0%, rgba(14, 12, 12, 0.55) 45%, rgba(14, 12, 12, 0) 100%);
 }

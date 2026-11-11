@@ -887,8 +887,8 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <Dumbbell position={[-0.64, 0.826, -0.11]} rotation={[0, 0.12, 0]} size={1.15} />
       <Dumbbell position={[-0.63, 0.826, -0.25]} rotation={[0, 0.05, 0]} size={1.15} />
       <Dumbbell position={[-1.05, 0.446, -0.15]} rotation={[0, 0.35, 0]} color={ACCENT} size={1.2} />
-      {/* tapis de yoga roulé, posé au sol, la spirale tournée vers nous */}
-      <YogaMat position={[-1.66, 0.058, -0.36]} rotation={[Math.PI / 2, 0, 0.12]} height={0.6} />
+      {/* tapis de yoga roulé, posé au sol contre le mur, à droite de l'étagère */}
+      <YogaMat position={[1.5, 0.06, -0.33]} rotation={[0, 0, -Math.PI / 2]} height={0.56} />
       <BrandBox position={[-0.95, 0.066, -0.16]} onPick={() => onNav('clients')} />
 
       {/* travée du milieu : les créateurs */}

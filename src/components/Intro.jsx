@@ -1,27 +1,22 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
+import { asset } from '../data.js'
 
-// Animation d'ouverture : « Trust The Process. » tapé lettre à lettre, les lettres
-// autres que les initiales se replient pour ne laisser que « TTP », puis le rideau
-// blanc se lève sur le site. ~2,6 s, une seule fois par visite, un clic la passe,
-// et rien du tout si le visiteur a demandé moins d'animations.
+// Animation d'ouverture : sur un papier blanc cassé (la couleur du mur du
+// studio), le monogramme TTP se dévoile de bas en haut, « Trust The Process »
+// s'écrit lettre à lettre dessous en petites capitales espacées, un filet se
+// trace, puis le rideau se lève sur le studio. Une seule couleur (bordeaux),
+// ~2,6 s, une fois par visite, un clic la passe.
 
-const TEXT = 'Trust The Process.'
-const INITIALS = new Set([0, 6, 10]) // T, T, P
-const TYPE_MS = 55
+const WORDS = 'Trust The Process'
+const EASE = [0.22, 1, 0.36, 1]
 
 export default function Intro({ onDone }) {
-  const [step, setStep] = useState(0) // lettres tapées
-  const [fold, setFold] = useState(false) // repli vers « TTP »
   const [open, setOpen] = useState(true)
 
   useEffect(() => {
-    const timers = []
-    for (let i = 1; i <= TEXT.length; i++) timers.push(setTimeout(() => setStep(i), 200 + i * TYPE_MS))
-    const typed = 200 + TEXT.length * TYPE_MS
-    timers.push(setTimeout(() => setFold(true), typed + 350))
-    timers.push(setTimeout(() => setOpen(false), typed + 1250))
-    return () => timers.forEach(clearTimeout)
+    const t = setTimeout(() => setOpen(false), 2500)
+    return () => clearTimeout(t)
   }, [])
 
   // le site s'anime pendant que le rideau se lève (pas après)
@@ -36,24 +31,41 @@ export default function Intro({ onDone }) {
           className="intro"
           onClick={() => setOpen(false)}
           exit={{ y: '-100%' }}
-          transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
           aria-hidden="true"
         >
-          <p className={`intro-word${fold ? ' is-fold' : ''}`}>
-            {TEXT.split('').map((ch, i) => {
-              const keep = INITIALS.has(i)
-              return (
-                <span
+          <motion.div
+            className="intro-inner"
+            exit={{ opacity: 0, y: -24 }}
+            transition={{ duration: 0.5, ease: EASE }}
+          >
+            <motion.img
+              className="intro-logo"
+              src={asset('assets/logo-dark.png')}
+              alt=""
+              initial={{ clipPath: 'inset(100% 0 0 0)', scale: 1.08, filter: 'blur(6px)' }}
+              animate={{ clipPath: 'inset(0% 0 0 0)', scale: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 1.1, ease: EASE }}
+            />
+            <p className="intro-words">
+              {WORDS.split('').map((ch, i) => (
+                <motion.span
                   key={i}
-                  className={`intro-ch${keep ? ' is-key' : ''}${i < step ? ' is-on' : ''}`}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 + i * 0.035, duration: 0.5, ease: EASE }}
                 >
                   {ch === ' ' ? ' ' : ch}
-                </span>
-              )
-            })}
-            <span className={`intro-caret${fold ? ' is-off' : ''}`} />
-          </p>
-          <span className="tb-mono intro-tag">TTP Creators — Lyon · Genève</span>
+                </motion.span>
+              ))}
+            </p>
+            <motion.span
+              className="intro-rule"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 1.1, duration: 1.1, ease: EASE }}
+            />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
