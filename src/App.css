@@ -2190,10 +2190,10 @@ a.ci:hover b {
 
 .intro-words {
   display: flex;
-  gap: 0.35em;
+  gap: 0.28em;
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.06em; /* majuscules à peine aérées (pas les grands espacements d'avant) */
+  letter-spacing: -0.01em; /* majuscules serrées (demande de Marc) */
   text-transform: uppercase;
   color: rgba(61, 0, 0, 0.85);
 }
