@@ -34,7 +34,7 @@ export default function Contact() {
     }
 
     if (profil === 'Créateur' && !handle) {
-      setNote({ ok: false, text: 'Merci d’indiquer ton @ (Instagram ou TikTok).' })
+      setNote({ ok: false, text: 'Merci d’indiquer votre @ (Instagram ou TikTok).' })
       return
     }
 
@@ -45,10 +45,10 @@ export default function Contact() {
           (profil === 'Créateur' ? `\nCompte : @${handle}` : '') +
           `\n\n${msg}`,
       )
-      setNote({ loader: true, text: 'Ouverture de ton client mail…' })
+      setNote({ loader: true, text: 'Ouverture de votre messagerie…' })
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
       setTimeout(
-        () => setNote({ ok: true, text: "Finalise l'envoi dans ton client mail." }),
+        () => setNote({ ok: true, text: "Terminez l'envoi dans votre messagerie." }),
         2000,
       )
       return
@@ -83,10 +83,10 @@ export default function Contact() {
         <Reveal className="contact">
           <div className="contact-l">
             <Eyebrow n="06">Contact</Eyebrow>
-            <h2>Parlons de ton projet.</h2>
+            <h2>Parlons de votre projet.</h2>
             <p className="lead">
-              Créateur qui cherche une vraie structure, ou marque qui veut activer des talents :
-              on répond sous 48 h.
+              Une marque qui prépare une campagne, ou un créateur qui cherche une agence :
+              écrivez-nous, on répond sous 48 h.
             </p>
             <div className="contact-info">
               <a href={`mailto:${CONTACT_EMAIL}`} className="ci">
@@ -122,8 +122,8 @@ export default function Contact() {
               </label>
             </div>
             <div className="field">
-              <span>Tu es</span>
-              <div className="seg" role="group" aria-label="Ton profil">
+              <span>Vous êtes</span>
+              <div className="seg" role="group" aria-label="Votre profil">
                 {['Créateur', 'Marque'].map((p) => (
                   <button
                     key={p}
@@ -147,11 +147,11 @@ export default function Contact() {
                   style={{ overflow: 'hidden' }}
                 >
                   <label className="field">
-                    <span>Ton @</span>
+                    <span>Votre @</span>
                     <input
                       name="pseudo"
                       type="text"
-                      placeholder="@toncompte — Instagram ou TikTok"
+                      placeholder="@votrecompte — Instagram ou TikTok"
                       autoComplete="off"
                       spellCheck={false}
                     />

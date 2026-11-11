@@ -14,28 +14,28 @@ const OFFER = [
     key: 'talent',
     label: 'Talent Management',
     caption:
-      "Carrière, négociations, planning et revenus : on gère la structure, les créateurs se concentrent sur la création.",
+      "Pour les créateurs : on négocie les contrats et les tarifs, on tient le planning et on développe les revenus. Le créateur se concentre sur ses contenus.",
     photo: 'assets/services/talent.webp',
   },
   {
     key: 'production',
     label: 'Production',
     caption:
-      "Direction artistique, tournage, montage — du contenu prêt à performer, pensé pour chaque plateforme.",
+      "Idée, tournage, montage : on produit des photos et des vidéos prêtes à publier, au bon format pour Instagram, TikTok ou YouTube.",
     photo: 'assets/services/production.webp',
   },
   {
     key: 'social',
     label: 'Social Media',
     caption:
-      "Ligne éditoriale, formats, calendrier et lecture des performances : une croissance qui ne doit rien au hasard.",
+      "Quoi publier, quand et sous quel format : on construit la ligne éditoriale, on lit les statistiques et on ajuste pour faire grandir la communauté.",
     photo: 'assets/services/social.webp',
   },
   {
     key: 'partenariats',
     label: 'Partenariats',
     caption:
-      "Sourcing, brief, activation et reporting — les bonnes marques connectées aux bons créateurs.",
+      "Pour les marques : on choisit les créateurs qui parlent à votre cible, on cadre le brief, le contrat et les droits, puis on vous rend un bilan chiffré.",
     photo: 'assets/services/partenariats.webp',
   },
 ]
@@ -57,7 +57,7 @@ export default function Services() {
   return (
     <section className="sec svc2" id="services" ref={ref}>
       <div className="wrap">
-        <Reveal className="svc2-label">(Services)</Reveal>
+        <Reveal className="svc2-label">(Ce qu'on fait)</Reveal>
         <div className="svc2-grid">
           <div
             className="svc2-list"

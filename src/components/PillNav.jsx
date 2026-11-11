@@ -6,8 +6,8 @@ import { motion } from 'motion/react'
 
 const LINKS = [
   { id: 'roster', label: 'Créateurs' },
-  { id: 'about', label: 'Agence' },
   { id: 'services', label: 'Services' },
+  { id: 'about', label: 'Agence' },
   { id: 'contact', label: 'Contact' },
 ]
 

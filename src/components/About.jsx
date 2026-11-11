@@ -99,18 +99,20 @@ export default function About() {
   return (
     <section className="sec" id="about">
       <div className="wrap">
-        <Eyebrow n="02">À propos</Eyebrow>
+        <Eyebrow n="03">L'agence</Eyebrow>
         <div className="about-grid">
           <FounderPhoto />
           <Reveal className="about-txt" delay={0.1}>
             <h2 className="about-title">
-              Une agence pensée comme un studio,
+              Deux fondateurs,
               <br />
-              au service des créateurs.
+              une agence entre Lyon et Genève.
             </h2>
             <p className="lead">
-              TTP Creators structure les talents, construit leur image et négocie leurs
-              partenariats. Une seule équipe, de la stratégie à la production — entre{' '}
+              TTP Creators est une agence de talent management. On représente des créateurs de
+              contenu sport et lifestyle, on négocie leurs partenariats avec les marques et on
+              produit avec eux des contenus qui marchent. Une seule équipe, de la stratégie au
+              tournage, entre{' '}
               <Tooltip content="Deux villes, deux marchés : la France et la Suisse. Campagnes locales ou activations internationales, nos créateurs couvrent les deux.">
                 <b className="tt-word">Lyon et Genève</b>
               </Tooltip>

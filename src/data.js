@@ -54,7 +54,7 @@ export const SERVICES = [
   {
     big: true,
     title: 'Talent Management',
-    text: 'Carrière, négociations, planning et développement de revenus. On gère la structure, tu te concentres sur la création.',
+    text: 'Carrière, négociations, planning et développement de revenus. On gère la structure, le créateur se concentre sur la création.',
     tags: ['Carrière', 'Deals', 'Planning'],
   },
   {
@@ -78,20 +78,20 @@ export const PLATFORMS = ['Instagram', 'TikTok', 'YouTube', 'Snapchat', 'Twitch'
 
 export const STEPS = [
   {
-    title: 'Découverte',
-    text: "Objectifs, audience, positionnement : on apprend à te connaître avant de parler stratégie.",
+    title: 'Le brief',
+    text: "Vous nous donnez l'objectif, la cible, le budget et les dates. On vous répond sous 48 h.",
   },
   {
-    title: 'Stratégie',
-    text: 'On pose la ligne, les formats et le plan de croissance. Noir sur blanc.',
+    title: 'Le casting',
+    text: 'On vous propose les créateurs adaptés, avec leur media kit, leurs chiffres et leurs tarifs.',
   },
   {
-    title: 'Production',
-    text: "On crée, on optimise, on publie. Chaque contenu a un rôle précis.",
+    title: 'La campagne',
+    text: "Contrat, droits, idées de contenus : tout est validé avec vous avant la publication.",
   },
   {
-    title: 'Croissance',
-    text: 'On mesure, on ajuste, et on active les bonnes marques au bon moment.',
+    title: 'Le bilan',
+    text: 'Vues, engagement, clics : vous recevez un rapport chiffré à la fin de chaque collaboration.',
   },
 ]
 

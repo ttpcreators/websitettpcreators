@@ -12,7 +12,7 @@ const mod = (a, n) => ((a % n) + n) % n
 const PLATFORM = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube' }
 
 function sizes(cw) {
-  return cw < 700 ? { W: 216, H: 284 } : { W: 300, H: 378 }
+  return cw < 700 ? { W: 248, H: 326 } : { W: 360, H: 452 }
 }
 
 export default function RosterDome({ creators }) {

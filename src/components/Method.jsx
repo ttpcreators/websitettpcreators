@@ -5,12 +5,12 @@ export default function Method() {
   return (
     <section className="sec" id="method">
       <div className="wrap">
-        <Eyebrow n="03">Notre méthode</Eyebrow>
+        <Eyebrow n="02">Pour les marques</Eyebrow>
         <Reveal>
           <h2 className="sec-title">
-            Quatre étapes.
+            Une campagne avec TTP,
             <br />
-            Un process éprouvé.
+            en quatre étapes.
           </h2>
         </Reveal>
         <div className="steps">

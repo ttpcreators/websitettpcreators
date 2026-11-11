@@ -32,14 +32,14 @@ export default function App() {
       <PillNav />
       <main>
         <Hero />
-        <Roster />
         <Clients />
-        <Manifesto />
-        <About />
+        <Roster />
         <Services />
         <Method />
-        <Network />
         <Stats />
+        <Manifesto />
+        <About />
+        <Network />
         <Story />
         <Contact />
       </main>
