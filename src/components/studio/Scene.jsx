@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial, RoundedBox, SoftShadows } from '@react-three/drei'
+import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial, RoundedBox, SoftShadows, useGLTF } from '@react-three/drei'
 import { Bloom, EffectComposer, Noise, ToneMapping, Vignette } from '@react-three/postprocessing'
 import { ToneMappingMode } from 'postprocessing'
 import * as THREE from 'three'
@@ -298,6 +298,37 @@ function Bay({ x, w, levels }) {
 
 /* ── les objets ───────────────────────────────────────── */
 
+// Vrais modèles 3D (Poly Haven, licence CC0 : libres de droits, usage
+// commercial permis). Fichiers compressés dans public/assets/3d/.
+// Le modèle est mis à la hauteur voulue et posé sur `position` (bas du modèle).
+const MODEL = (name) => `${import.meta.env.BASE_URL}assets/3d/${name}.glb`
+
+function Model({ name, height, position, rotation = [0, 0, 0] }) {
+  const { scene } = useGLTF(MODEL(name))
+  const obj = useMemo(() => {
+    const o = scene.clone(true)
+    const box = new THREE.Box3().setFromObject(o)
+    const size = box.getSize(new THREE.Vector3())
+    const k = height / size.y
+    o.scale.setScalar(k)
+    const c = box.getCenter(new THREE.Vector3())
+    o.position.set(-c.x * k, -box.min.y * k, -c.z * k)
+    o.traverse((m) => {
+      if (m.isMesh) {
+        m.castShadow = true
+        m.receiveShadow = true
+      }
+    })
+    return o
+  }, [scene, height])
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={obj} />
+    </group>
+  )
+}
+
+
 function Books({ x, y, colors, lean = 0 }) {
   let cx = x
   return (
@@ -355,39 +386,6 @@ function Kettlebell({ position }) {
       <mesh position={[0, 0.15, 0]} castShadow>
         <torusGeometry args={[0.045, 0.012, 12, 32, Math.PI]} />
         <meshStandardMaterial color="#4a0a0d" roughness={0.75} metalness={0.2} roughnessMap={grain('poudre', { amp: 70 })} />
-      </mesh>
-    </group>
-  )
-}
-
-// médecine-ball : caoutchouc mat avec ses coutures
-function Ball({ position }) {
-  return (
-    <group position={position}>
-      <mesh castShadow>
-        <sphereGeometry args={[0.085, 48, 32]} />
-        <meshStandardMaterial color="#2a2a2c" roughness={0.85} bumpMap={grain('caoutchouc', { amp: 110, repeat: [3, 2] })} bumpScale={0.5} />
-      </mesh>
-      {[0, Math.PI / 2].map((r) => (
-        <mesh key={r} rotation={[r, 0, Math.PI / 2]}>
-          <torusGeometry args={[0.0855, 0.0018, 6, 64]} />
-          <meshStandardMaterial color="#111" roughness={0.6} />
-        </mesh>
-      ))}
-    </group>
-  )
-}
-
-function Bottle({ position }) {
-  return (
-    <group position={position}>
-      <mesh position={[0, 0.1, 0]} castShadow>
-        <cylinderGeometry args={[0.035, 0.035, 0.2, 24]} />
-        <meshPhysicalMaterial color="#ffffff" roughness={0.08} transmission={0.9} thickness={0.05} />
-      </mesh>
-      <mesh position={[0, 0.215, 0]} castShadow>
-        <cylinderGeometry args={[0.022, 0.03, 0.03, 16]} />
-        <meshStandardMaterial color={INK} roughness={0.5} />
       </mesh>
     </group>
   )
@@ -762,21 +760,15 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       ))}
 
       {/* travée gauche */}
-      <Kettlebell position={[-1.18, 1.206, -0.17]} />
-      <Trophy position={[-0.78, 1.206, -0.17]} />
-      <Books
-        x={-1.32}
-        y={0.826}
-        colors={[
-          ['#efece6', 0.03, 0.27],
-          [INK, 0.025, 0.25],
-          ['#d8d3ca', 0.035, 0.29],
-          ['#7a1216', 0.022, 0.24],
-          ['#f4f2ee', 0.03, 0.26],
-        ]}
-        lean={-0.25}
-      />
-      <Ball position={[-0.78, 0.911, -0.15]} />
+      <Suspense fallback={null}>
+        <Model name="potted_plant_02" height={0.46} position={[-1.08, 1.206, -0.18]} rotation={[0, 0.6, 0]} />
+        <Model name="book_encyclopedia_set_01" height={0.25} position={[-1.15, 0.826, -0.18]} />
+        <Model name="football" height={0.18} position={[-0.74, 0.826, -0.16]} rotation={[0.3, 0.8, 0]} />
+        <Model name="camera_01" height={0.14} position={[-0.18, 0.946, -0.16]} rotation={[0, 0.35, 0]} />
+        <Model name="ceramic_vase_01" height={0.24} position={[1.02, 0.946, -0.17]} />
+      </Suspense>
+      <Trophy position={[-0.74, 1.206, -0.17]} />
+      <Kettlebell position={[-1.7, 0, 0.15]} />
       <Dumbbell position={[-1.05, 0.49, -0.15]} rotation={[0, 0.35, 0]} />
       <Books
         x={-0.82}
@@ -803,23 +795,12 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
         />
       ))}
       <Lamp position={[0.55, 0.946, -0.17]} night={night} />
-      <Ball position={[-0.2, 1.031, -0.16]} />
-      <Books
-        x={-0.4}
-        y={0.066}
-        colors={[
-          ['#f2f0eb', 0.03, 0.3],
-          ['#d9d4cb', 0.026, 0.28],
-          [INK, 0.034, 0.31],
-          ['#e8e4dc', 0.028, 0.27],
-          ['#a39d93', 0.02, 0.25],
-          ['#f2f0eb', 0.03, 0.29],
-        ]}
-      />
+      <Suspense fallback={null}>
+        <Model name="book_encyclopedia_set_01" height={0.28} position={[-0.2, 0.066, -0.18]} rotation={[0, Math.PI, 0]} />
+      </Suspense>
       <Notebook position={[0.45, 0.066, -0.1]} onPick={() => onNav('method')} />
 
       {/* travée droite */}
-      <Bottle position={[1.0, 0.946, -0.15]} />
       <Dumbbell position={[1.2, 0.99, -0.16]} rotation={[0, -0.4, 0]} />
       <Books
         x={0.92}
