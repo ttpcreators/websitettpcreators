@@ -3,12 +3,12 @@ import { AnimatePresence, motion } from 'motion/react'
 import { asset } from '../data.js'
 
 // Animation d'ouverture : sur un papier blanc cassé (la couleur du mur du
-// studio), le monogramme TTP se dévoile de bas en haut, « Trust The Process »
-// s'écrit lettre à lettre dessous en petites capitales espacées, un filet se
-// trace, puis le rideau se lève sur le studio. Une seule couleur (bordeaux),
-// ~1,7 s, une fois par visite, un clic la passe.
+// studio), le monogramme TTP se dévoile de bas en haut, puis « Trust the process. »
+// apparaît mot à mot dessous, en Instrument Serif italique (la typo des media kits),
+// et le rideau se lève sur le studio. Une seule couleur (bordeaux), ~1,7 s, une fois
+// par visite, un clic la passe.
 
-const WORDS = 'Trust The Process'
+const WORDS = ['Trust', 'the', 'process.']
 const EASE = [0.22, 1, 0.36, 1]
 
 export default function Intro({ onDone }) {
@@ -48,23 +48,17 @@ export default function Intro({ onDone }) {
               transition={{ duration: 0.85, ease: EASE }}
             />
             <p className="intro-words">
-              {WORDS.split('').map((ch, i) => (
+              {WORDS.map((w, i) => (
                 <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + i * 0.022, duration: 0.45, ease: EASE }}
+                  key={w}
+                  initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ delay: 0.45 + i * 0.14, duration: 0.6, ease: EASE }}
                 >
-                  {ch === ' ' ? ' ' : ch}
+                  {w}
                 </motion.span>
               ))}
             </p>
-            <motion.span
-              className="intro-rule"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.7, duration: 0.8, ease: EASE }}
-            />
           </motion.div>
         </motion.div>
       )}

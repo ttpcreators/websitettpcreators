@@ -2163,7 +2163,15 @@ a.ci:hover b {
     display: none;
   }
 }
-/* Animation d'ouverture : monogramme + « Trust The Process », une seule couleur */
+/* Animation d'ouverture : monogramme + « Trust the process. », une seule couleur */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/instrument-serif-italic.woff2') format('woff2');
+}
+
 .intro {
   position: fixed;
   inset: 0;
@@ -2189,24 +2197,17 @@ a.ci:hover b {
 
 .intro-words {
   display: flex;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: rgba(61, 0, 0, 0.72);
-  margin-right: -0.42em; /* compense l'espacement de la dernière lettre */
+  gap: 0.28em;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(26px, 2.6vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  color: var(--accent);
 }
 
 .intro-words span {
   display: inline-block;
-}
-
-.intro-rule {
-  display: block;
-  width: 72px;
-  height: 1px;
-  background: rgba(61, 0, 0, 0.45);
-  transform-origin: left center;
 }
 
 /* bouton jour / nuit */
