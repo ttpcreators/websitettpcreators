@@ -357,18 +357,120 @@ function Model({ name, height, position, rotation = [0, 0, 0] }) {
 
 
 
-function Dumbbell({ position, rotation = [0, 0, 0] }) {
-  const mat = <meshStandardMaterial color={INK} roughness={0.45} metalness={0.4} />
+// Haltère hexagonal : têtes en caoutchouc mat (posées à plat sur une face),
+// bagues chromées et poignée moletée. `position` = sol ou tablette sous l'haltère.
+function knurl() {
+  if (TEX.knurl) return TEX.knurl
+  const t = canvasTexture(64, 64, (ctx, w, h) => {
+    ctx.fillStyle = '#808080'
+    ctx.fillRect(0, 0, w, h)
+    ctx.strokeStyle = '#fff'
+    ctx.lineWidth = 2
+    for (let i = -w; i < w * 2; i += 8) {
+      ctx.beginPath()
+      ctx.moveTo(i, 0)
+      ctx.lineTo(i + h, h)
+      ctx.moveTo(i + h, 0)
+      ctx.lineTo(i, h)
+      ctx.stroke()
+    }
+  })
+  t.colorSpace = THREE.NoColorSpace
+  t.wrapS = t.wrapT = THREE.RepeatWrapping
+  t.repeat.set(3, 10)
+  TEX.knurl = t
+  return t
+}
+
+function Dumbbell({ position, rotation = [0, 0, 0], color = '#1c1c1e', size = 1 }) {
+  const R = 0.042 * size // rayon des têtes (pointe à pointe)
+  const lift = R * Math.cos(Math.PI / 6) // une face à plat sur la tablette
+  const rubber = (
+    <meshStandardMaterial
+      color={color}
+      roughness={0.82}
+      metalness={0}
+      bumpMap={grain('caoutchouc', { amp: 110, repeat: [2, 2] })}
+      bumpScale={0.35}
+    />
+  )
   return (
     <group position={position} rotation={rotation}>
-      <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
-        <cylinderGeometry args={[0.012, 0.012, 0.26, 12]} />
-        <meshStandardMaterial {...METAL} roughnessMap={grain('brosse', { streak: true, amp: 90 })} />
+      <group position={[0, lift, 0]}>
+        {/* poignée moletée */}
+        <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
+          <cylinderGeometry args={[0.0125 * size, 0.0125 * size, 0.13 * size, 20]} />
+          <meshStandardMaterial color="#b9b9b6" metalness={0.9} roughness={0.35} bumpMap={knurl()} bumpScale={0.6} />
+        </mesh>
+        {[-1, 1].map((sgn) => (
+          <group key={sgn} position={[sgn * 0.0925 * size, 0, 0]}>
+            {/* tête hexagonale, arêtes adoucies */}
+            <mesh rotation={[Math.PI / 6, 0, Math.PI / 2]} castShadow receiveShadow>
+              <cylinderGeometry args={[R, R, 0.055 * size, 6]} />
+              {rubber}
+            </mesh>
+            {/* bague chromée côté poignée */}
+            <mesh position={[-sgn * 0.031 * size, 0, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+              <cylinderGeometry args={[0.021 * size, 0.021 * size, 0.008 * size, 24]} />
+              <meshStandardMaterial color="#d6d6d3" metalness={1} roughness={0.18} />
+            </mesh>
+          </group>
+        ))}
+      </group>
+    </group>
+  )
+}
+
+// Tapis de yoga roulé, debout contre le mur, tenu par sa sangle
+function YogaMat({ position, rotation = [0, 0, 0], color = '#5a1418', height = 0.62 }) {
+  const r = 0.06
+  const end = useMemo(() => {
+    const key = `tapis-${color}`
+    if (TEX[key]) return TEX[key]
+    const t = canvasTexture(256, 256, (ctx, w, h) => {
+      ctx.fillStyle = color
+      ctx.fillRect(0, 0, w, h)
+      ctx.strokeStyle = 'rgba(0,0,0,0.35)'
+      ctx.lineWidth = 3
+      ctx.beginPath()
+      for (let a = 0; a < Math.PI * 2 * 7; a += 0.05) {
+        const rr = 6 + (a / (Math.PI * 2)) * 17
+        const x = w / 2 + rr * Math.cos(a)
+        const y = h / 2 + rr * Math.sin(a)
+        if (a === 0) ctx.moveTo(x, y)
+        else ctx.lineTo(x, y)
+      }
+      ctx.stroke()
+    })
+    TEX[key] = t
+    return t
+  }, [color])
+  const foam = (
+    <meshStandardMaterial
+      color={color}
+      roughness={0.95}
+      bumpMap={grain('mousse', { amp: 120, repeat: [4, 8] })}
+      bumpScale={0.5}
+    />
+  )
+  return (
+    <group position={position} rotation={rotation}>
+      <mesh position={[0, height / 2, 0]} castShadow receiveShadow>
+        <cylinderGeometry args={[r, r, height, 40, 1, true]} />
+        {foam}
       </mesh>
-      {[-0.1, 0.1].map((dx) => (
-        <mesh key={dx} position={[dx, 0, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
-          <cylinderGeometry args={[0.045, 0.045, 0.06, 6]} />
-          {mat}
+      {/* les deux bouts : la spirale du tapis roulé */}
+      {[0, height].map((y) => (
+        <mesh key={y} position={[0, y, 0]} rotation={[y ? -Math.PI / 2 : Math.PI / 2, 0, 0]}>
+          <circleGeometry args={[r, 40]} />
+          <meshStandardMaterial map={end} roughness={0.95} />
+        </mesh>
+      ))}
+      {/* sangle */}
+      {[0.12, 0.82].map((k) => (
+        <mesh key={k} position={[0, height * k, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <torusGeometry args={[r + 0.002, 0.004, 8, 48]} />
+          <meshStandardMaterial color="#2b2622" roughness={0.9} />
         </mesh>
       ))}
     </group>
@@ -777,12 +879,16 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <Suspense fallback={null}>
         <Model name="potted_plant_02" height={0.46} position={[-1.08, 1.206, -0.18]} rotation={[0, 0.6, 0]} />
         <Model name="book_encyclopedia_set_01" height={0.25} position={[-1.15, 0.826, -0.18]} />
-        <Model name="football" height={0.17} position={[-0.74, 0.826, -0.16]} rotation={[0, 0.8, 0]} />
         <Model name="camera_01" height={0.14} position={[-0.18, 0.946, -0.16]} rotation={[0, 0.35, 0]} />
         <Model name="ceramic_vase_01" height={0.24} position={[1.02, 0.946, -0.17]} />
       </Suspense>
       <Trophy position={[-0.74, 1.206, -0.17]} />
-      <Dumbbell position={[-1.05, 0.49, -0.15]} rotation={[0, 0.35, 0]} />
+      {/* paire d'haltères à la place des ballons */}
+      <Dumbbell position={[-0.64, 0.826, -0.11]} rotation={[0, 0.12, 0]} size={1.15} />
+      <Dumbbell position={[-0.63, 0.826, -0.25]} rotation={[0, 0.05, 0]} size={1.15} />
+      <Dumbbell position={[-1.05, 0.446, -0.15]} rotation={[0, 0.35, 0]} color={ACCENT} size={1.2} />
+      {/* tapis de yoga roulé, posé au sol, la spirale tournée vers nous */}
+      <YogaMat position={[-1.66, 0.058, -0.36]} rotation={[Math.PI / 2, 0, 0.12]} height={0.6} />
       <BrandBox position={[-0.95, 0.066, -0.16]} onPick={() => onNav('clients')} />
 
       {/* travée du milieu : les créateurs */}
@@ -806,7 +912,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <Notebook position={[0.45, 0.066, -0.1]} onPick={() => onNav('method')} />
 
       {/* travée droite */}
-      <Dumbbell position={[1.2, 0.99, -0.16]} rotation={[0, -0.4, 0]} />
+      <Dumbbell position={[1.22, 0.946, -0.16]} rotation={[0, -0.4, 0]} size={0.85} />
       <Suspense fallback={null}>
         <Model name="ceramic_vase_03" height={0.3} position={[1.0, 0.506, -0.17]} rotation={[0, 0.4, 0]} />
       </Suspense>

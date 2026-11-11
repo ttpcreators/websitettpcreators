@@ -3,7 +3,6 @@ usage commercial libre, sans obligation de citation). https://polyhaven.com
 
 - potted_plant_02.glb           https://polyhaven.com/a/potted_plant_02
 - book_encyclopedia_set_01.glb  https://polyhaven.com/a/book_encyclopedia_set_01
-- football.glb                  https://polyhaven.com/a/football
 - camera_01.glb                 https://polyhaven.com/a/Camera_01
 - ceramic_vase_01.glb           https://polyhaven.com/a/ceramic_vase_01
 
