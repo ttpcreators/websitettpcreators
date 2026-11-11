@@ -24,8 +24,8 @@ const BAYS = [
   { x: 0.84, w: 0.56, levels: [0.06, 0.5, 0.94] },
 ]
 const DEPTH = 0.36
-const ROW = { y: 0.506, cx: 0.17, half: 0.62, step: 0.3 } // rangée des créateurs (travée du milieu)
-const FRAME = { w: 0.24, h: 0.32 }
+const ROW = { y: 0.506, cx: 0.17, half: 0.6, step: 0.255 } // rangée des créateurs (travée du milieu)
+const FRAME = { w: 0.195, h: 0.26 }
 
 /* ── utilitaires ──────────────────────────────────────── */
 
@@ -611,8 +611,8 @@ function CreatorFrame({ tex, index, count, cur, focus, selected, onPick, night }
     const fade = dist > ROW.half ? 0 : 1
     const pick = (focus && selected) || (!focus && hover)
     g.current.position.x = x
-    g.current.position.z = damp(g.current.position.z, -0.12 + (pick ? 0.09 : 0), 7, dt)
-    const s = fade * (focus && selected ? 1.12 : 1)
+    g.current.position.z = damp(g.current.position.z, -0.12 + (pick ? 0.05 : 0), 7, dt)
+    const s = fade * (focus && selected ? 1.04 : 1)
     g.current.scale.setScalar(damp(g.current.scale.x, s, 9, dt))
     g.current.visible = g.current.scale.x > 0.01
     g.current.rotation.x = damp(g.current.rotation.x, pick ? 0 : -0.1, 7, dt)
@@ -667,10 +667,10 @@ function CameraRig({ focus, ready }) {
     const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))
     let fit, tx, ty, ly
     if (focus) {
-      fit = portrait ? 0.7 : 1.5
+      fit = portrait ? 1.0 : 2.3
       tx = ROW.cx
-      ty = 0.74
-      ly = 0.68
+      ty = 0.78
+      ly = 0.66
     } else {
       fit = portrait ? 1.5 : 3.9
       tx = portrait ? ROW.cx : 0
