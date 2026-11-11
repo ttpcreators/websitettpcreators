@@ -9,6 +9,9 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
 React 19 + Vite, **CSS pur** (pas de Tailwind, pas de TypeScript — ne pas en introduire),
 `motion` (= framer-motion, importer depuis `motion/react`), `lucide-react`, `d3-geo`/`d3-timer`
 (globe uniquement). Police Inter via Google Fonts (`index.html`).
+3D de l'accueil : `three` + `@react-three/fiber` + `@react-three/drei` + `@react-three/postprocessing`
+(chargés à part via `React.lazy`). ⚠️ `N8AO` (effet d'ombre d'ambiance) plante avec three 0.187 :
+ne pas le réintroduire. Après un `npm install` de lib 3D, vider `node_modules/.vite` si l'écran reste blanc.
 
 ## Commandes
 
@@ -20,8 +23,20 @@ npm run build      # tsc absent : vite build seul, dist/
 
 ## Structure
 
-- `src/App.jsx` — assemble les sections dans l'ordre : Hero, Clients, Manifesto, About,
-  Services, Method, Network (globe), Stats, Roster, Story, Contact + Navbar/MenuOverlay/Footer
+- `src/App.jsx` — assemble les sections dans l'ordre : Studio (accueil 3D, `id="hero"`), Clients,
+  Manifesto, About, Services, Method, Network (globe), Stats, Story, Contact + Intro (ouverture
+  « Trust The Process. » → TTP, une fois par visite) + Navbar/MenuOverlay/Footer. La section Roster
+  n'est plus affichée : le roster vit dans le studio (liens « Roster » → `#hero`).
+- `src/components/studio/` — **accueil « studio » 3D** (en ligne depuis 2026-11-11, validé par Marc
+  et Gianni, inspiré de verasfawaz.com) : `Studio.jsx` (habillage HTML, mode zoom, jour/nuit, repli
+  sans WebGL) + `Scene.jsx` (pièce, étagère, objets, caméra). Créateurs encadrés tirés en direct de
+  Supabase (`src/lib/useCreators.js`, photos réduites via `/storage/v1/render/image/…?width=560`,
+  ~40 Ko au lieu de 2-3 Mo) ; l'étagère avance d'un créateur toutes les 3 s en boucle. Clic télé →
+  Services, carnet → Méthode, boîte « Partenaires » → logos. Objets réels = modèles Poly Haven CC0
+  dans `public/assets/3d/` (voir `CREDITS.txt`, compressés gltf-transform WebP 512 + meshopt) ;
+  haltères, tapis de yoga, lampe, horloge (Lyon / New York), carnet = dessinés en code. Retours de
+  Marc : pas de kettlebell ni de ballons, pas de grandes marges blanches autour des photos, pas de
+  texte « TTP » en police sur la télé (logo brodé à la place).
 - `src/data.js` — TOUTES les données éditoriales (textes, nav, roster de repli, clients, stats).
   `CONTACT_EMAIL = partnerships@ttpcreators.pro` (source unique).
 - `src/App.css` — tout le style (classes par section). `src/index.css` — reset + tokens.
@@ -37,8 +52,9 @@ npm run build      # tsc absent : vite build seul, dist/
   en touches discrètes. Une passe couleur complète a été appliquée puis **rejetée par les
   fondateurs** (historique git : commits `e3f4784`→`4a7126c`). **Ne pas recolorer** sans
   instruction explicite, et **montrer une capture avant de déployer** tout changement visuel.
-- Titre hero : « Trust The Process. » — le deuxième T MAJUSCULE (initiales = TTP), une seule
-  ligne, effet machine à écrire.
+- « Trust The Process. » — le deuxième T MAJUSCULE (initiales = TTP), effet machine à écrire :
+  vit désormais dans l'animation d'ouverture (`Intro.jsx`). Titre de l'accueil : « L'agence des
+  créateurs sport & lifestyle. »
 - Navbar : logo seul (pas de texte « TTP Creators »).
 - Vocabulaire : dire **« créateurs »** (masculin générique), jamais « créatrices », dans tous
   les textes visibles du site (décision Marc 2026-09-29 — garder une image ouverte du roster).
