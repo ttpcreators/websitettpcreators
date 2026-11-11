@@ -9,15 +9,6 @@ import { useOnScreen } from '../lib/onScreen.js'
 
 const mod = (a, n) => ((a % n) + n) % n
 
-// même règle que _build_mediakits.py : prénom sans accents, en minuscules
-const slugify = (s) =>
-  String(s || '')
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '') || 'createur'
-
 const PLATFORM = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube' }
 
 function sizes(cw) {
@@ -162,17 +153,20 @@ export default function RosterDome({ creators }) {
     for (let c = cStart; c < cStart + slots; c++) {
       for (let r = 0; r < rows; r++) {
         const p = creators[mod(c * rows + r, n)]
-        const first = (p.realName || p.name).split(/\s+/)[0]
+        // carte cliquable seulement si le media kit existe (adresse connue)
+        const Tag = p.slug ? 'a' : 'div'
+        const link = p.slug
+          ? { href: `/mediakit/${p.slug}/`, 'aria-label': `${p.name}, voir son media kit` }
+          : {}
         cells.push(
-          <a
+          <Tag
             key={`${c}:${r}`}
             data-c={c}
             data-r={r}
             className="dome-cell"
-            href={`/mediakit/${slugify(first)}/`}
             style={{ width: W, height: H, marginLeft: -W / 2, marginTop: -H / 2 }}
             draggable={false}
-            aria-label={`${p.name}, voir son media kit`}
+            {...link}
           >
             <span className="dome-top">
               <span>{p.handle}</span>
@@ -184,11 +178,11 @@ export default function RosterDome({ creators }) {
             <span className="dome-bot">
               <span className="dome-tags">
                 <i>{PLATFORM[(p.platform || '').toLowerCase()] || 'Instagram'}</i>
-                <i>Media kit</i>
+                {p.slug ? <i>Media kit</i> : null}
               </span>
               <span className="dome-name">{p.name}</span>
             </span>
-          </a>,
+          </Tag>,
         )
       }
     }
