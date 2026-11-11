@@ -89,6 +89,12 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
   → upload `dist/`. Le site + les media kits partent ENSEMBLE. Cron horaire `:17` → toute
   nouvelle créatrice ajoutée dans l'app obtient sa page `/mediakit/<slug>/` + son PDF toute seule.
   Échec « Deployment failed, try again later » = transitoire GitHub → `gh run rerun <id> --failed`.
+- **SEO (2026-11-11)** : juste après `npm run build`, `python3 scripts/prerender_text.py` glisse dans
+  `<div id="root">` de `dist/index.html` un bloc `hidden` avec le texte de la page rendue (Chrome
+  headless), pour les robots sans JavaScript (ChatGPT, Claude, Perplexity). React le remplace au
+  chargement : rien ne change à l'écran. Les chiffres clés et les 4 services viennent de `src/data.js`.
+  Même principe dans les media kits (`.kit-static`, généré par `_build_mediakits.py`), qui ont aussi
+  une fiche ProfilePage. Le sitemap généré n'a plus de `lastmod` (le cron horaire le rendait faux).
 - ⚠️ La branche `claude/agency-website-m3e282` = ARCHIVE de l'ancien site (vanilla JS + media kit
   vanilla). En juil. elle avait été ré-autorisée puis avait redéployé l'ancien site par-dessus le
   vrai site React (régression corrigée le 2026-07-13). Elle est désormais **retirée des branches
