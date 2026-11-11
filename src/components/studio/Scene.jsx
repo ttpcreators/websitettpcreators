@@ -45,7 +45,7 @@ function canvasTexture(w, h, draw) {
   draw(ctx, w, h)
   const t = new THREE.CanvasTexture(c)
   t.colorSpace = THREE.SRGBColorSpace
-  t.anisotropy = 4
+  t.anisotropy = 8
   t.userData.redraw = (fn) => {
     fn(ctx, w, h)
     t.needsUpdate = true
@@ -633,17 +633,19 @@ function BrandBox({ position, onPick }) {
   const { hover, bind } = useHoverCursor()
   const face = useMemo(
     () =>
-      canvasTexture(512, 256, (ctx, w, h) => {
-        ctx.fillStyle = '#f1efe9'
+      // même proportions que la face de la boîte (0,50 × 0,18 m) : texte net, non étiré
+      canvasTexture(1400, 504, (ctx, w, h) => {
+        ctx.fillStyle = '#f3f1ec'
         ctx.fillRect(0, 0, w, h)
-        ctx.strokeStyle = 'rgba(0,0,0,0.12)'
-        ctx.strokeRect(14, 14, w - 28, h - 28)
+        ctx.strokeStyle = 'rgba(0,0,0,0.16)'
+        ctx.lineWidth = 4
+        ctx.strokeRect(28, 28, w - 56, h - 56)
         ctx.fillStyle = INK
-        ctx.font = '600 44px Inter, system-ui, sans-serif'
-        ctx.fillText('Partenaires', 40, 110)
-        ctx.font = '500 20px ui-monospace, Menlo, monospace'
-        ctx.fillStyle = 'rgba(0,0,0,0.55)'
-        ctx.fillText('TESLA · RAY-BAN · HP · SPEEDO…', 40, 170)
+        ctx.font = '600 150px Inter, system-ui, sans-serif'
+        ctx.fillText('Partenaires', 90, 250)
+        ctx.font = '600 58px ui-monospace, Menlo, monospace'
+        ctx.fillStyle = 'rgba(11,11,13,0.78)'
+        ctx.fillText('TESLA · RAY-BAN · HP · SPEEDO', 92, 380)
       }),
     [],
   )
