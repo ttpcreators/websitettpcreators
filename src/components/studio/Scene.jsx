@@ -620,17 +620,17 @@ function CreatorFrame({ tex, index, count, cur, focus, selected, onPick, night }
     // elle garde un éclat propre, comme un tirage éclairé par la lampe
     const m = photo.current
     if (m) {
-      const c = damp(m.color.r, night ? 0.55 : 0.62, 3, dt)
+      const c = damp(m.color.r, night ? 0.5 : 0.58, 3, dt)
       m.color.setScalar(c)
-      m.emissiveIntensity = damp(m.emissiveIntensity, night ? 0.42 : 0.12, 3, dt)
+      m.emissiveIntensity = damp(m.emissiveIntensity, night ? 0.36 : 0.06, 3, dt)
     }
   })
   return (
     <group ref={g} position={[0, ROW.y, -0.12]} {...bind} onClick={(e) => (e.stopPropagation(), onPick(index))}>
       <group position={[0, FRAME.h / 2 + 0.02, 0]}>
-        {/* cadre blanc + passe-partout */}
-        <mesh castShadow>
-          <boxGeometry args={[FRAME.w + 0.04, FRAME.h + 0.04, 0.018]} />
+        {/* cadre blanc fin, à la largeur de la photo */}
+        <mesh castShadow scale={[(FRAME.w * (tex?.userData.widthScale ?? 1) + 0.016) / (FRAME.w + 0.016), 1, 1]}>
+          <boxGeometry args={[FRAME.w + 0.016, FRAME.h + 0.016, 0.014]} />
           <meshStandardMaterial color="#fbfaf7" roughness={0.6} />
         </mesh>
         <mesh position={[0, 0, 0.0095]} scale={[tex?.userData.widthScale ?? 1, 1, 1]}>
@@ -644,7 +644,9 @@ function CreatorFrame({ tex, index, count, cur, focus, selected, onPick, night }
               emissive="#ffffff"
               emissiveIntensity={0.12}
               color="#9e9e9e"
-              roughness={0.85}
+              roughness={1}
+              metalness={0}
+              envMapIntensity={0}
             />
           ) : (
             <meshStandardMaterial key="vide" color="#d9d6cf" />
