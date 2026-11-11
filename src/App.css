@@ -2190,10 +2190,11 @@ a.ci:hover b {
 
 .intro-words {
   display: flex;
-  gap: 0.3em;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  gap: 0.35em;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em; /* majuscules à peine aérées (pas les grands espacements d'avant) */
+  text-transform: uppercase;
   color: rgba(61, 0, 0, 0.85);
 }
 
