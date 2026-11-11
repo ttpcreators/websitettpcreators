@@ -99,7 +99,7 @@ export default function About() {
   return (
     <section className="sec" id="about">
       <div className="wrap">
-        <Eyebrow n="01">À propos</Eyebrow>
+        <Eyebrow n="02">À propos</Eyebrow>
         <div className="about-grid">
           <FounderPhoto />
           <Reveal className="about-txt" delay={0.1}>

@@ -19,7 +19,7 @@ export default function Story() {
   return (
     <section className="sec" id="story">
       <div className="wrap">
-        <Eyebrow n="06">Notre histoire</Eyebrow>
+        <Eyebrow n="05">Notre histoire</Eyebrow>
         <div className="story-grid">
           <Reveal>
             <h2>La suite logique d'une agence de communication.</h2>

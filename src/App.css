@@ -2000,3 +2000,266 @@ a.ci:hover b {
     animation: none;
   }
 }
+
+/* ══ Maquette « dôme » (inspiration agence créative, version blanche) ══ */
+
+/* Barre du haut : logo · phrase · horloges · pilule */
+.tb {
+  align-items: flex-start;
+  gap: 24px;
+  padding: 18px clamp(16px, 2.4vw, 32px);
+  background: linear-gradient(#fff 55%, rgba(255, 255, 255, 0));
+}
+
+.tb-mono {
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+  font-size: 10.5px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.tb-statement {
+  display: none;
+  max-width: 34ch;
+  margin-left: auto;
+}
+
+.tb-clocks {
+  display: none;
+  list-style: none;
+  gap: 18px;
+}
+
+.tb-clocks li.is-dim {
+  color: var(--faint);
+}
+
+.tb-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 1px;
+}
+
+.tb-clocks li:first-child .tb-dot {
+  background: var(--accent);
+}
+
+.tb-cta {
+  margin-left: auto;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: background 0.25s;
+}
+
+.tb-cta:hover {
+  background: var(--accent);
+}
+
+@media (min-width: 900px) {
+  .tb-statement,
+  .tb-clocks {
+    display: flex;
+  }
+  .tb-statement {
+    display: block;
+  }
+  .tb-cta {
+    margin-left: 12px;
+  }
+}
+
+/* Menu pilule en bas */
+.pn {
+  position: fixed;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 70;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(11, 11, 13, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.pn-link {
+  position: relative;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+
+.pn-link:hover,
+.pn-link.is-on {
+  color: var(--ink);
+}
+
+.pn-link:hover:not(.is-on) {
+  color: #fff;
+}
+
+.pn-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.pn-label {
+  position: relative;
+}
+
+@media (max-width: 420px) {
+  .pn-link {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+}
+
+/* le bouton « haut de page » remonte au-dessus de la pilule */
+.to-top {
+  bottom: 76px;
+}
+
+/* Dôme du roster */
+.dome {
+  position: relative;
+  height: clamp(520px, 78vh, 820px);
+  overflow: hidden;
+  perspective: 1300px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dome:active {
+  cursor: grabbing;
+}
+
+/* les bords se fondent dans la page */
+.dome::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0) 14%, rgba(255, 255, 255, 0) 86%, #fff 100%),
+    linear-gradient(#fff 0%, rgba(255, 255, 255, 0) 12%, rgba(255, 255, 255, 0) 88%, #fff 100%);
+}
+
+.dome-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+}
+
+.dome-cell {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  backface-visibility: hidden;
+  will-change: transform;
+  -webkit-user-drag: none;
+}
+
+.dome-top,
+.dome-bot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dome-img {
+  flex: 1;
+  margin: 12px 8%;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.dome-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dome-cell:hover .dome-img img {
+  transform: scale(1.04);
+}
+
+.dome-tags {
+  display: flex;
+  gap: 4px;
+}
+
+.dome-tags i {
+  font-style: normal;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.dome-name {
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.dome-cell:hover .dome-name {
+  color: var(--accent);
+}
+
+.dome-hint {
+  margin: -14px 0 18px;
+  color: var(--faint);
+}
+
+@media (max-width: 700px) {
+  .dome-cell {
+    padding: 10px;
+  }
+  .dome-tags i:last-child {
+    display: none;
+  }
+}

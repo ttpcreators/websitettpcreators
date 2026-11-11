@@ -82,7 +82,7 @@ export default function Contact() {
       <div className="wrap">
         <Reveal className="contact">
           <div className="contact-l">
-            <Eyebrow n="07">Contact</Eyebrow>
+            <Eyebrow n="06">Contact</Eyebrow>
             <h2>Parlons de ton projet.</h2>
             <p className="lead">
               Créateur qui cherche une vraie structure, ou marque qui veut activer des talents :

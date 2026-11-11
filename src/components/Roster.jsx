@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import Reveal, { Eyebrow } from './Reveal.jsx'
-import RosterCarousel from './RosterCarousel.jsx'
+import RosterDome from './RosterDome.jsx'
 import { Tooltip } from './TooltipCard.jsx'
 import { ROSTER_FALLBACK, asset } from '../data.js'
 import { fetchRoster } from '../lib/roster.js'
@@ -39,12 +39,14 @@ export default function Roster() {
   }, [])
 
   const creators = useMemo(() => {
-    if (!rows) return ROSTER_FALLBACK.map((c) => ({ ...c, name: displayName(c.name), photo: asset(c.photo) }))
+    if (!rows) return ROSTER_FALLBACK.map((c) => ({ ...c, realName: c.name, name: displayName(c.name), photo: asset(c.photo) }))
     return rows.map((r) => {
       const canonical = titleCase(r.name) // nom réel → sert à retrouver la fiche fallback
       const local = ROSTER_FALLBACK.find((f) => f.name.toLowerCase() === canonical.toLowerCase())
       return {
+        realName: canonical, // nom réel → sert au lien du media kit (/mediakit/<prénom>/)
         name: displayName(r.name), // nom AFFICHÉ (avec override éventuel, ex. Lucie Bots)
+        platform: r.platform || '',
         handle: r.handle || local?.handle || '',
         niche: r.niche || local?.niche || '',
         photo: r.photo_url || (local ? asset(local.photo) : null),
@@ -59,7 +61,7 @@ export default function Roster() {
       <div className="wrap">
         <div className="roster-head">
           <div>
-            <Eyebrow n="05">Le roster</Eyebrow>
+            <Eyebrow n="01">Le roster</Eyebrow>
             <Reveal>
               <h2 className="sec-title" style={{ marginBottom: 0 }}>
                 Nos créateurs.
@@ -94,10 +96,9 @@ export default function Roster() {
             .
           </Reveal>
         </div>
-        <Reveal delay={0.15}>
-          <RosterCarousel creators={creators} />
-        </Reveal>
+        <p className="tb-mono dome-hint">Glissez pour explorer · Cliquez sur un créateur pour ouvrir son media kit</p>
       </div>
+      <RosterDome creators={creators} />
     </section>
   )
 }

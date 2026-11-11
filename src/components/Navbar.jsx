@@ -1,64 +1,74 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
-import { Plus } from 'lucide-react'
 import { EASE } from './Reveal.jsx'
 import { asset } from '../data.js'
 
-// Navbar façon « Ollef » en clair : logo à gauche, liens centrés (desktop),
-// CTA souligné à droite. Sur mobile, le bouton Menu ouvre l'overlay.
+// Barre du haut (maquette « dôme ») : logo seul à gauche, phrase de l'agence et
+// heure en direct des deux bureaux en petits caractères machine, bouton pilule
+// « Parlons-en » à droite. La navigation passe dans la pilule en bas (PillNav).
 
-const CENTER_LINKS = [
-  { href: '#about', label: 'À propos' },
-  { href: '#services', label: 'Services' },
-  { href: '#roster', label: 'Roster' },
-  { href: '#contact', label: 'Contact' },
+const OFFICES = [
+  { city: 'Lyon, FR', tz: 'Europe/Paris' },
+  { city: 'Genève, CH', tz: 'Europe/Zurich' },
 ]
 
-export default function Navbar({ menuOpen, onToggleMenu }) {
+function timeIn(tz, now) {
+  const hm = new Intl.DateTimeFormat('fr-FR', { timeZone: tz, hour: '2-digit', minute: '2-digit' }).format(now)
+  const off = new Intl.DateTimeFormat('en-GB', { timeZone: tz, timeZoneName: 'shortOffset' })
+    .formatToParts(now)
+    .find((p) => p.type === 'timeZoneName')?.value
+  return `${hm} ${off || ''}`.trim()
+}
+
+function useNow() {
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    // recale sur la minute pile, puis une fois par minute
+    let id
+    const t = setTimeout(() => {
+      setNow(new Date())
+      id = setInterval(() => setNow(new Date()), 60000)
+    }, 60000 - (Date.now() % 60000))
+    return () => {
+      clearTimeout(t)
+      clearInterval(id)
+    }
+  }, [])
+  return now
+}
+
+export default function Navbar() {
+  const now = useNow()
   return (
-    <motion.nav
-      className="navbar"
+    <motion.header
+      className="navbar tb"
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: EASE }}
     >
-      <div className="nav-left">
-        <a className="brand" href="#hero" aria-label="TTP Creators, accueil">
-          <img src={asset('assets/logo-dark.png')} alt="TTP Creators" className="brand-logo" />
-        </a>
+      <a className="brand" href="#hero" aria-label="TTP Creators, accueil">
+        <img src={asset('assets/logo-dark.png')} alt="TTP Creators" className="brand-logo" />
+      </a>
 
-        <button
-          className="menu-btn"
-          type="button"
-          onClick={onToggleMenu}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-        >
-          <span className="menu-btn-circle">
-            <motion.span
-              className="menu-btn-plus"
-              animate={{ rotate: menuOpen ? 45 : 0 }}
-              transition={{ duration: 0.4, ease: EASE }}
-            >
-              <Plus size={12} strokeWidth={3} />
-            </motion.span>
-          </span>
-          <span className="menu-btn-label">{menuOpen ? 'Fermer' : 'Menu'}</span>
-        </button>
-      </div>
+      <p className="tb-mono tb-statement">
+        TTP Creators est une agence de talents sport &amp; lifestyle qui relie les bons créateurs
+        aux bonnes marques.
+      </p>
 
-      <div className="nav-center" aria-label="Navigation principale">
-        {CENTER_LINKS.map((l) => (
-          <a key={l.href} href={l.href} className="nav-link">
-            {l.label}
-          </a>
+      <ul className="tb-mono tb-clocks" aria-label="Heure dans nos bureaux">
+        {OFFICES.map((o, i) => (
+          <li key={o.city} className={i ? 'is-dim' : ''}>
+            <span className="tb-dot" aria-hidden="true" />
+            {o.city}
+            <br />
+            {timeIn(o.tz, now)}
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <div className="nav-right">
-        <a className="nav-cta2" href="#contact">
-          Travailler avec nous
-        </a>
-      </div>
-    </motion.nav>
+      <a className="tb-cta" href="#contact">
+        Parlons-en
+      </a>
+    </motion.header>
   )
 }

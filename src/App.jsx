@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUp } from 'lucide-react'
 import Navbar from './components/Navbar.jsx'
-import MenuOverlay from './components/MenuOverlay.jsx'
+import PillNav from './components/PillNav.jsx'
 import Hero from './components/Hero.jsx'
 import Clients from './components/Clients.jsx'
 import Manifesto from './components/Manifesto.jsx'
@@ -18,16 +18,7 @@ import Footer from './components/Footer.jsx'
 import './App.css'
 
 export default function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
   const [showTop, setShowTop] = useState(false)
-
-  // Verrouille le scroll quand le menu plein écran est ouvert
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [menuOpen])
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 600)
@@ -37,10 +28,11 @@ export default function App() {
 
   return (
     <>
-      <Navbar menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((o) => !o)} />
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Navbar />
+      <PillNav />
       <main>
         <Hero />
+        <Roster />
         <Clients />
         <Manifesto />
         <About />
@@ -48,7 +40,6 @@ export default function App() {
         <Method />
         <Network />
         <Stats />
-        <Roster />
         <Story />
         <Contact />
       </main>
