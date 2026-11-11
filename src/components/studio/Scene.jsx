@@ -329,34 +329,6 @@ function Model({ name, height, position, rotation = [0, 0, 0] }) {
 }
 
 
-function Books({ x, y, colors, lean = 0 }) {
-  let cx = x
-  return (
-    <group>
-      {colors.map(([c, w, h], i) => {
-        const px = cx + w / 2
-        cx += w + 0.003
-        return (
-          <mesh
-            key={i}
-            position={[px, y + h / 2, -0.17]}
-            rotation={[0, 0, i === colors.length - 1 ? lean : 0]}
-            castShadow
-            receiveShadow
-          >
-            <boxGeometry args={[w, h, 0.2]} />
-            <meshStandardMaterial attach="material-0" color={c} roughness={0.9} />
-            <meshStandardMaterial attach="material-1" color={c} roughness={0.9} />
-            <meshStandardMaterial attach="material-2" color="#efeadf" roughness={1} bumpMap={grain('pages', { streak: true, amp: 120 })} bumpScale={0.4} />
-            <meshStandardMaterial attach="material-3" color="#efeadf" roughness={1} />
-            <meshStandardMaterial attach="material-4" map={spine(c, i)} roughness={0.85} bumpMap={grain('toile', { amp: 80, repeat: [1, 6] })} bumpScale={0.3} />
-            <meshStandardMaterial attach="material-5" color={c} roughness={0.9} />
-          </mesh>
-        )
-      })}
-    </group>
-  )
-}
 
 function Dumbbell({ position, rotation = [0, 0, 0] }) {
   const mat = <meshStandardMaterial color={INK} roughness={0.45} metalness={0.4} />
@@ -376,20 +348,6 @@ function Dumbbell({ position, rotation = [0, 0, 0] }) {
   )
 }
 
-function Kettlebell({ position }) {
-  return (
-    <group position={position}>
-      <mesh position={[0, 0.07, 0]} castShadow>
-        <sphereGeometry args={[0.075, 32, 24]} />
-        <meshStandardMaterial color="#4a0a0d" roughness={0.75} metalness={0.2} roughnessMap={grain('poudre', { amp: 70 })} />
-      </mesh>
-      <mesh position={[0, 0.15, 0]} castShadow>
-        <torusGeometry args={[0.045, 0.012, 12, 32, Math.PI]} />
-        <meshStandardMaterial color="#4a0a0d" roughness={0.75} metalness={0.2} roughnessMap={grain('poudre', { amp: 70 })} />
-      </mesh>
-    </group>
-  )
-}
 
 function Trophy({ position }) {
   return (
@@ -473,19 +431,13 @@ function Tv({ position, onPick }) {
   })
   return (
     <group ref={g} position={position} {...bind} onClick={onPick}>
-      <RoundedBox args={[0.42, 0.32, 0.3]} radius={0.03} castShadow>
-        <meshStandardMaterial color="#e9e6df" roughness={0.6} />
-      </RoundedBox>
-      <mesh position={[-0.04, 0.01, 0.151]}>
-        <planeGeometry args={[0.28, 0.21]} />
-        <meshBasicMaterial map={screen} toneMapped={false} />
-      </mesh>
-      {[0.06, -0.02].map((y) => (
-        <mesh key={y} position={[0.16, y, 0.152]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.014, 0.014, 0.01, 16]} />
-          <meshStandardMaterial color={INK} />
+      <Suspense fallback={null}>
+        <Model name="television_02" height={0.3} position={[0, 0, 0]} />
+        <mesh position={[0, 0.178, 0.131]}>
+          <planeGeometry args={[0.205, 0.158]} />
+          <meshBasicMaterial map={screen} toneMapped={false} />
         </mesh>
-      ))}
+      </Suspense>
     </group>
   )
 }
@@ -768,17 +720,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
         <Model name="ceramic_vase_01" height={0.24} position={[1.02, 0.946, -0.17]} />
       </Suspense>
       <Trophy position={[-0.74, 1.206, -0.17]} />
-      <Kettlebell position={[-1.7, 0, 0.15]} />
       <Dumbbell position={[-1.05, 0.49, -0.15]} rotation={[0, 0.35, 0]} />
-      <Books
-        x={-0.82}
-        y={0.446}
-        colors={[
-          ['#e7e3db', 0.028, 0.24],
-          ['#cfc9bf', 0.03, 0.26],
-          [INK, 0.02, 0.22],
-        ]}
-      />
       <BrandBox position={[-0.95, 0.066, -0.16]} onPick={() => onNav('clients')} />
 
       {/* travée du milieu : les créateurs */}
@@ -802,17 +744,10 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
 
       {/* travée droite */}
       <Dumbbell position={[1.2, 0.99, -0.16]} rotation={[0, -0.4, 0]} />
-      <Books
-        x={0.92}
-        y={0.506}
-        colors={[
-          ['#7a1216', 0.03, 0.26],
-          ['#efece6', 0.028, 0.28],
-          [INK, 0.022, 0.24],
-        ]}
-        lean={-0.3}
-      />
-      <Tv position={[1.12, 0.226, -0.13]} onPick={() => onNav('services')} />
+      <Suspense fallback={null}>
+        <Model name="ceramic_vase_03" height={0.3} position={[1.0, 0.506, -0.17]} rotation={[0, 0.4, 0]} />
+      </Suspense>
+      <Tv position={[1.12, 0.066, -0.17]} onPick={() => onNav('services')} />
 
       {/* mur */}
       <WallClock position={[0.95, 1.62, -0.42]} />

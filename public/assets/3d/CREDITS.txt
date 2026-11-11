@@ -7,4 +7,7 @@ usage commercial libre, sans obligation de citation). https://polyhaven.com
 - camera_01.glb                 https://polyhaven.com/a/Camera_01
 - ceramic_vase_01.glb           https://polyhaven.com/a/ceramic_vase_01
 
+- television_02.glb             https://polyhaven.com/a/television_02
+- ceramic_vase_03.glb           https://polyhaven.com/a/ceramic_vase_03
+
 Compressés avec gltf-transform (textures WebP 512 px, géométrie meshopt).
