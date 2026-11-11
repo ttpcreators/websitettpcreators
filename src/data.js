@@ -16,7 +16,7 @@ export const NAV_LINKS = [
   { href: '#services', label: 'Services' },
   { href: '#method', label: 'Méthode' },
   { href: '#network', label: 'Notre réseau' },
-  { href: '#roster', label: 'Roster' },
+  { href: '#hero', label: 'Roster' },
   { href: '#story', label: 'Notre histoire' },
   { href: '#contact', label: 'Contact' },
 ]

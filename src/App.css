@@ -2069,7 +2069,7 @@ a.ci:hover b {
 
 .studio-hint {
   position: absolute;
-  right: clamp(16px, 2.6vw, 36px);
+  right: calc(clamp(16px, 2.6vw, 36px) + 50px);
   bottom: clamp(18px, 3vh, 34px);
   color: var(--muted);
   transition: color 0.2s;
@@ -2162,4 +2162,146 @@ a.ci:hover b {
   .studio-hint {
     display: none;
   }
+}
+/* Animation d'ouverture */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  cursor: pointer;
+}
+
+.intro-word {
+  display: flex;
+  align-items: center;
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.intro-ch {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 0.8em;
+  opacity: 0;
+  transform: translateY(0.18em);
+  transition:
+    opacity 0.25s,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    max-width 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+    color 0.4s;
+}
+
+.intro-ch.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.intro-ch.is-key {
+  color: var(--accent);
+}
+
+.is-fold .intro-ch:not(.is-key) {
+  max-width: 0;
+  opacity: 0;
+}
+
+.is-fold .intro-ch.is-key {
+  color: var(--ink);
+}
+
+.intro-caret {
+  width: 0.06em;
+  height: 0.9em;
+  margin-left: 0.06em;
+  background: var(--accent);
+  animation: intro-blink 0.9s steps(1) infinite;
+  transition: opacity 0.3s;
+}
+
+.intro-caret.is-off {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes intro-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.intro-tag {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+
+
+/* bouton jour / nuit */
+.studio-mode {
+  position: absolute;
+  right: clamp(16px, 2.6vw, 36px);
+  bottom: clamp(12px, 2.4vh, 28px);
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink);
+  z-index: 3;
+  transition: background 0.4s, color 0.4s, border-color 0.4s;
+}
+
+/* mode nuit : textes en clair */
+.studio {
+  transition: background 1.2s;
+}
+
+.studio.is-night {
+  background: #121214;
+}
+
+.studio.is-night .studio-intro h1,
+.studio.is-night .studio-name,
+.studio.is-night .studio-nav {
+  color: #f4f2ee;
+  transition: color 0.8s;
+}
+
+.studio.is-night .studio-intro h1 span,
+.studio.is-night .studio-intro p,
+.studio.is-night .studio-hint,
+.studio.is-night .studio-name .tb-mono {
+  color: rgba(244, 242, 238, 0.55);
+}
+
+.studio.is-night .studio-mode,
+.studio.is-night .studio-nav button,
+.studio.is-night .studio-back {
+  background: rgba(20, 20, 22, 0.6);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f4f2ee;
+}
+
+html[data-nav-dark] .navbar .nav-link,
+html[data-nav-dark] .navbar .nav-cta2 {
+  color: #f4f2ee;
+}
+
+html[data-nav-dark] .navbar .brand-logo {
+  filter: brightness(0) invert(1);
 }

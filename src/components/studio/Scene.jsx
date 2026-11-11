@@ -114,8 +114,8 @@ function useHoverCursor() {
 function Room() {
   return (
     <group>
-      <mesh position={[0, 2, -0.45]} receiveShadow>
-        <planeGeometry args={[14, 6]} />
+      <mesh position={[0, 3, -0.45]} receiveShadow>
+        <planeGeometry args={[24, 8]} />
         <meshStandardMaterial color={WALL} roughness={0.95} />
       </mesh>
       {/* plinthe */}
@@ -123,14 +123,14 @@ function Room() {
         <boxGeometry args={[14, 0.1, 0.02]} />
         <meshStandardMaterial color="#e2e0db" roughness={0.8} />
       </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 2]} receiveShadow>
-        <planeGeometry args={[14, 6]} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 7]} receiveShadow>
+        <planeGeometry args={[24, 15]} />
         <MeshReflectorMaterial
           blur={[300, 80]}
           resolution={1024}
           mixBlur={1}
-          mixStrength={0.9}
-          roughness={0.75}
+          mixStrength={1.6}
+          roughness={0.6}
           depthScale={0.6}
           minDepthThreshold={0.4}
           maxDepthThreshold={1.2}
@@ -314,7 +314,13 @@ function Trophy({ position }) {
 }
 
 // Lampe bordeaux : globe sur un pied, avec sa lumière
-function Lamp({ position }) {
+function Lamp({ position, night }) {
+  const light = useRef()
+  const bulb = useRef()
+  useFrame((_, dt) => {
+    light.current.intensity = damp(light.current.intensity, night ? 3.2 : 0.4, 3, dt)
+    bulb.current.emissiveIntensity = damp(bulb.current.emissiveIntensity, night ? 0.9 : 0, 3, dt)
+  })
   return (
     <group position={position}>
       <mesh position={[0, 0.06, 0]} castShadow>
@@ -323,13 +329,20 @@ function Lamp({ position }) {
       </mesh>
       <mesh position={[0, 0.19, 0]} castShadow>
         <sphereGeometry args={[0.09, 32, 24, 0, Math.PI * 2, 0, Math.PI / 1.8]} />
-        <meshStandardMaterial color="#6b0f12" roughness={0.25} side={THREE.DoubleSide} />
+        <meshStandardMaterial
+          ref={bulb}
+          color="#6b0f12"
+          emissive="#ff5a3a"
+          emissiveIntensity={0}
+          roughness={0.25}
+          side={THREE.DoubleSide}
+        />
       </mesh>
       <mesh position={[0, 0.15, 0]}>
         <sphereGeometry args={[0.03, 16, 12]} />
         <meshBasicMaterial color="#ffd9b0" />
       </mesh>
-      <pointLight position={[0, 0.12, 0.05]} intensity={0.5} distance={1.2} color="#ffb98a" />
+      <pointLight ref={light} position={[0, 0.12, 0.08]} intensity={0.4} distance={2.6} decay={2} color="#ffb98a" />
     </group>
   )
 }
@@ -537,7 +550,7 @@ function CreatorFrame({ tex, index, cur, focus, selected, onPick }) {
 
 /* ── caméra ───────────────────────────────────────────── */
 
-function CameraRig({ focus }) {
+function CameraRig({ focus, ready }) {
   const { camera, size, pointer } = useThree()
   const look = useRef(new THREE.Vector3(0, 0.75, 0))
   useFrame((_, dt) => {
@@ -557,12 +570,12 @@ function CameraRig({ focus }) {
       ty = 1.05
       ly = 0.72
     }
-    const dist = fit / 2 / (tan * aspect)
+    const dist = fit / 2 / (tan * aspect) + (ready ? 0 : 4.5)
     const px = focus ? 0 : pointer.x * 0.18
     const py = focus ? 0 : pointer.y * 0.08
     camera.position.x = damp(camera.position.x, tx + px, 3, dt)
     camera.position.y = damp(camera.position.y, ty + py, 3, dt)
-    camera.position.z = damp(camera.position.z, dist, 3, dt)
+    camera.position.z = damp(camera.position.z, dist, ready ? 1.6 : 50, dt)
     look.current.x = damp(look.current.x, tx, 3, dt)
     look.current.y = damp(look.current.y, ly, 3, dt)
     camera.lookAt(look.current)
@@ -573,7 +586,7 @@ function CameraRig({ focus }) {
 
 /* ── la scène ─────────────────────────────────────────── */
 
-function Studio({ creators, focus, index, onPickCreator, onNav }) {
+function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) {
   const texs = usePhotoTextures(creators)
   const cur = useRef(1.5)
   useFrame((_, dt) => {
@@ -581,13 +594,27 @@ function Studio({ creators, focus, index, onPickCreator, onNav }) {
     cur.current = damp(cur.current, target, 5, dt)
   })
   const sun = useMemo(() => new THREE.Vector3(-3.2, 4.2, 3.6), [])
+  const amb = useRef()
+  const hemi = useRef()
+  const sunLight = useRef()
+  const day = useMemo(() => new THREE.Color('#fff3e2'), [])
+  const moon = useMemo(() => new THREE.Color('#9fb4d8'), [])
+  const { scene } = useThree()
+  useFrame((_, dt) => {
+    const k = 2.5
+    amb.current.intensity = damp(amb.current.intensity, night ? 0.05 : 0.55, k, dt)
+    hemi.current.intensity = damp(hemi.current.intensity, night ? 0.04 : 0.45, k, dt)
+    sunLight.current.intensity = damp(sunLight.current.intensity, night ? 0.35 : 2.4, k, dt)
+    sunLight.current.color.lerp(night ? moon : day, 1 - Math.exp(-k * dt))
+    scene.environmentIntensity = damp(scene.environmentIntensity ?? 1, night ? 0.12 : 1, k, dt)
+  })
 
   return (
     <>
-      <color attach="background" args={[WALL]} />
-      <ambientLight intensity={0.55} />
-      <hemisphereLight args={['#ffffff', '#d8d2c8', 0.45]} />
+      <ambientLight ref={amb} intensity={0.55} />
+      <hemisphereLight ref={hemi} args={['#ffffff', '#d8d2c8', 0.45]} />
       <directionalLight
+        ref={sunLight}
         position={sun}
         intensity={2.4}
         color="#fff3e2"
@@ -655,7 +682,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav }) {
           onPick={onPickCreator}
         />
       ))}
-      <Lamp position={[0.55, 0.946, -0.17]} />
+      <Lamp position={[0.55, 0.946, -0.17]} night={night} />
       <Ball position={[-0.2, 1.031, -0.16]} />
       <Books
         x={-0.4}
@@ -689,22 +716,30 @@ function Studio({ creators, focus, index, onPickCreator, onNav }) {
       {/* mur */}
       <WallClock position={[0.95, 1.62, -0.42]} />
 
-      <CameraRig focus={focus} />
+      <CameraRig focus={focus} ready={ready} />
     </>
   )
 }
 
-export default function Scene({ creators, focus, index, onPickCreator, onNav, active }) {
+export default function Scene({ creators, focus, index, onPickCreator, onNav, active, night, ready }) {
   return (
     <Canvas
       shadows
       dpr={[1, 1.75]}
       frameloop={active ? 'always' : 'never'}
-      camera={{ position: [0, 1.02, 5], fov: 32, near: 0.05, far: 40 }}
+      camera={{ position: [0, 1.4, 9], fov: 32, near: 0.05, far: 40 }}
       gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.18 }}
       onPointerMissed={() => document.body.style.removeProperty('cursor')}
     >
-      <Studio creators={creators} focus={focus} index={index} onPickCreator={onPickCreator} onNav={onNav} />
+      <Studio
+        creators={creators}
+        focus={focus}
+        index={index}
+        onPickCreator={onPickCreator}
+        onNav={onNav}
+        night={night}
+        ready={ready}
+      />
     </Canvas>
   )
 }

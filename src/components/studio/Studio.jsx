@@ -1,6 +1,6 @@
-import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Moon, Sun } from 'lucide-react'
 import { useCreators } from '../../lib/useCreators.js'
 import { useOnScreen } from '../../lib/onScreen.js'
 
@@ -12,10 +12,11 @@ const Scene = lazy(() => import('./Scene.jsx'))
 
 const pad = (n) => String(n).padStart(2, '0')
 
-export default function Studio() {
+export default function Studio({ ready = true }) {
   const creators = useCreators()
   const [focus, setFocus] = useState(false)
   const [index, setIndex] = useState(0)
+  const [night, setNight] = useState(false)
   const [setEl, on] = useOnScreen()
   const n = creators.length
 
@@ -28,6 +29,26 @@ export default function Studio() {
     setFocus(false)
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }, [])
+
+  // la nuit, la barre du haut passe en clair tant qu'elle est au-dessus du studio
+  const sectionRef = useRef(null)
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const root = document.documentElement
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (night && e.isIntersecting) root.dataset.navDark = ''
+        else delete root.dataset.navDark
+      },
+      { rootMargin: '0px 0px -92% 0px' },
+    )
+    io.observe(el)
+    return () => {
+      io.disconnect()
+      delete root.dataset.navDark
+    }
+  }, [night])
 
   useEffect(() => {
     if (!focus) return
@@ -43,7 +64,14 @@ export default function Studio() {
   const c = creators[index] || creators[0]
 
   return (
-    <section className="studio" id="hero" ref={setEl}>
+    <section
+      className={`studio${night ? ' is-night' : ''}`}
+      id="hero"
+      ref={(el) => {
+        sectionRef.current = el
+        setEl(el)
+      }}
+    >
       <div className="studio-canvas">
         <Suspense fallback={<div className="studio-wait tb-mono">Ouverture du studio…</div>}>
           <Scene
@@ -53,9 +81,21 @@ export default function Studio() {
             onPickCreator={open}
             onNav={nav}
             active={on}
+            night={night}
+            ready={ready}
           />
         </Suspense>
       </div>
+
+      <button
+        type="button"
+        className="studio-mode"
+        onClick={() => setNight((v) => !v)}
+        aria-label={night ? 'Allumer la lumière du jour' : 'Passer en mode nuit'}
+        title={night ? 'Jour' : 'Nuit'}
+      >
+        {night ? <Sun size={16} /> : <Moon size={16} />}
+      </button>
 
       <AnimatePresence mode="wait">
         {!focus ? (

@@ -6,7 +6,7 @@ import { SOCIALS, CONTACT_EMAIL } from '../data.js'
 const SITEMAP = [
   { href: '#about', label: 'À propos' },
   { href: '#services', label: 'Services' },
-  { href: '#roster', label: 'Roster' },
+  { href: '#hero', label: 'Roster' },
   { href: '#story', label: 'Notre histoire' },
   { href: '#contact', label: 'Contact' },
 ]

@@ -9,7 +9,7 @@ import { asset } from '../data.js'
 const CENTER_LINKS = [
   { href: '#about', label: 'À propos' },
   { href: '#services', label: 'Services' },
-  { href: '#roster', label: 'Roster' },
+  { href: '#hero', label: 'Roster' },
   { href: '#contact', label: 'Contact' },
 ]
 
