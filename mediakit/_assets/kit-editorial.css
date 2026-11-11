@@ -254,3 +254,6 @@ html.og .pdf-btn, html.og .progress, html.og .lang-switch { display: none !impor
 .og-card .figs { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--soft); display: flex; gap: 40px; }
 .og-card .figs div { font-size: 15px; color: var(--grey); line-height: 1.3; max-width: 15ch; }
 .og-card .figs b { display: block; font-family: var(--serif); font-weight: 400; font-size: 54px; line-height: 1; color: var(--ink); margin-bottom: 8px; white-space: nowrap; }
+
+/* Version texte pour les robots sans JavaScript (remplacée par le rendu JS, jamais affichée) */
+.kit-static { display: none; }

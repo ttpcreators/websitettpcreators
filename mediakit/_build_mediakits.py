@@ -124,6 +124,143 @@ def display_name(n):
     return NAME_OVERRIDES.get(str(n or "").strip().lower(), n)
 
 
+# ── Version texte lisible sans JavaScript (SEO, 2026-11-11) ─────────────────────
+# Le moteur JS remplace le contenu de #kit au chargement (kit.innerHTML = …) : ce bloc
+# ne sert qu'aux robots qui n'exécutent pas le JavaScript (IA, aperçus, Bing). Il reprend
+# EXACTEMENT les infos affichées par le kit (bio, audience, marques, tarifs si affichés),
+# masqué par .kit-static { display:none } pour ne jamais apparaître à l'écran.
+PLAT_LABEL = {"instagram": "Instagram", "tiktok": "TikTok", "youtube": "YouTube", "snapchat": "Snapchat",
+              "x": "X", "twitter": "X", "twitch": "Twitch", "linkedin": "LinkedIn", "pinterest": "Pinterest"}
+
+
+def _num(v):
+    try:
+        return float(str(v).replace(" ", "").replace("\xa0", "").replace(" ", "").replace(",", "."))
+    except (TypeError, ValueError):
+        return None
+
+
+def _fmt_int(n, en):
+    s = "{:,}".format(int(round(n)))
+    return s if en else s.replace(",", " ")
+
+
+def _paras(text):
+    return "".join("<p>%s</p>" % esc(x.strip()).replace("\n", "<br>") for x in re.split(r"\n\s*\n+", text or "") if x.strip())
+
+
+def _price(v, en):
+    """« 570 » → « 570 € HT » / « €570 excl. VAT », comme l'affiche le kit ; texte libre laissé tel quel."""
+    m = re.match(r"^\s*([\d\s.,\u202f\xa0]+)\s*(€|eur)?\s*(ht)?\s*$", str(v), re.I)
+    n = _num(m.group(1)) if m else None
+    if not n:
+        return str(v)
+    return ("€%s excl. VAT" if en else "%s € HT") % _fmt_int(n, en)
+
+
+def profile_url(handle, platform):
+    h, pl = str(handle or "").lstrip("@").strip(), str(platform or "").lower()
+    if not h:
+        return None
+    if "tiktok" in pl:
+        return "https://www.tiktok.com/@" + h
+    if "youtube" in pl:
+        return "https://youtube.com/@" + h
+    if pl in ("x", "twitter"):
+        return "https://x.com/" + h
+    if "instagram" in pl:
+        return "https://instagram.com/" + h
+    return None
+
+
+def static_kit(c, slug, title, lang="fr"):
+    en = lang == "en"
+    mk = c.get("mediakit") or {}
+    handle = str(mk.get("handle") or c.get("handle") or "").lstrip("@")
+    platform = str(c.get("platform") or "instagram").lower()
+    niche = c.get("niche") or ""
+    meta = [x for x in [niche, ("@" + handle + (" on " if en else " sur ") + PLAT_LABEL.get(platform, platform.title())) if handle else ""] if x]
+    out = ['<div class="kit-static">', "<h1>%s · %s</h1>" % (esc(title), "Media kit")]
+    if meta:
+        out.append("<p>%s</p>" % esc(" · ".join(meta)))
+    bio = (mk.get("bioEn") if en else mk.get("bio")) or ""
+    out.append(_paras(bio))
+    figs = []
+    for pl in [x for x in (mk.get("platforms") or []) if isinstance(x, dict) and x.get("key")]:
+        lab = PLAT_LABEL.get(str(pl["key"]).lower(), str(pl["key"]).title())
+        f = _num(pl.get("followers"))
+        if f:
+            figs.append(("%s followers on %s" if en else "%s abonnés sur %s") % (_fmt_int(f, en), lab))
+        er = str(pl.get("er") or "").replace("%", "").strip()
+        if _num(er):
+            figs.append(("%s%% engagement on %s" if en else "%s %% d'engagement sur %s") % (er, lab))
+    if figs:
+        out.append("<h2>%s</h2><ul>%s</ul>" % ("Audience", "".join("<li>%s</li>" % esc(x) for x in figs)))
+    brands = [b.get("name").strip() for b in (mk.get("brands") or []) if isinstance(b, dict) and str(b.get("name") or "").strip()]
+    if brands:
+        out.append("<h2>%s</h2><p>%s</p>" % ("Partner brands" if en else "Marques partenaires", esc(", ".join(brands))))
+    rates = [] if mk.get("hideRates") else [r for r in (mk.get("rates") or []) if isinstance(r, dict) and str(r.get("label") or "").strip() and str(r.get("price") or "").strip()]
+    if rates:
+        out.append("<h2>%s</h2><ul>%s</ul>" % ("Indicative rates" if en else "Tarifs indicatifs",
+                   "".join("<li>%s : %s</li>" % (esc(r["label"]), esc(_price(r["price"], en))) for r in rates)))
+    home = "/" if not en else "/"
+    out.append(('<p>Media kit presented by <a href="%s">TTP Creators</a>, sport &amp; lifestyle talent management agency (Lyon · Geneva). '
+                '<a href="/mediakit/agence/en/">See all our creators</a>.</p>' if en else
+                '<p>Media kit présenté par <a href="%s">TTP Creators</a>, agence de talent management sport &amp; lifestyle à Lyon et Genève. '
+                '<a href="/mediakit/agence/">Voir tous nos créateurs</a>.</p>') % home)
+    out.append("</div>")
+    return "".join(out)
+
+
+def profile_jsonld(c, slug, title, lang="fr"):
+    en = lang == "en"
+    mk = c.get("mediakit") or {}
+    handle = str(mk.get("handle") or c.get("handle") or "").lstrip("@")
+    url = "https://ttpcreators.pro/mediakit/%s/%s" % (slug, "en/" if en else "")
+    person = {"@type": "Person", "@id": "https://ttpcreators.pro/mediakit/%s/#person" % slug, "name": title,
+              "affiliation": {"@id": "https://ttpcreators.pro/#organization"}}
+    if handle:
+        person["alternateName"] = "@" + handle
+    if c.get("photo_url"):
+        person["image"] = c.get("photo_url")
+    if c.get("niche"):
+        person["description"] = c.get("niche")
+    prof = profile_url(handle, c.get("platform"))
+    if prof:
+        person["sameAs"] = [prof]
+    data = {"@context": "https://schema.org", "@type": "ProfilePage", "@id": url + "#page", "url": url,
+            "inLanguage": lang, "name": "%s · Media kit" % title, "mainEntity": person,
+            "isPartOf": {"@type": "WebSite", "@id": "https://ttpcreators.pro/#website", "url": "https://ttpcreators.pro/", "name": "TTP Creators"}}
+    return '<script type="application/ld+json">%s</script>' % json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+
+
+def static_agency(creators, slugs, lang="fr"):
+    en = lang == "en"
+    out = ['<div class="kit-static">',
+           "<h1>%s</h1>" % ("TTP Creators · Agency media kit" if en else "TTP Creators · Media kit agence"),
+           ("<p>TTP Creators is a sport &amp; lifestyle talent management agency based in Lyon and Geneva. "
+            "We represent content creators and handle strategy, production and brand partnerships.</p>" if en else
+            "<p>TTP Creators est une agence de talent management sport &amp; lifestyle à Lyon et Genève. "
+            "Nous représentons des créateurs de contenu et gérons pour eux la stratégie, la production et les partenariats de marque.</p>")]
+    items = []
+    for c in creators:
+        name = display_name(c.get("name") or "")
+        t = name.title() if name.isupper() else name
+        s = slugs.get(c.get("name"))
+        label = esc(t) + ((" · " + esc(c.get("niche"))) if c.get("niche") else "")
+        items.append('<li><a href="/mediakit/%s/%s">%s</a></li>' % (s, "en/" if en else "", label) if s else "<li>%s</li>" % label)
+    if items:
+        out.append("<h2>%s</h2><ul>%s</ul>" % ("Our creators" if en else "Nos créateurs", "".join(items)))
+    out.append("<h2>%s</h2><p>%s</p>" % ("They worked with our creators" if en else "Marques partenaires",
+                                          esc(", ".join(x["name"] for x in CLIENTS))))
+    if not en:
+        out.append("<h2>Notre approche</h2><ul>%s</ul>" % "".join("<li><strong>%s.</strong> %s</li>" % (esc(x["title"]), esc(x["text"])) for x in PILLARS))
+    out.append('<p><a href="/">%s</a> · <a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a></p>'
+               % ("TTP Creators website" if en else "Le site de TTP Creators"))
+    out.append("</div>")
+    return "".join(out)
+
+
 # Marques & piliers de l'agence pour le MEDIA KIT AGENCE (deck global). Copie des
 # sources canoniques du site (src/data.js CLIENTS + PILLARS) pour rester auto-suffisant ;
 # garder synchro si data.js change. Logos = silhouettes masquées en bordeaux (dist/assets/clients/).
@@ -229,9 +366,10 @@ def shell(c, slug, lang="fr"):
 <link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=3">
 <link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=3">
 <link rel="stylesheet" href="{up}../_assets/kit-editorial.css">
+{jsonld}
 </head>
 <body>
-<div class="kit" id="kit"></div>
+<div class="kit" id="kit">{static}</div>
 <a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="Media Kit - {title}{file_suffix}.pdf" aria-label="{pdf_aria}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -250,6 +388,7 @@ def shell(c, slug, lang="fr"):
 """.format(lang="en" if en else "fr", theme=kit_theme_attr(mk.get("theme")), title=esc(title), desc=esc(desc),
            title_suffix="TTP Creators media kit" if en else "Media kit TTP Creators",
            canonical=canonical, hreflang=hreflang, og=og, baked=baked, build=BUILD, up=up, nav=nav,
+           static=static_kit(c, slug, title, lang), jsonld=profile_jsonld(c, slug, title, lang),
            file_suffix=" (EN)" if en else "",
            pdf_aria="Download the media kit as a PDF" if en else "Télécharger le media kit en PDF",
            pdf_label="Download PDF" if en else "Télécharger en PDF")
@@ -347,7 +486,7 @@ def agency_shell(creators, agency=None, slugs=None, lang="fr"):
 <link rel="stylesheet" href="{up}../_assets/agence-editorial.css">
 </head>
 <body>
-<div class="kit" id="kit"></div>
+<div class="kit" id="kit">{static}</div>
 <a class="pdf-btn" id="dl-pdf" href="media-kit-{build}.pdf" download="{pdf_name}" aria-label="{pdf_aria}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -365,6 +504,7 @@ def agency_shell(creators, agency=None, slugs=None, lang="fr"):
 </html>
 """.format(lang="en" if en else "fr", theme=kit_theme_attr((agency or {}).get("theme")), desc=esc(desc), build=BUILD,
            baked=baked, canonical=canonical, hreflang=hreflang, nav=nav, up=up,
+           static=static_agency(creators, slugs, lang),
            page_title="Agency media kit · TTP Creators" if en else "Media kit agence · TTP Creators",
            pdf_name="TTP Creators - Agency Media Kit.pdf" if en else "TTP Creators - Media Kit Agence.pdf",
            pdf_aria="Download the agency media kit as a PDF" if en else "Télécharger le media kit agence en PDF",
@@ -383,12 +523,15 @@ def write_sitemap(slugs, ugc=None):
     kits. Régénéré à chaque build (+ cron horaire) → toute nouvelle créatrice y entre
     toute seule. robots.txt le déclare sur https://ttpcreators.pro/sitemap.xml.
     """
-    urls = ["https://ttpcreators.pro/", "https://ttpcreators.pro/mentions-legales/"]
+    urls = ["https://ttpcreators.pro/", "https://ttpcreators.pro/suite/",
+            "https://ttpcreators.pro/mentions-legales/", "https://ttpcreators.pro/confidentialite/",
+            "https://ttpcreators.pro/conditions/"]
     urls += ["https://ttpcreators.pro/mediakit/%s/" % s for s in slugs]
     urls += ["https://ttpcreators.pro/mediakit/%s/en/" % s for s in slugs]
     urls += ["https://ttpcreators.pro/mediakit/%s/ugc/" % s for s in (ugc or [])]
-    today = time.strftime("%Y-%m-%d")
-    body = "".join("  <url><loc>%s</loc><lastmod>%s</lastmod></url>\n" % (u, today) for u in urls)
+    # Pas de <lastmod> : le build tourne toutes les heures, une date du jour sur chaque URL
+    # serait fausse et Google finit par ignorer le champ (audit SEO 2026-11-11).
+    body = "".join("  <url><loc>%s</loc></url>\n" % u for u in urls)
     xml = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n"
