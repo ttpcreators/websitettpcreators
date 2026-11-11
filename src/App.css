@@ -2000,3 +2000,166 @@ a.ci:hover b {
     animation: none;
   }
 }
+
+/* ══ Accueil « studio » 3D (maquette) ═════════════════════════ */
+
+.tb-mono {
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+  font-size: 10.5px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.studio {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  background: #eceae5;
+  overflow: hidden;
+}
+
+.studio-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.studio-wait {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--faint);
+}
+
+.studio-ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: clamp(16px, 2.6vw, 36px);
+}
+
+.studio-ui > * {
+  pointer-events: auto;
+}
+
+.studio-intro {
+  position: absolute;
+  left: clamp(16px, 2.6vw, 36px);
+  bottom: clamp(18px, 3vh, 34px);
+  max-width: 30ch;
+}
+
+.studio-intro h1 {
+  font-size: clamp(1.35rem, 2.1vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.studio-intro h1 span {
+  color: rgba(11, 11, 13, 0.4);
+}
+
+.studio-intro p {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.studio-hint {
+  position: absolute;
+  right: clamp(16px, 2.6vw, 36px);
+  bottom: clamp(18px, 3vh, 34px);
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.studio-hint:hover {
+  color: var(--ink);
+}
+
+.studio-back {
+  position: absolute;
+  top: 78px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink);
+}
+
+.studio-card {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(18px, 4vh, 40px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.studio-name {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.studio-name .tb-mono {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.studio-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink);
+}
+
+.studio-nav button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.7);
+  transition: border-color 0.2s;
+}
+
+.studio-nav button:hover {
+  border-color: var(--ink);
+}
+
+.studio-kit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.25s;
+}
+
+.studio-kit:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .studio-hint {
+    display: none;
+  }
+}

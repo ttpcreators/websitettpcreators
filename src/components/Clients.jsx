@@ -8,7 +8,7 @@ export default function Clients() {
   const track = [...CLIENTS, ...CLIENTS]
   const [ref, on] = useOnScreen()
   return (
-    <section className="clients" aria-label="Ils nous font confiance">
+    <section className="clients" id="clients" aria-label="Ils nous font confiance">
       <div className="marquee" ref={ref} data-paused={on ? undefined : ''}>
         <div className="marquee-track">
           {track.map((c, i) => {

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUp } from 'lucide-react'
 import Navbar from './components/Navbar.jsx'
 import MenuOverlay from './components/MenuOverlay.jsx'
-import Hero from './components/Hero.jsx'
+import Studio from './components/studio/Studio.jsx'
 import Clients from './components/Clients.jsx'
 import Manifesto from './components/Manifesto.jsx'
 import About from './components/About.jsx'
@@ -40,7 +40,7 @@ export default function App() {
       <Navbar menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((o) => !o)} />
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
       <main>
-        <Hero />
+        <Studio />
         <Clients />
         <Manifesto />
         <About />

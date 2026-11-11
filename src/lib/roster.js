@@ -21,3 +21,31 @@ export async function fetchRoster(signal) {
   if (!Array.isArray(rows) || rows.length === 0) throw new Error('public_roster vide')
   return rows
 }
+
+// Adresse du media kit de chaque créateur (/mediakit/<slug>/), calculée comme
+// _build_mediakits.py : slug choisi dans l'app, sinon le prénom ; doublon → -2, -3…
+const slugify = (s) =>
+  String(s || '')
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'createur'
+
+export async function fetchMediakitSlugs(signal) {
+  const res = await fetch(
+    `${SB_URL}/rest/v1/public_mediakit?select=name,slug:mediakit->>slug&order=sort_order`,
+    { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }, signal },
+  )
+  if (!res.ok) throw new Error(`public_mediakit HTTP ${res.status}`)
+  const used = new Set()
+  const map = {}
+  for (const r of await res.json()) {
+    const base = slugify(r.slug || String(r.name || '').split(/\s+/)[0])
+    let slug = base
+    for (let i = 2; used.has(slug); i++) slug = `${base}-${i}`
+    used.add(slug)
+    map[String(r.name || '').toLowerCase().trim()] = slug
+  }
+  return map
+}
