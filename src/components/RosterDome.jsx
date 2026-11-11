@@ -9,13 +9,29 @@ import { useOnScreen } from '../lib/onScreen.js'
 
 const mod = (a, n) => ((a % n) + n) % n
 
+// Pas de grille entre deux voisins (côte à côte, dessus-dessous, en diagonale) :
+// on avance de h créateurs par colonne et de v par rangée, h et v choisis pour
+// que jamais deux cartes voisines ne montrent la même personne.
+const gcd = (a, b) => (b ? gcd(b, a % b) : a)
+function strides(n) {
+  if (n < 5) return [1, 2]
+  for (let h = 2; h < n; h++) {
+    if (gcd(h, n) !== 1) continue
+    for (let v = 2; v < n; v++) {
+      if (v === h || gcd(v, n) !== 1) continue
+      if (mod(h + v, n) && mod(h - v, n)) return [h, v]
+    }
+  }
+  return [1, 2]
+}
+
 const PLATFORM = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube' }
 
 function sizes(cw) {
-  return cw < 700 ? { W: 248, H: 326 } : { W: 360, H: 452 }
+  return cw < 700 ? { W: 188, H: 246 } : { W: 236, H: 300 }
 }
 
-export default function RosterDome({ creators, ready = true }) {
+export default function RosterDome({ creators, ready = true, children }) {
   const reduce = useReducedMotion()
   const [setOnScreenEl, on] = useOnScreen('120px')
   const boxRef = useRef(null)
@@ -29,6 +45,7 @@ export default function RosterDome({ creators, ready = true }) {
   const rows = Math.ceil(dims.ch / H) + 1
   const slots = Math.ceil(dims.cw / W) + 4
   const n = creators.length
+  const [hStep, vStep] = strides(n)
 
   // taille du dôme
   useEffect(() => {
@@ -157,7 +174,7 @@ export default function RosterDome({ creators, ready = true }) {
   if (n) {
     for (let c = cStart; c < cStart + slots; c++) {
       for (let r = 0; r < rows; r++) {
-        const p = creators[mod(c * rows + r, n)]
+        const p = creators[mod(c * hStep + r * vStep, n)]
         // carte cliquable seulement si le media kit existe (adresse connue)
         const Tag = p.slug ? 'a' : 'div'
         const link = p.slug
@@ -209,6 +226,7 @@ export default function RosterDome({ creators, ready = true }) {
       <div className="dome-stage" ref={stageRef}>
         {cells}
       </div>
+      {children}
     </div>
   )
 }

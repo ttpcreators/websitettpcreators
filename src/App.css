@@ -2143,7 +2143,7 @@ a.ci:hover b {
 /* Dôme du roster */
 .dome {
   position: relative;
-  height: clamp(600px, 94svh, 1040px);
+  height: clamp(480px, calc(100svh - 190px), 900px);
   overflow: hidden;
   perspective: 1300px;
   background: #fff;
@@ -2198,7 +2198,7 @@ a.ci:hover b {
   align-items: center;
   gap: 8px;
   font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
-  font-size: 10.5px;
+  font-size: 9px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--muted);
@@ -2226,10 +2226,17 @@ a.ci:hover b {
 .dome-tags {
   display: flex;
   gap: 4px;
+  min-width: 0;
+}
+
+/* petites cartes : seulement le réseau, le nom a la place */
+.dome-tags i + i {
+  display: none;
 }
 
 .dome-tags i {
   font-style: normal;
+  white-space: nowrap;
   padding: 3px 7px;
   border-radius: 999px;
   background: var(--panel);
@@ -2239,7 +2246,7 @@ a.ci:hover b {
 .dome-name {
   color: var(--ink);
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 11.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
   text-transform: none;
@@ -2261,30 +2268,37 @@ a.ci:hover b {
   }
   .dome-top,
   .dome-bot {
-    font-size: 9.5px;
+    font-size: 8.5px;
   }
   .dome-name {
-    font-size: 12.5px;
+    font-size: 11px;
+  }
+  .dome-bar-hint {
+    display: none;
   }
   .dome-tags i:last-child {
     display: none;
   }
 }
 
-/* Ouverture courte (maquette) : titre + deux boutons, le dôme juste dessous */
+/* Ouverture discrète (maquette) : une ligne de titre + deux boutons, le dôme fait l'image */
 .hero.hx {
   min-height: 0;
-  justify-content: flex-start;
-  gap: clamp(24px, 4vh, 40px);
-  padding-top: calc(110px + 6vh);
-  padding-bottom: clamp(36px, 6vh, 64px);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px 32px;
+  padding-top: calc(84px + 3vh);
+  padding-bottom: 22px;
 }
 
 .hx-title {
-  font-size: clamp(2.8rem, 8vw, 8.4rem);
+  max-width: none;
+  font-size: clamp(1.7rem, 2.9vw, 2.9rem);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
   color: var(--ink);
 }
 
@@ -2293,23 +2307,24 @@ a.ci:hover b {
 }
 
 .hx-soft {
-  color: rgba(11, 11, 13, 0.34);
+  color: rgba(11, 11, 13, 0.36);
+  white-space: nowrap;
 }
 
 .hx-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .hx-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
+  gap: 8px;
+  padding: 11px 18px;
   border: 1px solid var(--ink);
   border-radius: 999px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--ink);
   transition: background 0.25s, color 0.25s, border-color 0.25s;
@@ -2332,7 +2347,7 @@ a.ci:hover b {
 
 @media (max-width: 767px) {
   .hero.hx {
-    padding-top: calc(96px + 4vh);
+    padding-top: calc(80px + 2vh);
   }
 }
 
@@ -2435,13 +2450,18 @@ a.ci:hover b {
   transform: translateZ(-900px) rotateX(18deg);
 }
 
-/* ligne discrète au-dessus du dôme */
+/* ligne discrète posée en haut du dôme */
 .dome-bar {
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  left: clamp(16px, 2.4vw, 32px);
+  right: clamp(16px, 2.4vw, 32px);
   display: flex;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 14px;
+  pointer-events: none;
   color: var(--muted);
 }
 

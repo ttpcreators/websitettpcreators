@@ -42,15 +42,14 @@ export default function Roster({ ready = true }) {
 
   return (
     <section className="sec" id="roster">
-      <div className="wrap">
+      <RosterDome creators={creators} ready={ready}>
         <p className="tb-mono dome-bar">
           <span>
-            (01) Le roster — {count} créateur{count > 1 ? 's' : ''} sport &amp; lifestyle
+            {count} créateur{count > 1 ? 's' : ''} — sport &amp; lifestyle
           </span>
           <span className="dome-bar-hint">Glissez pour explorer · Cliquez pour voir le media kit</span>
         </p>
-      </div>
-      <RosterDome creators={creators} ready={ready} />
+      </RosterDome>
     </section>
   )
 }
