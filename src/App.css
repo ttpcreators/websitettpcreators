@@ -2373,3 +2373,54 @@ html[data-nav-dark] .navbar .brand-logo {
 .studio-kit {
   white-space: nowrap;
 }
+
+/* grain photo + vignettage par-dessus la 3D (remplace le post-traitement, 0 Ko à charger) */
+.studio-canvas::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(30, 24, 20, 0.22) 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+/* Image d'attente : une photo du studio s'affiche tout de suite, la 3D la remplace
+   en fondu quand elle est prête (même cadrage). */
+.studio {
+  background: #eceae5 url('/assets/studio-desktop.webp') center / cover no-repeat;
+}
+
+@media (max-aspect-ratio: 4/5) {
+  .studio {
+    background-image: url('/assets/studio-mobile.webp');
+  }
+}
+
+.studio-canvas canvas {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.studio-canvas.is-shown canvas {
+  opacity: 1;
+}
+
+.studio.is-night {
+  background-image: none;
+}
+
+/* mode capture de l'image d'attente (?poster) : rien d'autre que la pièce */
+html.poster .navbar,
+html.poster .studio-ui,
+html.poster .studio-mode,
+html.poster .to-top,
+html.poster .studio-canvas::after {
+  display: none !important;
+}
+
+html.poster .studio-canvas canvas {
+  opacity: 1;
+  transition: none;
+}

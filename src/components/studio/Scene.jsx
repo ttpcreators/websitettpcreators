@@ -1,8 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial, PerformanceMonitor, RoundedBox, SoftShadows, useGLTF } from '@react-three/drei'
-import { Bloom, EffectComposer, Noise, ToneMapping, Vignette } from '@react-three/postprocessing'
-import { ToneMappingMode } from 'postprocessing'
+import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial, PerformanceMonitor, RoundedBox, SoftShadows, useGLTF, useProgress } from '@react-three/drei'
 import * as THREE from 'three'
 
 // Le studio TTP en 3D : une pièce blanche baignée de soleil (ombre de fenêtre
@@ -30,6 +28,9 @@ const FRAME = { w: 0.195, h: 0.26 }
 /* ── utilitaires ──────────────────────────────────────── */
 
 const damp = THREE.MathUtils.damp
+
+// ?poster : sert à photographier l'image d'attente (public/assets/studio-*.webp)
+const POSTER = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('poster')
 
 // Téléphone ou petit écran : rendu allégé (ombres, reflet, lissage) pour rester fluide
 const LITE =
@@ -573,7 +574,7 @@ function Tv({ position, onPick }) {
     screen.userData.redraw((ctx, w, h) => draw(ctx, w, h, null))
     const img = new Image()
     img.onload = () => screen.userData.redraw((ctx, w, h) => draw(ctx, w, h, img))
-    img.src = `${import.meta.env.BASE_URL}assets/logo-light.png`
+    img.src = `${import.meta.env.BASE_URL}assets/logo-light-256.webp`
   }, [screen])
   const g = useRef()
   useFrame((_, dt) => {
@@ -772,12 +773,33 @@ function CreatorFrame({ tex, index, count, cur, focus, selected, onPick, night }
   )
 }
 
+// Prévient quand les modèles et les photos sont chargés (et qu'une image a été dessinée)
+function ReadySignal({ onReady }) {
+  const { active, progress } = useProgress()
+  const done = useRef(false)
+  const frames = useRef(0)
+  useFrame(() => {
+    frames.current++
+    if (done.current) return
+    const loaded = !active && (progress === 100 || progress === 0)
+    if ((loaded && frames.current > 3) || frames.current > 600) {
+      done.current = true
+      onReady?.()
+    }
+  })
+  return null
+}
+
 /* ── caméra ───────────────────────────────────────────── */
 
 function CameraRig({ focus, ready }) {
   const { camera, size, pointer } = useThree()
   const look = useRef(new THREE.Vector3(0, 0.75, 0))
-  useFrame((_, dt) => {
+  const first = useRef(true)
+  useFrame((_, dt0) => {
+    // première image : la caméra est posée directement à sa place (comme l'image d'attente)
+    const dt = first.current ? 10 : dt0
+    first.current = false
     const aspect = size.width / size.height
     const portrait = aspect < 0.8
     camera.fov = portrait ? 50 : 32
@@ -794,12 +816,12 @@ function CameraRig({ focus, ready }) {
       ty = 1.05
       ly = 0.72
     }
-    const dist = fit / 2 / (tan * aspect) + (ready ? 0 : 4.5)
+    const dist = fit / 2 / (tan * aspect)
     const px = focus ? 0 : pointer.x * 0.18
     const py = focus ? 0 : pointer.y * 0.08
     camera.position.x = damp(camera.position.x, tx + px, 3, dt)
     camera.position.y = damp(camera.position.y, ty + py, 3, dt)
-    camera.position.z = damp(camera.position.z, dist, ready ? 1.6 : 50, dt)
+    camera.position.z = damp(camera.position.z, dist, 3, dt)
     look.current.x = damp(look.current.x, tx, 3, dt)
     look.current.y = damp(look.current.y, ly, 3, dt)
     camera.lookAt(look.current)
@@ -829,7 +851,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
     } else {
       if (wasFocus.current) goal.current += 0.5 // 4 cadres centrés
       tick.current += dt
-      if (n > 4 && tick.current > 3) {
+      if (n > 4 && tick.current > 3 && !POSTER) {
         tick.current = 0
         goal.current += 1
       }
@@ -936,19 +958,12 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <WallClock position={PORTRAIT ? [0.3, 1.5, -0.42] : [0.95, 1.62, -0.42]} />
 
       <CameraRig focus={focus} ready={ready} />
-      {LITE ? null : (
-      <EffectComposer multisampling={4} enableNormalPass={false}>
-                <Bloom intensity={night ? 0.22 : 0} luminanceThreshold={0.97} mipmapBlur />
-        <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
-        <Vignette offset={0.3} darkness={0.32} />
-        <Noise opacity={0.035} premultiply />
-      </EffectComposer>
-      )}
+      {/* grain et vignettage : faits en CSS (.studio-canvas::after), sans bibliothèque à charger */}
     </>
   )
 }
 
-export default function Scene({ creators, focus, index, onPickCreator, onNav, active, night, ready, onFail }) {
+export default function Scene({ creators, focus, index, onPickCreator, onNav, active, night, ready, onFail, onReady }) {
   // résolution : on démarre raisonnable et on ajuste selon la fluidité réelle
   // téléphone : pleine netteté rétina (jusqu'à 2), l'allègement des effets paie la note
   const maxDpr = Math.min(2, typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1)
@@ -964,10 +979,11 @@ export default function Scene({ creators, focus, index, onPickCreator, onNav, ac
       shadows
       dpr={dpr}
       frameloop={active ? 'always' : 'never'}
-      camera={{ position: [0, 1.4, 9], fov: 32, near: 0.05, far: 40 }}
+      camera={{ position: [0, 1.05, 6], fov: 32, near: 0.05, far: 40 }}
       gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.18 }}
       onPointerMissed={() => document.body.style.removeProperty('cursor')}
     >
+      <ReadySignal onReady={onReady} />
       <PerformanceMonitor
         onIncline={() => setDpr((d) => Math.min(d + 0.25, maxDpr))}
         onDecline={() => setDpr((d) => Math.max(d - 0.25, LITE ? 1.25 : 1))}

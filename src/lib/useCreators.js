@@ -18,12 +18,15 @@ export function thumb(url, width = 640) {
 export function useCreators() {
   const [rows, setRows] = useState(null)
   const [slugs, setSlugs] = useState(null)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
     const ctrl = new AbortController()
     fetchRoster(ctrl.signal)
       .then(setRows)
-      .catch(() => {})
+      .catch((e) => {
+        if (e?.name !== 'AbortError') setFailed(true)
+      })
     fetchMediakitSlugs(ctrl.signal)
       .then(setSlugs)
       .catch(() => setSlugs({})) // échec : on garde les photos de l'app, sans lien
@@ -32,7 +35,10 @@ export function useCreators() {
 
   return useMemo(() => {
     // on attend aussi les media kits, pour ne pas changer de photo en cours de route
-    if (!rows || !slugs)
+    // en attendant Supabase : liste vide (on ne télécharge pas les photos de repli pour
+    // rien) ; si Supabase ne répond pas, la liste de repli prend le relais
+    if (!rows && !failed) return []
+    if (!rows)
       return ROSTER_FALLBACK.map((c) => ({
         ...c,
         name: displayName(c.name),
@@ -56,5 +62,5 @@ export function useCreators() {
         slug: mk?.slug || null,
       }
     })
-  }, [rows, slugs])
+  }, [rows, slugs, failed])
 }

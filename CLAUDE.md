@@ -9,9 +9,14 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
 React 19 + Vite, **CSS pur** (pas de Tailwind, pas de TypeScript — ne pas en introduire),
 `motion` (= framer-motion, importer depuis `motion/react`), `lucide-react`, `d3-geo`/`d3-timer`
 (globe uniquement). Police Inter via Google Fonts (`index.html`).
-3D de l'accueil : `three` + `@react-three/fiber` + `@react-three/drei` + `@react-three/postprocessing`
-(chargés à part via `React.lazy`). ⚠️ `N8AO` (effet d'ombre d'ambiance) plante avec three 0.187 :
-ne pas le réintroduire. Après un `npm install` de lib 3D, vider `node_modules/.vite` si l'écran reste blanc.
+3D de l'accueil : `three` + `@react-three/fiber` + `@react-three/drei` (chunk `Scene` chargé à part,
+téléchargement lancé dès `main.jsx`). Pas de `@react-three/postprocessing` (retiré pour la vitesse : grain
+et vignettage en CSS sur `.studio-canvas::after`) ; ⚠️ `N8AO` plante avec three 0.187.
+**Vitesse** : une image d'attente (`public/assets/studio-desktop.webp` / `studio-mobile.webp`, ~40 Ko)
+s'affiche tout de suite, la 3D la remplace en fondu quand modèles + photos sont chargés. À refaire si
+le roster ou la pièce changent : `npm run dev` puis `node scripts/capture-poster.mjs …` (usage en tête du
+fichier). Sur téléphone (`LITE`) : pas de reflet du sol, pas d'ombres PCSS, pleine résolution rétina.
+Modèles simplifiés (gltf-transform `--simplify`) : ~1 Mo au total. Après un `npm install` de lib 3D, vider `node_modules/.vite` si l'écran reste blanc.
 
 ## Commandes
 

@@ -24,6 +24,7 @@ export default function App() {
   const [ready, setReady] = useState(() => {
     try {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true
+      if (new URLSearchParams(window.location.search).has('poster')) return true
       return sessionStorage.getItem('ttp-intro') === '1'
     } catch {
       return true

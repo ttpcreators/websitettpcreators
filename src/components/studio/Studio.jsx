@@ -49,6 +49,8 @@ export default function Studio({ ready = true }) {
   const [focus, setFocus] = useState(false);
   const [index, setIndex] = useState(0);
   const [night, setNight] = useState(false);
+  // la 3D apparaît (fondu) une fois chargée ; avant, l'image d'attente est affichée
+  const [shown, setShown] = useState(false);
   const [failed, setFailed] = useState(() => !canWebGL());
   const [setEl, on] = useOnScreen();
   const n = creators.length;
@@ -57,7 +59,7 @@ export default function Studio({ ready = true }) {
     setIndex(i);
     setFocus(true);
   }, []);
-  const go = useCallback((d) => setIndex((i) => (i + d + n) % n), [n]);
+  const go = useCallback((d) => n && setIndex((i) => (i + d + n) % n), [n]);
   const nav = useCallback((id) => {
     setFocus(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -105,7 +107,7 @@ export default function Studio({ ready = true }) {
         setEl(el);
       }}
     >
-      <div className="studio-canvas">
+      <div className={`studio-canvas${shown || failed ? ' is-shown' : ''}`}>
         {failed ? (
           <div className="studio-flat" aria-hidden="true">
             {creators.slice(0, 4).map((x) => (
@@ -121,6 +123,7 @@ export default function Studio({ ready = true }) {
             >
               <Scene
                 onFail={() => setFailed(true)}
+            onReady={() => setShown(true)}
                 creators={creators}
                 focus={focus}
                 index={index}
@@ -150,7 +153,7 @@ export default function Studio({ ready = true }) {
       )}
 
       <AnimatePresence mode="wait">
-        {!focus ? (
+        {!focus || !c ? (
           <motion.div
             key="home"
             className="studio-ui"
@@ -165,13 +168,11 @@ export default function Studio({ ready = true }) {
               </h1>
               <p className="tb-mono">Lyon · Genève</p>
             </div>
-            <button
-              type="button"
-              className="studio-all"
-              onClick={() => open(0)}
-            >
-              Voir les {n} créateurs <ArrowRight size={15} />
-            </button>
+            {n > 0 ? (
+              <button type="button" className="studio-all" onClick={() => open(0)}>
+                Voir les {n} créateurs <ArrowRight size={15} />
+              </button>
+            ) : null}
           </motion.div>
         ) : (
           <motion.div
