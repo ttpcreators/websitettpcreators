@@ -120,6 +120,19 @@ function spine(color, i) {
   return t
 }
 
+// Cadrage doux d'une photo dans son cadre 3:4 : une photo très en hauteur
+// n'est plus recadrée sur le visage, elle s'affiche plus étroite avec un
+// passe-partout blanc de chaque côté (comme un vrai tirage). On ne coupe
+// jamais plus d'environ un quart de l'image.
+function framed(tex) {
+  const img = tex.image
+  const fa = FRAME.w / FRAME.h
+  const ia = img?.width ? img.width / img.height : fa
+  const pa = Math.min(fa, Math.max(ia * 1.25, fa * 0.62)) // proportion de la photo affichée
+  tex.userData.widthScale = pa / fa
+  cover(tex, pa)
+}
+
 // recadre une photo pour remplir un cadre (comme object-fit: cover)
 function cover(tex, aspect) {
   const img = tex.image
@@ -131,7 +144,7 @@ function cover(tex, aspect) {
     tex.offset.set((1 - aspect / ia) / 2, 0)
   } else {
     tex.repeat.set(1, ia / aspect)
-    tex.offset.set(0, (1 - ia / aspect) * 0.65) // garde le visage (haut de l'image)
+    tex.offset.set(0, (1 - ia / aspect) * 0.55) // un peu au-dessus du centre
   }
   tex.needsUpdate = true
 }
@@ -149,7 +162,7 @@ function usePhotoTextures(creators) {
         (t) => {
           t.colorSpace = THREE.SRGBColorSpace
           t.anisotropy = 8
-          cover(t, FRAME.w / FRAME.h)
+          framed(t)
           if (alive) setTexs((m) => ({ ...m, [c.photo]: t }))
         },
         undefined,
@@ -158,7 +171,7 @@ function usePhotoTextures(creators) {
           if (!c.photoFull || c.photoFull === c.photo) return
           loader.load(c.photoFull, (t) => {
             t.colorSpace = THREE.SRGBColorSpace
-            cover(t, FRAME.w / FRAME.h)
+            framed(t)
             if (alive) setTexs((m) => ({ ...m, [c.photo]: t }))
           })
         },
@@ -620,7 +633,7 @@ function CreatorFrame({ tex, index, count, cur, focus, selected, onPick, night }
           <boxGeometry args={[FRAME.w + 0.04, FRAME.h + 0.04, 0.018]} />
           <meshStandardMaterial color="#fbfaf7" roughness={0.6} />
         </mesh>
-        <mesh position={[0, 0, 0.0095]}>
+        <mesh position={[0, 0, 0.0095]} scale={[tex?.userData.widthScale ?? 1, 1, 1]}>
           <planeGeometry args={[FRAME.w, FRAME.h]} />
           {tex ? (
             <meshStandardMaterial
