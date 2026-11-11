@@ -4,9 +4,9 @@ import { asset } from '../data.js'
 
 // Animation d'ouverture : sur un papier blanc cassé (la couleur du mur du
 // studio), le monogramme TTP se dévoile de bas en haut, puis « Trust the process. »
-// apparaît mot à mot dessous, en Instrument Serif italique (la typo des media kits),
-// et le rideau se lève sur le studio. Une seule couleur (bordeaux), ~1,7 s, une fois
-// par visite, un clic la passe.
+// apparaît dessous, en Inter tout simple (la typo du site), et le rideau se lève
+// sur le studio. Une seule couleur (bordeaux), ~1,7 s, une fois par visite, un clic
+// la passe.
 
 const WORDS = ['Trust', 'the', 'process.']
 const EASE = [0.22, 1, 0.36, 1]
@@ -51,9 +51,9 @@ export default function Intro({ onDone }) {
               {WORDS.map((w, i) => (
                 <motion.span
                   key={w}
-                  initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ delay: 0.45 + i * 0.14, duration: 0.6, ease: EASE }}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45 + i * 0.1, duration: 0.5, ease: EASE }}
                 >
                   {w}
                 </motion.span>
