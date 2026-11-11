@@ -2368,3 +2368,8 @@ html[data-nav-dark] .navbar .brand-logo {
 .studio.is-night .studio-ui::before {
   background: linear-gradient(to top, rgba(14, 12, 12, 0.9) 0%, rgba(14, 12, 12, 0.55) 45%, rgba(14, 12, 12, 0) 100%);
 }
+
+/* bouton du media kit sur une seule ligne */
+.studio-kit {
+  white-space: nowrap;
+}

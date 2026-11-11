@@ -45,7 +45,7 @@ export async function fetchMediakitSlugs(signal) {
     let slug = base
     for (let i = 2; used.has(slug); i++) slug = `${base}-${i}`
     used.add(slug)
-    map[String(r.name || '').toLowerCase().trim()] = slug
+    map[String(r.name || '').toLowerCase().trim()] = { slug }
   }
   return map
 }

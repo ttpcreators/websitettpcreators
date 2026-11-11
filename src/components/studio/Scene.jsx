@@ -226,9 +226,19 @@ function Room() {
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 7]} receiveShadow>
         <planeGeometry args={[24, 15]} />
+        {LITE ? (
+          // téléphone : sol ciré sans second rendu de la scène (le reflet coûte cher)
+          <meshStandardMaterial
+            color={FLOOR}
+            roughness={0.32}
+            metalness={0.08}
+            envMapIntensity={0.9}
+            roughnessMap={grain('beton', { size: 512, base: 150, amp: 70, repeat: [6, 4] })}
+          />
+        ) : (
         <MeshReflectorMaterial
           blur={[300, 80]}
-          resolution={LITE ? 384 : 1024}
+          resolution={1024}
           mixBlur={1}
           mixStrength={1.6}
           roughness={0.6}
@@ -239,6 +249,7 @@ function Room() {
           metalness={0.15}
           roughnessMap={grain('beton', { size: 512, base: 150, amp: 70, repeat: [6, 4] })}
         />
+        )}
       </mesh>
     </group>
   )
@@ -868,7 +879,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
         <Lightformer intensity={0.5} position={[4, 1, 1]} rotation-y={-Math.PI / 2} scale={[4, 2, 1]} />
       </Environment>
 
-      <SoftShadows size={22} samples={LITE ? 6 : 12} focus={0.6} />
+      {LITE ? null : <SoftShadows size={22} samples={12} focus={0.6} />}
       <Room />
       <ContactShadows frames={1} position={[0, 0.002, -0.2]} scale={[3.4, 0.9]} far={1.4} blur={2.8} opacity={0.6} resolution={512} color="#1c1915" />
       {BAYS.map((b) => (
@@ -923,19 +934,23 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <WallClock position={PORTRAIT ? [0.3, 1.5, -0.42] : [0.95, 1.62, -0.42]} />
 
       <CameraRig focus={focus} ready={ready} />
-      <EffectComposer multisampling={LITE ? 0 : 4} enableNormalPass={false}>
+      {LITE ? null : (
+      <EffectComposer multisampling={4} enableNormalPass={false}>
                 <Bloom intensity={night ? 0.22 : 0} luminanceThreshold={0.97} mipmapBlur />
         <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
         <Vignette offset={0.3} darkness={0.32} />
         <Noise opacity={0.035} premultiply />
       </EffectComposer>
+      )}
     </>
   )
 }
 
 export default function Scene({ creators, focus, index, onPickCreator, onNav, active, night, ready, onFail }) {
   // résolution : on démarre raisonnable et on ajuste selon la fluidité réelle
-  const [dpr, setDpr] = useState(LITE ? 1.25 : 1.5)
+  // téléphone : pleine netteté rétina (jusqu'à 2), l'allègement des effets paie la note
+  const maxDpr = Math.min(2, typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1)
+  const [dpr, setDpr] = useState(LITE ? maxDpr : 1.5)
   return (
     <Canvas
       onCreated={({ gl }) => {
@@ -952,8 +967,8 @@ export default function Scene({ creators, focus, index, onPickCreator, onNav, ac
       onPointerMissed={() => document.body.style.removeProperty('cursor')}
     >
       <PerformanceMonitor
-        onIncline={() => setDpr((d) => Math.min(d + 0.25, LITE ? 1.5 : 2))}
-        onDecline={() => setDpr((d) => Math.max(d - 0.25, 0.75))}
+        onIncline={() => setDpr((d) => Math.min(d + 0.25, maxDpr))}
+        onDecline={() => setDpr((d) => Math.max(d - 0.25, LITE ? 1.25 : 1))}
       />
       <Studio
         creators={creators}
