@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUp } from 'lucide-react'
 import Navbar from './components/Navbar.jsx'
 import PillNav from './components/PillNav.jsx'
 import Hero from './components/Hero.jsx'
+import Intro from './components/Intro.jsx'
 import Clients from './components/Clients.jsx'
 import Manifesto from './components/Manifesto.jsx'
 import About from './components/About.jsx'
@@ -19,6 +20,24 @@ import './App.css'
 
 export default function App() {
   const [showTop, setShowTop] = useState(false)
+  // animation d'ouverture : une fois par visite, jamais si « moins d'animations »
+  const [ready, setReady] = useState(() => {
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true
+      return sessionStorage.getItem('ttp-intro') === '1'
+    } catch {
+      return true
+    }
+  })
+  const [showIntro] = useState(() => !ready)
+  const introDone = useCallback(() => {
+    try {
+      sessionStorage.setItem('ttp-intro', '1')
+    } catch {
+      /* stockage indisponible : l'intro rejouera, sans gravité */
+    }
+    setReady(true)
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 600)
@@ -28,12 +47,13 @@ export default function App() {
 
   return (
     <>
+      {showIntro && <Intro onDone={introDone} />}
       <Navbar />
       <PillNav />
       <main>
-        <Hero />
+        <Hero ready={ready} />
+        <Roster ready={ready} />
         <Clients />
-        <Roster />
         <Services />
         <Method />
         <Stats />

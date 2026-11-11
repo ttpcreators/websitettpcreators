@@ -15,7 +15,7 @@ function sizes(cw) {
   return cw < 700 ? { W: 248, H: 326 } : { W: 360, H: 452 }
 }
 
-export default function RosterDome({ creators }) {
+export default function RosterDome({ creators, ready = true }) {
   const reduce = useReducedMotion()
   const [setOnScreenEl, on] = useOnScreen('120px')
   const boxRef = useRef(null)
@@ -99,6 +99,11 @@ export default function RosterDome({ creators }) {
   useEffect(() => {
     layoutRef.current()
   })
+
+  // entrée : le dôme arrive en tournant vite, puis ralentit jusqu'à sa dérive
+  useEffect(() => {
+    if (ready && !reduce) st.current.vel = -26
+  }, [ready, reduce])
 
   // trackpad / molette horizontale
   useEffect(() => {
@@ -190,7 +195,7 @@ export default function RosterDome({ creators }) {
 
   return (
     <div
-      className="dome"
+      className={`dome${ready ? ' is-ready' : ''}`}
       ref={(el) => {
         boxRef.current = el
         setOnScreenEl(el)

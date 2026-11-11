@@ -1,32 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import Reveal, { Eyebrow } from './Reveal.jsx'
 import RosterDome from './RosterDome.jsx'
-import { Tooltip } from './TooltipCard.jsx'
 import { ROSTER_FALLBACK, asset } from '../data.js'
 import { fetchRoster, fetchMediakitSlugs } from '../lib/roster.js'
 import { titleCase, displayName } from '../lib/format.js'
 
-// Mini-carte d'univers : avatars des créatrices de la niche + descriptif
-function UniversCard({ creators, niche, desc }) {
-  const list = creators.filter((c) => new RegExp(niche, 'i').test(c.niche))
-  return (
-    <span className="tt-univers">
-      <span className="tt-avatars">
-        {list.slice(0, 3).map((c) =>
-          c.photo ? <img key={c.name} src={c.photo} alt={c.name} loading="lazy" /> : null,
-        )}
-      </span>
-      <span className="tt-univers-txt">
-        <b>
-          {list.length} créateur{list.length > 1 ? 's' : ''} {niche}
-        </b>
-        <span>{desc}</span>
-      </span>
-    </span>
-  )
-}
-
-export default function Roster() {
+export default function Roster({ ready = true }) {
   const [rows, setRows] = useState(null)
   const [slugs, setSlugs] = useState(null)
 
@@ -65,46 +43,14 @@ export default function Roster() {
   return (
     <section className="sec" id="roster">
       <div className="wrap">
-        <div className="roster-head">
-          <div>
-            <Eyebrow n="01">Le roster</Eyebrow>
-            <Reveal>
-              <h2 className="sec-title" style={{ marginBottom: 0 }}>
-                Nos créateurs.
-              </h2>
-            </Reveal>
-          </div>
-          <Reveal className="roster-sub" delay={0.1}>
-            {count === 8 ? 'Huit' : count} créateur{count > 1 ? 's' : ''}, deux univers :{' '}
-            <Tooltip
-              content={
-                <UniversCard
-                  creators={creators}
-                  niche="Sport"
-                  desc="Entraînement, performance, lifestyle athlétique."
-                />
-              }
-            >
-              <b className="tt-word">Sport</b>
-            </Tooltip>{' '}
-            et{' '}
-            <Tooltip
-              content={
-                <UniversCard
-                  creators={creators}
-                  niche="Lifestyle"
-                  desc="Quotidien, mode, inspiration."
-                />
-              }
-            >
-              <b className="tt-word">Lifestyle</b>
-            </Tooltip>
-            .
-          </Reveal>
-        </div>
-        <p className="tb-mono dome-hint">Glissez pour explorer · Cliquez sur un créateur pour ouvrir son media kit</p>
+        <p className="tb-mono dome-bar">
+          <span>
+            (01) Le roster — {count} créateur{count > 1 ? 's' : ''} sport &amp; lifestyle
+          </span>
+          <span className="dome-bar-hint">Glissez pour explorer · Cliquez pour voir le media kit</span>
+        </p>
       </div>
-      <RosterDome creators={creators} />
+      <RosterDome creators={creators} ready={ready} />
     </section>
   )
 }

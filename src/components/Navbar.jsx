@@ -50,11 +50,6 @@ export default function Navbar() {
         <img src={asset('assets/logo-dark.png')} alt="TTP Creators" className="brand-logo" />
       </a>
 
-      <p className="tb-mono tb-statement">
-        TTP Creators est une agence de talents sport &amp; lifestyle qui relie les bons créateurs
-        aux bonnes marques.
-      </p>
-
       <ul className="tb-mono tb-clocks" aria-label="Heure dans nos bureaux">
         {OFFICES.map((o, i) => (
           <li key={o.city} className={i ? 'is-dim' : ''}>
