@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial, RoundedBox, SoftShadows, useGLTF } from '@react-three/drei'
+import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial, PerformanceMonitor, RoundedBox, SoftShadows, useGLTF } from '@react-three/drei'
 import { Bloom, EffectComposer, Noise, ToneMapping, Vignette } from '@react-three/postprocessing'
 import { ToneMappingMode } from 'postprocessing'
 import * as THREE from 'three'
@@ -30,6 +30,12 @@ const FRAME = { w: 0.24, h: 0.32 }
 /* ── utilitaires ──────────────────────────────────────── */
 
 const damp = THREE.MathUtils.damp
+
+// Téléphone ou petit écran : rendu allégé (ombres, reflet, lissage) pour rester fluide
+const LITE =
+  typeof window !== 'undefined' &&
+  (window.matchMedia('(max-width: 820px)').matches || (navigator.hardwareConcurrency || 8) <= 4)
+const PORTRAIT = typeof window !== 'undefined' && window.matchMedia('(max-aspect-ratio: 4/5)').matches
 
 function canvasTexture(w, h, draw) {
   const c = document.createElement('canvas')
@@ -147,7 +153,15 @@ function usePhotoTextures(creators) {
           if (alive) setTexs((m) => ({ ...m, [c.photo]: t }))
         },
         undefined,
-        () => {},
+        () => {
+          // version réduite indisponible : on charge l'original
+          if (!c.photoFull || c.photoFull === c.photo) return
+          loader.load(c.photoFull, (t) => {
+            t.colorSpace = THREE.SRGBColorSpace
+            cover(t, FRAME.w / FRAME.h)
+            if (alive) setTexs((m) => ({ ...m, [c.photo]: t }))
+          })
+        },
       )
     })
     return () => {
@@ -201,7 +215,7 @@ function Room() {
         <planeGeometry args={[24, 15]} />
         <MeshReflectorMaterial
           blur={[300, 80]}
-          resolution={1024}
+          resolution={LITE ? 384 : 1024}
           mixBlur={1}
           mixStrength={1.6}
           roughness={0.6}
@@ -405,26 +419,36 @@ function Lamp({ position, night }) {
 // Télé TTP : mène aux services
 function Tv({ position, onPick }) {
   const { hover, bind } = useHoverCursor()
-  const screen = useMemo(
-    () =>
-      canvasTexture(512, 384, (ctx, w, h) => {
-        ctx.fillStyle = '#0d0d0f'
-        ctx.fillRect(0, 0, w, h)
-        ctx.fillStyle = '#ffffff'
-        ctx.font = '600 120px Inter, system-ui, sans-serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText('TTP', w / 2, h / 2 - 18)
-        ctx.font = '500 26px ui-monospace, Menlo, monospace'
-        ctx.fillStyle = 'rgba(255,255,255,0.6)'
-        ctx.fillText('NOS SERVICES ▸', w / 2, h / 2 + 70)
-        for (let y = 0; y < h; y += 4) {
-          ctx.fillStyle = 'rgba(255,255,255,0.03)'
-          ctx.fillRect(0, y, w, 1)
-        }
-      }),
-    [],
-  )
+  // écran : le monogramme brodé de TTP (logo du site) sur un fond bordeaux
+  // presque noir, avec la lueur et les lignes d'un vieux tube cathodique
+  const screen = useMemo(() => canvasTexture(512, 384, () => {}), [])
+  useEffect(() => {
+    const draw = (ctx, w, h, logo) => {
+      const bg = ctx.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, w * 0.7)
+      bg.addColorStop(0, '#2a0b0c')
+      bg.addColorStop(1, '#0b0607')
+      ctx.fillStyle = bg
+      ctx.fillRect(0, 0, w, h)
+      if (logo) {
+        const lh = h * 0.56
+        const lw = (lh * logo.width) / logo.height
+        ctx.drawImage(logo, (w - lw) / 2, h * 0.12, lw, lh)
+      }
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.font = '500 22px ui-monospace, Menlo, monospace'
+      ctx.fillStyle = 'rgba(235,225,210,0.7)'
+      ctx.fillText('NOS SERVICES', w / 2, h * 0.84)
+      for (let y = 0; y < h; y += 3) {
+        ctx.fillStyle = 'rgba(0,0,0,0.12)'
+        ctx.fillRect(0, y, w, 1)
+      }
+    }
+    screen.userData.redraw((ctx, w, h) => draw(ctx, w, h, null))
+    const img = new Image()
+    img.onload = () => screen.userData.redraw((ctx, w, h) => draw(ctx, w, h, img))
+    img.src = `${import.meta.env.BASE_URL}assets/logo-light.png`
+  }, [screen])
   const g = useRef()
   useFrame((_, dt) => {
     g.current.position.z = damp(g.current.position.z, position[2] + (hover ? 0.03 : 0), 8, dt)
@@ -516,7 +540,7 @@ function BrandBox({ position, onPick }) {
   )
 }
 
-// Horloge murale double : Lyon et Genève, à l'heure
+// Horloge murale double : Lyon et New York, à l'heure (deux fuseaux différents)
 function WallClock({ position }) {
   const tex = useMemo(() => canvasTexture(640, 220, () => {}), [])
   useEffect(() => {
@@ -530,11 +554,11 @@ function WallClock({ position }) {
       ctx.fillRect(w / 2 - 1, 30, 2, h - 60)
       ;[
         ['LYON', t('Europe/Paris'), w / 4],
-        ['GENÈVE', t('Europe/Zurich'), (3 * w) / 4],
+        ['NEW YORK', t('America/New_York'), (3 * w) / 4],
       ].forEach(([city, time, x]) => {
         ctx.textAlign = 'center'
-        ctx.fillStyle = 'rgba(0,0,0,0.5)'
-        ctx.font = '500 22px ui-monospace, Menlo, monospace'
+        ctx.fillStyle = 'rgba(0,0,0,0.62)'
+        ctx.font = '600 30px ui-monospace, Menlo, monospace'
         ctx.fillText(city, x, 62)
         ctx.fillStyle = INK
         ctx.font = '600 84px Inter, system-ui, sans-serif'
@@ -560,12 +584,15 @@ function WallClock({ position }) {
 
 /* ── les créateurs encadrés ───────────────────────────── */
 
-function CreatorFrame({ tex, index, cur, focus, selected, onPick, night }) {
+function CreatorFrame({ tex, index, count, cur, focus, selected, onPick, night }) {
   const g = useRef()
   const photo = useRef()
   const { hover, bind } = useHoverCursor()
   useFrame((_, dt) => {
-    const x = ROW.cx + (index - cur.current) * ROW.step
+    // position dans la boucle : décalage ramené entre -count/2 et +count/2
+    let off = (((index - cur.current) % count) + count) % count
+    if (off > count / 2) off -= count
+    const x = ROW.cx + off * ROW.step
     const dist = Math.abs(x - ROW.cx)
     // en dehors de la travée, le cadre disparaît en douceur
     const fade = dist > ROW.half ? 0 : 1
@@ -655,10 +682,30 @@ function CameraRig({ focus, ready }) {
 
 function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) {
   const texs = usePhotoTextures(creators)
+  // Défilé des créateurs : l'étagère n'en montre que 4 à la fois, alors elle
+  // avance toute seule d'un cran toutes les 3 s (en boucle) pour que tout le
+  // roster y passe. En mode zoom, elle va au créateur choisi par le plus court chemin.
+  const n = creators.length
   const cur = useRef(1.5)
+  const goal = useRef(1.5)
+  const tick = useRef(0)
+  const wasFocus = useRef(false)
   useFrame((_, dt) => {
-    const target = focus ? index : Math.min(1.5, (creators.length - 1) / 2)
-    cur.current = damp(cur.current, target, 5, dt)
+    if (focus) {
+      let d = (((index - goal.current) % n) + n) % n
+      if (d > n / 2) d -= n
+      goal.current += d
+      tick.current = 0
+    } else {
+      if (wasFocus.current) goal.current += 0.5 // 4 cadres centrés
+      tick.current += dt
+      if (n > 4 && tick.current > 3) {
+        tick.current = 0
+        goal.current += 1
+      }
+    }
+    wasFocus.current = focus
+    cur.current = damp(cur.current, goal.current, 3.5, dt)
   })
   const sun = useMemo(() => new THREE.Vector3(-3.2, 4.2, 3.6), [])
   const amb = useRef()
@@ -686,7 +733,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
         intensity={2.4}
         color="#fff3e2"
         castShadow
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={LITE ? [1024, 1024] : [2048, 2048]}
         shadow-bias={-0.0004}
         shadow-normalBias={0.02}
         shadow-radius={6}
@@ -704,7 +751,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
         <Lightformer intensity={0.5} position={[4, 1, 1]} rotation-y={-Math.PI / 2} scale={[4, 2, 1]} />
       </Environment>
 
-      <SoftShadows size={22} samples={12} focus={0.6} />
+      <SoftShadows size={22} samples={LITE ? 6 : 12} focus={0.6} />
       <Room />
       <ContactShadows frames={1} position={[0, 0.002, -0.2]} scale={[3.4, 0.9]} far={1.4} blur={2.8} opacity={0.6} resolution={512} color="#1c1915" />
       {BAYS.map((b) => (
@@ -715,7 +762,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <Suspense fallback={null}>
         <Model name="potted_plant_02" height={0.46} position={[-1.08, 1.206, -0.18]} rotation={[0, 0.6, 0]} />
         <Model name="book_encyclopedia_set_01" height={0.25} position={[-1.15, 0.826, -0.18]} />
-        <Model name="football" height={0.18} position={[-0.74, 0.826, -0.16]} rotation={[0.3, 0.8, 0]} />
+        <Model name="football" height={0.17} position={[-0.74, 0.826, -0.16]} rotation={[0, 0.8, 0]} />
         <Model name="camera_01" height={0.14} position={[-0.18, 0.946, -0.16]} rotation={[0, 0.35, 0]} />
         <Model name="ceramic_vase_01" height={0.24} position={[1.02, 0.946, -0.17]} />
       </Suspense>
@@ -729,6 +776,7 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
           key={c.name + i}
           tex={texs[c.photo]}
           index={i}
+          count={n}
           cur={cur}
           focus={focus}
           selected={i === index}
@@ -750,10 +798,11 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
       <Tv position={[1.12, 0.066, -0.17]} onPick={() => onNav('services')} />
 
       {/* mur */}
-      <WallClock position={[0.95, 1.62, -0.42]} />
+      {/* sur téléphone (écran en hauteur), l'horloge se rapproche du centre pour rester entière */}
+      <WallClock position={PORTRAIT ? [0.3, 1.5, -0.42] : [0.95, 1.62, -0.42]} />
 
       <CameraRig focus={focus} ready={ready} />
-      <EffectComposer multisampling={4} enableNormalPass={false}>
+      <EffectComposer multisampling={LITE ? 0 : 4} enableNormalPass={false}>
                 <Bloom intensity={night ? 0.22 : 0} luminanceThreshold={0.97} mipmapBlur />
         <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
         <Vignette offset={0.3} darkness={0.32} />
@@ -763,16 +812,28 @@ function Studio({ creators, focus, index, onPickCreator, onNav, night, ready }) 
   )
 }
 
-export default function Scene({ creators, focus, index, onPickCreator, onNav, active, night, ready }) {
+export default function Scene({ creators, focus, index, onPickCreator, onNav, active, night, ready, onFail }) {
+  // résolution : on démarre raisonnable et on ajuste selon la fluidité réelle
+  const [dpr, setDpr] = useState(LITE ? 1.25 : 1.5)
   return (
     <Canvas
+      onCreated={({ gl }) => {
+        gl.domElement.addEventListener('webglcontextlost', (e) => {
+          e.preventDefault()
+          onFail?.()
+        })
+      }}
       shadows
-      dpr={[1, 1.75]}
+      dpr={dpr}
       frameloop={active ? 'always' : 'never'}
       camera={{ position: [0, 1.4, 9], fov: 32, near: 0.05, far: 40 }}
       gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.18 }}
       onPointerMissed={() => document.body.style.removeProperty('cursor')}
     >
+      <PerformanceMonitor
+        onIncline={() => setDpr((d) => Math.min(d + 0.25, LITE ? 1.5 : 2))}
+        onDecline={() => setDpr((d) => Math.max(d - 0.25, 0.75))}
+      />
       <Studio
         creators={creators}
         focus={focus}

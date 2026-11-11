@@ -3,6 +3,13 @@ import { ROSTER_FALLBACK, asset } from '../data.js'
 import { fetchRoster, fetchMediakitSlugs } from './roster.js'
 import { titleCase, displayName } from './format.js'
 
+// Photo réduite par Supabase (WebP ~40 Ko au lieu de l'original de 2-3 Mo).
+// Les autres adresses (photos locales de repli) restent telles quelles.
+export function thumb(url, width = 640) {
+  if (!url || !url.includes('/storage/v1/object/public/')) return url
+  return `${url.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/')}?width=${width}&quality=72`
+}
+
 // Créateurs du roster en direct (vue Supabase public_roster) + adresse de leur
 // media kit. Tant que le réseau n'a pas répondu (ou s'il échoue), la liste de
 // repli de data.js est affichée.
@@ -37,7 +44,8 @@ export function useCreators() {
         handle: r.handle || local?.handle || '',
         niche: r.niche || local?.niche || '',
         platform: r.platform || '',
-        photo: r.photo_url || (local ? asset(local.photo) : null),
+        photo: thumb(r.photo_url, 560) || (local ? asset(local.photo) : null),
+        photoFull: r.photo_url || null,
         slug: slugs?.[String(r.name || '').toLowerCase().trim()] || null,
       }
     })

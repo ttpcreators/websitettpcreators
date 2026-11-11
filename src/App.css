@@ -2305,3 +2305,69 @@ html[data-nav-dark] .navbar .nav-cta2 {
 html[data-nav-dark] .navbar .brand-logo {
   filter: brightness(0) invert(1);
 }
+
+/* bouton « Voir les créateurs » */
+.studio-all {
+  position: absolute;
+  right: calc(clamp(16px, 2.6vw, 36px) + 50px);
+  bottom: clamp(12px, 2.4vh, 28px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.25s;
+}
+
+.studio-all:hover {
+  background: var(--accent);
+}
+
+.studio.is-night .studio-all {
+  background: #f4f2ee;
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .studio-all {
+    left: clamp(16px, 2.6vw, 36px);
+    right: auto;
+    bottom: calc(clamp(18px, 3vh, 34px) + 96px);
+  }
+}
+
+/* repli sans 3D */
+.studio-flat {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.5vw, 18px);
+  padding: 0 clamp(16px, 6vw, 80px) 12vh;
+}
+
+.studio-flat img {
+  width: min(18vw, 200px);
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 8px solid #fbfaf7;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.studio-flat-photo {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  width: min(60vw, 300px);
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 10px solid #fbfaf7;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}
