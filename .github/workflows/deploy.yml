@@ -40,6 +40,14 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      # Le HTML de l'accueil est vide sans JavaScript (<div id="root"></div>) : ChatGPT,
+      # Claude, Perplexity et souvent Bing n'y lisaient rien. Ce script y glisse le texte
+      # de la page rendue, masqué (React le remplace au chargement, rien ne change à
+      # l'écran). Il ne fait jamais échouer le déploiement.
+      - name: Version texte de l'accueil pour les robots sans JavaScript (SEO)
+        continue-on-error: true
+        run: python3 scripts/prerender_text.py
+
       # 2) Media kit : pages live + intégration dans dist/, puis rendu PDF
       - uses: actions/setup-python@v5
         with:
