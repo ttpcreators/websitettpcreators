@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Sélection de créateurs — TTP Creators</title>
+    <meta name="description" content="Une sélection de créateurs proposée par l'agence TTP Creators." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/png" href="../assets/favicon.png?v=3" />
+    <link rel="apple-touch-icon" href="../assets/favicon.png?v=3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root { --ink: #0b0b0d; --accent: #3d0000; --muted: #6b6b73; --line: #e8e6e6; --paper: #fff; --well: #f7f6f5; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+      .wrap { max-width: 1040px; margin: 0 auto; padding: clamp(1.6rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem) 4rem; }
+      .logo { height: 24px; width: auto; display: block; margin-bottom: clamp(2rem, 6vw, 3.5rem); }
+      .for { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--accent); margin: 0 0 .7rem; }
+      h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: 1.08; letter-spacing: -.02em; font-weight: 600; margin: 0 0 1rem; max-width: 22ch; }
+      .intro { color: var(--muted); max-width: 60ch; margin: 0 0 2rem; white-space: pre-line; }
+      .sum { display: flex; flex-wrap: wrap; gap: .6rem 2.4rem; padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 2rem; }
+      .sum b { display: block; font-size: 1.45rem; font-weight: 600; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+      .sum span { color: var(--muted); font-size: .82rem; }
+      .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; }
+      .card { border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem; display: flex; flex-direction: column; gap: .9rem; }
+      .who { display: flex; align-items: center; gap: .8rem; min-width: 0; }
+      .ph { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--well); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--muted); }
+      .name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .handle { color: var(--accent); font-size: .86rem; text-decoration: none; }
+      .handle:hover { text-decoration: underline; }
+      .tags { color: var(--muted); font-size: .84rem; min-height: 1.3em; }
+      .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; padding-top: .8rem; border-top: 1px solid var(--line); }
+      .nums b { display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
+      .nums span { color: var(--muted); font-size: .74rem; }
+      .state { color: var(--muted); padding: 3rem 0; }
+      footer { margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
+      footer a { color: var(--accent); }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <a href="/" aria-label="TTP Creators"><img class="logo" src="../assets/logo-dark.png" alt="TTP Creators" /></a>
+      <p class="for" id="for" hidden></p>
+      <h1 id="title">Sélection de créateurs</h1>
+      <p class="intro" id="intro" hidden></p>
+      <div class="sum" id="sum" hidden></div>
+      <p class="state" id="state">Chargement de la sélection…</p>
+      <ul class="grid" id="grid"></ul>
+      <footer>
+        <span>Sélection préparée par TTP Creators · chiffres Instagram au <span id="date">dernier relevé</span>.</span>
+        <a href="/#contact">Parler à l'agence</a>
+      </footer>
+    </main>
+    <script>
+      // Liste publique d'une sélection préparée dans TTP Suite (Base créateurs › Listes).
+      // Lit la vue anonyme public_creator_lists : seulement les listes dont le lien est activé,
+      // seulement des chiffres publics (jamais d'email, de bio ni de note). Tout est écrit en
+      // textContent : rien de ce qui vient de la base n'est interprété comme du HTML.
+      const SB_URL = 'https://zizvggziggswhrbuyhuo.supabase.co'
+      const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppenZnZ3ppZ2dzd2hyYnV5aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5Mzk2NjcsImV4cCI6MjA5ODUxNTY2N30.5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU'
+      const $ = (id) => document.getElementById(id)
+      const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e }
+      const compact = (n) => n == null ? '—' : n >= 1e6 ? `${(n / 1e6).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} M` : n >= 1e4 ? `${Math.round(n / 1e3).toLocaleString('fr-FR')} K` : Math.round(n).toLocaleString('fr-FR')
+      const pct = (n) => n == null ? '—' : `${Number(n).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} %`
+      const fail = (msg) => { $('state').textContent = msg; $('state').hidden = false }
+
+      async function main() {
+        const slug = new URLSearchParams(location.search).get('l') || ''
+        if (!/^[a-z0-9-]{3,60}$/.test(slug)) return fail("Ce lien n'est pas complet. Demande-le à nouveau à l'agence.")
+        let rows
+        try {
+          const res = await fetch(`${SB_URL}/rest/v1/public_creator_lists?slug=eq.${encodeURIComponent(slug)}&select=title,brand,intro,updated_at,creators`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } })
+          if (!res.ok) throw new Error(res.status)
+          rows = await res.json()
+        } catch {
+          return fail("La sélection n'a pas pu se charger. Réessaie dans un instant.")
+        }
+        const l = rows && rows[0]
+        if (!l) return fail("Cette sélection n'est plus disponible. Demande un nouveau lien à l'agence.")
+        document.title = `${l.title} — TTP Creators`
+        $('title').textContent = l.title
+        if (l.brand) { $('for').textContent = `Sélection pour ${l.brand}`; $('for').hidden = false }
+        if (l.intro) { $('intro').textContent = l.intro; $('intro').hidden = false }
+        if (l.updated_at) $('date').textContent = new Date(l.updated_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+        const cs = Array.isArray(l.creators) ? l.creators : []
+        if (!cs.length) return fail("Cette sélection est vide pour l'instant.")
+        $('state').hidden = true
+
+        const reach = cs.reduce((s, c) => s + (Number(c.followers) || 0), 0)
+        const ers = cs.map((c) => c.er).filter((v) => v != null)
+        const sum = $('sum')
+        for (const [v, k] of [[String(cs.length), cs.length > 1 ? 'créateurs' : 'créateur'], [compact(reach), 'abonnés cumulés'], [ers.length ? pct(ers.reduce((a, b) => a + Number(b), 0) / ers.length) : '—', 'engagement moyen']]) {
+          const d = el('div'); d.append(el('b', null, v), el('span', null, k)); sum.append(d)
+        }
+        sum.hidden = false
+
+        const grid = $('grid')
+        for (const c of cs) {
+          const li = el('li', 'card')
+          const who = el('div', 'who')
+          const initial = el('div', 'ph', String(c.name || c.username || '?').slice(0, 1).toUpperCase())
+          if (c.picture && /^https:\/\//.test(c.picture)) {
+            const img = el('img', 'ph'); img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer'; img.src = c.picture
+            img.onerror = () => img.replaceWith(initial)
+            who.append(img)
+          } else who.append(initial)
+          const id = el('div'); id.style.minWidth = '0'
+          id.append(el('div', 'name', c.name || `@${c.username}`))
+          const a = el('a', 'handle', `@${c.username}`); a.href = `https://www.instagram.com/${encodeURIComponent(c.username)}/`; a.target = '_blank'; a.rel = 'noopener noreferrer'
+          id.append(a); who.append(id)
+          const nums = el('div', 'nums')
+          for (const [v, k] of [[compact(c.followers), 'abonnés'], [pct(c.er), 'engagement'], [c.perWeek == null ? '—' : Number(c.perWeek).toLocaleString('fr-FR', { maximumFractionDigits: 1 }), 'posts / sem.']]) {
+            const d = el('div'); d.append(el('b', null, v), el('span', null, k)); nums.append(d)
+          }
+          li.append(who, el('div', 'tags', [c.niche, c.ville].filter(Boolean).join(' · ')), nums)
+          grid.append(li)
+        }
+      }
+      main()
+    </script>
+  </body>
+</html>
