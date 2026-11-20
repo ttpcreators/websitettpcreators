@@ -13,6 +13,7 @@ import Method from './components/Method.jsx'
 import Network from './components/Network.jsx'
 import Stats from './components/Stats.jsx'
 import Story from './components/Story.jsx'
+import Results from './components/Results.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import './App.css'
@@ -69,6 +70,7 @@ export default function App() {
         <Network />
         <Stats />
         <Story />
+        <Results />
         <Contact />
       </main>
       <Footer />

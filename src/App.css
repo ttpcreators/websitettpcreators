@@ -2417,3 +2417,107 @@ html.poster .studio-canvas canvas {
   opacity: 1;
   transition: none;
 }
+
+/* ── Résultats + « Recevoir le roster » (2026-11-20) ─────────────────────── */
+.res-lead {
+  max-width: 560px;
+}
+
+.res-grid {
+  margin-top: clamp(28px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.res-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.res-brand {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.res-fig {
+  margin-top: 10px;
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.res-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.res-card p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.res-cta {
+  margin-top: 20px;
+  background: var(--panel);
+  border-radius: 28px;
+  padding: clamp(24px, 3.5vw, 44px);
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(20px, 3vw, 44px);
+  align-items: center;
+}
+
+.res-cta h3 {
+  margin: 0;
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.res-cta-l p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.res-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.res-ok {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.res-ok p {
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .res-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .res-cta {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .res-grid {
+    grid-template-columns: 1fr;
+  }
+}
