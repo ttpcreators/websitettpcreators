@@ -36,6 +36,22 @@
       .nums b { display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
       .nums span { color: var(--muted); font-size: .74rem; }
       .state { color: var(--muted); padding: 3rem 0; }
+      /* Dispos du mois (agences) : réseaux, prix indicatifs à points de conduite, catégories prises. */
+      .grid.dispos { grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); }
+      .sub { color: var(--muted); font-size: .84rem; }
+      .nets { display: flex; flex-direction: column; gap: .55rem; padding-top: .8rem; border-top: 1px solid var(--line); }
+      .net { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .6rem; font-size: .88rem; }
+      .net a, .net span.n { font-weight: 600; color: var(--ink); text-decoration: none; min-width: 5.2rem; }
+      .net a:hover { text-decoration: underline; }
+      .net .v { font-variant-numeric: tabular-nums; }
+      .net .m { color: var(--muted); }
+      .rates { list-style: none; margin: 0; padding: .8rem 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: .35rem; font-size: .88rem; }
+      .rates li { display: flex; align-items: baseline; gap: .4rem; }
+      .rates .lead { flex: 1; border-bottom: 1px dotted #c9c6c6; transform: translateY(-.25em); min-width: 1rem; }
+      .rates b { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .ask { color: var(--muted); font-size: .88rem; padding-top: .8rem; border-top: 1px solid var(--line); }
+      .busy { color: var(--accent); font-size: .82rem; }
+      .terms { color: var(--muted); font-size: .8rem; max-width: 70ch; margin: 2rem 0 0; }
       footer { margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
       footer a { color: var(--accent); }
       a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
@@ -50,8 +66,9 @@
       <div class="sum" id="sum" hidden></div>
       <p class="state" id="state">Chargement de la sélection…</p>
       <ul class="grid" id="grid"></ul>
+      <p class="terms" id="terms" hidden></p>
       <footer>
-        <span>Sélection préparée par TTP Creators · chiffres Instagram au <span id="date">dernier relevé</span>.</span>
+        <span>Sélection préparée par TTP Creators · <span id="what">chiffres Instagram</span> au <span id="date">dernier relevé</span>.</span>
         <a href="/#contact">Parler à l'agence</a>
       </footer>
     </main>
@@ -73,7 +90,10 @@
         if (!/^[a-z0-9-]{3,60}$/.test(slug)) return fail("Ce lien n'est pas complet. Demande-le à nouveau à l'agence.")
         let rows
         try {
-          const res = await fetch(`${SB_URL}/rest/v1/public_creator_lists?slug=eq.${encodeURIComponent(slug)}&select=title,brand,intro,updated_at,creators`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } })
+          // `dispos` (dispos du mois) n'existe qu'après le SQL 2026-11-22 de TTP Suite : sans elle, on relit sans.
+          const get = (cols) => fetch(`${SB_URL}/rest/v1/public_creator_lists?slug=eq.${encodeURIComponent(slug)}&select=${cols}`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } })
+          let res = await get('title,brand,intro,updated_at,creators,dispos')
+          if (res.status === 400) res = await get('title,brand,intro,updated_at,creators')
           if (!res.ok) throw new Error(res.status)
           rows = await res.json()
         } catch {
@@ -86,6 +106,7 @@
         if (l.brand) { $('for').textContent = `Sélection pour ${l.brand}`; $('for').hidden = false }
         if (l.intro) { $('intro').textContent = l.intro; $('intro').hidden = false }
         if (l.updated_at) $('date').textContent = new Date(l.updated_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+        if (l.dispos && Array.isArray(l.dispos.creators)) return renderDispos(l.dispos)
         const cs = Array.isArray(l.creators) ? l.creators : []
         if (!cs.length) return fail("Cette sélection est vide pour l'instant.")
         $('state').hidden = true
@@ -120,6 +141,69 @@
           grid.append(li)
         }
       }
+      // Dispos du mois pour les agences (TTP Suite › Base créateurs › Listes, colonne `dispos`) :
+      // chiffres par réseau, prix agence indicatifs (seulement ceux calculés, jamais de case
+      // vide) et catégories prises en exclusivité (jamais la marque).
+      const NETS = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube' }
+      const eur = (n) => `${Number(n).toLocaleString('fr-FR')} €`
+      const day = (iso, mois) => { const [y, m, d] = String(iso).split('-'); return y === String(mois).slice(0, 4) ? `${d}/${m}` : `${d}/${m}/${y}` }
+      function renderDispos(d) {
+        const cs = d.creators
+        if (!cs.length) return fail("Cette sélection est vide pour l'instant.")
+        $('state').hidden = true
+        $('what').textContent = 'chiffres relevés'
+        if (d.genereLe) $('date').textContent = new Date(d.genereLe).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+        const reach = cs.reduce((s, c) => s + (c.reseaux || []).reduce((t, n) => t + (Number(n.followers) || 0), 0), 0)
+        const priced = cs.filter((c) => c.prix && Object.keys(c.prix).length).length
+        const sum = $('sum')
+        for (const [v, k] of [[String(cs.length), cs.length > 1 ? 'créateurs' : 'créateur'], [compact(reach), 'abonnés cumulés'], [String(priced), priced > 1 ? 'prix indicatifs' : 'prix indicatif']]) {
+          const e = el('div'); e.append(el('b', null, v), el('span', null, k)); sum.append(e)
+        }
+        sum.hidden = false
+        const grid = $('grid'); grid.classList.add('dispos')
+        const formats = Array.isArray(d.formats) ? d.formats : []
+        for (const c of cs) {
+          const li = el('li', 'card')
+          const who = el('div', 'who')
+          const initial = el('div', 'ph', String(c.name || '?').slice(0, 1).toUpperCase())
+          if (c.photo && /^https:\/\//.test(c.photo)) {
+            const img = el('img', 'ph'); img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer'; img.src = c.photo
+            img.onerror = () => img.replaceWith(initial)
+            who.append(img)
+          } else who.append(initial)
+          const id = el('div'); id.style.minWidth = '0'
+          id.append(el('div', 'name', c.name || ''))
+          if (c.niche) id.append(el('div', 'sub', c.niche))
+          who.append(id); li.append(who)
+          const nets = (c.reseaux || []).filter((n) => NETS[n.key])
+          if (nets.length) {
+            const box = el('div', 'nets')
+            for (const n of nets) {
+              const row = el('div', 'net')
+              const label = NETS[n.key]
+              if (n.url && /^https:\/\//.test(n.url)) { const a = el('a', null, label); a.href = n.url; a.target = '_blank'; a.rel = 'noopener noreferrer'; row.append(a) } else row.append(el('span', 'n', label))
+              if (n.followers != null) row.append(el('span', 'v', `${compact(n.followers)} abonnés`))
+              if (n.views != null) row.append(el('span', 'v', `${compact(n.views)} vues ${n.viewsKind === 'mediane' ? 'médianes' : 'moyennes'}`))
+              if (n.er != null) row.append(el('span', 'm', `${pct(n.er)} d'engagement`))
+              box.append(row)
+            }
+            li.append(box)
+          }
+          const rows = formats.filter((f) => c.prix && c.prix[f.key] != null)
+          if (rows.length) {
+            const ul = el('ul', 'rates')
+            for (const f of rows) { const r = el('li'); r.append(el('span', null, f.label), el('span', 'lead'), el('b', null, `${eur(c.prix[f.key])} HT`)); ul.append(r) }
+            li.append(ul)
+          } else li.append(el('div', 'ask', 'Prix sur demande'))
+          if (Array.isArray(c.indispos) && c.indispos.length) {
+            const txt = c.indispos.map((x) => `${x.label}${x.from ? ` à partir du ${day(x.from, d.mois)}` : ''}${x.until ? ` jusqu'au ${day(x.until, d.mois)}` : ''}`).join(' ; ')
+            li.append(el('div', 'busy', `Pas dispo pour : ${txt}`))
+          }
+          grid.append(li)
+        }
+        if (d.conditions) { $('terms').textContent = d.conditions; $('terms').hidden = false }
+      }
+
       main()
     </script>
   </body>
