@@ -18,6 +18,7 @@ export const NAV_LINKS = [
   { href: '#network', label: 'Notre réseau' },
   { href: '#hero', label: 'Roster' },
   { href: '#story', label: 'Notre histoire' },
+  { href: '#resultats', label: 'Résultats' },
   { href: '#contact', label: 'Contact' },
 ]
 
@@ -94,6 +95,19 @@ export const STEPS = [
     text: 'On mesure, on ajuste, et on active les bonnes marques au bon moment.',
   },
 ]
+
+// Résultats publiés sur le site (section Résultats). Chiffres réels, vérifiés dans TTP Suite
+// le 20/11/2026 : ne rien ajouter qui ne soit pas mesuré, et l'accord de la marque d'abord.
+export const RESULTS = [
+  { brand: 'Teveo', figure: '2 700 €', label: 'de ventes générées', text: 'Une campagne sport mesurée à la vente, avec code créateur.' },
+  { brand: 'Reel d’Ana', figure: '33 000', label: 'interactions sur un seul Reel', text: 'Un contenu lifestyle pensé pour la plateforme, publié au bon moment.' },
+  { brand: 'Nutripure', figure: '3', label: 'collaborations signées depuis juillet', text: 'Un partenariat nutrition sportive qui se renouvelle.' },
+  { brand: 'Kosbiotic', figure: 'Mensuel', label: 'partenariat sur la durée', text: 'Un contrat suivi mois après mois, avec des contenus validés avant publication.' },
+]
+
+// Formulaire « Recevoir le roster » : fonction site-lead de TTP Suite (contact + tâche de tri).
+export const SITE_LEAD_URL = 'https://zizvggziggswhrbuyhuo.supabase.co/functions/v1/site-lead'
+export const ROSTER_DECK_URL = 'https://ttpcreators.pro/mediakit/agence/'
 
 export const STATS = [
   { target: 50, prefix: '+', label: 'Campagnes livrées' },
