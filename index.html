@@ -1,13 +1,14 @@
 <!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>TTP Creators — Talent management Sport & Lifestyle | Lyon · Genève</title>
-    <meta
-      name="description"
-      content="TTP Creators, agence de talent management Sport et Lifestyle entre Lyon et Genève. On transforme les créateurs en marques."
-    />
+<html lang="fr" data-theme="light" data-ttp-site="bureau">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Accueil « Bureau » (en ligne depuis le 2026-11-27, choisi par Marc) : une page autonome, façon
+     Mac sur ordinateur et façon iPhone sur téléphone, CSS et JavaScript dans ce fichier.
+     data-ttp-site="bureau" sur <html> est vérifié par le garde-fou du déploiement
+     (.github/workflows/deploy.yml) : ne pas le retirer. -->
+<title>TTP Creators — Talent management Sport &amp; Lifestyle | Lyon · Genève</title>
+<meta name="description" content="TTP Creators, agence de talent management Sport et Lifestyle entre Lyon et Genève. On transforme les créateurs en marques.">
     <!-- Aperçu de partage (iMessage, WhatsApp, LinkedIn, Instagram, X, Facebook).
          Image 1200×630 < 300 Ko (WhatsApp ignore les images lourdes). Pour changer
          l'image : NOUVEAU nom de fichier, sinon les réseaux gardent l'ancienne en cache. -->
@@ -37,31 +38,13 @@
     />
     <meta name="twitter:image" content="https://ttpcreators.pro/og-ttp.jpg?v=2" />
     <meta name="twitter:image:alt" content="TTP Creators — On transforme les créateurs en marques." />
-    <link rel="canonical" href="https://ttpcreators.pro/" />
-    <meta name="theme-color" content="#ffffff" />
-    <link rel="icon" href="favicon.ico?v=4" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=4" />
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon.png?v=4" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png?v=4" />
-    <link rel="shortcut icon" href="favicon.ico?v=4" />
-    <link rel="preconnect" href="https://zizvggziggswhrbuyhuo.supabase.co" crossorigin />
-    <link rel="preload" as="image" href="/assets/studio-desktop.webp" media="(min-aspect-ratio: 4/5)" />
-    <link rel="preload" as="image" href="/assets/studio-mobile.webp" media="(max-aspect-ratio: 4/5)" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Police chargée sans bloquer l'affichage (display=swap : texte visible tout de suite). -->
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
+<link rel="canonical" href="https://ttpcreators.pro/">
+<link rel="icon" href="favicon.ico?v=3" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=3">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/favicon.png?v=3">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png?v=3">
+<link rel="preconnect" href="https://zizvggziggswhrbuyhuo.supabase.co" crossorigin>
+<link rel="preload" as="image" href="assets/wall-candice.jpg">
     <!--
       Données structurées schema.org (JSON-LD). INVISIBLE sur la page, lu par les
       moteurs : c'est la façon LÉGITIME de déclarer l'entité « TTP Creators » et ses
@@ -104,9 +87,2039 @@
         ]
       }
     </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<style>
+/* ───────── Jetons (macOS : clair et sombre) ───────── */
+:root{
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","Segoe UI",Roboto,system-ui,sans-serif;
+  --font-round:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  --mb-h:25px;
+  --brand:#49060d;
+  --accent:#007aff;
+  --text:#1d1d1f; --text-2:#6e6e73; --text-3:#8e8e93;
+  --line:rgba(0,0,0,.1); --line-2:rgba(0,0,0,.06);
+  --win-bg:#ffffff; --win-bg-2:#f5f5f7; --tb-bg:#ececec; --tb-title:#4d4d4d; --tb-title-off:#a9a9ad;
+  --win-outline:rgba(0,0,0,.26); --win-hi:rgba(255,255,255,.6);
+  --sidebar:#e8e8ea; --sidebar-sel:rgba(0,0,0,.08);
+  --menubar-bg:rgba(238,238,240,.62); --menubar-text:#000; --menubar-press:rgba(0,0,0,.1);
+  --menu-bg:rgba(242,242,244,.8); --menu-text:#1d1d1f; --menu-dim:rgba(0,0,0,.28); --menu-kbd:rgba(0,0,0,.45); --menu-sep:rgba(0,0,0,.1); --menu-outline:rgba(0,0,0,.16);
+  --dock-bg:rgba(246,246,248,.36); --dock-border:rgba(255,255,255,.42); --dock-dot:rgba(0,0,0,.7); --dock-sep:rgba(0,0,0,.16);
+  --tip-bg:rgba(236,236,238,.92); --tip-text:#1d1d1f;
+  --field:#fff; --field-border:rgba(0,0,0,.13);
+  --btn:#fff; --btn-border:rgba(0,0,0,.14);
+  --tl-off:#d5d5d7;
+  --row-alt:#f4f5f5;
+  --tile:rgba(255,255,255,.6);
+  --shadow-win:0 0 0 .5px var(--win-outline),0 26px 70px 6px rgba(0,0,0,.32),0 4px 14px rgba(0,0,0,.08);
+  --shadow-win-off:0 0 0 .5px rgba(0,0,0,.2),0 14px 40px rgba(0,0,0,.18);
+  --shadow-pop:0 0 0 .5px var(--menu-outline),0 12px 34px rgba(0,0,0,.24);
+}
+:root[data-theme="dark"]{
+  --accent:#0a84ff;
+  --text:#f5f5f7; --text-2:#a1a1a6; --text-3:#8d8d92;
+  --line:rgba(255,255,255,.12); --line-2:rgba(255,255,255,.07);
+  --win-bg:#1f1f1f; --win-bg-2:#191919; --tb-bg:#2b2b2b; --tb-title:#e0e0e2; --tb-title-off:#6c6c70;
+  --win-outline:rgba(0,0,0,.65); --win-hi:rgba(255,255,255,.14);
+  --sidebar:#2a2a2c; --sidebar-sel:rgba(255,255,255,.1);
+  --menubar-bg:rgba(26,26,28,.5); --menubar-text:#fff; --menubar-press:rgba(255,255,255,.18);
+  --menu-bg:rgba(42,42,44,.8); --menu-text:#f5f5f7; --menu-dim:rgba(255,255,255,.3); --menu-kbd:rgba(255,255,255,.5); --menu-sep:rgba(255,255,255,.12); --menu-outline:rgba(0,0,0,.55);
+  --dock-bg:rgba(44,44,46,.4); --dock-border:rgba(255,255,255,.16); --dock-dot:rgba(255,255,255,.82); --dock-sep:rgba(255,255,255,.22);
+  --tip-bg:rgba(40,40,42,.92); --tip-text:#f5f5f7;
+  --field:#2c2c2e; --field-border:rgba(255,255,255,.12);
+  --btn:#3a3a3c; --btn-border:rgba(255,255,255,.1);
+  --tl-off:#4a4a4d;
+  --row-alt:#262628;
+  --tile:rgba(255,255,255,.08);
+}
+:root{--squircle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0C88 0 100 12 100 50S88 100 50 100 0 88 0 50 12 0 50 0Z'/%3E%3C/svg%3E")}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font:13px/1.38 var(--font);letter-spacing:-.08px;color:var(--text);background:#2c2522;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;cursor:default}
+button{font:inherit;color:inherit;background:none;border:0;letter-spacing:inherit;cursor:default}
+a{color:inherit;text-decoration:none;cursor:default}
+img{display:block}
+input{font:inherit;letter-spacing:inherit;color:inherit}
+.g{width:16px;height:16px;flex:none}
+.dim{color:var(--text-2)}
+
+/* ───────── Fond d'écran ───────── */
+/* petite image agrandie puis floutée : quelques Ko au lieu d'une grande photo */
+.wall{position:fixed;inset:-40px;background:#5a4a42 center 30%/cover no-repeat;filter:blur(16px) saturate(1.2);transform:scale(1.04)}
+.wall::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.22))}
+:root[data-theme="dark"] .wall::after{background:rgba(0,0,0,.38)}
+
+/* ───────── Barre des menus ───────── */
+.menubar{position:fixed;top:0;left:0;right:0;height:var(--mb-h);display:flex;align-items:center;gap:1px;padding:0 6px;z-index:9000;background:var(--menubar-bg);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);color:var(--menubar-text);box-shadow:0 .5px 0 rgba(0,0,0,.12);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.mb-item{height:22px;padding:0 9px;border-radius:5px;display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px}
+.mb-item.app{font-weight:700}
+.mb-item.open{background:var(--menubar-press)}
+.mb-logo{padding:0 10px}
+.mb-logo img{height:17px;width:auto}
+:root[data-theme="dark"] .mb-logo img{filter:brightness(0) invert(1)}
+.mb-right{margin-left:auto;display:flex;align-items:center;gap:1px}
+.mb-status i{width:7px;height:7px;border-radius:50%;background:#30d158;box-shadow:0 0 0 2.5px rgba(48,209,88,.22)}
+.mb-ic .g{width:15px;height:15px}
+.mb-clock .t{font-variant-numeric:tabular-nums}
+.mb-hot{position:fixed;top:0;left:0;right:0;height:4px;z-index:9001;display:none}
+body.fullscreen .mb-hot{display:block}
+body.fullscreen .menubar{transform:translateY(-100%)}
+body.fullscreen .menubar.peek{transform:none}
+
+/* ───────── Menus déroulants ───────── */
+.menu{position:fixed;z-index:9500;min-width:230px;max-width:340px;padding:5px;border-radius:8px;background:var(--menu-bg);backdrop-filter:blur(40px) saturate(1.9);-webkit-backdrop-filter:blur(40px) saturate(1.9);box-shadow:var(--shadow-pop);color:var(--menu-text);display:none}
+.menu.on{display:block}
+.mi{display:flex;align-items:center;gap:7px;height:22px;padding:0 10px 0 22px;border-radius:4px;position:relative;white-space:nowrap}
+.mi .ck{position:absolute;left:7px;font-size:11px;width:10px;text-align:center}
+.mi img{width:16px;height:16px;border-radius:50%;object-fit:cover}
+.mi .l{overflow:hidden;text-overflow:ellipsis}
+.mi .k{margin-left:auto;padding-left:22px;color:var(--menu-kbd)}
+.mi.hl{background:var(--accent);color:#fff}
+.mi.hl .k{color:rgba(255,255,255,.8)}
+.mi.dis{color:var(--menu-dim)}
+.mi.dis.hl{background:none;color:var(--menu-dim)}
+.msep{height:1px;background:var(--menu-sep);margin:5px 10px}
+.mhead{font-size:11px;font-weight:600;color:var(--menu-kbd);padding:3px 10px 2px 22px}
+.msearch{display:flex;align-items:center;gap:6px;margin:2px 4px 4px;padding:0 8px;height:24px;border-radius:6px;background:var(--field);box-shadow:0 0 0 .5px var(--field-border)}
+.msearch input{flex:1;border:0;background:none;outline:0;font-size:13px}
+.msearch .g{width:13px;height:13px;color:var(--text-3)}
+
+/* ───────── Bureau ───────── */
+.desk{position:fixed;top:var(--mb-h);left:0;right:0;bottom:0}
+body.fullscreen .desk{visibility:hidden}
+.file{position:absolute;width:96px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px;touch-action:none}
+.file .ic{width:70px;height:70px;display:grid;place-items:center;border-radius:7px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+.file .ic svg{width:64px;height:64px}
+.file .ph{width:54px;height:66px;object-fit:cover;border:2px solid #fff;border-radius:1px}
+.file .nm{font-size:12px;font-weight:500;line-height:1.22;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75),0 0 6px rgba(0,0,0,.35);padding:1px 5px;border-radius:4px;text-align:center;max-width:96px;word-break:break-word}
+.file.sel .ic{background:rgba(0,0,0,.28)}
+.file.sel .nm{background:#0a64d6;text-shadow:none}
+.file.drag{opacity:.85;z-index:5}
+.desk.tidy .file{transition:left .4s cubic-bezier(.2,.8,.2,1),top .4s cubic-bezier(.2,.8,.2,1)}
+.rubber{position:fixed;z-index:60;border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.16);pointer-events:none;display:none}
+
+/* ───────── Fenêtres ───────── */
+.layer{position:fixed;inset:0;z-index:100;pointer-events:none}
+.win{position:absolute;pointer-events:auto;display:flex;flex-direction:column;background:var(--win-bg);border-radius:12px;box-shadow:var(--shadow-win);overflow:hidden;color:var(--text)}
+.win::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 .5px var(--win-hi);pointer-events:none;z-index:6}
+.win.off{box-shadow:var(--shadow-win-off)}
+.win.full{border-radius:0;box-shadow:none}
+body.fullscreen .win:not(.full){visibility:hidden}
+.tb{height:28px;flex:none;display:flex;align-items:center;justify-content:center;position:relative;background:var(--tb-bg);border-bottom:1px solid var(--line);font-weight:600;color:var(--tb-title);padding:0 80px}
+.tb .ttl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.win.off .tb{color:var(--tb-title-off)}
+.tb.tall{height:52px;justify-content:flex-start;padding:0 12px 0 86px;gap:10px}
+.ttl2{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.ttl2 b{font-size:13px;font-weight:700;color:var(--text)}
+.ttl2 small{font-size:11px;font-weight:400;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win.off .ttl2 b,.win.off .ttl2 small{color:var(--tb-title-off)}
+.tools{margin-left:auto;display:flex;gap:6px}
+.tbtn{width:30px;height:26px;border-radius:6px;display:grid;place-items:center;color:var(--text-2)}
+.tbtn:hover{background:var(--sidebar-sel)}
+.tbtn.on{color:var(--accent)}
+.wbody{flex:1;min-height:0;overflow:auto;user-select:text;-webkit-user-select:text}
+/* boutons rouge, jaune, vert */
+.tl{position:absolute;left:13px;top:14px;transform:translateY(-50%);display:flex;gap:8px;z-index:7}
+.tb.tall~.tl,.win.k-viewer .tl{top:26px}
+.win.k-finder .tl{top:20px;left:20px}
+.tl button{width:12px;height:12px;border-radius:50%;display:grid;place-items:center;padding:0;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.14)}
+.tl .c{background:#ff5f57}.tl .m{background:#febc2e}.tl .f{background:#28c840}
+.tl svg{width:12px;height:12px;opacity:0}
+.tl:hover svg{opacity:1}
+.tl button:active{filter:brightness(.82)}
+.win.off .tl:not(:hover) button{background:var(--tl-off)}
+.tl button:disabled{background:var(--tl-off)!important;filter:none}
+.tl button:disabled svg{display:none}
+.tl .f .plus{display:none}
+body.alt .tl .f .arrows{display:none}
+body.alt .tl .f .plus{display:block}
+/* poignées de redimensionnement */
+.rz{position:absolute;z-index:8}
+.rz-n{top:0;left:12px;right:12px;height:5px;cursor:ns-resize}
+.rz-s{bottom:0;left:12px;right:12px;height:6px;cursor:ns-resize}
+.rz-e{right:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.rz-w{left:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.rz-ne{right:0;top:0;width:12px;height:12px;cursor:nesw-resize}
+.rz-nw{left:0;top:0;width:12px;height:12px;cursor:nwse-resize}
+.rz-se{right:0;bottom:0;width:14px;height:14px;cursor:nwse-resize}
+.rz-sw{left:0;bottom:0;width:14px;height:14px;cursor:nesw-resize}
+.win.fixed .rz,.win.full .rz{display:none}
+
+/* boutons macOS */
+.pbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:28px;padding:0 14px;border-radius:7px;font-size:13px;font-weight:500;background:var(--btn);box-shadow:0 0 0 .5px var(--btn-border),0 1px 1.5px rgba(0,0,0,.1);color:var(--text);white-space:nowrap}
+.pbtn:active{filter:brightness(.94)}
+.pbtn.blue{background:linear-gradient(180deg,#3d92ff,#0a6cf5);color:#fff;box-shadow:0 0 0 .5px rgba(0,60,160,.4),0 1px 1.5px rgba(0,0,0,.15)}
+.pbtn .g{width:14px;height:14px}
+
+/* icônes officielles des réseaux */
+.bt{width:var(--s);height:var(--s);border-radius:23%;display:inline-grid;place-items:center;flex:none;overflow:hidden;vertical-align:middle}
+.bt svg,.ico.b-ig svg,.ico.b-li svg,.ico.b-tt svg{width:62%;height:62%}
+.b-ig{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}
+.bt.b-ig svg,.ico.b-ig svg{width:70%;height:70%}
+.b-li{background:#0a66c2}
+.bt.b-li svg,.ico.b-li svg{width:56%;height:56%}
+.b-tt{background:#000}
+.bt.b-tt svg,.ico.b-tt svg{width:58%;height:58%}
+
+/* ───────── Finder ───────── */
+.fd{display:grid;grid-template-columns:200px 1fr;height:100%;min-height:0}
+.fd.noside{grid-template-columns:1fr}
+.fd.noside .fd-side{display:none}
+.fd.noside .fd-tb{padding-left:88px}
+.fd-side{background:var(--sidebar);padding:44px 10px 12px;overflow:auto;border-right:1px solid var(--line-2)}
+.side-h{font-size:11px;font-weight:600;color:var(--text-3);padding:12px 9px 4px}
+.side-h:first-child{padding-top:4px}
+.side-i{display:flex;align-items:center;gap:8px;width:100%;height:26px;padding:0 9px;border-radius:6px;font-size:13px;text-align:left}
+.side-i .g{color:var(--accent);width:16px;height:16px}
+.side-i.on{background:var(--sidebar-sel)}
+.tagdot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+.fd-main{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--win-bg)}
+.fd-tb{height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 12px 0 12px;border-bottom:1px solid var(--line)}
+.fd-nav{display:flex;gap:2px}
+.fd-nav button{width:28px;height:26px;border-radius:6px;display:grid;place-items:center;color:var(--text-2)}
+.fd-nav button:hover:not(:disabled){background:var(--sidebar-sel)}
+.fd-nav button:disabled{opacity:.35}
+.fd-title{font-weight:700;font-size:15px;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fd-tools{margin-left:auto;display:flex;align-items:center;gap:8px}
+.seg{display:flex;border-radius:7px;background:var(--sidebar-sel);padding:2px}
+.seg button{width:28px;height:22px;border-radius:5px;display:grid;place-items:center;color:var(--text-2)}
+.seg button.on{background:var(--win-bg);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.14)}
+.search{display:flex;align-items:center;gap:5px;height:26px;width:170px;padding:0 8px;border-radius:7px;background:var(--sidebar-sel)}
+.search input{flex:1;min-width:0;border:0;background:none;outline:0;font-size:13px}
+.search .g{width:14px;height:14px;color:var(--text-3)}
+.fd-body{flex:1;overflow:auto;padding:16px 14px;min-height:0}
+.fd-status{height:24px;flex:none;border-top:1px solid var(--line-2);font-size:11px;color:var(--text-3);display:grid;place-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:12px 6px;align-content:start}
+.it{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;text-align:center}
+.it .ic{width:76px;height:76px;display:grid;place-items:center;border-radius:7px}
+.it .ic svg{width:64px;height:64px}
+.it .ph{width:58px;height:72px;object-fit:cover;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.it .nm{font-size:12px;line-height:1.25;padding:1px 5px;border-radius:4px;max-width:100%;word-break:break-word}
+.it .inf{font-size:11px;color:var(--accent);margin-top:-2px}
+.it.sel .ic{background:var(--sidebar-sel)}
+.it.sel .nm{background:var(--accent);color:#fff}
+.logo-tile{width:64px;height:64px;border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.18)}
+.logo-tile.word{padding:6px;text-align:center}
+.logo-tile.word b{font:700 11px/1.12 var(--font);letter-spacing:-.01em;color:#1d1d1f;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
+.logo-tile.mini{width:18px;height:18px;border-radius:5px;flex:none}
+.logo-tile.mini.word{padding:0}
+.logo-tile.mini.word b{font-size:10px;line-height:18px}
+.logo-tile i{display:block;width:72%;height:44%;background:#1d1d1f;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.ltable{width:100%;border-collapse:collapse}
+.ltable th{position:sticky;top:-16px;background:var(--win-bg);text-align:left;font-weight:500;font-size:12px;color:var(--text-2);padding:5px 10px;border-bottom:1px solid var(--line)}
+.ltable td{padding:4px 10px;white-space:nowrap}
+.ltable tr:nth-child(even) td{background:var(--row-alt)}
+.ltable td:first-child{display:flex;align-items:center;gap:8px}
+.ltable .mini{width:18px;height:18px;border-radius:3px;object-fit:cover;flex:none}
+.ltable .mini-svg svg{width:18px;height:18px}
+.ltable tr.sel td{background:var(--accent);color:#fff}
+.empty{height:100%;display:grid;place-items:center;color:var(--text-3);font-size:15px}
+
+/* ───────── Visionneuse (fiche créateur) ───────── */
+.vw{display:grid;grid-template-columns:1fr 270px;height:100%;min-height:0}
+.vw.noinsp{grid-template-columns:1fr}
+.vw.noinsp .insp{display:none}
+.vw-img{background:var(--win-bg-2);display:grid;place-items:center;padding:18px;min-height:0;overflow:hidden}
+.vw-img img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.insp{border-left:1px solid var(--line);padding:18px 16px;display:flex;flex-direction:column;gap:10px;overflow:auto;background:var(--win-bg)}
+.insp-h{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-2);font-weight:500}
+.insp h2{font-size:20px;font-weight:700;letter-spacing:-.35px;line-height:1.15}
+.insp .dim{margin-top:-6px}
+.insp-big{display:flex;align-items:baseline;gap:6px;padding:10px 12px;border-radius:10px;background:var(--win-bg-2)}
+.insp-big b{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.insp-big span{color:var(--text-2);font-size:12px}
+.insp-sec{font-size:11px;font-weight:600;color:var(--text-3);margin-top:2px}
+.netrow{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px}
+a.netrow:hover{background:var(--sidebar-sel)}
+.netrow span{display:flex;flex-direction:column;line-height:1.2;font-weight:500}
+.netrow small{font-size:11px;color:var(--text-2);font-weight:400}
+.netrow b{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}
+.insp-acts{margin-top:auto;display:flex;flex-direction:column;gap:7px;padding-top:8px}
+.insp-acts .pbtn{width:100%}
+
+/* ───────── Document texte, PDF, tableur ───────── */
+.doc{padding:30px 36px 40px;font-size:14px;line-height:1.6;max-width:640px}
+.doc h1{font-size:26px;font-weight:700;letter-spacing:-.5px;line-height:1.15;margin-bottom:16px}
+.doc h2{font-size:15px;font-weight:700;margin:20px 0 4px}
+.doc p{margin-bottom:12px}
+.doc .team{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 6px}
+.doc figure img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px}
+.doc figcaption{display:flex;flex-direction:column;margin-top:6px;line-height:1.3}
+.doc figcaption span{color:var(--text-2);font-size:12px}
+.pdf{background:var(--win-bg-2);min-height:100%;padding:24px;display:grid;justify-items:center}
+:root[data-theme="dark"] .pdf{background:#3a3a3c}
+.page{width:100%;max-width:560px;background:#fff;color:#1d1d1f;padding:42px 44px 48px;box-shadow:0 2px 14px rgba(0,0,0,.2)}
+.page .eyebrow{font-size:11px;font-weight:600;color:var(--brand);letter-spacing:.02em}
+.page h1{font-size:30px;font-weight:700;letter-spacing:-.6px;margin:4px 0 10px}
+.page .lead{color:#6e6e73;margin-bottom:22px;font-size:14px}
+.svc{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:14px 0;border-top:1px solid #e5e5e7}
+.svc .n{font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums}
+.svc h3{font-size:15px;font-weight:600}
+.svc p{color:#6e6e73;font-size:13px;margin-top:2px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chips span{font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;background:#f2f2f4;color:#3a3a3c}
+.sheet{padding:22px 24px 30px;display:flex;flex-direction:column;gap:16px}
+.sh-head h1{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.sh-head p{color:var(--text-2)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{padding:14px;border-radius:12px;background:var(--win-bg-2);display:flex;flex-direction:column;gap:2px}
+.kpi b{font-size:30px;font-weight:700;letter-spacing:-.8px;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi span{font-size:12px;color:var(--text-2)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{border-radius:12px;box-shadow:0 0 0 .5px var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.card h2{font-size:13px;font-weight:700}
+.bar{display:grid;grid-template-columns:112px 1fr auto;align-items:center;gap:10px}
+.bar .lbl{display:flex;align-items:center;gap:7px;font-weight:500}
+.track{height:10px;border-radius:99px;background:var(--win-bg-2);overflow:hidden}
+.track i{display:block;height:100%;border-radius:inherit;background:var(--accent);width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.track i.ig{background:linear-gradient(90deg,#fd5949,#d6249f,#285aeb)}
+.track i.tt{background:linear-gradient(90deg,#25f4ee,#111 60%,#fe2c55)}
+.bar b{font-variant-numeric:tabular-nums}
+.toprow{display:flex;align-items:center;gap:10px;padding:4px 6px;border-radius:8px;text-align:left}
+.toprow:hover{background:var(--sidebar-sel)}
+.toprow img{width:30px;height:30px;border-radius:50%;object-fit:cover}
+.toprow span{display:flex;flex-direction:column;line-height:1.2;font-weight:500}
+.toprow small{font-size:11px;color:var(--text-2);font-weight:400}
+.toprow b{margin-left:auto}
+.niches{display:flex;flex-wrap:wrap;gap:6px}
+.niche{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:var(--win-bg-2);font-size:12px}
+.niche b{color:var(--text-2);font-weight:600}
+.gridt{width:100%;border-collapse:collapse;font-size:13px}
+.gridt th{background:var(--win-bg-2);font-weight:600;text-align:left;padding:6px 10px;border:1px solid var(--line)}
+.gridt td{padding:6px 10px;border:1px solid var(--line)}
+.gridt .num{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ───────── Fiche contact ───────── */
+.ct{padding:26px 26px 22px;display:flex;flex-direction:column;gap:18px;height:100%}
+.ct-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px}
+.ct-head img{width:84px;height:84px;border-radius:50%;margin-bottom:6px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.ct-head h2{font-size:22px;font-weight:700;letter-spacing:-.4px}
+.ct-head p{color:var(--text-2)}
+.ct-acts{display:flex;justify-content:center;gap:22px}
+.ct-act{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;color:var(--text-2)}
+.ct-act .bt,.ct-act .mailic{transition:transform .15s}
+.ct-act:hover .bt,.ct-act:hover .mailic{transform:scale(1.06)}
+.mailic{width:34px;height:34px;border-radius:23%;display:grid;place-items:center;background:linear-gradient(180deg,#5ac8fa,#0a7aff);color:#fff}
+.mailic .g{width:19px;height:19px}
+.ct-f{display:grid;grid-template-columns:90px 1fr;gap:8px 12px;padding-top:14px;border-top:1px solid var(--line)}
+.ct-f dt{text-align:right;color:var(--text-2);font-size:12px;padding-top:1px}
+.ct-f dd a{color:var(--accent)}
+.ct-foot{margin-top:auto;display:flex;justify-content:flex-end;gap:8px}
+
+/* ───────── À propos ───────── */
+.about{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:22px 22px 16px;height:100%}
+.about-ic{width:92px;height:92px;border-radius:22%;margin-bottom:10px;box-shadow:0 4px 14px rgba(0,0,0,.22)}
+.about h2{font-size:19px;font-weight:700;letter-spacing:-.3px}
+.about p{font-size:12px}
+.about .pbtn{margin-top:14px}
+.about small{margin-top:auto;font-size:11px;color:var(--text-3)}
+.about .legal{font-size:11px;color:var(--text-3)}
+.about .legal a{color:inherit}
+.about .legal a:hover{color:var(--accent)}
+
+/* ───────── Dock ───────── */
+.dock{position:fixed;left:50%;bottom:5px;transform:translateX(-50%);display:flex;align-items:flex-end;gap:3px;padding:4px 6px;border-radius:21px;background:var(--dock-bg);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);box-shadow:inset 0 0 0 1px var(--dock-border),0 0 0 .5px rgba(0,0,0,.18),0 12px 34px rgba(0,0,0,.2);z-index:8000;transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+body.fullscreen .dock{transform:translate(-50%,130%)}
+.dk{display:flex;align-items:flex-end;gap:3px}
+.di{position:relative;width:52px;height:52px;flex:none;display:grid;place-items:center}
+.di .ico{width:100%;height:100%;border-radius:23%;display:grid;place-items:center;overflow:hidden}
+.di img.ico{object-fit:cover}
+/* icônes façon iPhone : forme « squircle » (arrondi continu), dégradé, pictogramme plein */
+.icw{display:block;width:100%;height:100%;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.3))}
+.ico.sq{-webkit-mask:var(--squircle) center/100% 100% no-repeat;mask:var(--squircle) center/100% 100% no-repeat;border-radius:0}
+.ico .g.w{width:58%;height:58%;color:#fff;stroke-width:1.9}
+.ico .gf{width:60%;height:60%;fill:#fff}
+.ico .gs{width:84%;height:84%}
+.ico .gd{width:74%;height:74%}
+.di .tip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);padding:4px 10px;border-radius:7px;background:var(--tip-bg);color:var(--tip-text);font-size:13px;white-space:nowrap;box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 14px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .1s}
+.di .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--tip-bg)}
+.di:hover .tip{opacity:1}
+.di .dot{position:absolute;bottom:-5px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--dock-dot);opacity:0}
+.di.on .dot{opacity:1}
+.dsep{width:1px;align-self:stretch;margin:6px 5px;background:var(--dock-sep);flex:none}
+.di.minw .ico{background:var(--win-bg);box-shadow:0 0 0 .5px rgba(0,0,0,.25),0 2px 6px rgba(0,0,0,.2);border-radius:6px;place-items:stretch}
+.minw .mw-tb{height:16%;background:var(--tb-bg);border-bottom:1px solid var(--line)}
+.minw .mw-ph{width:100%;height:100%;object-fit:cover}
+.minw .badge{position:absolute;right:-3px;bottom:-3px;width:46%;height:46%;border-radius:23%;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.minw .badge .ico,.minw .badge img{width:100%;height:100%;border-radius:0}
+.minw .badge .icw{filter:none}
+.trash-ic{background:none!important;box-shadow:none!important}
+.trash-ic svg{width:92%;height:92%}
+
+/* ───────── Panneaux : Spotlight, centre de contrôle, widgets, notification, coup d'œil ───────── */
+.glass{background:var(--menu-bg);backdrop-filter:blur(44px) saturate(1.9);-webkit-backdrop-filter:blur(44px) saturate(1.9);box-shadow:var(--shadow-pop);color:var(--menu-text)}
+.spot{position:fixed;inset:0;z-index:9600;display:none;justify-content:center;align-items:flex-start;padding-top:17vh}
+.spot.on{display:flex}
+.spot .box{width:min(680px,92vw);border-radius:14px;overflow:hidden}
+.spot .in{display:flex;align-items:center;gap:10px;height:54px;padding:0 16px}
+.spot .in .g{width:22px;height:22px;color:var(--text-3)}
+.spot input{flex:1;border:0;background:transparent;font:400 22px var(--font);letter-spacing:-.35px;outline:0}
+.spot .res{border-top:1px solid var(--line);max-height:min(400px,56vh);overflow:auto;padding:5px 6px 7px}
+.spot .res:empty{display:none}
+.spot .sec{font-size:11px;font-weight:600;color:var(--text-3);padding:7px 10px 3px}
+.spot .r{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:7px}
+.spot .r img,.spot .r .ri{width:24px;height:24px;border-radius:6px;object-fit:cover;flex:none;display:grid;place-items:center}
+.spot .r .ri svg{width:22px;height:22px}
+.spot .r .ri .g{width:16px;height:16px}
+.spot .r small{margin-left:auto;color:var(--text-3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45%}
+.spot .r.on{background:var(--accent);color:#fff}
+.spot .r.on small{color:rgba(255,255,255,.78)}
+.cc{position:fixed;top:calc(var(--mb-h) + 6px);right:8px;width:330px;padding:12px;border-radius:18px;z-index:9500;display:none;grid-template-columns:1fr 1fr;gap:10px}
+.cc.on{display:grid}
+.cc .tile{border-radius:13px;padding:11px;background:var(--tile);box-shadow:0 0 0 .5px var(--line);display:flex;flex-direction:column;gap:8px;text-align:left}
+.cc .wide{grid-column:1/-1}
+.cc .tt{font-size:12px;font-weight:600}
+.cc button.tile{flex-direction:row;align-items:center;gap:9px;font-weight:500}
+.cc button.tile .g{width:28px;height:28px;padding:6px;border-radius:50%;background:var(--accent);color:#fff}
+.seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg3 button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:10px;font-size:12px}
+.seg3 button .g{width:20px;height:20px}
+.seg3 button.on{background:var(--accent);color:#fff}
+.walls{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.walls button{aspect-ratio:16/10;border-radius:7px;background:center/cover;box-shadow:0 0 0 .5px rgba(0,0,0,.2)}
+.walls button.on{box-shadow:0 0 0 2.5px var(--accent)}
+.nc{position:fixed;top:calc(var(--mb-h) + 6px);right:8px;width:340px;display:none;flex-direction:column;gap:10px;z-index:9500}
+.nc.on{display:flex}
+.widget{border-radius:20px;padding:14px 16px}
+.cal h3{font-size:13px;font-weight:700;color:#ff3b30;text-transform:capitalize;margin-bottom:6px}
+.cal .gd{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;font-size:11px}
+.cal .gd span{height:22px;display:grid;place-items:center;border-radius:50%;font-variant-numeric:tabular-nums}
+.cal .gd .h{color:var(--text-3);font-weight:600;font-size:10px}
+.cal .gd .today{background:#ff3b30;color:#fff;font-weight:700;width:22px;margin:auto}
+.wg-roster{display:flex;flex-direction:column;gap:8px;text-align:left;width:100%}
+.avs{display:flex}
+.avs img{width:30px;height:30px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--menu-bg);margin-left:-8px}
+.avs img:first-child{margin-left:0}
+.wg-big{font-size:28px;font-weight:700;letter-spacing:-.6px;line-height:1.05}
+.wg-sub{font-size:12px;color:var(--text-2)}
+.notif{position:fixed;top:calc(var(--mb-h) + 10px);right:12px;width:350px;z-index:9400;display:flex;gap:11px;align-items:flex-start;padding:12px 14px;border-radius:18px;transform:translateX(calc(100% + 30px));transition:transform .5s cubic-bezier(.2,.9,.3,1.05)}
+.notif.on{transform:none}
+.notif img{width:38px;height:38px;border-radius:9px;flex:none}
+.notif div{min-width:0}
+.notif b{font-weight:600}
+.notif p{margin-top:1px}
+.notif time{position:absolute;right:14px;top:12px;font-size:11px;color:var(--text-3)}
+.notif .nx{position:absolute;left:-6px;top:-6px;width:20px;height:20px;border-radius:50%;background:var(--menu-bg);box-shadow:var(--shadow-pop);display:grid;place-items:center;opacity:0;font-size:13px}
+.notif:hover .nx{opacity:1}
+.ql{position:fixed;inset:0;z-index:9700;display:none;place-items:center;background:rgba(0,0,0,.12)}
+.ql.on{display:grid}
+.ql-p{width:min(560px,90vw);border-radius:12px;overflow:hidden;background:var(--win-bg);box-shadow:var(--shadow-win);animation:qlIn .22s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes qlIn{from{transform:scale(.9);opacity:0}}
+.ql-bar{height:38px;display:flex;align-items:center;gap:10px;padding:0 10px;background:var(--tb-bg);border-bottom:1px solid var(--line)}
+.ql-bar b{flex:1;text-align:center}
+.ql-x{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:var(--text-2)}
+.ql-x:hover{background:var(--sidebar-sel)}
+.ql-c{position:relative;display:grid;place-items:center;height:min(520px,64vh);background:var(--win-bg-2);padding:20px}
+.ql-c img{max-width:100%;max-height:100%;object-fit:contain}
+.ql-word{font:700 clamp(30px,7vw,60px)/1.05 var(--font);letter-spacing:-.03em;text-align:center;color:var(--text);max-width:90%;overflow-wrap:anywhere}
+.ql-sub{position:absolute;left:0;right:0;bottom:16px;margin:0;text-align:center;font-size:13px;color:var(--text-2)}
+.ql-logo{width:70%;height:40%;background:var(--text);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+
+/* ───────── Écran verrouillé ───────── */
+.lock{position:fixed;inset:0;z-index:9900;color:#fff;display:flex;flex-direction:column;align-items:center;overflow:hidden;transition:opacity .55s ease,transform .55s ease}
+.lock .bg{position:absolute;inset:-40px;background:#3a302c center 30%/cover no-repeat;filter:blur(14px) brightness(.6) saturate(1.15)}
+.lock .touch{display:none}
+@media (hover:none){.lock .click{display:none}.lock .touch{display:inline}}
+.lock>*:not(.bg){position:relative}
+.lock .date{margin-top:9vh;font:600 21px var(--font-round);opacity:.92}
+.lock .date::first-letter{text-transform:uppercase}
+.lock .time{font:700 min(24vw,128px)/1 var(--font-round);letter-spacing:-2px;margin-top:4px;font-variant-numeric:tabular-nums}
+.lock .who{margin-top:auto;margin-bottom:8vh;display:flex;flex-direction:column;align-items:center;gap:10px}
+.lock .av{width:74px;height:74px;border-radius:50%;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.lock .nm{font-weight:600;font-size:15px}
+.lock .pw{display:flex;align-items:center;gap:8px;height:32px;min-width:230px;padding:0 5px 0 14px;border-radius:16px;background:rgba(255,255,255,.22);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);color:#fff;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.3)}
+.lock .pw #pwText{flex:1;text-align:left;font-size:13px;white-space:nowrap}
+.lock .pw .go{flex:none;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.3);display:grid;place-items:center}
+.lock .pw .go .g{width:13px;height:13px;stroke-width:2.4}
+.lock small{font-size:12px;opacity:.75}
+.lock.out{opacity:0;transform:scale(1.04);pointer-events:none}
+
+/* ───────── Calendrier ───────── */
+.cal-ic{background:#fff!important;display:block!important}
+.cal-ic svg{width:100%;height:100%;display:block}
+.agd{display:grid;grid-template-columns:1fr 300px;height:100%;min-height:0}
+.agd-cal{padding:18px 20px 14px;display:flex;flex-direction:column;min-width:0;min-height:0}
+.agd-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.agd-month{font-size:26px;font-weight:700;letter-spacing:-.5px;text-transform:capitalize}
+.agd-month span{color:#ff3b30}
+.agd-nav{margin-left:auto;display:flex;gap:4px}
+.agd-nav button{height:28px;min-width:30px;padding:0 10px;border-radius:7px;background:var(--win-bg-2);font-weight:500;display:grid;place-items:center}
+.agd-nav .g{width:15px;height:15px}
+.agd-wd{display:grid;grid-template-columns:repeat(7,1fr);font-size:11px;font-weight:600;color:var(--text-3);text-align:center;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.agd-grid{flex:1;display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:minmax(50px,1fr)}
+.agd-grid button{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:6px;border-bottom:1px solid var(--line-2);font-size:15px;font-variant-numeric:tabular-nums}
+.agd-grid button.out{color:var(--text-3);opacity:.45}
+.agd-grid .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center}
+.agd-grid .today .n{color:#ff3b30;font-weight:700}
+.agd-grid .sel .n{background:var(--text);color:var(--win-bg);font-weight:700}
+.agd-grid .today.sel .n{background:#ff3b30;color:#fff}
+.agd-grid .dots{display:flex;gap:3px;height:6px}
+.agd-grid .dots i{width:5px;height:5px;border-radius:50%}
+.agd-side{border-left:1px solid var(--line);padding:18px 14px;overflow:auto;display:flex;flex-direction:column;gap:7px;background:var(--win-bg-2)}
+.agd-side h2{font-size:13px;font-weight:700;margin-top:10px}
+.agd-side h2:first-child{margin-top:0}
+.agd-dayt::first-letter{text-transform:uppercase}
+.ev{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;background:var(--win-bg);text-align:left;width:100%}
+.ev i{width:4px;align-self:stretch;border-radius:2px;flex:none}
+.ev span:not(.when){min-width:0;display:flex;flex-direction:column}
+.ev b{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev small{color:var(--text-2);font-size:12px}
+.ev .when{margin-left:auto;text-align:right;color:var(--text-2);font-size:12px;white-space:nowrap;padding-left:6px}
+.ev-empty{color:var(--text-3);font-size:12px;padding:2px}
+.agd-tip{display:grid;gap:10px;padding:12px;border-radius:10px;background:var(--win-bg)}
+.agd-tip p{margin:0;font-size:12px;line-height:1.4;color:var(--text-2)}
+.agd-tip .pbtn{justify-self:start}
+.agd-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--text-2);margin-top:auto;padding-top:12px}
+.agd-legend span{display:inline-flex;align-items:center;gap:5px}
+.agd-legend i{width:8px;height:8px;border-radius:50%}
+.cal .gd span{position:relative}
+.cal .gd .has::after{content:"";position:absolute;bottom:0;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent)}
+.nc-ev{display:flex;flex-direction:column;gap:2px;margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
+.nc-ev .ev{background:transparent;padding:5px 2px}
+.spot .fld{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.cal-h{display:block;width:100%;text-align:left}
+
+/* ───────── Téléphone (façon iPhone) ───────── */
+.phone,.mhd,.fd-chips,.ios-status,.homebar,.lock-ios,.lt,.spot-x,.edge{display:none}
+@media (max-width:1100px){.mb-status span{display:none}}
+@media (max-width:900px){.mb-clock .d{display:none}}
+@media (max-width:720px){
+  :root{--mb-h:0px;--grp-bg:#f2f2f7;--grp-card:#fff}
+  :root[data-theme="dark"]{--grp-bg:#000;--grp-card:#1c1c1e}
+  html,body{overscroll-behavior:none}
+  .menubar,.mb-hot,.desk,.dock,.notif,.cc,.nc{display:none!important}
+  /* barre d'état et barre d'accueil */
+  .ios-status{display:flex;position:fixed;top:0;left:0;right:0;height:47px;z-index:9950;align-items:center;justify-content:space-between;padding:14px 24px 0 36px;color:#fff;font:600 16px/1 var(--font);letter-spacing:-.3px;pointer-events:none;transition:color .25s}
+  .ios-status .sig{display:flex;gap:6px;align-items:center}
+  .ios-status svg{height:12px;width:auto;fill:currentColor}
+  .homebar{display:block;position:fixed;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#fff;z-index:9950;transition:background .25s}
+  .homebar::before{content:"";position:absolute;inset:-16px -24px}
+  body:not(.app-open) .homebar{display:none}
+  :root[data-theme="light"] body.app-open .ios-status{color:#000}
+  :root[data-theme="light"] body.app-open .homebar{background:#000}
+  /* écran d'accueil : pages, widgets, icônes, dock */
+  .phone{--hp:22px;--hg:22px;display:flex;flex-direction:column;position:fixed;inset:0;padding:54px 0 calc(8px + env(safe-area-inset-bottom))}
+  .ph-pages{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x}
+  .ph-pages::-webkit-scrollbar{display:none}
+  .ph-page{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:repeat(4,1fr);column-gap:var(--hg);row-gap:18px;align-content:start;padding:10px var(--hp) 0}
+  .phone .app{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px;font-weight:500;letter-spacing:-.1px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent;min-width:0}
+  .phone .app .icw{width:100%;max-width:64px;height:auto;aspect-ratio:1;transition:transform .16s cubic-bezier(.2,.8,.2,1),filter .16s}
+  .phone .app:active .icw{transform:scale(.88);filter:brightness(.75) drop-shadow(0 1px 1.5px rgba(0,0,0,.3))}
+  .phone .app .ico{width:100%;height:100%;display:grid;place-items:center;overflow:hidden}
+  .phone .app img.ico{object-fit:cover}
+  .phone .lab{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .iw-wrap{grid-column:span 2;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .iw-wrap.med{grid-column:span 4}
+  .iw{position:relative;display:block;width:100%;aspect-ratio:1;border-radius:22px;overflow:hidden;background:#fff;color:#000;box-shadow:0 4px 16px rgba(0,0,0,.14);text-align:left;-webkit-tap-highlight-color:transparent;transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+  .iw:active{transform:scale(.96)}
+  .iw-wrap.med .iw{aspect-ratio:auto;height:calc((100vw - 2*var(--hp) - 3*var(--hg))/2 + var(--hg))}
+  :root[data-theme="dark"] .iw{background:#1c1c1e;color:#fff}
+  .wlabel{font-size:11.5px;font-weight:500;color:#fff;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+  .iw-clock{background:#1c1c1e!important;color:#fff!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 10px 8px}
+  .dial{width:86%;height:auto}
+  .dial .face{fill:#fff}
+  .dial text{font:600 9.5px var(--font);fill:#1d1d1f;text-anchor:middle}
+  .dial .hh{stroke:#1d1d1f;stroke-width:3.4;stroke-linecap:round}
+  .dial .mh{stroke:#1d1d1f;stroke-width:2.2;stroke-linecap:round}
+  .dial .sh{stroke:#ff9500;stroke-width:1.1;stroke-linecap:round}
+  .dial .pin{fill:#1d1d1f}.dial .pin2{fill:#ff9500}
+  .iw-clock span{font-size:11px;font-weight:600;opacity:.8}
+  .iw-cal{display:flex!important;flex-direction:column;padding:13px 14px 12px}
+  .cal-day{font-size:11.5px;font-weight:700;color:#ff3b30;text-transform:uppercase;letter-spacing:.02em}
+  .cal-num{font-size:40px;font-weight:300;letter-spacing:-1.4px;line-height:1.02;margin-bottom:4px}
+  .cal-evs{display:flex;flex-direction:column;gap:5px;margin-top:auto;overflow:hidden}
+  .cal-ev{display:flex;gap:6px;font-size:11.5px;line-height:1.2;min-width:0}
+  .cal-ev i{width:3px;border-radius:2px;flex:none}
+  .cal-ev b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cal-ev small{display:block;color:#8e8e93;font-size:10.5px}
+  .cal-ev span{min-width:0}
+  .iw-people{display:grid!important;grid-template-columns:repeat(4,1fr);align-items:center;padding:0 8px}
+  .pp{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:12px;font-weight:500;min-width:0;-webkit-tap-highlight-color:transparent}
+  .pp img{width:min(60px,15.5vw);height:min(60px,15.5vw);border-radius:50%;object-fit:cover}
+  .pp:active img{filter:brightness(.8)}
+  .iw-next{display:flex!important;flex-direction:column;padding:13px 15px 12px;gap:8px}
+  .iw-next h3{font-size:13px;font-weight:700;color:#ff3b30;display:flex;justify-content:space-between}
+  .iw-next h3 small{color:#8e8e93;font-weight:500}
+  .iw-next .cal-ev{font-size:13px}
+  .iw-next .cal-ev small{font-size:11.5px}
+  .iw-stocks{background:#000!important;color:#fff!important;display:flex!important;flex-direction:column;justify-content:center;gap:10px;padding:12px 15px}
+  .st-row{display:grid;grid-template-columns:1fr 56px auto;align-items:center;gap:10px}
+  .st-l{min-width:0}
+  .st-l b{display:block;font-size:14px;font-weight:700;letter-spacing:-.2px}
+  .st-l small{display:block;font-size:11px;color:#8e8e93}
+  .st-bar{height:5px;border-radius:3px;background:#2c2c2e;overflow:hidden}
+  .st-bar i{display:block;height:100%;border-radius:inherit;background:#30d158}
+  .st-v{min-width:60px;padding:4px 7px;border-radius:7px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+  .iw-photo{background:#2c2c2e!important}
+  .iw-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;opacity:0;transition:opacity .45s}
+  .pf-cap{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;display:flex;flex-direction:column}
+  .pf-cap small{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;opacity:.85}
+  .pf-cap b{font-size:17px;font-weight:700;letter-spacing:-.3px}
+  .ph-bottom{display:flex;flex-direction:column;align-items:center;gap:12px;padding:8px 10px 0}
+  .ph-search,.ph-dots{height:30px;padding:0 13px;border-radius:15px;background:rgba(255,255,255,.2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;-webkit-tap-highlight-color:transparent}
+  .ph-search .g{width:13px;height:13px;stroke-width:2.4}
+  .ph-dots{display:none;gap:8px}
+  .ph-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4)}
+  .ph-dots i.on{background:#fff}
+  .phone.paging .ph-search{display:none}
+  .phone.paging .ph-dots{display:flex}
+  .ph-dock{display:grid;grid-template-columns:repeat(4,1fr);column-gap:var(--hg);width:100%;padding:15px 14px;border-radius:34px;background:rgba(255,255,255,.2);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6)}
+  .ph-dock .lab{display:none}
+  /* apps ouvertes en plein écran, comme sur iPhone */
+  .win{left:0!important;top:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;border-radius:0;box-shadow:none}
+  .win::after{display:none}
+  .tl,.tb,.rz{display:none!important}
+  .edge{display:block;position:absolute;left:0;top:0;bottom:0;width:22px;z-index:30;touch-action:none}
+  .mhd{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:93px;padding:47px 8px 0;flex:none;border-bottom:.5px solid var(--line);background:var(--tb-bg)}
+  .mhd b{font-size:17px;font-weight:600;letter-spacing:-.4px;max-width:56vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:opacity .2s}
+  .mback{justify-self:start;display:flex;align-items:center;gap:1px;height:44px;padding:0 6px;font-size:17px;color:var(--accent);-webkit-tap-highlight-color:transparent}
+  .mback .g{width:22px;height:22px;stroke-width:2.3}
+  .mback:active{opacity:.4}
+  .wbody{-webkit-overflow-scrolling:touch}
+  /* dossiers : grand titre, recherche, onglets */
+  .fd{grid-template-columns:1fr}
+  .fd-side,.fd-nav,.fd-title,.fd-tools .seg,.fd-status{display:none}
+  .fd-main{overflow:auto}
+  .win.k-finder:not(.scrolled) .mhd b{opacity:0}
+  .lt{display:block;font-size:34px;font-weight:700;letter-spacing:-.8px;padding:4px 16px 2px}
+  .fd-tb{height:auto;padding:6px 16px 10px;border:0}
+  .fd-tools{margin:0;width:100%}
+  .search{width:100%;height:36px;border-radius:10px;background:rgba(118,118,128,.12)}
+  .search input{font-size:17px}
+  .search .g{width:16px;height:16px}
+  .fd-chips{display:flex;gap:8px;overflow-x:auto;padding:0 16px 12px;scrollbar-width:none;flex:none}
+  .fd-chips::-webkit-scrollbar{display:none}
+  .fd-chips button{flex:none;height:32px;padding:0 14px;border-radius:99px;background:rgba(118,118,128,.12);font-size:15px;font-weight:500;-webkit-tap-highlight-color:transparent}
+  .fd-chips button.on{background:var(--accent);color:#fff}
+  .fd-body{flex:none;overflow:visible;padding:4px 12px 40px}
+  .grid{grid-template-columns:repeat(3,1fr);gap:14px 4px}
+  /* fiche créateur : listes groupées iOS */
+  .vw{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;background:var(--grp-bg)}
+  .vw-img{padding:0;background:#000;max-height:58vh}
+  .vw-img img{width:100%;max-height:58vh;object-fit:cover;box-shadow:none}
+  .insp{border:0;background:var(--grp-bg);padding:18px 16px 40px;gap:12px;overflow:visible}
+  .insp h2{font-size:28px;letter-spacing:-.6px}
+  .insp-big{background:var(--grp-card);border-radius:12px;padding:14px 16px}
+  .insp-sec{padding-left:16px;text-transform:uppercase;font-size:12px;font-weight:400;color:var(--text-2);letter-spacing:.02em;margin-bottom:-6px}
+  .grp{background:var(--grp-card);border-radius:12px;overflow:hidden}
+  .grp .netrow{border-radius:0;padding:12px 14px}
+  .grp .netrow+.netrow{border-top:.5px solid var(--line)}
+  .insp-acts{padding-top:4px}
+  .insp-acts .pbtn,.ct-foot .pbtn{height:50px;font-size:17px;border-radius:14px;width:100%;font-weight:600}
+  .insp-acts .pbtn:not(.blue),.ct-foot .pbtn:not(.blue){background:var(--grp-card);color:var(--accent);box-shadow:none}
+  /* fiche contact façon Contacts */
+  .ct{height:auto;background:var(--grp-bg);padding:22px 16px 40px;gap:16px}
+  .ct-acts{gap:10px}
+  .ct-act{flex:1;background:var(--grp-card);border-radius:12px;padding:10px 4px;font-size:12px;color:var(--accent);font-weight:500}
+  .ct-f{background:var(--grp-card);border-radius:12px;padding:2px 0;grid-template-columns:1fr;gap:0;border:0}
+  .ct-f dt{text-align:left;padding:10px 16px 0;font-size:13px;color:var(--text)}
+  .ct-f dd{padding:1px 16px 10px;font-size:17px;border-bottom:.5px solid var(--line)}
+  .ct-f dd:last-child{border-bottom:0}
+  .ct-foot{flex-direction:column-reverse}
+  /* autres apps */
+  .kpis{grid-template-columns:1fr 1fr}
+  .cols{grid-template-columns:1fr}
+  .sheet{padding:18px 16px 28px}
+  .bar{grid-template-columns:100px 1fr auto}
+  .doc{padding:22px 20px 36px;font-size:16px}
+  .pdf{padding:12px}
+  .page{padding:26px 22px 30px}
+  .agd{grid-template-columns:1fr;height:auto}
+  .agd-cal{padding:10px 12px 6px}
+  .agd-month{font-size:30px}
+  .agd-nav button:nth-child(2){display:none}
+  .agd-grid{grid-auto-rows:50px}
+  .agd-side{border:0;background:var(--grp-bg);padding:14px 16px 40px}
+  .ev{background:var(--grp-card);padding:11px 12px}
+  .agd-tip{background:var(--grp-card)}
+  /* recherche plein écran, comme sur iPhone */
+  .spot{padding:52px 12px 0;background:rgba(0,0,0,.2);backdrop-filter:blur(34px) saturate(1.5);-webkit-backdrop-filter:blur(34px) saturate(1.5);align-items:stretch;flex-direction:column;justify-content:flex-start}
+  .spot .box{width:100%;background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible}
+  .spot .in{height:auto;padding:0;gap:12px}
+  .spot .fld{height:38px;padding:0 10px;border-radius:12px;background:rgba(255,255,255,.8);color:#1d1d1f}
+  :root[data-theme="dark"] .spot .fld{background:rgba(44,44,46,.9);color:#fff}
+  .spot .in .g{width:18px;height:18px}
+  .spot input{font-size:17px;letter-spacing:-.2px}
+  .spot-x{display:block;color:#fff;font-size:17px;-webkit-tap-highlight-color:transparent}
+  .spot .res{margin-top:12px;border-radius:14px;background:var(--grp-card);border:0;max-height:70vh;padding:6px}
+  .spot .r{height:46px}
+  /* écran verrouillé façon iPhone */
+  .lock .who{display:none}
+  .lock .date{margin-top:62px;font-size:19px}
+  .lock .time{font-size:min(27vw,108px);letter-spacing:-3px;margin-top:0}
+  .lock-ios{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;margin-top:auto;padding:0 10px 14px}
+  .lk-notif{position:relative;width:100%;display:flex;gap:11px;align-items:flex-start;padding:12px 14px;border-radius:22px;background:rgba(255,255,255,.24);backdrop-filter:blur(28px) saturate(1.5);-webkit-backdrop-filter:blur(28px) saturate(1.5);color:#fff;text-align:left}
+  .lk-notif img{width:38px;height:38px;border-radius:9px;flex:none}
+  .lk-notif div{min-width:0;font-size:14px;line-height:1.3}
+  .lk-notif b{font-weight:600}
+  .lk-notif time{position:absolute;right:14px;top:12px;font-size:12px;opacity:.7}
+  .lk-swipe{font-size:13px;font-weight:500;opacity:.85}
+  .lk-row{width:100%;display:flex;justify-content:space-between;padding:0 32px}
+  .lk-btn{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.28);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+  .lk-btn svg{width:22px;height:22px;fill:#fff}
+  .lk-home{width:134px;height:5px;border-radius:3px;background:#fff}
+  .lock{transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .5s;touch-action:none}
+  .lock.out{transform:translateY(-100%);opacity:1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<!-- Version texte de l'accueil pour les robots qui n'exécutent pas le JavaScript (ChatGPT, Claude,
+     Perplexity…) et les navigateurs sans JavaScript : les mêmes textes que les fenêtres du bureau.
+     Le script de la page la retire dès le démarrage : rien de caché ne reste dans la page affichée.
+     Chiffres, créateurs et marques : réécrits à chaque déploiement par scripts/bureau_donnees.py. -->
+<main id="texte" hidden>
+  <h1>TTP Creators, l'agence des créateurs sport &amp; lifestyle</h1>
+  <p>Talent management entre Lyon et Genève, depuis 2022. Un créateur n'est pas une audience : c'est une marque. On construit une identité qui dure, pas des pics de vues.</p>
+  <h2>Services</h2>
+  <ul>
+    <li><strong>Talent Management</strong> : carrière, négociations, planning et développement de revenus. On gère la structure, tu te concentres sur la création.</li>
+    <li><strong>Production de contenu</strong> : direction artistique, tournage, montage, photo. Du contenu prêt à publier, pensé pour chaque plateforme.</li>
+    <li><strong>Stratégie social media</strong> : ligne éditoriale, formats, calendrier et lecture des performances. Une croissance qui ne doit rien au hasard.</li>
+    <li><strong>Partenariats marques</strong> : sourcing, brief, activation et reporting. On connecte les bonnes marques aux bons talents.</li>
+  </ul>
+  <h2>Méthode : Trust The Process.</h2>
+  <ol>
+    <li><strong>Découverte</strong> : objectifs, audience, positionnement : on apprend à te connaître avant de parler stratégie.</li>
+    <li><strong>Stratégie</strong> : on pose la ligne, les formats et le plan de croissance. Noir sur blanc.</li>
+    <li><strong>Production</strong> : on crée, on optimise, on publie. Chaque contenu a un rôle précis.</li>
+    <li><strong>Croissance</strong> : on mesure, on ajuste, et on active les bonnes marques au bon moment.</li>
+  </ol>
+  <h2>Nos créateurs</h2>
+  <p data-texte="chiffres">11 créateurs, 2,1 M d'abonnés cumulés sur Instagram et TikTok, 70 marques avec nos créateurs.</p>
+  <ul data-texte="createurs">
+    <li><a href="/mediakit/anamilanovic/">Ana Milanovic</a> (@anamilanovic_, Health, 636,6 K abonnés)</li>
+    <li><a href="/mediakit/lena/">Léna Pasquale</a> (@lenaa.psl, Sport, 22,9 K abonnés)</li>
+    <li><a href="/mediakit/candice/">Candice Maissa</a> (@candicemaissa, Lifestyle, 56,8 K abonnés)</li>
+    <li><a href="/mediakit/cassandra/">Cassandra Rousseau</a> (@instacassii, Lifestyle, 122,5 K abonnés)</li>
+    <li><a href="/mediakit/ivana/">Ivana</a> (@lunivana, Relation amoureuse, 244,1 K abonnés)</li>
+    <li><a href="/mediakit/justinegentet/">Justine Gentet</a> (@justinelbcv_, Sport, 16,2 K abonnés)</li>
+    <li><a href="/mediakit/pierre/">Pierre Gentet</a> (@gntt_pierre, Sport, 7,2 K abonnés)</li>
+    <li><a href="/mediakit/lea/">Léa Berenger</a> (@leabrnger, Lifestyle, 4 K abonnés)</li>
+    <li><a href="/mediakit/chloe/">Chloé Deyre</a> (@chloe.dyr, Fitness, 26,9 K abonnés)</li>
+    <li><a href="/mediakit/anthony/">Anthony Gharbi</a> (@the_french_osteopath, Santé / Ostéopathie, 709,7 K abonnés)</li>
+    <li><a href="/mediakit/adelina/">Adelina Krasnici</a> (@adelina_lmp11, Food, 301 K abonnés)</li>
+  </ul>
+  <h2>Ils ont travaillé avec nos créateurs</h2>
+  <p data-texte="marques">Tesla, Ray-Ban, HP, Speedo, Palladium, Bumble, Magnum, Qonto, Nutripure, So Shape, Novoma, Airup, Altalanga, Andros, Banane de Guadeloupe &amp; Martinique, Carlsbourg, Cellublue, Certideal, Colombus, Conforama, Dovy Cuisines, Dulux Valentine, Easy Cooking, Édition point, Emma, Eno, Fabletics, Fitjeans, Flammarion, IKEA, Institut Esthederm, Jean Dubost, Jeunesse Dorée, Kenwood, Knorr, Kosbiotic, Kumali, L'Or Espresso, L'Oréal, Les Lunes, M&amp;M's, Maasmechelen Village, Marie Morin, Motelrock, Moulinex, Musea Lagree Studio, Nanou_thebrand, Nestlé, Onatera, Panda tea, Paramount, Prozis, Respire, Rétif, Robur, Saint Louis, Sephora, Shokz, Silikomart, Sol De Janeiro, St-Germain, Teveo, Typology, Ultraprenium, Victoria's Secret, Waynabox, Wecandoo, Wild, Wines Bordeaux, Wizbii.</p>
+  <h2>Contact</h2>
+  <p><a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a> · <a href="https://www.instagram.com/ttpcreators/">Instagram</a> · <a href="https://www.linkedin.com/company/ttp-creators/">LinkedIn</a> · <a href="/mediakit/agence/">Le roster de l'agence</a></p>
+  <p><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions d'utilisation</a></p>
+</main>
+<noscript><style>body>:not(#texte):not(noscript){display:none!important}#texte[hidden]{display:block!important;max-width:680px;margin:0 auto;padding:32px 16px;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#1d1d1f;background:#fff}#texte a{color:#0066cc}html,body{overflow:auto!important;height:auto!important;background:#fff!important}</style></noscript>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gFolderBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aaeef"/><stop offset="1" stop-color="#2f8ad9"/></linearGradient>
+    <linearGradient id="gFolderFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93d3fc"/><stop offset="1" stop-color="#5cb6f5"/></linearGradient>
+  </defs>
+</svg>
+<div class="wall" id="wall"></div>
+
+<header class="menubar" id="menubar">
+  <button class="mb-item mb-logo" data-menu="logo" aria-label="Menu TTP Creators"><img src="assets/ttp-logo-bordeaux.png" alt=""></button>
+  <button class="mb-item app" data-menu="app" id="mbApp">Bureau</button>
+  <button class="mb-item" data-menu="fichier">Fichier</button>
+  <button class="mb-item" data-menu="edition">Édition</button>
+  <button class="mb-item" data-menu="presentation">Présentation</button>
+  <button class="mb-item" data-menu="talents">Talents</button>
+  <button class="mb-item" data-menu="fenetre">Fenêtre</button>
+  <button class="mb-item" data-menu="aide">Aide</button>
+  <div class="mb-right">
+    <button class="mb-item mb-status" data-menu="statut"><i></i><span>Ouvert aux collabs</span></button>
+    <button class="mb-item mb-ic" id="mbSpot" aria-label="Spotlight"></button>
+    <button class="mb-item mb-ic" id="mbCC" aria-label="Centre de contrôle"></button>
+    <button class="mb-item mb-clock" id="mbClock"><span class="d"></span><span class="t"></span></button>
+  </div>
+</header>
+<div class="mb-hot" id="mbHot"></div>
+
+<main class="desk" id="desk"></main>
+<div class="rubber" id="rubber"></div>
+<div class="layer" id="layer"></div>
+
+<nav class="dock" id="dock">
+  <div class="dk" id="dkApps"></div>
+  <span class="dsep"></span>
+  <div class="dk" id="dkMin"></div>
+  <div class="dk" id="dkTrash"></div>
+</nav>
+
+<div class="menu" id="menu" role="menu"></div>
+<div class="cc glass" id="cc"></div>
+<div class="nc" id="nc"></div>
+<div class="notif glass" id="notif" role="status"></div>
+<div class="spot" id="spot"><div class="box glass"><div class="in"><label class="fld"><span id="spotIc"></span><input id="spotQ" placeholder="Recherche Spotlight" autocomplete="off" aria-label="Recherche"></label><button class="spot-x" id="spotX">Annuler</button></div><div class="res" id="spotRes"></div></div></div>
+<div class="ql" id="ql"></div>
+
+<div class="ios-status" id="iosStatus" aria-hidden="true"><span id="iosTime"></span><span class="sig"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3C13.4 1.7 10.8.6 8 .6S2.6 1.7.7 3.5L2 4.8c1.6-1.5 3.7-2.4 6-2.4zm0 3.6c1.4 0 2.6.5 3.6 1.4l1.3-1.3C11.6 4.9 9.9 4.2 8 4.2S4.4 4.9 3.1 6.1l1.3 1.3C5.4 6.5 6.6 6 8 6zm0 3.6c-.6 0-1.1.2-1.5.6L8 11.7l1.5-1.5c-.4-.4-.9-.6-1.5-.6z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2" y="2" width="20" height="8" rx="1.8"/><path d="M25 4v4c.8-.3 1.4-1.1 1.4-2S25.8 4.3 25 4z" fill-opacity=".45"/></svg></span></div>
+<div class="homebar" id="homebar" role="button" aria-label="Retour à l’accueil"></div>
+<section class="phone" id="phone">
+  <div class="ph-pages" id="phPages"></div>
+  <div class="ph-bottom"><button class="ph-search" id="phSearch"><span id="phSearchIc"></span>Rechercher</button><div class="ph-dots" id="phDots"></div><div class="ph-dock" id="phDock"></div></div>
+</section>
+
+<div class="lock" id="lock">
+  <div class="bg" id="lockBg"></div>
+  <div class="date" id="ldate"></div>
+  <div class="time" id="ltime"></div>
+  <div class="who">
+    <img class="av" src="assets/ttp-icon.png" alt="">
+    <div class="nm">TTP Creators</div>
+    <button class="pw" id="pw" aria-label="Entrer"><span id="pwText"></span><span class="go" id="pwGo"></span></button>
+    <small><span class="click">Cliquez ou appuyez sur Entrée</span><span class="touch">Touchez pour entrer</span></small>
+  </div>
+  <div class="lock-ios">
+    <div class="lk-notif"><img src="assets/ttp-icon.png" alt=""><div><b>TTP Creators</b><br><span id="lkText"></span></div><time>maintenant</time></div>
+    <span class="lk-swipe">Balayez vers le haut pour ouvrir</span>
+    <div class="lk-row"><span class="lk-btn" id="lkTorch"></span><span class="lk-btn" id="lkCam"></span></div>
+    <span class="lk-home"></span>
+  </div>
+</div>
+
+<script id="ttp-data" type="application/json">{"maj":"2026-11-27T16:41Z","createurs":[
+{"nom":"Ana Milanovic","compte":"@anamilanovic_","niche":"Health","kit":"anamilanovic","photo":"ana_milanovic/1791293096572.png","reseaux":[["tiktok",392100,"anamilanovic_"],["instagram",244510,"anamilanovic_"]]},
+{"nom":"Léna Pasquale","compte":"@lenaa.psl","niche":"Sport","kit":"lena","photo":"lena_pasquale/1782992662575.png","reseaux":[["instagram",22940,"lenaa.psl"]]},
+{"nom":"Candice Maissa","compte":"@candicemaissa","niche":"Lifestyle","kit":"candice","photo":"candice_maissa/1782993231244.png","reseaux":[["tiktok",45800,"candicemaissa"],["instagram",11027,"candicemaissa"]]},
+{"nom":"Cassandra Rousseau","compte":"@instacassii","niche":"Lifestyle","kit":"cassandra","photo":"cassandra_rousseau/1792764045267.png","reseaux":[["tiktok",122521,"instacassii"]]},
+{"nom":"Ivana","compte":"@lunivana","niche":"Relation amoureuse","kit":"ivana","photo":"ivana/1793618490803.jpg","reseaux":[["tiktok",152800,"lunivana"],["instagram",91262,"lunivana_"]]},
+{"nom":"Justine Gentet","compte":"@justinelbcv_","niche":"Sport","kit":"justinegentet","photo":"justine_gentet/1785515711355.jpeg","reseaux":[["instagram",16184,"justinelbcv_"]]},
+{"nom":"Pierre Gentet","compte":"@gntt_pierre","niche":"Sport","kit":"pierre","photo":"pierre_gentet/1790199259706.jpeg","reseaux":[["instagram",7200,"gntt_pierre"]]},
+{"nom":"Léa Berenger","compte":"@leabrnger","niche":"Lifestyle","kit":"lea","photo":"lea_berenger/1783792677816.png","reseaux":[["instagram",4006,"leabrnger"]]},
+{"nom":"Chloé Deyre","compte":"@chloe.dyr","niche":"Fitness","kit":"chloe","photo":"chloe_deyre/1795537811606.jpeg","reseaux":[["tiktok",16023,"chloe.dyr"],["instagram",10910,"chloe.dyr"]]},
+{"nom":"Anthony Gharbi","compte":"@the_french_osteopath","niche":"Santé / Ostéopathie","kit":"anthony","photo":"anthony_gharbi/1795617934095.png","reseaux":[["tiktok",496000,null],["instagram",213727,"the_french_osteopath"]]},
+{"nom":"Adelina Krasnici","compte":"@adelina_lmp11","niche":"Food","kit":"adelina","photo":"adelina_krasnici/1795617891564.png","reseaux":[["instagram",165998,"adelina_lmp11"],["tiktok",135000,null]]}
+],"marques":[["Flammarion",["Ana"]],["Édition point",["Ana"]],["Kumali",["Ana"]],["Nanou_thebrand",["Ana"]],["Conforama",["Léna"]],["M&M's",["Léna"]],["Colombus",["Léna"]],["Typology",["Léna"]],["L'Oréal",["Léna"]],["Fabletics",["Léna"]],["Eno",["Léna"]],["Sephora",["Léna"]],["Victoria's Secret",["Léna"]],["Nutripure",["Léna"]],["Certideal",["Candice"]],["Sol De Janeiro",["Candice"]],["Jeunesse Dorée",["Candice"]],["Wecandoo",["Candice"]],["Wizbii",["Candice"]],["Waynabox",["Candice"]],["Andros",["Candice"]],["Airup",["Candice"]],["Motelrock",["Candice"]],["Respire",["Candice"]],["Shokz",["Justine"]],["Ultraprenium",["Justine"]],["Onatera",["Justine"]],["Panda tea",["Justine"]],["Prozis",["Justine","Chloé"]],["Teveo",["Chloé"]],["Kosbiotic",["Chloé"]],["Cellublue",["Chloé"]],["Fitjeans",["Chloé"]],["Musea Lagree Studio",["Chloé"]],["Kenwood",["Adelina"]],["Moulinex",["Adelina"]],["Silikomart",["Adelina"]],["Altalanga",["Adelina"]],["Marie Morin",["Adelina"]],["St-Germain",["Adelina"]],["Maasmechelen Village",["Adelina"]],["Easy Cooking",["Adelina"]],["Dulux Valentine",["Adelina"]],["Paramount",["Adelina"]],["Knorr",["Adelina"]],["Wines Bordeaux",["Adelina"]],["Banane de Guadeloupe & Martinique",["Adelina"]],["L'Or Espresso",["Adelina"]],["Robur",["Adelina"]],["Nestlé",["Adelina"]],["Saint Louis",["Adelina"]],["Rétif",["Adelina"]],["Les Lunes",["Adelina"]],["IKEA",["Adelina"]],["Wild",["Adelina"]],["Emma",["Adelina"]],["Carlsbourg",["Adelina"]],["Dovy Cuisines",["Adelina"]],["Jean Dubost",["Adelina"]],["Institut Esthederm",["Adelina"]]]}</script>
+<script>
+// La version texte (robots sans JavaScript) laisse la place au bureau
+document.getElementById('texte')?.remove();
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const norm = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isPhone = () => innerWidth <= 720;
+const MB = 25;
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+const openUrl = u => window.open(u, '_blank', 'noopener');
+let lastPT = 'mouse';
+addEventListener('pointerdown', e => { lastPT = e.pointerType || 'mouse'; }, true);
+// iPhone : position de l'icône touchée, pour ouvrir l'app en zoomant depuis elle
+let tapRect = null;
+addEventListener('pointerdown', e => {
+  const t = e.target.closest('.phone [data-open]');
+  tapRect = t ? (t.querySelector('.icw') || t.querySelector('img') || t).getBoundingClientRect() : null;
+}, true);
+
+/* ═════════ Données ═════════ */
+// Roster et marques : bloc JSON « ttp-data » plus haut. À chaque déploiement (et toutes les
+// heures), scripts/bureau_donnees.py le remplace par les données en direct de Supabase (vues
+// publiques public_roster et public_mediakit) : un créateur ajouté dans TTP Suite apparaît ici tout
+// seul. Le bloc du dépôt sert de repli. Aucun montant, aucune donnée privée.
+const DATA = (() => { try { return JSON.parse(document.getElementById('ttp-data').textContent) || {}; } catch (e) { return {}; } })();
+const MAIL = 'partnerships@ttpcreators.pro';
+const KIT = 'https://ttpcreators.pro/mediakit/';
+const IG_URL = 'https://www.instagram.com/ttpcreators/';
+const LI_URL = 'https://www.linkedin.com/company/ttp-creators/';
+// photo réduite par Supabase (chemin dans le dossier avatars, ou adresse complète du stockage)
+const thumb = (p, w = 560) => {
+  if (!p) return 'assets/ttp-icon.png';
+  const u = /^https?:/.test(p) ? p.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') : `https://zizvggziggswhrbuyhuo.supabase.co/storage/v1/render/image/public/avatars/${p}`;
+  return `${u}${u.includes('?') ? '&' : '?'}width=${w}&resize=contain&quality=72`;
+};
+// abonnés : 244510 → « 244,5 K », 1250000 → « 1,25 M »
+const kf = n => n >= 1e6 ? (n / 1e6).toFixed(2).replace(/\.?0+$/, '').replace('.', ',') + ' M' : (n / 1e3).toFixed(1).replace(/\.0$/, '').replace('.', ',') + ' K';
+// nom, compte, niche, media kit, photo, abonnés (tous réseaux), réseaux [réseau, abonnés, compte]
+const C = (DATA.createurs || []).map(c => {
+  const nets = (c.reseaux || []).filter(r => r[1] > 0).sort((a, b) => b[1] - a[1]);
+  return [c.nom, c.compte || '', c.niche || 'Créateur', c.kit || null, c.photo || null, kf(nets.reduce((t, r) => t + r[1], 0)), nets.map(([n, v, h]) => [n, kf(v), h || null])];
+});
+const usedIds = new Set();
+const CREATORS = C.map(([name, handle, niche, kit, photo, fans, nets]) => {
+  const base = norm(name.split(' ')[0]).replace(/[^a-z0-9]+/g, '-') || 'createur';
+  let slug = base;
+  for (let i = 2; usedIds.has(slug); i++) slug = `${base}-${i}`;
+  usedIds.add(slug);
+  return { name, handle, niche, kit, fans, nets, slug, id: 'c:' + slug, file: slug + '.jpg', photo: thumb(photo), icon: thumb(photo, 200), wall: thumb(photo, 160) };
+});
+const K = s => { const t = String(s), v = parseFloat(t.replace(/\s|K|M/g, '').replace(',', '.')) || 0; return /M/.test(t) ? v * 1000 : v; };
+const fmtK = v => v >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + ' M' : Math.round(v) + ' K';
+const TOTAL = CREATORS.reduce((t, c) => t + K(c.fans), 0);
+const NET = { instagram: 0, tiktok: 0 };
+CREATORS.forEach(c => c.nets.forEach(([n, v]) => { NET[n] = (NET[n] || 0) + K(v); }));
+const TAGC = { 'Sport': '#ff453a', 'Lifestyle': '#bf5af2', 'Health': '#32d74b', 'Fitness': '#ff9f0a', 'Food': '#ffd60a', 'Santé / Ostéopathie': '#0a84ff', 'Relation amoureuse': '#98989d' };
+const tagc = n => TAGC[n] || '#98989d';
+const NICHES = Object.entries(CREATORS.reduce((m, c) => { m[c.niche] = (m[c.niche] || 0) + 1; return m; }, {})).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+// Marques : les 11 logos dessinés (assets/clients), puis toutes les marques citées dans les media kits
+// publics des créateurs (« Ces marques lui ont fait confiance »), avec les créateurs concernés
+const CLIENTS = [['Tesla', 'tesla'], ['Ray-Ban', 'ray-ban'], ['HP', 'hp'], ['Speedo', 'speedo'], ['Palladium', 'palladium'], ['Bumble', 'bumble'], ['Magnum', 'magnum'], ['Qonto', 'quonto'], ['Nutripure', 'nutripure'], ['So Shape', 'so-shape'], ['Novoma', 'novoma']];
+const MARQUES = (() => {
+  const m = new Map(), rest = [];
+  CLIENTS.forEach(([n, f]) => m.set(norm(n), { n, f, who: [] }));
+  (DATA.marques || []).forEach(([n, who]) => {
+    const k = norm(n), b = m.get(k);
+    if (b) b.who = who || [];
+    else { const x = { n, f: null, who: who || [] }; m.set(k, x); rest.push(x); }
+  });
+  return [...CLIENTS.map(([n]) => m.get(norm(n))), ...rest.sort((a, b) => a.n.localeCompare(b.n, 'fr'))];
+})();
+const avec = w => !w || !w.length ? '' : 'Avec ' + (w.length > 1 ? w.slice(0, -1).join(', ') + ' et ' + w[w.length - 1] : w[0]);
+const brandQL = b => ({ title: b.n, logo: b.f, word: b.f ? null : b.n, sub: avec(b.who) });
+const SERVICES = [
+  ['Talent Management', 'Carrière, négociations, planning et développement de revenus. On gère la structure, tu te concentres sur la création.', ['Carrière', 'Deals', 'Planning']],
+  ['Production de contenu', 'Direction artistique, tournage, montage, photo. Du contenu prêt à publier, pensé pour chaque plateforme.', ['Photo', 'Vidéo', 'DA']],
+  ['Stratégie social media', 'Ligne éditoriale, formats, calendrier et lecture des performances. Une croissance qui ne doit rien au hasard.', ['Édito', 'Calendrier', 'Analytics']],
+  ['Partenariats marques', 'Sourcing, brief, activation et reporting. On connecte les bonnes marques aux bons talents.', ['Sourcing', 'Campagnes', 'Reporting']],
+];
+const STEPS = [
+  ['Découverte', 'Objectifs, audience, positionnement : on apprend à te connaître avant de parler stratégie.'],
+  ['Stratégie', 'On pose la ligne, les formats et le plan de croissance. Noir sur blanc.'],
+  ['Production', 'On crée, on optimise, on publie. Chaque contenu a un rôle précis.'],
+  ['Croissance', 'On mesure, on ajuste, et on active les bonnes marques au bon moment.'],
+];
+// Temps forts déjà publiés sur ttpcreators.pro, sans aucun montant
+const HIGHLIGHTS = [
+  ['Reel d’Ana', '33 000', 'interactions sur un seul Reel'],
+  ['Nutripure', '3', 'collaborations signées depuis juillet'],
+  ['Kosbiotic', 'Mensuel', 'partenariat suivi mois après mois'],
+];
+
+/* ═════════ Icônes ═════════ */
+const P = {
+  users: '<circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.6 6.5-5.6s5.9 2 6.5 5.6"/><path d="M16 4.3a3.4 3.4 0 0 1 0 6.5M18 14.6c2 .5 3.2 2.2 3.5 5.4"/>',
+  spark: '<path d="M12 3.5l1.8 5.2 5.2 1.8-5.2 1.8L12 17.5l-1.8-5.2L5 10.5l5.2-1.8z"/><path d="M18.5 3.5v3M17 5h3"/>',
+  steps: '<path d="M3 19h5v-4h5v-4h5V7h3"/>',
+  chart: '<path d="M5 20v-8M11 20V5M17 20v-6M21.5 20h-19"/>',
+  tag: '<path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.8 8.8-8.7 8.7z"/><circle cx="8" cy="8" r="1.4"/>',
+  book: '<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v14H6.5A1.5 1.5 0 0 0 5 18.5zM5 18.5A1.5 1.5 0 0 0 6.5 20H19"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.8 6.8 8.2 6 8.2-6"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.6-4.6"/>',
+  left: '<path d="m14.5 5.5-6.5 6.5 6.5 6.5"/>',
+  right: '<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>',
+  grid: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/>',
+  list: '<path d="M8.5 6.5H20M8.5 12H20M8.5 17.5H20"/><circle cx="4.6" cy="6.5" r=".9"/><circle cx="4.6" cy="12" r=".9"/><circle cx="4.6" cy="17.5" r=".9"/>',
+  doc: '<path d="M6.5 3h7l4.5 4.5V20a1 1 0 0 1-1 1H6.5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M13.5 3v4.5H18"/>',
+  cc: '<rect x="3" y="4" width="18" height="7" rx="3.5"/><circle cx="17.5" cy="7.5" r="2"/><rect x="3" y="13" width="18" height="7" rx="3.5"/><circle cx="6.5" cy="16.5" r="2"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
+  moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  auto: '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/>',
+  lock: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/>',
+  copy: '<rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 8.5V5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 5v9A1.5 1.5 0 0 0 5 15.5h3.5"/>',
+  tidy: '<path d="M4 6h7M4 12h7M4 18h7M15 6h5M15 12h5M15 18h5"/>',
+  photo: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m3.5 17 5-4.5 4 3.5 3-2.5 5 4"/>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  x: '<path d="M6 6l12 12M18 6 6 18"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+};
+const ico = (n, cls = '') => `<svg class="g ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+// Logos officiels (tracés Simple Icons, CC0) dans leur carré de marque
+const TT_PATH = 'M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z';
+const LI_PATH = 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z';
+const BRANDS = {
+  instagram: { label: 'Instagram', cls: 'b-ig', mark: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.25" fill="#fff"/></svg>' },
+  linkedin: { label: 'LinkedIn', cls: 'b-li', mark: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="${LI_PATH}"/></svg>` },
+  tiktok: { label: 'TikTok', cls: 'b-tt', mark: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25f4ee" d="${TT_PATH}" transform="translate(-.8 -.6)"/><path fill="#fe2c55" d="${TT_PATH}" transform="translate(.8 .6)"/><path fill="#fff" d="${TT_PATH}"/></svg>` },
+};
+const brand = (n, s = 20) => `<span class="bt ${BRANDS[n].cls}" style="--s:${s}px" aria-hidden="true">${BRANDS[n].mark}</span>`;
+const appIcon = (g, c1, c2) => `<span class="ico" style="background:linear-gradient(180deg,${c1},${c2})">${ico(g, 'w')}</span>`;
+// Icônes façon iPhone : forme squircle, dégradé vertical, pictogramme plein et blanc
+const IOSG = {
+  people: '<circle cx="9" cy="7.6" r="3.7"/><path d="M2.5 19.3c0-3.5 2.9-5.8 6.5-5.8s6.5 2.3 6.5 5.8c0 .5-.4.9-.9.9H3.4c-.5 0-.9-.4-.9-.9z"/><circle cx="17" cy="8.6" r="2.9" opacity=".82"/><path d="M15.8 14c.4-.1.8-.1 1.2-.1 2.9 0 5.3 1.9 5.3 4.7 0 .4-.3.8-.7.8h-3.9c.1-.3.1-.6.1-.9 0-1.8-.8-3.4-2-4.5z" opacity=".82"/>',
+  sparkles: '<path d="M10.2 2.6l2 5.9 5.9 2-5.9 2-2 5.9-2-5.9-5.9-2 5.9-2z"/><path d="M18.3 13.6l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z"/><path d="M18.6 2.8l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z"/>',
+  checklist: '<circle cx="5.6" cy="6.4" r="2.3"/><circle cx="5.6" cy="12" r="2.3"/><circle cx="5.6" cy="17.6" r="2.3"/><rect x="9.6" y="5.2" width="11.2" height="2.4" rx="1.2"/><rect x="9.6" y="10.8" width="11.2" height="2.4" rx="1.2"/><rect x="9.6" y="16.4" width="8" height="2.4" rx="1.2"/>',
+  tag: '<path fill-rule="evenodd" d="M3 4.7V11c0 .6.2 1.1.6 1.5l8.9 8.9c.8.8 2.1.8 2.9 0l6-6c.8-.8.8-2.1 0-2.9l-8.9-8.9C12.1 3.2 11.6 3 11 3H4.7C3.8 3 3 3.8 3 4.7zM7.6 9.2a1.6 1.6 0 1 1 0-3.2 1.6 1.6 0 0 1 0 3.2z"/>',
+  book: '<path d="M11.1 5.3C9.5 4.1 7.3 3.5 5 3.5c-.9 0-1.8.1-2.5.3-.3.1-.5.4-.5.7v13.2c0 .5.5.8.9.7.7-.2 1.4-.3 2.1-.3 2.3 0 4.5.7 6.1 1.9z"/><path d="M12.9 5.3c1.6-1.2 3.8-1.8 6.1-1.8.9 0 1.8.1 2.5.3.3.1.5.4.5.7v13.2c0 .5-.5.8-.9.7-.7-.2-1.4-.3-2.1-.3-2.3 0-4.5.7-6.1 1.9z"/>',
+  envelope: '<path d="M2.4 7.4l8.8 5.9c.5.3 1.1.3 1.6 0l8.8-5.9V17a2 2 0 0 1-2 2H4.4a2 2 0 0 1-2-2z"/><path d="M4.4 5h15.2c.9 0 1.7.6 1.9 1.5l-9.5 6.1-9.5-6.1C2.7 5.6 3.5 5 4.4 5z"/>',
+  doc: '<path fill-rule="evenodd" d="M6.2 2.5h7.3c.5 0 1 .2 1.4.6l4.4 4.4c.4.4.6.9.6 1.4V19.5a2 2 0 0 1-2 2H6.2a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2zM8 12.2h8v1.6H8zm0 3.4h6v1.6H8z"/>',
+  photo: '<path fill-rule="evenodd" d="M4.5 4h15A2.5 2.5 0 0 1 22 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5v-11A2.5 2.5 0 0 1 4.5 4zM8.5 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM4 18h16l-5.2-6.5-3.8 4.6-2.4-2.6z"/>',
+};
+const IOS = {
+  talents: ['#5fe07e', '#24a548', 'people'], services: ['#d88dff', '#9a3ce0', 'sparkles'], methode: ['#ffd84a', '#ff9a0a', 'checklist'],
+  marques: ['#ff6b90', '#e5164b', 'tag'], histoire: ['#ffb53f', '#ff7600', 'book'], contact: ['#5ac8fa', '#0a6cff', 'envelope'],
+  roster: ['#ff6f61', '#de261b', 'doc'], viewer: ['#8fd6ff', '#2f86f0', 'photo'],
+};
+const icw = inner => `<span class="icw">${inner}</span>`;
+function iosIcon(k) {
+  if (k === 'resultats') return '<span class="ico sq" style="background:linear-gradient(180deg,#2c2c2e,#000)"><svg class="gs" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5h17" stroke="rgba(255,255,255,.28)" stroke-width=".8"/><path d="M3.5 15.5l4.2-4.3 3.4 2.8 4.5-6 4.9 3.6" fill="none" stroke="#30d158" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20.5" cy="11.6" r="1.4" fill="#30d158"/></svg></span>';
+  const [a, b, g] = IOS[k];
+  return `<span class="ico sq" style="background:linear-gradient(180deg,${a},${b})"><svg class="gf" viewBox="0 0 24 24" aria-hidden="true">${IOSG[g]}</svg></span>`;
+}
+const calIcon = () => '<span class="ico sq cal-ic"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="60" fill="#fff"/><text class="cal-wd" x="30" y="16.5" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" font-weight="600" fill="#ff3b30"></text><text class="cal-dn" x="30" y="47" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="31" font-weight="300" fill="#1d1d1f"></text></svg></span>';
+const FOLDER = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 16a4 4 0 0 1 4-4h13.6a3 3 0 0 1 2.3 1.1l2.4 2.9H54a4 4 0 0 1 4 4v4H6z" fill="url(#gFolderBack)"/><rect x="6" y="20.5" width="52" height="34" rx="4.5" fill="url(#gFolderFront)"/><rect x="6" y="20.5" width="52" height="1.4" rx=".7" fill="#fff" opacity=".55"/></svg>';
+const docIcon = (label, color, inner = '') => `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M15 5h23.5L51 17.5V57a2 2 0 0 1-2 2H15a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="#fff" stroke="rgba(0,0,0,.16)"/><path d="M38.5 5v10.5a2 2 0 0 0 2 2H51" fill="#eceef1" stroke="rgba(0,0,0,.16)"/>${inner}<rect x="17" y="46" width="30" height="9" rx="2" fill="${color}"/><text x="32" y="52.6" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Inter,sans-serif" font-size="6.6" font-weight="700" fill="#fff">${label}</text></svg>`;
+const LINES = '<path d="M20 24h22M20 29h24M20 34h18M20 39h22" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round"/>';
+const SHEETL = '<rect x="20" y="22" width="24" height="18" rx="1.5" fill="none" stroke="#34c759" stroke-width="1.6"/><path d="M20 28h24M20 34h24M28 22v18M36 22v18" stroke="#34c759" stroke-width="1.2"/>';
+const ICON = {
+  pdf: docIcon('PDF', '#e2483d', LINES),
+  txt: docIcon('TXT', '#8e8e93', LINES),
+  doc: docIcon('DOC', '#2b7de9', LINES),
+  sheet: docIcon('STATS', '#30a14e', SHEETL),
+  vcf: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="13" width="52" height="38" rx="5" fill="#fff" stroke="rgba(0,0,0,.16)"/><circle cx="21" cy="31" r="9" fill="#49060d"/><image href="assets/ttp-logo-white.png" x="16.3" y="25" width="9.4" height="12"/><path d="M35 26h15M35 32h12M35 38h14" stroke="#c7c7cc" stroke-width="2.2" stroke-linecap="round"/></svg>',
+};
+const TRASH = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 17h36l-3.4 38.4a3.5 3.5 0 0 1-3.5 3.1H20.9a3.5 3.5 0 0 1-3.5-3.1z" fill="rgba(255,255,255,.58)" stroke="rgba(0,0,0,.28)"/><path d="M23 23l1.4 30M32 23v30M41 23l-1.4 30" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><ellipse cx="32" cy="17" rx="19" ry="4.2" fill="rgba(255,255,255,.75)" stroke="rgba(0,0,0,.28)"/></svg>';
+const DOCS = [
+  { id: 'services', name: 'Services.pdf', type: 'PDF', icon: ICON.pdf },
+  { id: 'methode', name: 'Méthode.txt', type: 'Texte', icon: ICON.txt },
+  { id: 'resultats', name: 'Résultats', type: 'Tableur', icon: ICON.sheet },
+  { id: 'histoire', name: 'Notre histoire', type: 'Document', icon: ICON.doc },
+  { id: 'contact', name: 'TTP Creators.vcf', type: 'Fiche contact', icon: ICON.vcf },
+  { id: 'roster', name: 'Roster agence.pdf', type: 'PDF', icon: ICON.pdf },
+];
+
+/* ═════════ Contenu des fenêtres ═════════ */
+function viewerHTML(c) {
+  const nets = c.nets.map(([n, v, h]) => {
+    const url = h ? (n === 'instagram' ? `https://www.instagram.com/${h}/` : `https://www.tiktok.com/@${h}`) : '';
+    const inner = `${brand(n, 24)}<span>${BRANDS[n].label}<small>${h ? '@' + esc(h) : ''}</small></span><b>${v}</b>`;
+    return url ? `<a class="netrow" href="${url}" target="_blank" rel="noopener">${inner}</a>` : `<div class="netrow">${inner}</div>`;
+  }).join('');
+  return `<div class="vw"><div class="vw-img"><img src="${c.photo}" alt="${esc(c.name)}"></div>
+  <aside class="insp"><div class="insp-h"><span class="tagdot" style="background:${tagc(c.niche)}"></span>${esc(c.niche)}</div>
+  <h2>${esc(c.name)}</h2><p class="dim">${esc(c.handle)}</p>
+  <div class="insp-big"><b>${c.fans}</b><span>abonnés au total</span></div>
+  <div class="insp-sec">Réseaux</div><div class="grp">${nets}</div>
+  <div class="insp-acts">${c.kit ? `<a class="pbtn blue" href="${KIT}${c.kit}/" target="_blank" rel="noopener">Voir le media kit</a>` : ''}<a class="pbtn" href="mailto:${MAIL}?subject=${encodeURIComponent('Collab avec ' + c.name)}">Proposer une collab</a></div></aside></div>`;
+}
+const servicesHTML = () => `<div class="pdf"><div class="page"><p class="eyebrow">TTP Creators</p><h1>Services</h1><p class="lead">Une seule équipe, de la stratégie au contrat. Stratégie, production, négociation : tout se passe en interne.</p>${SERVICES.map((s, i) => `<div class="svc"><span class="n">0${i + 1}</span><div><h3>${s[0]}</h3><p>${s[1]}</p><div class="chips">${s[2].map(t => `<span>${t}</span>`).join('')}</div></div></div>`).join('')}</div></div>`;
+const methodeHTML = () => `<div class="doc"><h1>Trust The Process.</h1>${STEPS.map((s, i) => `<p><b>${i + 1}. ${s[0]}</b><br>${s[1]}</p>`).join('')}</div>`;
+const histoireHTML = () => `<div class="doc"><h1>Notre histoire</h1><p>L'agence des créateurs sport &amp; lifestyle, entre Lyon et Genève. Un créateur n'est pas une audience : c'est une marque. On construit une identité qui dure, pas des pics de vues.</p><div class="team"><figure><img src="assets/about/marc.webp" alt=""><figcaption><b>Marc</b><span>Cofondateur</span></figcaption></figure><figure><img src="assets/about/gianni.webp" alt=""><figcaption><b>Gianni</b><span>Cofondateur</span></figcaption></figure></div><h2>2022 · TTP Agency</h2><p>Naissance de l'agence de communication : stratégie de marque, création et campagnes.</p><h2>Aujourd'hui · TTP Creators</h2><p>Le talent management comme évidence : les créateurs au cœur des marques.</p></div>`;
+function resultatsHTML() {
+  const max = Math.max(NET.instagram, NET.tiktok);
+  const top = [...CREATORS].sort((a, b) => K(b.fans) - K(a.fans)).slice(0, 3);
+  const kpis = [
+    { v: TOTAL / 1000, dec: 1, suf: ' M', txt: fmtK(TOTAL), l: 'abonnés cumulés' },
+    { v: CREATORS.length, txt: String(CREATORS.length), l: 'créateurs actifs' },
+    { v: 50, pre: '+', txt: '+50', l: 'campagnes livrées' },
+    { v: MARQUES.length, txt: String(MARQUES.length), l: 'marques avec nos créateurs' },
+  ];
+  return `<div class="sheet"><div class="sh-head"><h1>Résultats</h1><p>Chiffres publics du roster, relevés le 27 novembre 2026.</p></div>
+  <div class="kpis">${kpis.map(k => `<div class="kpi"><b data-count="${k.v}" data-dec="${k.dec || 0}" data-pre="${k.pre || ''}" data-suf="${k.suf || ''}">${k.txt}</b><span>${k.l}</span></div>`).join('')}</div>
+  <div class="cols"><section class="card"><h2>Audience par réseau</h2>${['instagram', 'tiktok'].map(n => `<div class="bar"><span class="lbl">${brand(n, 18)}${BRANDS[n].label}</span><span class="track"><i class="${n === 'instagram' ? 'ig' : 'tt'}" data-w="${(NET[n] / max * 100).toFixed(1)}"></i></span><b>${fmtK(NET[n])}</b></div>`).join('')}<p class="dim" style="font-size:12px">Abonnés cumulés des 11 créateurs, réseau par réseau.</p></section>
+  <section class="card"><h2>Plus grandes audiences</h2>${top.map(c => `<button class="toprow" data-open="${c.id}"><img src="${c.icon}" alt=""><span>${esc(c.name)}<small>${esc(c.niche)}</small></span><b>${c.fans}</b></button>`).join('')}</section></div>
+  <section class="card"><h2>Univers du roster</h2><div class="niches">${NICHES.map(([n, k]) => `<span class="niche"><span class="tagdot" style="background:${tagc(n)}"></span>${esc(n)} <b>${k}</b></span>`).join('')}</div></section>
+  <section class="card"><h2>Temps forts</h2><table class="gridt"><thead><tr><th>Collab</th><th>Chiffre</th><th>Ce que ça veut dire</th></tr></thead><tbody>${HIGHLIGHTS.map(h => `<tr><td>${esc(h[0])}</td><td class="num">${h[1]}</td><td>${h[2]}</td></tr>`).join('')}</tbody></table></section></div>`;
+}
+const contactHTML = () => `<div class="ct"><div class="ct-head"><img src="assets/ttp-icon.png" alt=""><h2>TTP Creators</h2><p>Talent management sport &amp; lifestyle</p></div>
+  <div class="ct-acts"><a class="ct-act" href="mailto:${MAIL}"><span class="mailic">${ico('mail')}</span>e-mail</a><a class="ct-act" href="${IG_URL}" target="_blank" rel="noopener">${brand('instagram', 34)}Instagram</a><a class="ct-act" href="${LI_URL}" target="_blank" rel="noopener">${brand('linkedin', 34)}LinkedIn</a></div>
+  <dl class="ct-f"><dt>travail</dt><dd><a href="mailto:${MAIL}">${MAIL}</a></dd><dt>Instagram</dt><dd><a href="${IG_URL}" target="_blank" rel="noopener">@ttpcreators</a></dd><dt>LinkedIn</dt><dd><a href="${LI_URL}" target="_blank" rel="noopener">TTP Creators</a></dd><dt>villes</dt><dd>Lyon · Genève</dd></dl>
+  <div class="ct-foot"><button class="pbtn" data-run="copy">${ico('copy')}<span>Copier l'e-mail</span></button><a class="pbtn blue" href="mailto:${MAIL}">Écrire</a></div></div>`;
+const aboutHTML = () => `<div class="about"><img class="about-ic" src="assets/ttp-icon.png" alt=""><h2>TTP Creators</h2><p>Talent management sport &amp; lifestyle</p><p class="dim">Lyon · Genève · depuis 2022</p><a class="pbtn blue" href="mailto:${MAIL}">Écrire à l'agence</a><small>© 2022-${new Date().getFullYear()} TTP Creators</small><p class="legal"><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions</a></p></div>`;
+
+/* ═════════ Calendrier : temps forts publics, recalculés pour chaque année ═════════ */
+// Aucune donnée privée sur le site public : ni anniversaires ni rendez-vous des créateurs. Les temps
+// forts des marques (avec la date limite conseillée pour réserver des créateurs) et les journées du
+// sport sont des dates publiques, calculées ici pour chaque année : rien à mettre à jour.
+const AG_COLORS = { fort: '#0a84ff', resa: '#ff9f0a', sport: '#30d158' };
+const AG_LABELS = { fort: 'Temps fort', resa: 'À réserver', sport: 'Sport' };
+const pad2 = n => String(n).padStart(2, '0');
+const isoOf = (y, m, d) => `${y}-${pad2(m + 1)}-${pad2(d)}`;
+const isoD = dt => isoOf(dt.getFullYear(), dt.getMonth(), dt.getDate());
+function todayParis() {
+  const p = {};
+  new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Paris', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date()).forEach(x => { p[x.type] = +x.value; });
+  return { y: p.year, m: p.month - 1, d: p.day };
+}
+// dimanche de Pâques (méthode de Meeus)
+function paques(y) {
+  const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const n = h + l - 7 * m + 114;
+  return new Date(y, Math.floor(n / 31) - 1, (n % 31) + 1);
+}
+// n-ième jour « jour » (0 = dimanche) du mois m ; n = -1 : le dernier du mois
+function nieme(y, m, jour, n) {
+  if (n > 0) return new Date(y, m, 1 + ((jour - new Date(y, m, 1).getDay() + 7) % 7) + 7 * (n - 1));
+  const fin = new Date(y, m + 1, 0);
+  return new Date(y, m, fin.getDate() - ((fin.getDay() - jour + 7) % 7));
+}
+// [date, type, titre, précision, semaines conseillées pour réserver des créateurs]
+function tempsForts(y) {
+  const d = (m, j) => new Date(y, m, j), p = paques(y), pentecote = new Date(y, p.getMonth(), p.getDate() + 49);
+  let meres = nieme(y, 4, 0, -1); if (isoD(meres) === isoD(pentecote)) meres = nieme(y, 5, 0, 1);
+  let soldesH = nieme(y, 0, 3, 2); if (soldesH.getDate() > 12) soldesH = nieme(y, 0, 3, 1);
+  let soldesE = nieme(y, 5, 3, -1); if (soldesE.getDate() > 28) soldesE = d(5, soldesE.getDate() - 7);
+  const bf = nieme(y, 10, 4, 4); bf.setDate(bf.getDate() + 1);
+  return [
+    [d(0, 1), 'fort', 'Bonnes résolutions', 'Le pic de l’année du sport et de la nutrition', 6],
+    [soldesH, 'fort', 'Soldes d’hiver', 'Mode, sport et maison', 4],
+    [d(1, 14), 'fort', 'Saint-Valentin', 'Cadeaux, sorties et beauté', 5],
+    [d(3, 6), 'sport', 'Journée internationale du sport', 'Le sport au service de tous'],
+    [p, 'fort', 'Pâques', 'Chocolat, recettes et famille', 5],
+    [meres, 'fort', 'Fête des mères', 'Beauté, bien-être et cadeaux', 5],
+    [d(5, 3), 'sport', 'Journée mondiale du vélo', 'Mobilité et sorties'],
+    [nieme(y, 5, 3, 1), 'sport', 'Journée mondiale de la course', 'Global Running Day'],
+    [nieme(y, 5, 0, 3), 'fort', 'Fête des pères', 'Sport, high-tech et cadeaux', 5],
+    [d(5, 21), 'sport', 'Journée internationale du yoga', 'Bien-être et mobilité'],
+    [d(5, 21), 'fort', 'Fête de la musique', 'Sorties et événements', 4],
+    [d(5, 23), 'sport', 'Journée olympique', 'Toutes les disciplines'],
+    [soldesE, 'fort', 'Soldes d’été', 'Mode, sport et voyage', 4],
+    [d(8, 1), 'fort', 'Rentrée', 'Nouvelles routines et reprise du sport', 6],
+    [d(8, 23), 'sport', 'Semaine européenne du sport', 'Du 23 au 30 septembre'],
+    [d(9, 31), 'fort', 'Halloween', 'Food, déguisements et soirées', 4],
+    [bf, 'fort', 'Black Friday', 'Le plus gros week-end d’achats de l’année', 6],
+    [d(11, 25), 'fort', 'Noël', 'Cadeaux, recettes et calendrier de l’Avent', 6],
+  ];
+}
+const jourMois = dt => (dt.getDate() === 1 ? '1er' : dt.getDate()) + ' ' + new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(dt);
+const AG_CACHE = {};
+// événements de l'année y, rangés par jour (une date limite peut tomber l'année d'avant)
+function agYear(y) {
+  if (AG_CACHE[y]) return AG_CACHE[y];
+  const map = {}, add = (dt, e) => { const k = isoD(dt); (map[k] = map[k] || []).push(e); };
+  [y, y + 1].forEach(yy => tempsForts(yy).forEach(([dt, k, title, sub, sem]) => {
+    if (yy === y) add(dt, { d: isoD(dt), t: '', k, title, who: sub, id: k === 'sport' ? 'loc:talents' : 'contact' });
+    if (sem) { const r = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() - 7 * sem); if (r.getFullYear() === y) add(r, { d: isoD(r), t: '', k: 'resa', title: `Réserver : ${title}`, who: `${sem} semaines avant le ${jourMois(dt)}`, id: 'contact' }); }
+  }));
+  return (AG_CACHE[y] = map);
+}
+const agEventsOn = iso => agYear(+iso.slice(0, 4))[iso] || [];
+function agUpcoming(n) {
+  const t = todayParis(), out = [];
+  for (let i = 0; i < 400 && out.length < n; i++) { const dt = new Date(t.y, t.m, t.d + i); out.push(...agEventsOn(isoOf(dt.getFullYear(), dt.getMonth(), dt.getDate()))); }
+  return out.slice(0, n);
+}
+const agDay = (iso, o = { weekday: 'short', day: 'numeric', month: 'short' }) => new Intl.DateTimeFormat('fr-FR', o).format(new Date(iso + 'T12:00:00'));
+function agWhen(e) {
+  const t = todayParis(), tm = new Date(t.y, t.m, t.d + 1);
+  const day = e.d === isoOf(t.y, t.m, t.d) ? 'Aujourd’hui' : e.d === isoOf(tm.getFullYear(), tm.getMonth(), tm.getDate()) ? 'Demain' : agDay(e.d);
+  if (!e.t) return day;
+  const [h, mi] = e.t.split(':');
+  return `${day} · ${+h} h${mi !== '00' ? ' ' + mi : ''}`;
+}
+const evRow = e => `<button class="ev" data-open="${e.id}"><i style="background:${AG_COLORS[e.k]}"></i><span><b>${esc(e.title)}</b><small>${AG_LABELS[e.k]} · ${esc(e.who)}</small></span><span class="when">${esc(agWhen(e))}</span></button>`;
+const AG = { y: 0, m: 0, sel: '' };
+function agendaHTML() {
+  const t = todayParis(); AG.y = t.y; AG.m = t.m; AG.sel = isoOf(t.y, t.m, t.d);
+  return `<div class="agd"><div class="agd-cal"><div class="agd-head"><h1 class="agd-month"></h1><div class="agd-nav"><button data-ag="prev" aria-label="Mois précédent">${ico('left')}</button><button data-ag="today">Aujourd’hui</button><button data-ag="next" aria-label="Mois suivant">${ico('right')}</button></div></div><div class="agd-wd">${['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(d => `<span>${d}</span>`).join('')}</div><div class="agd-grid"></div></div>
+  <div class="agd-side"><h2 class="agd-dayt"></h2><div class="agd-day"></div><h2>À venir</h2>${agUpcoming(6).map(evRow).join('')}<h2>Pour les marques</h2><div class="agd-tip"><p>Réservez vos créateurs 4 à 6 semaines avant un temps fort : brief, tournage et validation prennent ce temps.</p><a class="pbtn blue" href="mailto:${MAIL}?subject=${encodeURIComponent('Réserver des créateurs')}">Réserver</a></div><div class="agd-legend">${Object.keys(AG_LABELS).map(k => `<span><i style="background:${AG_COLORS[k]}"></i>${AG_LABELS[k]}</span>`).join('')}</div></div></div>`;
+}
+function renderAgenda() {
+  const w = wins.get('agenda'); if (!w) return;
+  const el = w.el, t = todayParis(), today = isoOf(t.y, t.m, t.d);
+  const first = (new Date(AG.y, AG.m, 1).getDay() + 6) % 7, days = new Date(AG.y, AG.m + 1, 0).getDate(), prev = new Date(AG.y, AG.m, 0).getDate();
+  el.querySelector('.agd-month').innerHTML = `${new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(new Date(AG.y, AG.m, 1))} <span>${AG.y}</span>`;
+  let cells = '';
+  for (let i = 0; i < first; i++) cells += `<button class="out" disabled><span class="n">${prev - first + 1 + i}</span></button>`;
+  for (let d = 1; d <= days; d++) {
+    const iso = isoOf(AG.y, AG.m, d);
+    cells += `<button data-day="${iso}" class="${iso === today ? 'today' : ''}${iso === AG.sel ? ' sel' : ''}"><span class="n">${d}</span><span class="dots">${agEventsOn(iso).slice(0, 3).map(e => `<i style="background:${AG_COLORS[e.k]}"></i>`).join('')}</span></button>`;
+  }
+  for (let i = first + days, k = 1; i % 7; i++, k++) cells += `<button class="out" disabled><span class="n">${k}</span></button>`;
+  el.querySelector('.agd-grid').innerHTML = cells;
+  el.querySelector('.agd-dayt').textContent = AG.sel === today ? 'Aujourd’hui' : agDay(AG.sel, { weekday: 'long', day: 'numeric', month: 'long' });
+  const evs = agEventsOn(AG.sel);
+  el.querySelector('.agd-day').innerHTML = evs.length ? evs.map(evRow).join('') : '<p class="ev-empty">Aucun événement</p>';
+}
+function wireAgenda(el) {
+  el.addEventListener('click', e => {
+    const b = e.target.closest('[data-ag]');
+    if (b) {
+      if (b.dataset.ag === 'today') { const t = todayParis(); AG.y = t.y; AG.m = t.m; AG.sel = isoOf(t.y, t.m, t.d); }
+      else { const dt = new Date(AG.y, AG.m + (b.dataset.ag === 'next' ? 1 : -1), 1); AG.y = dt.getFullYear(); AG.m = dt.getMonth(); }
+      renderAgenda(); return;
+    }
+    const d = e.target.closest('[data-day]'); if (d) { AG.sel = d.dataset.day; renderAgenda(); }
+  });
+  renderAgenda();
+}
+
+/* ═════════ Définition des fenêtres ═════════ */
+const APPN = { finder: 'Bureau', viewer: 'Visionneuse', pdf: 'Visionneuse', text: 'Texte', sheet: 'Tableur', contacts: 'Contacts', about: 'TTP Creators', cal: 'Calendrier' };
+const W = {
+  about: () => ({ kind: 'about', title: 'À propos de TTP Creators', w: 300, h: 364, fixed: true, noMin: true, html: aboutHTML() }),
+  services: () => ({ kind: 'pdf', title: 'Services.pdf', w: 580, h: 640, html: servicesHTML() }),
+  methode: () => ({ kind: 'text', title: 'Méthode.txt', w: 480, h: 460, html: methodeHTML() }),
+  histoire: () => ({ kind: 'text', title: 'Notre histoire', w: 540, h: 600, html: histoireHTML() }),
+  resultats: () => ({ kind: 'sheet', title: 'Résultats', w: 820, h: 640, minW: 520, html: resultatsHTML(), after: countUp }),
+  contact: () => ({ kind: 'contacts', title: 'TTP Creators.vcf', w: 420, h: 540, minW: 360, minH: 460, html: contactHTML() }),
+  agenda: () => ({ kind: 'cal', title: 'Calendrier', w: 840, h: 600, minW: 560, minH: 440, html: agendaHTML(), after: wireAgenda }),
+  finder: () => ({ kind: 'finder', title: locName(F.loc), w: 840, h: 560, minW: 540, minH: 340, html: finderHTML(), after: el => { wireFinder(el); renderFinder(); } }),
+};
+CREATORS.forEach(c => {
+  W[c.id] = () => ({ kind: 'viewer', title: c.file, sub: `${c.name} · ${c.fans} abonnés`, w: 800, h: 560, minW: 520, minH: 380, tools: `<button class="tbtn on" data-run="insp" aria-label="Inspecteur">${ico('info')}</button>`, html: viewerHTML(c) });
+});
+
+/* ═════════ Gestionnaire de fenêtres ═════════ */
+const layer = $('#layer');
+const wins = new Map();
+let Z = 200, cascade = 0, front = null;
+const geom = el => ({ x: el.offsetLeft, y: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight });
+const setGeom = (el, g) => { el.style.left = g.x + 'px'; el.style.top = g.y + 'px'; el.style.width = g.w + 'px'; el.style.height = g.h + 'px'; };
+const area = () => ({ x: 6, y: MB + 6, w: innerWidth - 12, h: innerHeight - MB - 6 - 84 });
+function flip(el, from) {
+  if (reduce) return;
+  const to = el.getBoundingClientRect();
+  if (!to.width || !to.height) return;
+  el.animate([
+    { transformOrigin: '0 0', transform: `translate(${from.left - to.left}px,${from.top - to.top}px) scale(${from.width / to.width},${from.height / to.height})` },
+    { transformOrigin: '0 0', transform: 'none' },
+  ], { duration: 360, easing: 'cubic-bezier(.2,.8,.2,1)' });
+}
+// iPhone : l'app s'ouvre en zoomant depuis son icône, et s'y referme
+function phoneZoom(el, f, closing, done) {
+  const W0 = innerWidth, H0 = innerHeight;
+  const small = f ? { transformOrigin: '0 0', transform: `translate(${f.left}px,${f.top}px) scale(${f.width / W0},${f.height / H0})`, borderRadius: '110px', opacity: closing ? 0 : 0.3 }
+    : { transformOrigin: '50% 55%', transform: 'scale(.88)', borderRadius: '44px', opacity: 0 };
+  const big = { transformOrigin: f ? '0 0' : '50% 55%', transform: 'none', borderRadius: '0px', opacity: 1 };
+  const a = el.animate(closing ? [big, small] : [small, big], { duration: closing ? 330 : 440, easing: closing ? 'cubic-bezier(.4,0,.7,1)' : 'cubic-bezier(.17,.89,.25,1)', fill: closing ? 'forwards' : 'none' });
+  if (done) a.onfinish = done;
+}
+const LIGHTS = def => `<div class="tl" data-tl>
+  <button class="c" data-act="close" aria-label="Fermer"><svg viewBox="0 0 12 12"><path d="M3.7 3.7l4.6 4.6M8.3 3.7 3.7 8.3" stroke="#4d0000" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+  <button class="m" data-act="min" aria-label="Réduire"${def.noMin ? ' disabled' : ''}><svg viewBox="0 0 12 12"><path d="M2.9 6h6.2" stroke="#8f5a12" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+  <button class="f" data-act="full" aria-label="Plein écran"${def.fixed ? ' disabled' : ''}><svg class="arrows" viewBox="0 0 12 12"><path d="M3.2 3.2h4.3L3.2 7.5z" fill="#0b5f0d"/><path d="M8.8 8.8H4.5l4.3-4.3z" fill="#0b5f0d"/></svg><svg class="plus" viewBox="0 0 12 12"><path d="M6 2.9v6.2M2.9 6h6.2" stroke="#0b5f0d" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+</div>`;
+const HANDLES = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'].map(d => `<i class="rz rz-${d}" data-rz="${d}"></i>`).join('');
+
+function openWin(id) {
+  if (!id) return;
+  if (id === 'roster') { openUrl(KIT + 'agence/'); return; }
+  if (id.startsWith('loc:')) { openFinder(id.slice(4)); return; }
+  const ex = wins.get(id);
+  if (ex) { if (ex.state === 'min') restoreWin(id); else focusWin(id); return; }
+  const make = W[id]; if (!make) return;
+  const def = make();
+  const el = document.createElement('div');
+  el.className = `win k-${def.kind}${def.fixed ? ' fixed' : ''}`;
+  el.dataset.id = id;
+  const head = def.kind === 'finder' ? '' : def.kind === 'viewer'
+    ? `<div class="tb tall" data-drag><div class="ttl2"><b>${esc(def.title)}</b><small>${esc(def.sub || '')}</small></div><div class="tools">${def.tools || ''}</div></div>`
+    : `<div class="tb" data-drag><span class="ttl">${esc(def.title)}</span></div>`;
+  // iPhone : le bouton retour porte le nom de l'écran d'où l'on vient (« ‹ Talents »), sinon « ‹ Accueil »
+  const under = isPhone() && front && wins.get(front) && wins.get(front).state !== 'min' ? wins.get(front).title : '';
+  const backT = under ? (under.length > 12 ? under.slice(0, 11) + '…' : under) : 'Accueil';
+  const mhd = `<div class="mhd"><button class="mback" aria-label="${under ? 'Retour' : 'Retour à l’accueil'}">${ico('left')}${esc(backT)}</button><b>${esc(def.title)}</b><span></span></div>`;
+  el.innerHTML = mhd + LIGHTS(def) + head + `<div class="wbody">${def.html}</div>` + (def.fixed ? '' : HANDLES) + '<i class="edge"></i>';
+  el.querySelector('.mback').addEventListener('click', () => closeWin(id));
+  const a = area();
+  const w = Math.min(def.w, a.w), h = Math.min(def.h, a.h);
+  const off = (cascade++ % 6) * 26;
+  let x = a.x + (a.w - w) / 2 - 70 + off, y = a.y + (a.h - h) / 2 - 24 + off * 0.7;
+  x = Math.max(a.x, Math.min(x, a.x + a.w - w)); y = Math.max(a.y, Math.min(y, a.y + a.h - h));
+  setGeom(el, { x, y, w, h });
+  el.style.minWidth = (def.minW || 300) + 'px'; el.style.minHeight = (def.minH || 200) + 'px';
+  layer.appendChild(el);
+  const win = { id, el, def, state: 'normal', prev: null, title: def.title };
+  wins.set(id, win);
+  wireWin(win);
+  focusWin(id);
+  if (isPhone()) { win.from = tapRect; tapRect = null; if (!reduce) phoneZoom(el, win.from, false); }
+  else if (!reduce) el.animate([{ opacity: 0, transform: 'scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 190, easing: 'cubic-bezier(.2,.9,.3,1)' });
+  bounceFor(id);
+  def.after && def.after(el);
+  markDock();
+  return win;
+}
+function wireWin(win) {
+  const { el } = win;
+  el.addEventListener('pointerdown', () => { if (front !== win.id) focusWin(win.id); }, true);
+  el.querySelector('[data-tl]').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || b.disabled) return;
+    e.stopPropagation();
+    const act = b.dataset.act;
+    if (act === 'close') closeWin(win.id);
+    else if (act === 'min') minimizeWin(win.id);
+    else if (act === 'full') e.altKey ? toggleZoom(win.id) : toggleFull(win.id);
+  });
+  // déplacer par la barre de titre ou la barre d'outils
+  el.addEventListener('pointerdown', e => {
+    const h = e.target.closest('[data-drag]');
+    if (!h || e.button !== 0 || e.target.closest('button,a,input,label,.side-i,.tl')) return;
+    if (isPhone() || win.state === 'full') return;
+    const sx = e.clientX, sy = e.clientY, ox = el.offsetLeft, oy = el.offsetTop;
+    let moved = false;
+    const mv = ev => {
+      const dx = ev.clientX - sx, dy = ev.clientY - sy;
+      if (!moved && Math.hypot(dx, dy) < 3) return;
+      moved = true;
+      if (win.state === 'zoom') win.state = 'normal';
+      el.style.left = Math.min(innerWidth - 90, Math.max(90 - el.offsetWidth, ox + dx)) + 'px';
+      el.style.top = Math.max(MB, Math.min(innerHeight - 40, oy + dy)) + 'px';
+    };
+    const up = () => { removeEventListener('pointermove', mv); removeEventListener('pointerup', up); };
+    addEventListener('pointermove', mv); addEventListener('pointerup', up);
+  });
+  el.addEventListener('dblclick', e => {
+    if (!e.target.closest('[data-drag]') || e.target.closest('button,a,input,label,.side-i,.tl')) return;
+    toggleZoom(win.id);
+  });
+  // redimensionner par les bords et les coins
+  el.addEventListener('pointerdown', e => {
+    const hd = e.target.closest('[data-rz]'); if (!hd || isPhone()) return;
+    e.preventDefault(); e.stopPropagation();
+    const d = hd.dataset.rz, r = geom(el), sx = e.clientX, sy = e.clientY;
+    const minW = win.def.minW || 300, minH = win.def.minH || 200;
+    const mv = ev => {
+      const dx = ev.clientX - sx, dy = ev.clientY - sy;
+      let { x, y, w, h } = r;
+      if (d.includes('e')) w = Math.max(minW, r.w + dx);
+      if (d.includes('s')) h = Math.max(minH, r.h + dy);
+      if (d.includes('w')) { w = Math.max(minW, r.w - dx); x = r.x + r.w - w; }
+      if (d.includes('n')) { h = Math.max(minH, r.h - dy); y = r.y + r.h - h; if (y < MB) { h -= MB - y; y = MB; } }
+      setGeom(el, { x, y, w, h });
+      win.state = 'normal';
+    };
+    const up = () => { removeEventListener('pointermove', mv); removeEventListener('pointerup', up); };
+    addEventListener('pointermove', mv); addEventListener('pointerup', up);
+  });
+}
+function focusWin(id) {
+  const w = wins.get(id); if (!w) return;
+  w.el.style.zIndex = ++Z; front = id;
+  wins.forEach((x, k) => x.el.classList.toggle('off', k !== id));
+  updateMenubar(); markDock();
+}
+function focusNext() {
+  let best = null;
+  wins.forEach(w => { if (w.state !== 'min' && (!best || +w.el.style.zIndex > +best.el.style.zIndex)) best = w; });
+  if (best) focusWin(best.id); else { front = null; updateMenubar(); markDock(); }
+}
+function closeWin(id, how) {
+  const w = wins.get(id); if (!w) return;
+  if (w.state === 'full') document.body.classList.remove('fullscreen');
+  wins.delete(id);
+  $(`#dkMin [data-win="${CSS.escape(id)}"]`)?.remove();
+  const done = () => w.el.remove();
+  if (reduce || w.state === 'min') done();
+  else if (isPhone()) {
+    if (how === 'slide') w.el.animate([{ transform: w.el.style.transform || 'none' }, { transform: `translateX(${innerWidth}px)` }], { duration: 230, easing: 'ease-out', fill: 'forwards' }).onfinish = done;
+    else phoneZoom(w.el, w.from, true, done);
+  }
+  else w.el.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(.97)' }], { duration: 160, easing: 'ease-in' }).onfinish = done;
+  if (front === id) focusNext(); else markDock();
+}
+function closeAll() { [...wins.keys()].forEach(closeWin); }
+function minimizeWin(id) {
+  const w = wins.get(id);
+  if (!w || w.state === 'min' || w.state === 'full' || w.def.noMin || isPhone()) return;
+  const tile = addMinTile(w);
+  const from = w.el.getBoundingClientRect(), to = tile.getBoundingClientRect();
+  w.prevState = w.state; w.state = 'min';
+  const finish = () => { w.el.style.display = 'none'; tile.style.visibility = ''; };
+  tile.style.visibility = 'hidden';
+  if (reduce) finish();
+  else {
+    const sx = to.width / from.width, sy = to.height / from.height, dx = to.left - from.left, dy = to.top - from.top;
+    w.el.animate([
+      { transformOrigin: '0 0', transform: 'none', opacity: 1 },
+      { transformOrigin: '0 0', transform: `translate(${dx * 0.28}px,${dy * 0.62}px) scale(${1 - (1 - sx) * 0.55},${1 - (1 - sy) * 0.32})`, opacity: 0.95, offset: 0.45 },
+      { transformOrigin: '0 0', transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`, opacity: 0.35 },
+    ], { duration: 520, easing: 'cubic-bezier(.45,0,.25,1)' }).onfinish = finish;
+  }
+  focusNext();
+}
+function restoreWin(id) {
+  const w = wins.get(id); if (!w || w.state !== 'min') return;
+  const tile = $(`#dkMin [data-win="${CSS.escape(id)}"]`);
+  const from = tile ? tile.getBoundingClientRect() : null;
+  w.el.style.display = '';
+  w.state = w.prevState || 'normal';
+  tile?.remove();
+  focusWin(id);
+  if (from && !reduce) {
+    const to = w.el.getBoundingClientRect();
+    const sx = from.width / to.width, sy = from.height / to.height, dx = from.left - to.left, dy = from.top - to.top;
+    w.el.animate([
+      { transformOrigin: '0 0', transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`, opacity: 0.35 },
+      { transformOrigin: '0 0', transform: `translate(${dx * 0.28}px,${dy * 0.62}px) scale(${1 - (1 - sx) * 0.55},${1 - (1 - sy) * 0.32})`, opacity: 0.95, offset: 0.55 },
+      { transformOrigin: '0 0', transform: 'none', opacity: 1 },
+    ], { duration: 480, easing: 'cubic-bezier(.2,.7,.3,1)' });
+  }
+}
+function toggleFull(id) {
+  const w = wins.get(id); if (!w || w.def.fixed || w.state === 'min') return;
+  const from = w.el.getBoundingClientRect();
+  if (w.state === 'full') {
+    document.body.classList.remove('fullscreen');
+    w.el.classList.remove('full');
+    setGeom(w.el, w.prev); w.state = w.prevState === 'zoom' ? 'zoom' : 'normal';
+  } else {
+    wins.forEach(o => { if (o.state === 'full' && o !== w) toggleFull(o.id); });
+    w.prev = geom(w.el); w.prevState = w.state;
+    setGeom(w.el, { x: 0, y: 0, w: innerWidth, h: innerHeight });
+    w.el.classList.add('full'); document.body.classList.add('fullscreen');
+    w.state = 'full'; focusWin(id);
+  }
+  flip(w.el, from); updateMenubar();
+}
+function toggleZoom(id) {
+  const w = wins.get(id); if (!w || w.def.fixed || w.state === 'full' || w.state === 'min' || isPhone()) return;
+  const from = w.el.getBoundingClientRect();
+  if (w.state === 'zoom') { setGeom(w.el, w.prev); w.state = 'normal'; }
+  else { w.prev = geom(w.el); setGeom(w.el, area()); w.state = 'zoom'; }
+  flip(w.el, from);
+}
+function hideOthers() { wins.forEach(w => { if (w.id !== front && w.state !== 'min') minimizeWin(w.id); }); }
+function showAll() { wins.forEach(w => { if (w.state === 'min') restoreWin(w.id); }); }
+function quitApp() { const k = front && wins.get(front)?.def.kind; if (!k) return; [...wins.values()].filter(w => w.def.kind === k || (k === 'pdf' && w.def.kind === 'viewer') || (k === 'viewer' && w.def.kind === 'pdf')).forEach(w => closeWin(w.id)); }
+addEventListener('resize', () => {
+  wins.forEach(w => {
+    if (w.state === 'full') setGeom(w.el, { x: 0, y: 0, w: innerWidth, h: innerHeight });
+    else if (w.state === 'zoom') setGeom(w.el, area());
+  });
+  layoutDesk();
+});
+
+/* ═════════ Finder ═════════ */
+const F = { loc: 'talents', view: 'icons', q: '', back: [], fwd: [], sel: null, side: true };
+const LOCS = { talents: 'Talents', marques: 'Marques', documents: 'Documents', corbeille: 'Corbeille' };
+const locName = l => l.startsWith('tag:') ? l.slice(4) : LOCS[l] || 'Talents';
+function finderHTML() {
+  return `<div class="fd${F.side ? '' : ' noside'}">
+  <aside class="fd-side" data-drag>
+    <div class="side-h">Favoris</div>
+    <button class="side-i" data-loc="talents">${ico('users')}Talents</button>
+    <button class="side-i" data-loc="marques">${ico('tag')}Marques</button>
+    <button class="side-i" data-loc="documents">${ico('doc')}Documents</button>
+    <div class="side-h">TTP Creators</div>
+    <a class="side-i" href="${IG_URL}" target="_blank" rel="noopener">${brand('instagram', 16)}Instagram</a>
+    <a class="side-i" href="${LI_URL}" target="_blank" rel="noopener">${brand('linkedin', 16)}LinkedIn</a>
+    <div class="side-h">Tags</div>
+    ${NICHES.map(([n]) => `<button class="side-i" data-loc="tag:${esc(n)}"><span class="tagdot" style="background:${tagc(n)}"></span>${esc(n)}</button>`).join('')}
+  </aside>
+  <div class="fd-main">
+    <div class="lt"></div>
+    <div class="fd-tb" data-drag>
+      <div class="fd-nav"><button data-f="back" aria-label="Précédent">${ico('left')}</button><button data-f="fwd" aria-label="Suivant">${ico('right')}</button></div>
+      <div class="fd-title"></div>
+      <div class="fd-tools"><div class="seg"><button data-view="icons" aria-label="Présentation par icônes">${ico('grid')}</button><button data-view="list" aria-label="Présentation par liste">${ico('list')}</button></div><label class="search">${ico('search')}<input placeholder="Rechercher" aria-label="Rechercher dans le dossier"></label></div>
+    </div>
+    <div class="fd-chips">${[['talents', 'Talents'], ['marques', 'Marques'], ['documents', 'Documents'], ...NICHES.map(([n]) => ['tag:' + n, n])].map(([l, n]) => `<button data-loc="${esc(l)}">${esc(n)}</button>`).join('')}</div>
+    <div class="fd-body" tabindex="-1"></div>
+    <div class="fd-status"></div>
+  </div></div>`;
+}
+function finderItems() {
+  const l = F.loc;
+  let items = [];
+  if (l === 'talents' || l.startsWith('tag:')) {
+    items = CREATORS.filter(c => !l.startsWith('tag:') || c.niche === l.slice(4)).map(c => ({ id: c.id, name: c.file, info: c.fans + ' abonnés', type: c.niche, fans: c.fans, img: c.icon, ql: { title: c.name, img: c.photo, open: c.id }, open: () => openWin(c.id) }));
+  } else if (l === 'marques') {
+    items = MARQUES.map(b => ({ id: 'b:' + norm(b.n).replace(/[^a-z0-9]+/g, '-'), name: b.n, info: avec(b.who), type: b.f ? 'Logo' : 'Marque', logo: b.f, word: b.f ? null : b.n, ql: brandQL(b) }));
+  } else if (l === 'documents') {
+    items = DOCS.map(d => ({ id: d.id, name: d.name, type: d.type, svg: d.icon, open: () => openWin(d.id) }));
+  }
+  const q = norm(F.q.trim());
+  return q ? items.filter(i => norm(i.name + ' ' + i.type).includes(q)) : items;
+}
+// marque sans logo : son nom, composé comme un logo
+const wordTile = n => {
+  const mot = Math.max(...n.split(/\s+/).map(w => w.length)); // le mot le plus long tient sur une ligne
+  return `<span class="logo-tile word"><b style="font-size:${Math.max(7, Math.min(11.5, 52 / (0.62 * mot))).toFixed(1)}px">${esc(n)}</b></span>`;
+};
+function itemIcon(i, big = true) {
+  if (i.img) return big ? `<img class="ph" src="${i.img}" alt="" draggable="false">` : `<img class="mini" src="${i.img}" alt="">`;
+  if (i.logo) return `<span class="logo-tile${big ? '' : ' mini'}"><i style="--m:url(assets/clients/${i.logo}.png)"></i></span>`;
+  if (i.word) return big ? wordTile(i.word) : `<span class="logo-tile mini word"><b>${esc(i.word.slice(0, 1))}</b></span>`;
+  return big ? i.svg : `<span class="mini-svg">${i.svg}</span>`;
+}
+function renderFinder() {
+  const w = wins.get('finder'); if (!w) return;
+  const el = w.el, items = finderItems();
+  w.title = locName(F.loc);
+  el.querySelector('.fd-title').textContent = w.title;
+  el.querySelector('.mhd b').textContent = w.title;
+  el.querySelector('.lt').textContent = w.title;
+  el.querySelector('.fd').classList.toggle('noside', !F.side);
+  el.querySelector('[data-f="back"]').disabled = !F.back.length;
+  el.querySelector('[data-f="fwd"]').disabled = !F.fwd.length;
+  $$('.seg button', el).forEach(b => b.classList.toggle('on', b.dataset.view === F.view));
+  $$('[data-loc]', el).forEach(b => b.classList.toggle('on', b.dataset.loc === F.loc));
+  el.querySelector('.fd-chips [data-loc].on')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  const body = el.querySelector('.fd-body');
+  if (F.loc === 'corbeille') body.innerHTML = '<div class="empty">La corbeille est vide</div>';
+  else if (!items.length) body.innerHTML = '<div class="empty">Aucun élément</div>';
+  else if (F.view === 'list') {
+    const cr = F.loc === 'talents' || F.loc.startsWith('tag:');
+    body.innerHTML = `<table class="ltable"><thead><tr><th>Nom</th><th>${cr ? 'Niche' : 'Type'}</th>${cr ? '<th>Abonnés</th>' : ''}</tr></thead><tbody>${items.map(i => `<tr data-it="${esc(i.id)}" class="${F.sel === i.id ? 'sel' : ''}"><td>${itemIcon(i, false)}${esc(i.name)}</td><td>${esc(i.type)}</td>${cr ? `<td>${i.fans}</td>` : ''}</tr>`).join('')}</tbody></table>`;
+  } else {
+    body.innerHTML = `<div class="grid">${items.map(i => `<div class="it${F.sel === i.id ? ' sel' : ''}" data-it="${esc(i.id)}"><span class="ic">${itemIcon(i)}</span><span class="nm">${esc(i.name)}</span>${i.info ? `<span class="inf">${esc(i.info)}</span>` : ''}</div>`).join('')}</div>`;
+  }
+  el.querySelector('.fd-status').textContent = F.loc === 'corbeille' ? '0 élément' : `${items.length} élément${items.length > 1 ? 's' : ''}`;
+  if (front === 'finder') updateMenubar();
+}
+function navFinder(loc) {
+  if (loc === F.loc) return;
+  F.back.push(F.loc); F.fwd = []; F.loc = loc; F.sel = null; F.q = '';
+  const inp = wins.get('finder')?.el.querySelector('.search input'); if (inp) inp.value = '';
+  renderFinder();
+}
+function openFinder(loc = 'talents') {
+  const ex = wins.get('finder');
+  if (ex) { navFinder(loc); if (ex.state === 'min') restoreWin('finder'); else focusWin('finder'); return; }
+  F.loc = loc; F.back = []; F.fwd = []; F.q = ''; F.sel = null;
+  openWin('finder');
+}
+function wireFinder(el) {
+  el.addEventListener('click', e => {
+    const s = e.target.closest('[data-loc]'); if (s) { navFinder(s.dataset.loc); return; }
+    const f = e.target.closest('[data-f]');
+    if (f && !f.disabled) {
+      if (f.dataset.f === 'back' && F.back.length) { F.fwd.push(F.loc); F.loc = F.back.pop(); }
+      else if (f.dataset.f === 'fwd' && F.fwd.length) { F.back.push(F.loc); F.loc = F.fwd.pop(); }
+      F.sel = null; renderFinder(); return;
+    }
+    const v = e.target.closest('[data-view]'); if (v) { F.view = v.dataset.view; renderFinder(); return; }
+    const it = e.target.closest('[data-it]');
+    if (it) {
+      F.sel = it.dataset.it; selDesk(null);
+      $$('[data-it]', el).forEach(x => x.classList.toggle('sel', x === it));
+      if (lastPT === 'touch' || isPhone()) openFinderItem(F.sel);
+    } else if (e.target.closest('.fd-body')) { F.sel = null; $$('[data-it].sel', el).forEach(x => x.classList.remove('sel')); }
+  });
+  el.addEventListener('dblclick', e => { const it = e.target.closest('[data-it]'); if (it) openFinderItem(it.dataset.it); });
+  el.querySelector('.search input').addEventListener('input', e => { F.q = e.target.value; renderFinder(); });
+  // iPhone : le grand titre laisse place au titre de la barre quand on fait défiler
+  el.querySelector('.fd-main').addEventListener('scroll', ev => el.classList.toggle('scrolled', ev.target.scrollTop > 36), { passive: true });
+}
+function openFinderItem(id) {
+  const it = finderItems().find(i => i.id === id); if (!it) return;
+  if (it.open) it.open(); else if (it.ql) quickLook(it.ql);
+}
+
+/* ═════════ Bureau ═════════ */
+const desk = $('#desk');
+const SLOTS = [[22, 3], [33, 15], [24, 34], [35, 46], [24, 66], [66, 4], [77, 10], [88, 3], [64, 30], [88, 28], [76, 44], [46, 3]];
+const FILES = [
+  { id: 'loc:talents', label: 'Talents', svg: FOLDER, type: 'Dossier', x: 3, y: 3 },
+  { id: 'loc:marques', label: 'Marques', svg: FOLDER, type: 'Dossier', x: 3, y: 22 },
+  { id: 'loc:documents', label: 'Documents', svg: FOLDER, type: 'Dossier', x: 3, y: 41 },
+  { id: 'methode', label: 'Méthode.txt', svg: ICON.txt, type: 'Texte', x: 3, y: 60 },
+  { id: 'services', label: 'Services.pdf', svg: ICON.pdf, type: 'PDF', x: 12, y: 11 },
+  { id: 'roster', label: 'Roster agence.pdf', svg: ICON.pdf, type: 'PDF', x: 12, y: 31 },
+  { id: 'resultats', label: 'Résultats', svg: ICON.sheet, type: 'Tableur', x: 12, y: 51 },
+  { id: 'histoire', label: 'Notre histoire', svg: ICON.doc, type: 'Document', x: 88, y: 70 },
+  { id: 'contact', label: 'TTP Creators.vcf', svg: ICON.vcf, type: 'Fiche', x: 79, y: 78 },
+  ...CREATORS.slice(0, SLOTS.length).map((c, i) => ({ id: c.id, label: c.file, img: c.icon, type: 'Photo', x: SLOTS[i][0], y: SLOTS[i][1], ql: { title: c.name, img: c.photo, open: c.id } })),
+];
+const fileEls = [];
+const dsel = new Set();
+function layoutDesk() {
+  const r = desk.getBoundingClientRect();
+  fileEls.forEach(({ el, f }) => { el.style.left = (f.x / 100 * (r.width - 96)) + 'px'; el.style.top = (f.y / 100 * (r.height - 190)) + 'px'; });
+}
+function selDesk(id, add = false) {
+  if (!add) dsel.clear();
+  if (id) dsel.add(id);
+  fileEls.forEach(({ el, f }) => el.classList.toggle('sel', dsel.has(f.id)));
+}
+FILES.forEach(f => {
+  const el = document.createElement('div');
+  el.className = 'file'; el.tabIndex = 0; el.dataset.id = f.id;
+  el.innerHTML = `<span class="ic">${f.img ? `<img class="ph" src="${f.img}" alt="" draggable="false" loading="lazy" decoding="async">` : f.svg}</span><span class="nm">${esc(f.label)}</span>`;
+  desk.appendChild(el); fileEls.push({ el, f });
+  el.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    e.stopPropagation();
+    if (e.metaKey || e.shiftKey) { if (dsel.has(f.id)) { dsel.delete(f.id); selDesk(null, true); } else selDesk(f.id, true); }
+    else if (!dsel.has(f.id)) selDesk(f.id);
+    F.sel = null;
+    const group = fileEls.filter(o => dsel.has(o.f.id)).map(o => ({ o, x: o.el.offsetLeft, y: o.el.offsetTop }));
+    const sx = e.clientX, sy = e.clientY; let moved = false;
+    desk.classList.remove('tidy');
+    const mv = ev => {
+      const dx = ev.clientX - sx, dy = ev.clientY - sy;
+      if (!moved && Math.hypot(dx, dy) < 4) return;
+      moved = true;
+      group.forEach(g => { g.o.el.classList.add('drag'); g.o.el.style.left = (g.x + dx) + 'px'; g.o.el.style.top = (g.y + dy) + 'px'; });
+    };
+    const up = ev => {
+      removeEventListener('pointermove', mv); removeEventListener('pointerup', up);
+      const r = desk.getBoundingClientRect();
+      group.forEach(g => { g.o.el.classList.remove('drag'); g.o.f.x = g.o.el.offsetLeft / (r.width - 96) * 100; g.o.f.y = g.o.el.offsetTop / (r.height - 190) * 100; });
+      if (!moved && ev.pointerType === 'touch') openWin(f.id);
+    };
+    addEventListener('pointermove', mv); addEventListener('pointerup', up);
+  });
+  el.addEventListener('dblclick', () => openWin(f.id));
+  el.addEventListener('contextmenu', e => { e.preventDefault(); e.stopPropagation(); if (!dsel.has(f.id)) selDesk(f.id); showMenu('ctx-item', null, { x: e.clientX, y: e.clientY }); });
+});
+// sélection au lasso
+const rubber = $('#rubber');
+desk.addEventListener('pointerdown', e => {
+  if (e.target !== desk || e.button !== 0) return;
+  if (!e.metaKey && !e.shiftKey) selDesk(null);
+  const sx = e.clientX, sy = e.clientY, base = new Set(dsel);
+  const mv = ev => {
+    const x = Math.min(sx, ev.clientX), y = Math.min(sy, ev.clientY), w = Math.abs(ev.clientX - sx), h = Math.abs(ev.clientY - sy);
+    Object.assign(rubber.style, { display: 'block', left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
+    dsel.clear(); base.forEach(i => dsel.add(i));
+    fileEls.forEach(({ el, f }) => { const r = el.getBoundingClientRect(); if (r.left < x + w && r.right > x && r.top < y + h && r.bottom > y) dsel.add(f.id); });
+    selDesk(null, true);
+  };
+  const up = () => { rubber.style.display = 'none'; removeEventListener('pointermove', mv); removeEventListener('pointerup', up); };
+  addEventListener('pointermove', mv); addEventListener('pointerup', up);
+});
+desk.addEventListener('contextmenu', e => { if (e.target !== desk) return; e.preventDefault(); showMenu('ctx-desk', null, { x: e.clientX, y: e.clientY }); });
+function tidy(byType) {
+  const r = desk.getBoundingClientRect(), per = Math.max(1, Math.floor((r.height - 110) / 106));
+  let list = [...fileEls];
+  if (byType) list.sort((a, b) => a.f.type.localeCompare(b.f.type) || a.f.label.localeCompare(b.f.label));
+  desk.classList.add('tidy');
+  list.forEach((o, i) => {
+    const col = Math.floor(i / per), row = i % per;
+    const left = r.width - 106 - col * 100, top = 10 + row * 106;
+    o.el.style.left = left + 'px'; o.el.style.top = top + 'px';
+    o.f.x = left / (r.width - 96) * 100; o.f.y = top / (r.height - 190) * 100;
+  });
+}
+const selectAll = () => { fileEls.forEach(({ f }) => dsel.add(f.id)); selDesk(null, true); };
+
+/* ═════════ Dock ═════════ */
+const DOCK = [
+  { key: 'about', label: 'TTP Creators', html: icw('<img class="ico sq" src="assets/ttp-icon.png" alt="">'), run: () => openWin('about'), kinds: ['about'] },
+  { key: 'finder', label: 'Talents', html: icw(iosIcon('talents')), run: () => openFinder('talents'), ids: ['finder'] },
+  { key: 'services', label: 'Services', html: icw(iosIcon('services')), run: () => openWin('services'), ids: ['services'] },
+  { key: 'methode', label: 'Méthode', html: icw(iosIcon('methode')), run: () => openWin('methode'), ids: ['methode'] },
+  { key: 'resultats', label: 'Résultats', html: icw(iosIcon('resultats')), run: () => openWin('resultats'), ids: ['resultats'] },
+  { key: 'agenda', label: 'Calendrier', html: icw(calIcon()), run: () => openWin('agenda'), ids: ['agenda'] },
+  { key: 'histoire', label: 'Notre histoire', html: icw(iosIcon('histoire')), run: () => openWin('histoire'), ids: ['histoire'] },
+  { key: 'viewer', label: 'Visionneuse', html: icw(iosIcon('viewer')), run: () => { const v = [...wins.values()].filter(w => w.def.kind === 'viewer').sort((a, b) => b.el.style.zIndex - a.el.style.zIndex)[0]; v && (v.state === 'min' ? restoreWin(v.id) : focusWin(v.id)); }, kinds: ['viewer'], dynamic: true },
+  { key: 'contact', label: 'Contact', html: icw(iosIcon('contact')), run: () => openWin('contact'), ids: ['contact'] },
+  { key: 'instagram', label: 'Instagram', html: icw(`<span class="ico sq b-ig">${BRANDS.instagram.mark}</span>`), run: () => openUrl(IG_URL) },
+  { key: 'linkedin', label: 'LinkedIn', html: icw(`<span class="ico sq b-li">${BRANDS.linkedin.mark}</span>`), run: () => openUrl(LI_URL) },
+];
+const dkApps = $('#dkApps'), dkMin = $('#dkMin'), dkTrash = $('#dkTrash');
+dkApps.innerHTML = DOCK.map(d => `<button class="di" data-dock="${d.key}" aria-label="${esc(d.label)}"${d.dynamic ? ' hidden' : ''}>${d.html}<span class="tip">${esc(d.label)}</span><span class="dot"></span></button>`).join('');
+dkTrash.innerHTML = `<button class="di" data-trash aria-label="Corbeille"><span class="ico trash-ic">${TRASH}</span><span class="tip">Corbeille</span></button>`;
+$('#dock').addEventListener('click', e => {
+  const t = e.target.closest('.di'); if (!t) return;
+  if (t.dataset.dock) DOCK.find(d => d.key === t.dataset.dock).run();
+  else if (t.dataset.win) restoreWin(t.dataset.win);
+  else if (t.hasAttribute('data-trash')) openFinder('corbeille');
+});
+function dockKeyFor(id) {
+  const w = wins.get(id); if (!w) return null;
+  const d = DOCK.find(x => (x.ids && x.ids.includes(id)) || (x.kinds && x.kinds.includes(w.def.kind)));
+  return d ? d.key : null;
+}
+function bounceFor(id) {
+  if (reduce) return;
+  const k = dockKeyFor(id); const ic = k && $(`#dkApps [data-dock="${k}"] .ico`);
+  ic && ic.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-16px)', offset: .35 }, { transform: 'translateY(0)', offset: .7 }, { transform: 'translateY(-5px)', offset: .85 }, { transform: 'translateY(0)' }], { duration: 700, easing: 'ease-out' });
+}
+function markDock() {
+  DOCK.forEach(d => {
+    const b = $(`#dkApps [data-dock="${d.key}"]`); if (!b) return;
+    const on = [...wins.values()].some(w => (d.ids && d.ids.includes(w.id)) || (d.kinds && d.kinds.includes(w.def.kind)));
+    b.classList.toggle('on', on);
+    if (d.dynamic) b.hidden = !on;
+  });
+  document.body.classList.toggle('app-open', [...wins.values()].some(w => w.state !== 'min'));
+}
+function addMinTile(w) {
+  const c = CREATORS.find(x => x.id === w.id);
+  const k = dockKeyFor(w.id); const app = DOCK.find(d => d.key === k);
+  const inner = c ? `<img class="mw-ph" src="${c.icon}" alt="">` : '<span class="mw-tb"></span>';
+  const b = document.createElement('button');
+  b.className = 'di minw'; b.dataset.win = w.id; b.setAttribute('aria-label', w.title);
+  b.innerHTML = `<span class="ico">${inner}</span>${app ? `<span class="badge">${app.html}</span>` : ''}<span class="tip">${esc(w.title)}</span>`;
+  dkMin.appendChild(b);
+  return b;
+}
+// grossissement sous la souris
+const dockEl = $('#dock'), BASE = 52, MAX = 80, RANGE = 160;
+dockEl.addEventListener('pointermove', e => {
+  if (reduce || e.pointerType !== 'mouse') return;
+  $$('.di', dockEl).forEach(el => {
+    if (el.hidden) return;
+    const r = el.getBoundingClientRect(), d = Math.abs(e.clientX - (r.left + r.width / 2));
+    const s = d > RANGE ? BASE : BASE + (MAX - BASE) * Math.cos(d / RANGE * Math.PI / 2);
+    el.style.width = el.style.height = s + 'px';
+  });
+});
+dockEl.addEventListener('pointerleave', () => $$('.di', dockEl).forEach(el => { el.style.width = el.style.height = ''; }));
+
+/* ═════════ Barre des menus ═════════ */
+const menuEl = $('#menu');
+let menuName = null, menuAnchor = null, menuList = [], hl = -1;
+const appName = () => { const w = front && wins.get(front); return w ? APPN[w.def.kind] : 'Bureau'; };
+function updateMenubar() { $('#mbApp').textContent = appName(); }
+const SEP = { sep: 1 };
+function menuItems(name) {
+  const w = front && wins.get(front);
+  const fin = w && w.def.kind === 'finder';
+  const anyMin = [...wins.values()].some(x => x.state === 'min');
+  switch (name) {
+    case 'logo': return [{ l: 'À propos de TTP Creators', a: () => openWin('about') }, SEP, { l: 'Écrire à l’agence…', a: mail }, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }, SEP, { l: 'Centre de contrôle', a: () => togglePanel('cc') }, { l: 'Fond d’écran suivant', a: () => setWall((wallIdx + 1) % WALLS.length) }, SEP, { l: 'Verrouiller l’écran', k: '⌥L', a: lockScreen }];
+    case 'app': return [{ l: `À propos de ${appName()}`, a: () => openWin('about') }, SEP, { l: 'Masquer les autres', a: hideOthers, dis: !w }, { l: 'Tout afficher', a: showAll, dis: !anyMin }, SEP, { l: `Quitter ${appName()}`, a: quitApp, dis: !w }];
+    case 'fichier': return [{ l: 'Ouvrir…', k: '⌘K', a: openSpot }, { l: 'Nouvelle fenêtre Talents', a: () => openFinder('talents') }, SEP, { l: 'Coup d’œil', k: '␣', a: quickLookSelected, dis: !selectedItem() }, { l: 'Ouvrir l’élément sélectionné', k: '↩', a: openSelected, dis: !selectedItem() }, SEP, { l: 'Fermer la fenêtre', k: '⌥W', a: () => closeWin(front), dis: !w }, { l: 'Tout fermer', a: closeAll, dis: !wins.size }];
+    case 'edition': return [{ l: 'Copier l’adresse e-mail', a: () => copyMail() }, { l: 'Tout sélectionner', a: selectAll }, SEP, { l: 'Rechercher', k: '⌘K', a: openSpot }];
+    case 'presentation': return [{ l: 'Par icônes', ck: fin && F.view === 'icons' ? '✓' : '', a: () => { F.view = 'icons'; renderFinder(); }, dis: !fin }, { l: 'Par liste', ck: fin && F.view === 'list' ? '✓' : '', a: () => { F.view = 'list'; renderFinder(); }, dis: !fin }, { l: F.side ? 'Masquer la barre latérale' : 'Afficher la barre latérale', a: () => { F.side = !F.side; renderFinder(); }, dis: !fin }, SEP, { l: 'Ranger le bureau', a: () => tidy(false) }, { l: 'Trier par type', a: () => tidy(true) }, SEP, { l: w && w.state === 'full' ? 'Quitter le plein écran' : 'Passer en plein écran', k: '⌥F', a: () => toggleFull(front), dis: !w || w.def.fixed }, { l: document.documentElement.dataset.theme === 'dark' ? 'Apparence claire' : 'Apparence sombre', a: () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark') }];
+    case 'talents': return [...CREATORS.map(c => ({ l: c.name, k: c.fans, img: c.icon, a: () => openWin(c.id) })), SEP, { l: 'Tous les talents…', a: () => openFinder('talents') }];
+    case 'fenetre': return [{ l: 'Réduire', k: '⌥M', a: () => minimizeWin(front), dis: !w || w.def.noMin || w.state === 'full' }, { l: 'Zoom', a: () => toggleZoom(front), dis: !w || w.def.fixed || w.state === 'full' }, { l: w && w.state === 'full' ? 'Quitter le plein écran' : 'Passer en plein écran', k: '⌥F', a: () => toggleFull(front), dis: !w || w.def.fixed }, SEP, { l: 'Tout ramener au premier plan', a: showAll, dis: !wins.size }, ...(wins.size ? [SEP] : []), ...[...wins.values()].map(x => ({ l: x.title, ck: x.id === front ? '✓' : x.state === 'min' ? '◆' : '', a: () => (x.state === 'min' ? restoreWin(x.id) : focusWin(x.id)) }))];
+    case 'aide': return [{ search: 1 }, SEP, { l: 'Écrire à l’agence', a: mail }, { l: 'Instagram', brand: 'instagram', a: () => openUrl(IG_URL) }, { l: 'LinkedIn', brand: 'linkedin', a: () => openUrl(LI_URL) }, SEP, { l: 'Mentions légales', a: () => openUrl('/mentions-legales/') }, { l: 'Confidentialité', a: () => openUrl('/confidentialite/') }, { l: 'Conditions d’utilisation', a: () => openUrl('/conditions/') }];
+    case 'statut': return [{ head: 'Ouvert aux collabs' }, { l: 'Proposer une collab…', a: mail }, { l: 'Voir les talents', a: () => openFinder('talents') }, SEP, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }];
+    case 'ctx-item': { const one = dsel.size === 1 ? [...dsel][0] : null; return [{ l: 'Ouvrir', a: () => [...dsel].forEach(openWin), dis: !dsel.size }, { l: 'Coup d’œil', k: '␣', a: quickLookSelected, dis: !one || !FILES.find(f => f.id === one)?.ql }, SEP, { l: 'Ranger le bureau', a: () => tidy(false) }]; }
+    case 'ctx-desk': return [{ l: 'Ranger le bureau', a: () => tidy(false) }, { l: 'Trier par type', a: () => tidy(true) }, SEP, { l: 'Changer le fond d’écran…', a: () => togglePanel('cc') }, { l: 'Voir les talents', a: () => openFinder('talents') }, { l: 'Écrire à l’agence…', a: mail }];
+  }
+  return [];
+}
+function showMenu(name, anchor, pos) {
+  closePanels(true);
+  menuList = menuItems(name); menuName = name; menuAnchor = anchor || null; hl = -1;
+  menuEl.innerHTML = menuList.map((it, i) => it.sep ? '<div class="msep"></div>'
+    : it.head ? `<div class="mhead">${esc(it.head)}</div>`
+    : it.search ? `<label class="msearch">${ico('search')}<input placeholder="Rechercher" aria-label="Rechercher dans l’aide"></label>`
+    : `<div class="mi${it.dis ? ' dis' : ''}" data-i="${i}" role="menuitem"><span class="ck">${it.ck || ''}</span>${it.img ? `<img src="${it.img}" alt="">` : ''}${it.brand ? brand(it.brand, 15) : ''}<span class="l">${esc(it.l)}</span>${it.k ? `<span class="k">${esc(it.k)}</span>` : ''}</div>`).join('');
+  menuEl.classList.add('on');
+  const mw = menuEl.offsetWidth, mh = menuEl.offsetHeight;
+  let x, y;
+  if (anchor) { const r = anchor.getBoundingClientRect(); x = r.left; y = MB; }
+  else { x = pos.x; y = pos.y; }
+  x = Math.max(4, Math.min(x, innerWidth - mw - 4)); y = Math.max(MB, Math.min(y, innerHeight - mh - 4));
+  menuEl.style.left = x + 'px'; menuEl.style.top = y + 'px';
+  $$('.mb-item').forEach(b => b.classList.toggle('open', b === anchor));
+  const inp = menuEl.querySelector('.msearch input');
+  if (inp) { inp.focus(); inp.addEventListener('keydown', e => { if (e.key === 'Enter') { const q = inp.value; hideMenu(); openSpot(q); } e.stopPropagation(); if (e.key === 'Escape') hideMenu(); }); }
+}
+function hideMenu() { menuEl.classList.remove('on'); menuName = null; menuAnchor = null; $$('.mb-item.open').forEach(b => b.classList.remove('open')); }
+function setHl(i) { hl = i; $$('.mi', menuEl).forEach(m => m.classList.toggle('hl', +m.dataset.i === i)); }
+function runItem(i) { const it = menuList[i]; if (!it || it.dis || !it.a) return; hideMenu(); it.a(); }
+const mbar = $('#menubar');
+mbar.addEventListener('pointerdown', e => {
+  const b = e.target.closest('[data-menu]'); if (!b) return;
+  e.preventDefault();
+  if (menuName && menuAnchor === b) { hideMenu(); return; }
+  showMenu(b.dataset.menu, b);
+});
+mbar.addEventListener('pointerover', e => { const b = e.target.closest('[data-menu]'); if (b && menuName && menuAnchor && b !== menuAnchor) showMenu(b.dataset.menu, b); });
+menuEl.addEventListener('pointermove', e => { const m = e.target.closest('.mi'); setHl(m ? +m.dataset.i : -1); });
+menuEl.addEventListener('pointerleave', () => setHl(-1));
+menuEl.addEventListener('click', e => { const m = e.target.closest('.mi'); if (m) runItem(+m.dataset.i); });
+document.addEventListener('pointerdown', e => {
+  if (menuName && !e.target.closest('#menu') && !e.target.closest('[data-menu]')) hideMenu();
+  if (!e.target.closest('#cc,#mbCC,#nc,#mbClock')) closePanels(true);
+}, true);
+// plein écran : la barre réapparaît en haut de l'écran
+$('#mbHot').addEventListener('pointerenter', () => mbar.classList.add('peek'));
+mbar.addEventListener('pointerleave', () => { if (!menuName) mbar.classList.remove('peek'); });
+
+/* ═════════ Centre de contrôle, widgets, notification ═════════ */
+const WALLS = [
+  { name: 'Candice', img: 'assets/wall-candice.jpg' },
+  ...['ana', 'ivana', 'lea'].map(s => { const c = CREATORS.find(x => x.slug === s); return { name: c.name, img: c.wall }; }),
+];
+let wallIdx = Math.min(WALLS.length - 1, Math.max(0, +(store.get('ttp-wall') || 0)));
+function setWall(i) {
+  wallIdx = i; store.set('ttp-wall', i);
+  const u = `url('${WALLS[i].img}')`;
+  $('#wall').style.backgroundImage = u; $('#lockBg').style.backgroundImage = u;
+  if ($('#cc').classList.contains('on')) renderCC();
+}
+const themePref = () => store.get('ttp-theme') || 'auto';
+function applyTheme() { const p = themePref(); const dark = p === 'dark' || (p === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches); document.documentElement.dataset.theme = dark ? 'dark' : 'light'; }
+function setTheme(v) { store.set('ttp-theme', v); applyTheme(); if ($('#cc').classList.contains('on')) renderCC(); }
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+function renderCC() {
+  const p = themePref();
+  $('#cc').innerHTML = `<div class="tile wide"><div class="tt">Apparence</div><div class="seg3">${[['light', 'Clair', 'sun'], ['dark', 'Sombre', 'moon'], ['auto', 'Auto', 'auto']].map(([v, l, g]) => `<button data-theme-set="${v}" class="${p === v ? 'on' : ''}">${ico(g)}<span>${l}</span></button>`).join('')}</div></div>
+  <div class="tile wide"><div class="tt">Fond d’écran</div><div class="walls">${WALLS.map((w, i) => `<button data-wall="${i}" class="${i === wallIdx ? 'on' : ''}" style="background-image:url('${w.img}')" aria-label="${esc(w.name)}"></button>`).join('')}</div></div>
+  <button class="tile" data-run="tidy">${ico('tidy')}<span>Ranger le bureau</span></button>
+  <button class="tile" data-run="lock">${ico('lock')}<span>Verrouiller</span></button>`;
+}
+$('#cc').addEventListener('click', e => {
+  const t = e.target.closest('[data-theme-set]'); if (t) { setTheme(t.dataset.themeSet); return; }
+  const w = e.target.closest('[data-wall]'); if (w) { setWall(+w.dataset.wall); return; }
+});
+function renderNC() {
+  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
+  const y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+  const first = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+  const month = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(now);
+  let cells = ['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(d => `<span class="h">${d}</span>`).join('');
+  for (let i = 0; i < first; i++) cells += '<span></span>';
+  for (let d = 1; d <= days; d++) cells += `<span class="${d === today ? 'today' : ''}${agEventsOn(isoOf(y, m, d)).length ? ' has' : ''}">${d}</span>`;
+  $('#nc').innerHTML = `<div class="widget glass cal"><button class="cal-h" data-open="agenda"><h3>${month}</h3></button><div class="gd">${cells}</div><div class="nc-ev">${agUpcoming(3).map(evRow).join('')}</div></div>
+  <button class="widget glass wg-roster" data-open="loc:talents"><span class="wg-sub">Roster TTP Creators</span><span class="avs">${CREATORS.slice(0, 7).map(c => `<img src="${c.icon}" alt="">`).join('')}</span><span class="wg-big">${fmtK(TOTAL)} d’abonnés</span><span class="wg-sub">${CREATORS.length} créateurs · Instagram et TikTok</span></button>
+  <button class="widget glass wg-roster" data-open="resultats"><span class="wg-sub">Temps fort</span><span class="wg-big">33 000</span><span class="wg-sub">interactions sur un seul Reel</span></button>`;
+}
+function togglePanel(p) {
+  const el = $('#' + p), on = !el.classList.contains('on');
+  closePanels(true); hideMenu();
+  if (on) { p === 'cc' ? renderCC() : renderNC(); el.classList.add('on'); }
+}
+function closePanels() { $('#cc').classList.remove('on'); $('#nc').classList.remove('on'); }
+$('#mbCC').innerHTML = ico('cc'); $('#mbSpot').innerHTML = ico('search');
+$('#mbCC').addEventListener('click', () => togglePanel('cc'));
+$('#mbClock').addEventListener('click', () => togglePanel('nc'));
+$('#mbSpot').addEventListener('click', () => toggleSpot());
+let nTimer = 0;
+function notify(title, body, onClick) {
+  const n = $('#notif');
+  n.innerHTML = `<img src="assets/ttp-icon.png" alt=""><div><b>${esc(title)}</b><p>${esc(body)}</p></div><time>maintenant</time><button class="nx" aria-label="Fermer">×</button>`;
+  n.classList.add('on');
+  n.onclick = e => { hideNotif(); if (!e.target.closest('.nx')) onClick && onClick(); };
+  clearTimeout(nTimer); nTimer = setTimeout(hideNotif, 9000);
+}
+const hideNotif = () => $('#notif').classList.remove('on');
+
+/* ═════════ Spotlight ═════════ */
+const spot = $('#spot'), spotQ = $('#spotQ'), spotRes = $('#spotRes');
+$('#spotIc').innerHTML = ico('search');
+const INDEX = [
+  ...CREATORS.map(c => ({ sec: 'Talents', t: c.name, s: `${c.niche} · ${c.fans} abonnés`, img: c.icon, a: () => openWin(c.id) })),
+  ...DOCS.map(d => ({ sec: 'Documents', t: d.name, s: d.type, svg: d.icon, a: () => openWin(d.id) })),
+  ...Object.entries({ talents: 'Talents', marques: 'Marques', documents: 'Documents' }).map(([k, v]) => ({ sec: 'Dossiers', t: v, s: 'Dossier', svg: FOLDER, a: () => openFinder(k) })),
+  ...MARQUES.map(b => ({ sec: 'Marques', t: b.n, s: avec(b.who) || 'Marque', logo: b.f, word: b.f ? null : b.n, a: () => quickLook(brandQL(b)) })),
+  { sec: 'Actions', t: 'Écrire à l’agence', s: MAIL, icon: 'mail', a: mail },
+  { sec: 'Actions', t: 'Apparence sombre', s: 'Centre de contrôle', icon: 'moon', a: () => setTheme('dark') },
+  { sec: 'Actions', t: 'Apparence claire', s: 'Centre de contrôle', icon: 'sun', a: () => setTheme('light') },
+  { sec: 'Actions', t: 'Verrouiller l’écran', s: '⌥L', icon: 'lock', a: lockScreen },
+  { sec: 'Apps', t: 'Calendrier', s: 'Temps forts des marques et du sport', icon: 'cal', a: () => openWin('agenda') },
+  ...agUpcoming(8).map(e => ({ sec: 'Agenda', t: e.title, s: agWhen(e), icon: 'cal', a: () => openWin('agenda') })),
+];
+let hits = [], spSel = 0;
+function renderSpot() {
+  const q = norm(spotQ.value.trim());
+  hits = q ? INDEX.filter(i => norm(i.t + ' ' + i.s + ' ' + i.sec).includes(q)) : INDEX.filter(i => i.sec === 'Talents' || i.sec === 'Dossiers');
+  spSel = Math.min(spSel, Math.max(0, hits.length - 1));
+  let last = '', html = '';
+  hits.forEach((h, i) => {
+    const sec = q && i === 0 ? 'Meilleur résultat' : h.sec;
+    if (sec !== last) { html += `<div class="sec">${sec}</div>`; last = sec; }
+    const icn = h.img ? `<img src="${h.img}" alt="">` : h.logo ? `<span class="ri"><span class="logo-tile" style="width:24px;height:24px;border-radius:6px"><i style="--m:url(assets/clients/${h.logo}.png)"></i></span></span>` : h.word ? `<span class="ri"><span class="logo-tile word" style="width:24px;height:24px;border-radius:6px;padding:0"><b style="font-size:11px">${esc(h.word.slice(0, 1))}</b></span></span>` : h.svg ? `<span class="ri">${h.svg}</span>` : `<span class="ri">${ico(h.icon)}</span>`;
+    html += `<div class="r${i === spSel ? ' on' : ''}" data-i="${i}">${icn}<span>${esc(h.t)}</span><small>${esc(h.s)}</small></div>`;
+    if (q && i === 0) last = 'Meilleur résultat';
+  });
+  spotRes.innerHTML = html;
+  spotRes.querySelector('.r.on')?.scrollIntoView({ block: 'nearest' });
+}
+function openSpot(q = '') { hideMenu(); closePanels(); spot.classList.add('on'); spotQ.value = typeof q === 'string' ? q : ''; spSel = 0; renderSpot(); setTimeout(() => spotQ.focus(), 20); }
+const closeSpot = () => spot.classList.remove('on');
+$('#spotX').addEventListener('click', closeSpot);
+const toggleSpot = () => spot.classList.contains('on') ? closeSpot() : openSpot();
+spotQ.addEventListener('input', () => { spSel = 0; renderSpot(); });
+spotQ.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') { spSel = Math.min(hits.length - 1, spSel + 1); renderSpot(); e.preventDefault(); }
+  else if (e.key === 'ArrowUp') { spSel = Math.max(0, spSel - 1); renderSpot(); e.preventDefault(); }
+  else if (e.key === 'Enter' && hits[spSel]) { const h = hits[spSel]; closeSpot(); h.a(); }
+});
+spotRes.addEventListener('click', e => { const r = e.target.closest('.r'); if (r) { const h = hits[+r.dataset.i]; closeSpot(); h.a(); } });
+spot.addEventListener('pointerdown', e => { if (e.target === spot) closeSpot(); });
+
+/* ═════════ Coup d'œil (barre d'espace) ═════════ */
+const ql = $('#ql'); let qlItem = null;
+function quickLook(item) {
+  if (!item) return;
+  qlItem = item;
+  ql.innerHTML = `<div class="ql-p"><div class="ql-bar"><button class="ql-x" data-ql="close" aria-label="Fermer">${ico('x')}</button><b>${esc(item.title)}</b>${item.open ? '<button class="pbtn" data-ql="open">Ouvrir</button>' : '<span style="width:22px"></span>'}</div><div class="ql-c">${item.img ? `<img src="${item.img}" alt="">` : item.word ? `<span class="ql-word">${esc(item.word)}</span>` : `<span class="ql-logo" style="--m:url(assets/clients/${item.logo}.png)"></span>`}${item.sub ? `<p class="ql-sub">${esc(item.sub)}</p>` : ''}</div></div>`;
+  ql.classList.add('on');
+}
+const closeQL = () => { ql.classList.remove('on'); qlItem = null; };
+ql.addEventListener('click', e => {
+  const b = e.target.closest('[data-ql]');
+  if (e.target === ql || (b && b.dataset.ql === 'close')) closeQL();
+  else if (b && b.dataset.ql === 'open') { const id = qlItem.open; closeQL(); openWin(id); }
+});
+function selectedItem() {
+  if (front === 'finder' && F.sel) { const it = finderItems().find(i => i.id === F.sel); if (it) return { open: it.open || null, ql: it.ql || null }; }
+  if (dsel.size === 1) { const f = FILES.find(x => x.id === [...dsel][0]); if (f) return { open: () => openWin(f.id), ql: f.ql || null }; }
+  return null;
+}
+function quickLookSelected() { const s = selectedItem(); if (s && s.ql) quickLook(s.ql); }
+function openSelected() { const s = selectedItem(); if (s && s.open) s.open(); else if (s && s.ql) quickLook(s.ql); }
+
+/* ═════════ Actions ═════════ */
+function mail() { location.href = `mailto:${MAIL}`; }
+function copyMail(btn) {
+  const done = () => { if (btn) { const s = btn.querySelector('span'); const t = s.textContent; s.textContent = 'Copié'; setTimeout(() => { s.textContent = t; }, 1400); } };
+  (navigator.clipboard ? navigator.clipboard.writeText(MAIL) : Promise.reject()).then(done).catch(() => {});
+}
+function countUp(el) {
+  el.querySelectorAll('[data-w]').forEach(i => requestAnimationFrame(() => requestAnimationFrame(() => { i.style.width = i.dataset.w + '%'; })));
+  el.querySelectorAll('[data-count]').forEach(n => {
+    const to = +n.dataset.count, dec = +n.dataset.dec, pre = n.dataset.pre, suf = n.dataset.suf, t0 = performance.now(), dur = 1100;
+    const fmt = v => pre + (dec ? v.toFixed(dec).replace('.', ',') : Math.round(v)) + suf;
+    if (reduce) { n.textContent = fmt(to); return; }
+    const step = t => { const p = Math.min(1, (t - t0) / dur); n.textContent = fmt(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+}
+document.addEventListener('click', e => {
+  const o = e.target.closest('[data-open]');
+  if (o) { closePanels(); openWin(o.dataset.open); return; }
+  const r = e.target.closest('[data-run]'); if (!r) return;
+  const k = r.dataset.run;
+  if (k === 'copy') copyMail(r);
+  else if (k === 'tidy') { closePanels(); tidy(false); }
+  else if (k === 'lock') { closePanels(); lockScreen(); }
+  else if (k === 'insp') { const vw = r.closest('.win').querySelector('.vw'); vw.classList.toggle('noinsp'); r.classList.toggle('on', !vw.classList.contains('noinsp')); }
+});
+
+/* ═════════ Clavier ═════════ */
+addEventListener('keydown', e => {
+  if (!lock.classList.contains('out')) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); unlock(); } return; }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); toggleSpot(); return; }
+  if (e.key === 'Alt') document.body.classList.add('alt');
+  if (e.altKey && !e.metaKey && !e.ctrlKey) {
+    const c = e.code;
+    if (c === 'KeyW') { e.preventDefault(); front && closeWin(front); return; }
+    if (c === 'KeyM') { e.preventDefault(); front && minimizeWin(front); return; }
+    if (c === 'KeyF') { e.preventDefault(); front && toggleFull(front); return; }
+    if (c === 'KeyL') { e.preventDefault(); lockScreen(); return; }
+  }
+  if (menuName) {
+    const idx = menuList.map((it, i) => (it.l && !it.dis ? i : -1)).filter(i => i >= 0);
+    if (e.key === 'ArrowDown') { e.preventDefault(); setHl(idx[(idx.indexOf(hl) + 1) % idx.length]); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setHl(idx[(idx.indexOf(hl) - 1 + idx.length) % idx.length]); }
+    else if (e.key === 'Enter') { e.preventDefault(); runItem(hl); }
+    else if (e.key === 'Escape') hideMenu();
+    else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && menuAnchor) {
+      const all = $$('.menubar [data-menu]').filter(b => b.offsetParent);
+      const n = all[(all.indexOf(menuAnchor) + (e.key === 'ArrowRight' ? 1 : -1) + all.length) % all.length];
+      showMenu(n.dataset.menu, n);
+    }
+    return;
+  }
+  if (e.key === 'Escape') {
+    if (spot.classList.contains('on')) closeSpot();
+    else if (ql.classList.contains('on')) closeQL();
+    else if ($('#cc.on,#nc.on')) closePanels();
+    else { const f = [...wins.values()].find(w => w.state === 'full'); f && toggleFull(f.id); }
+    return;
+  }
+  if (e.target.closest('input,textarea')) return;
+  if (e.key === ' ') { e.preventDefault(); ql.classList.contains('on') ? closeQL() : quickLookSelected(); }
+  else if (e.key === 'Enter' || (e.metaKey && e.key === 'ArrowDown')) { e.preventDefault(); openSelected(); }
+});
+addEventListener('keyup', e => { if (e.key === 'Alt') document.body.classList.remove('alt'); });
+addEventListener('blur', () => document.body.classList.remove('alt'));
+
+/* ═════════ Horloge (Lyon) et écran verrouillé ═════════ */
+const fmt = o => new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', ...o }).format(new Date());
+function tick() {
+  const t = fmt({ hour: '2-digit', minute: '2-digit' });
+  $('#mbClock .d').textContent = fmt({ weekday: 'short', day: 'numeric', month: 'short' }) + ' ';
+  $('#mbClock .t').textContent = t;
+  $('#iosTime').textContent = t; $('#ltime').textContent = t;
+  const wd = fmt({ weekday: 'short' }).toUpperCase(), dn = fmt({ day: 'numeric' });
+  $$('.cal-wd').forEach(x => { x.textContent = wd; }); $$('.cal-dn').forEach(x => { x.textContent = dn; });
+  const cd = $('#calDay'); if (cd) { cd.textContent = fmt({ weekday: 'long' }); $('#calNum').textContent = dn; }
+  $('#ldate').textContent = fmt({ weekday: 'long', day: 'numeric', month: 'long' });
+}
+const lock = $('#lock');
+$('#pwGo').innerHTML = ico('arrow');
+let typing = 0;
+function typeTagline() {
+  const txt = 'Trust The Process.', out = $('#pwText'); let i = 0;
+  clearTimeout(typing);
+  if (reduce) { out.textContent = txt; return; }
+  out.textContent = '';
+  (function type() { out.textContent = txt.slice(0, ++i); if (i < txt.length) typing = setTimeout(type, 75); })();
+}
+function unlock() {
+  if (lock.classList.contains('out')) return;
+  lock.classList.add('out');
+  store.set('ttp-unlocked', '1');
+  try { sessionStorage.setItem('ttp-dock-seen', '1'); } catch (e) {}
+  if (!isPhone() && !store.get('ttp-notif-seen')) setTimeout(() => { notify('Bienvenue chez TTP Creators', 'Double-cliquez sur une photo pour découvrir un talent, ou tapez ⌘K pour chercher.', () => openFinder('talents')); }, 700);
+}
+function lockScreen() { hideMenu(); closePanels(); closeSpot(); lock.classList.remove('out'); typeTagline(); }
+lock.addEventListener('click', unlock);
+
+/* ═════════ Téléphone (façon iPhone) ═════════ */
+const phApp = (open, label, inner) => `<button class="app" data-open="${open}">${icw(inner)}<span class="lab">${esc(label)}</span></button>`;
+const phLink = (href, label, inner) => `<a class="app" href="${href}" target="_blank" rel="noopener">${icw(inner)}<span class="lab">${esc(label)}</span></a>`;
+const brandIco = n => `<span class="ico sq ${BRANDS[n].cls}">${BRANDS[n].mark}</span>`;
+function dialSVG() {
+  let nums = '';
+  for (let i = 1; i <= 12; i++) { const a = i * Math.PI / 6; nums += `<text x="${(50 + 37 * Math.sin(a)).toFixed(1)}" y="${(53.4 - 37 * Math.cos(a)).toFixed(1)}">${i}</text>`; }
+  return `<svg class="dial" viewBox="0 0 100 100" aria-hidden="true"><circle class="face" cx="50" cy="50" r="49"/>${nums}<line class="hh" x1="50" y1="50" x2="50" y2="28"/><line class="mh" x1="50" y1="50" x2="50" y2="16"/><line class="sh" x1="50" y1="58" x2="50" y2="12"/><circle class="pin" cx="50" cy="50" r="2.5"/><circle class="pin2" cx="50" cy="50" r="1.1"/></svg>`;
+}
+const topCreators = [...CREATORS].sort((a, b) => K(b.fans) - K(a.fans));
+const nIG = CREATORS.filter(c => c.nets.some(n => n[0] === 'instagram')).length;
+const nTT = CREATORS.filter(c => c.nets.some(n => n[0] === 'tiktok')).length;
+const calEvRow = e => `<span class="cal-ev"><i style="background:${AG_COLORS[e.k]}"></i><span><b>${esc(e.title)}</b><small>${esc(agWhen(e))}</small></span></span>`;
+const W_CLOCK = `<div class="iw-wrap"><div class="iw iw-clock">${dialSVG()}<span>Lyon</span></div><span class="wlabel">Horloge</span></div>`;
+const W_CAL = `<div class="iw-wrap"><button class="iw iw-cal" data-open="agenda"><span class="cal-day" id="calDay"></span><span class="cal-num" id="calNum"></span><span class="cal-evs">${agUpcoming(2).map(calEvRow).join('')}</span></button><span class="wlabel">Calendrier</span></div>`;
+const W_PEOPLE = `<div class="iw-wrap med"><div class="iw iw-people">${topCreators.slice(0, 4).map(c => `<button class="pp" data-open="${c.id}"><img src="${c.icon}" alt="" loading="lazy" decoding="async"><span>${esc(c.name.split(' ')[0])}</span></button>`).join('')}</div><span class="wlabel">Talents</span></div>`;
+const W_NEXT = `<div class="iw-wrap med"><button class="iw iw-next" data-open="agenda"><h3>À venir<small>Temps forts · réservations · sport</small></h3>${agUpcoming(3).map(calEvRow).join('')}</button><span class="wlabel">Calendrier</span></div>`;
+const W_STATS = `<div class="iw-wrap med"><button class="iw iw-stocks" data-open="resultats">${[['Roster TTP', `${CREATORS.length} créateurs`, TOTAL], ['Instagram', `${nIG} créateurs`, NET.instagram], ['TikTok', `${nTT} créateurs`, NET.tiktok]].map(([l, s, v]) => `<span class="st-row"><span class="st-l"><b>${l}</b><small>${s}</small></span><span class="st-bar"><i style="width:${(v / TOTAL * 100).toFixed(0)}%"></i></span><span class="st-v">${fmtK(v)}</span></span>`).join('')}</button><span class="wlabel">Résultats</span></div>`;
+const W_PHOTO = `<div class="iw-wrap med"><button class="iw iw-photo" id="phFeat"><img alt="" decoding="async"><span class="pf-cap"><small>À la une</small><b></b></span></button><span class="wlabel">À la une</span></div>`;
+$('#phPages').innerHTML = [
+  W_CLOCK + W_CAL + W_PEOPLE + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')),
+  W_NEXT + W_STATS + phApp('agenda', 'Calendrier', calIcon()) + phApp('histoire', 'Histoire', iosIcon('histoire')) + phApp('roster', 'Roster', iosIcon('roster')) + phLink(LI_URL, 'LinkedIn', brandIco('linkedin')),
+  W_PHOTO + CREATORS.map(c => phApp(c.id, c.name.split(' ')[0], `<img class="ico sq" src="${c.icon}" alt="" loading="lazy" decoding="async">`)).join(''),
+].map(p => `<div class="ph-page">${p}</div>`).join('');
+$('#phDock').innerHTML = phApp('about', 'TTP', '<img class="ico sq" src="assets/ttp-icon.png" alt="">') + phApp('loc:talents', 'Talents', iosIcon('talents')) + phApp('contact', 'Contact', iosIcon('contact')) + phLink(IG_URL, 'Instagram', brandIco('instagram'));
+$('#phDots').innerHTML = '<i class="on"></i><i></i><i></i>';
+$('#phSearchIc').innerHTML = ico('search');
+$('#phSearch').addEventListener('click', () => openSpot());
+$('#lkText').textContent = `Trust The Process. Touchez pour découvrir nos ${CREATORS.length} créateurs.`;
+$('#lkTorch').innerHTML = '<svg viewBox="0 0 24 24"><path d="M8.5 2h7v2.6l-1.6 3.2V21a1 1 0 0 1-1 1h-1.8a1 1 0 0 1-1-1V7.8L8.5 4.6z"/></svg>';
+$('#lkCam').innerHTML = '<svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.6 5.2l1.1-1.5c.3-.4.8-.7 1.3-.7h2c.5 0 1 .3 1.3.7l1.1 1.5H19a2.5 2.5 0 0 1 2.5 2.5v9.8A2.5 2.5 0 0 1 19 20H5a2.5 2.5 0 0 1-2.5-2.5V7.7A2.5 2.5 0 0 1 5 5.2zM12 16.6a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>';
+// pages : la pilule « Rechercher » devient des points pendant le défilement, comme sur iPhone
+const phPages = $('#phPages'), phoneEl = $('#phone');
+let pageT = 0;
+phPages.addEventListener('scroll', () => {
+  phoneEl.classList.add('paging');
+  const i = Math.round(phPages.scrollLeft / phPages.clientWidth);
+  $$('#phDots i').forEach((d, k) => d.classList.toggle('on', k === i));
+  clearTimeout(pageT); pageT = setTimeout(() => phoneEl.classList.remove('paging'), 900);
+}, { passive: true });
+// tirer vers le bas sur l'écran d'accueil : la recherche
+phPages.addEventListener('pointerdown', e => {
+  const sx = e.clientX, sy = e.clientY;
+  const stop = () => { removeEventListener('pointermove', mv); removeEventListener('pointerup', stop); removeEventListener('pointercancel', stop); };
+  const mv = ev => { const dy = ev.clientY - sy, dx = Math.abs(ev.clientX - sx); if (dy > 55 && dx < 40) { stop(); openSpot(); } else if (dx > 30 || dy < -25) stop(); };
+  addEventListener('pointermove', mv); addEventListener('pointerup', stop); addEventListener('pointercancel', stop);
+});
+// glisser depuis le bord gauche d'une app : retour à l'écran précédent
+layer.addEventListener('pointerdown', e => {
+  const edge = e.target.closest('.edge'); if (!edge || !isPhone()) return;
+  const winEl = edge.closest('.win'), id = winEl.dataset.id, sx = e.clientX;
+  let dx = 0;
+  edge.setPointerCapture(e.pointerId);
+  const mv = ev => { dx = Math.max(0, ev.clientX - sx); winEl.style.transform = `translateX(${dx}px)`; winEl.style.boxShadow = '-12px 0 30px rgba(0,0,0,.25)'; };
+  const up = () => {
+    edge.removeEventListener('pointermove', mv); edge.removeEventListener('pointerup', up); edge.removeEventListener('pointercancel', up);
+    if (dx > innerWidth * 0.28) closeWin(id, 'slide');
+    else { winEl.animate([{ transform: `translateX(${dx}px)` }, { transform: 'none' }], { duration: 220, easing: 'cubic-bezier(.2,.8,.2,1)' }); winEl.style.transform = ''; winEl.style.boxShadow = ''; }
+  };
+  edge.addEventListener('pointermove', mv); edge.addEventListener('pointerup', up); edge.addEventListener('pointercancel', up);
+});
+// barre d'accueil : retour à l'écran d'accueil
+$('#homebar').addEventListener('click', closeAll);
+// écran verrouillé : balayer vers le haut pour ouvrir
+let lockY = null;
+lock.addEventListener('pointerdown', e => { if (!isPhone()) return; lockY = e.clientY; lock.style.transition = 'none'; });
+addEventListener('pointermove', e => { if (lockY !== null) lock.style.transform = `translateY(${Math.min(0, e.clientY - lockY)}px)`; });
+addEventListener('pointerup', e => {
+  if (lockY === null) return;
+  const dy = e.clientY - lockY; lockY = null;
+  lock.style.transition = ''; lock.style.transform = '';
+  if (dy < -40) unlock();
+});
+// widget « À la une » : un créateur différent toutes les 6 secondes
+let featIdx = 0;
+function feature() {
+  const b = $('#phFeat'), img = b.querySelector('img'), c = topCreators[featIdx++ % topCreators.length];
+  const swap = () => { img.onload = () => { img.style.opacity = 1; }; img.src = c.photo; b.dataset.open = c.id; b.querySelector('b').textContent = c.name; };
+  if (img.getAttribute('src')) { img.style.opacity = 0; setTimeout(swap, 400); } else swap();
+}
+// horloge à aiguilles (heure de Lyon)
+function dial() {
+  const p = {};
+  new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).forEach(x => { p[x.type] = +x.value; });
+  const rot = (sel, deg) => $$('.dial ' + sel).forEach(l => l.setAttribute('transform', `rotate(${deg.toFixed(2)} 50 50)`));
+  rot('.hh', (p.hour % 12) * 30 + p.minute * 0.5); rot('.mh', p.minute * 6 + p.second * 0.1); rot('.sh', p.second * 6);
+}
+setInterval(() => { if (isPhone()) dial(); }, 1000);
+setInterval(() => { if (isPhone() && lock.classList.contains('out') && !document.body.classList.contains('app-open')) feature(); }, 6000);
+if (isPhone()) { dial(); feature(); }
+
+/* ═════════ Démarrage ═════════ */
+applyTheme();
+setWall(wallIdx);
+layoutDesk();
+updateMenubar(); markDock();
+tick(); setInterval(tick, 10000);
+let seen = false; try { seen = sessionStorage.getItem('ttp-dock-seen') === '1'; } catch (e) {}
+if (seen || new URLSearchParams(location.search).has('nolock')) { lock.classList.add('out'); }
+else typeTagline();
+})();
+</script>
+</body>
 </html>

@@ -4,7 +4,36 @@ Site officiel de l'agence de talent management **TTP Creators** (Sport & Lifesty
 **En production sur https://ttpcreators.pro** — toute modification poussée sur la branche de
 déploiement met à jour le site public en ~1 minute. Agir en conséquence.
 
-## Stack
+## Accueil « Bureau » (en ligne depuis le 2026-11-27, choisi par Marc)
+
+- **`index.html` = tout l'accueil** : une page autonome (CSS et JavaScript dans le fichier, sans
+  React ni police web), façon Mac sur ordinateur (barre de menus, Dock, fenêtres, Finder, Spotlight
+  ⌘K, Coup d'œil, Centre de contrôle) et façon iPhone sous 720 px (écran verrouillé, widgets,
+  pages d'apps, retour par glissement). Vite la construit telle quelle (`npm run build` : seul le
+  CSS est compacté).
+- **Données** : bloc `<script id="ttp-data" type="application/json">` (créateurs, abonnés par réseau,
+  media kit, marques). À chaque déploiement ET avec le cron horaire, `scripts/bureau_donnees.py`
+  le remplace dans `dist/index.html` par les vues publiques Supabase `public_roster` +
+  `public_mediakit` : un créateur ajouté dans l'app apparaît dans l'heure. Les comptes par réseau
+  (absents des vues) sont repris du bloc du dépôt. Rafraîchir le repli du dépôt :
+  `python3 scripts/bureau_donnees.py index.html`.
+- **Version texte** (`<main id="texte" hidden>`, même principe que l'ancien `prerender_text.py`) :
+  lue par les robots sans JavaScript, retirée par la page au démarrage. Chiffres, créateurs et
+  marques réécrits par le même script.
+- **Marques** : les 11 logos de `public/assets/clients/`, puis toutes les marques des media kits
+  publics (« Ces marques lui ont fait confiance »), écrites comme des logos, avec les créateurs
+  concernés (« Avec Léna »). Corrections de fautes de frappe : `CORRECTIONS` dans le script.
+- **Calendrier** : uniquement des dates publiques, recalculées chaque année dans la page (temps
+  forts marketing avec la date limite pour réserver des créateurs, journées du sport). **Jamais**
+  d'anniversaires ni de rendez-vous des créateurs sur le site public (vie privée et sécurité) :
+  à n'ajouter qu'avec l'accord écrit de chaque créateur.
+- **Garde-fou du déploiement** : `dist/index.html` doit porter `data-ttp-site="bureau"` (sur
+  `<html>`) et le bloc `ttp-data`, sinon le déploiement est bloqué.
+- **Retour à l'ancien accueil** (studio 3D React) : tag `sauvegarde-2026-11-27-accueil-studio`.
+  Le code React (`src/`) reste dans le dépôt mais n'est plus construit ; `src/data.js` sert
+  toujours de référence au deck agence des media kits (`CLIENTS`, `PILLARS`).
+
+## Stack (ancien accueil React, plus construit depuis le 2026-11-27)
 
 React 19 + Vite, **CSS pur** (pas de Tailwind, pas de TypeScript — ne pas en introduire),
 `motion` (= framer-motion, importer depuis `motion/react`), `lucide-react`, `d3-geo`/`d3-timer`
@@ -82,14 +111,16 @@ DottedGlobe (wireframe-dotted-globe), AiLoader.
 - Repo : `ttpcreators/websitettpcreators`. **PRODUCTION = branche `main` UNIQUEMENT.**
   L'environnement `github-pages` n'autorise plus QUE `main` (les policies `claude/react-site`
   et `claude/agency-website-m3e282` ont été supprimées le 2026-07-13). Un seul point de vérité.
-- Workflow `.github/workflows/deploy.yml` (sur main) : `npm ci && npm run build` (React → `dist/`)
-  PUIS génération du **media kit** (`python3 mediakit/_build_mediakits.py`, données live Supabase)
+- Workflow `.github/workflows/deploy.yml` (sur main) : `npm ci && npm run build` (accueil → `dist/`)
+  puis `scripts/bureau_donnees.py` (roster et marques en direct) PUIS génération du **media kit** (`python3 mediakit/_build_mediakits.py`, données live Supabase)
   → `cp -r mediakit dist/mediakit` → rendu **PDF paysage** (`SERVE_DIR=dist python3
   mediakit/_render_pdfs.py`, Chrome headless) → garde-fou (build React valide, pas de `<video>`)
-  → upload `dist/`. Le site + les media kits partent ENSEMBLE. Cron horaire `:17` → toute
+  → upload `dist/`. Le site + les media kits partent ENSEMBLE. (Le garde-fou vérifie désormais le
+  marqueur `data-ttp-site="bureau"`, plus `id="root"`.) Cron horaire `:17` → toute
   nouvelle créatrice ajoutée dans l'app obtient sa page `/mediakit/<slug>/` + son PDF toute seule.
   Échec « Deployment failed, try again later » = transitoire GitHub → `gh run rerun <id> --failed`.
-- **SEO (2026-11-11)** : juste après `npm run build`, `python3 scripts/prerender_text.py` glisse dans
+- **SEO (2026-11-11, ancien accueil React ; remplacé le 2026-11-27 par la version texte du Bureau)** :
+  juste après `npm run build`, `python3 scripts/prerender_text.py` glissait dans
   `<div id="root">` de `dist/index.html` un bloc `hidden` avec le texte de la page rendue (Chrome
   headless), pour les robots sans JavaScript (ChatGPT, Claude, Perplexity). React le remplace au
   chargement : rien ne change à l'écran. Les chiffres clés et les 4 services viennent de `src/data.js`.
