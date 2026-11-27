@@ -195,6 +195,36 @@ body.fullscreen .desk{visibility:hidden}
 .file.sel .ic{background:rgba(0,0,0,.28)}
 .file.sel .nm{background:#0a64d6;text-shadow:none}
 .file.drag{opacity:.85;z-index:5}
+/* Dossiers « vivants » */
+.fold{--fw:104px;position:relative;display:block;width:var(--fw);height:calc(var(--fw)*.78)}
+.fold-back{position:absolute;left:3%;right:3%;top:9%;bottom:8%;border-radius:calc(var(--fw)*.09);background:var(--fb)}
+.fold-back::before{content:"";position:absolute;left:0;top:calc(var(--fw)*-.06);width:40%;height:calc(var(--fw)*.12);border-radius:calc(var(--fw)*.06) calc(var(--fw)*.06) 0 0;background:var(--fb)}
+.fold .pk{position:absolute;top:2%;width:36%;height:52%;border-radius:calc(var(--fw)*.05);background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);overflow:hidden;display:grid;place-items:center}
+.fold .pk0{left:10%;transform:rotate(-9deg)}
+.fold .pk1{left:32%;top:-2%;transform:rotate(1deg);z-index:1}
+.fold .pk2{left:54%;transform:rotate(9deg)}
+.fold .pk-ph{padding:calc(var(--fw)*.018)}
+.fold .pk-ph img{width:100%;height:100%;object-fit:cover;border-radius:calc(var(--fw)*.035)}
+.fold .pk-logo{padding:calc(var(--fw)*.04)}
+.fold .pk-logo img{width:100%;height:100%;object-fit:contain}
+.fold .pk-doc{background:none;box-shadow:none;overflow:visible}
+.fold .pk-doc svg{width:130%;height:130%;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2))}
+.fold-front{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:2;border-radius:calc(var(--fw)*.1);background:var(--ff);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 calc(var(--fw)*.05) calc(var(--fw)*.12) rgba(0,0,0,.2);display:flex;align-items:center;justify-content:space-between;padding:0 8%;font:600 calc(var(--fw)*.085)/1 var(--font);color:#fff}
+.fold-talents{--fb:#2c2832;--ff:linear-gradient(180deg,rgba(184,172,198,.72),rgba(104,92,120,.92))}
+.fold-marques{--fb:#d6d0c8;--ff:linear-gradient(180deg,rgba(255,255,255,.82),rgba(236,230,222,.96))}
+.fold-documents{--fb:#2a0004;--ff:linear-gradient(180deg,#8f2c39,#5a0d17)}
+.fold-marques .fold-front{color:#5a5550}
+.fd-av{display:flex}
+.fd-av img{width:calc(var(--fw)*.17);height:calc(var(--fw)*.17);border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.85);margin-right:calc(var(--fw)*-.05)}
+.fd-pill{display:inline-flex;align-items:center;gap:.35em;padding:.45em .8em;border-radius:99px;background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.35);white-space:nowrap}
+.fold-marques .fd-pill,.fold-marques .fd-n{background:rgba(0,0,0,.06);box-shadow:inset 0 0 0 .5px rgba(0,0,0,.08)}
+.fd-n{display:grid;place-items:center;min-width:calc(var(--fw)*.17);height:calc(var(--fw)*.17);padding:0 .3em;border-radius:99px;background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.35)}
+.fd-pill .live{width:.55em;height:.55em;border-radius:50%;background:#34c759;box-shadow:0 0 0 .15em rgba(52,199,89,.25)}
+.file.is-fold{width:124px}
+.file.is-fold .ic{width:auto;height:auto;padding:4px 8px 2px;filter:none;border-radius:12px}
+.file.is-fold .sub{font-size:11px;line-height:1.1;color:rgba(255,255,255,.85);text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.file.is-fold.sel .ic{background:rgba(0,0,0,.18)}
+
 .desk.tidy .file{transition:left .4s cubic-bezier(.2,.8,.2,1),top .4s cubic-bezier(.2,.8,.2,1)}
 .rubber{position:fixed;z-index:60;border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.16);pointer-events:none;display:none}
 
@@ -646,6 +676,12 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   .cal-ev b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cal-ev small{display:block;color:#8e8e93;font-size:10.5px}
   .cal-ev span{min-width:0}
+  .iw-folds{display:grid!important;grid-template-columns:repeat(3,1fr);align-items:center;padding:0 6px;background:#fff!important}
+  .iw-folds .fb{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0;-webkit-tap-highlight-color:transparent}
+  .iw-folds .fold{--fw:min(25vw,104px);margin-bottom:6px}
+  .iw-folds .fb b{font-size:12.5px;font-weight:600;color:#1d1d1f}
+  .iw-folds .fb small{font-size:10.5px;color:#8e8e93}
+  .iw-folds .fb:active .fold{transform:scale(.95)}
   .iw-next{display:flex!important;flex-direction:column;padding:13px 15px 12px;gap:8px}
   .iw-next h3{font-size:13px;font-weight:700;color:#ff3b30;display:flex;justify-content:space-between}
   .iw-next h3 small{color:#8e8e93;font-weight:500}
@@ -1757,17 +1793,43 @@ function openFinderItem(id) {
   if (it.open) it.open(); else if (it.ql) quickLook(it.ql);
 }
 
+/* ═════════ Dossiers « vivants » (Talents, Marques, Documents) ═════════ */
+// Demande de Marc (2026-11-27, d'après une maquette repérée sur Pinterest) : on voit ce qu'il y a dans
+// le dossier avant de l'ouvrir (photos, logos, fichiers qui dépassent) + pastilles sur le devant.
+const FOLD_NAMES = { talents: 'Talents', marques: 'Marques', documents: 'Documents' };
+function foldSub(k) {
+  return k === 'talents' ? `${CREATORS.length} créateurs` : k === 'marques' ? `${MARQUES.length} marques` : `${DOCS.length} fichiers`;
+}
+function folderHTML(k) {
+  let peek = '', front = '';
+  if (k === 'talents') {
+    const top = [...CREATORS].sort((a, b) => K(b.fans) - K(a.fans)).slice(0, 3);
+    peek = top.map((c, i) => `<span class="pk pk-ph pk${i}"><img src="${esc(c.icon)}" alt="" loading="lazy" decoding="async" draggable="false"></span>`).join('');
+    front = `<span class="fd-av">${top.map(c => `<img src="${esc(c.icon)}" alt="" loading="lazy" decoding="async" draggable="false">`).join('')}</span><span class="fd-pill"><i class="live"></i>À jour</span>`;
+  } else if (k === 'marques') {
+    const pref = ['nestle', 'sephora', 'loreal', 'ikea', 'nutripure'];
+    const withLogo = MARQUES.filter(b => b.img);
+    const pick = [...pref.map(p => withLogo.find(b => cleMarque(b.n) === p)).filter(Boolean), ...withLogo].filter((b, i, a) => a.indexOf(b) === i).slice(0, 3);
+    peek = pick.map((b, i) => `<span class="pk pk-logo pk${i}"${b.bg ? ` style="background:${b.bg}"` : ''}><img src="${esc(b.img)}" alt="" loading="lazy" decoding="async" draggable="false"></span>`).join('');
+    front = `<span class="fd-n">${MARQUES.length}</span><span class="fd-pill">Logos</span>`;
+  } else {
+    peek = [ICON.pdf, ICON.txt, ICON.sheet].map((svg, i) => `<span class="pk pk-doc pk${i}">${svg}</span>`).join('');
+    front = `<span class="fd-n">${DOCS.length}</span><span class="fd-pill">PDF · TXT</span>`;
+  }
+  return `<span class="fold fold-${k}" aria-hidden="true"><span class="fold-back"></span>${peek}<span class="fold-front">${front}</span></span>`;
+}
+
 /* ═════════ Bureau ═════════ */
 const desk = $('#desk');
 const SLOTS = [[22, 3], [33, 15], [24, 34], [35, 46], [24, 66], [66, 4], [77, 10], [88, 3], [64, 30], [88, 28], [76, 44], [46, 3]];
 const FILES = [
-  { id: 'loc:talents', label: 'Talents', svg: FOLDER, type: 'Dossier', x: 3, y: 3 },
-  { id: 'loc:marques', label: 'Marques', svg: FOLDER, type: 'Dossier', x: 3, y: 22 },
-  { id: 'loc:documents', label: 'Documents', svg: FOLDER, type: 'Dossier', x: 3, y: 41 },
-  { id: 'methode', label: 'Méthode.txt', svg: ICON.txt, type: 'Texte', x: 3, y: 60 },
-  { id: 'services', label: 'Services.pdf', svg: ICON.pdf, type: 'PDF', x: 12, y: 11 },
-  { id: 'roster', label: 'Roster agence.pdf', svg: ICON.pdf, type: 'PDF', x: 12, y: 31 },
-  { id: 'resultats', label: 'Résultats', svg: ICON.sheet, type: 'Tableur', x: 12, y: 51 },
+  { id: 'loc:talents', label: 'Talents', fold: 'talents', type: 'Dossier', x: 1.5, y: 2 },
+  { id: 'loc:marques', label: 'Marques', fold: 'marques', type: 'Dossier', x: 1.5, y: 25 },
+  { id: 'loc:documents', label: 'Documents', fold: 'documents', type: 'Dossier', x: 1.5, y: 48 },
+  { id: 'methode', label: 'Méthode.txt', svg: ICON.txt, type: 'Texte', x: 3, y: 72 },
+  { id: 'services', label: 'Services.pdf', svg: ICON.pdf, type: 'PDF', x: 14.5, y: 11 },
+  { id: 'roster', label: 'Roster agence.pdf', svg: ICON.pdf, type: 'PDF', x: 14.5, y: 31 },
+  { id: 'resultats', label: 'Résultats', svg: ICON.sheet, type: 'Tableur', x: 14.5, y: 51 },
   { id: 'histoire', label: 'Notre histoire', svg: ICON.doc, type: 'Document', x: 88, y: 70 },
   { id: 'contact', label: 'TTP Creators.vcf', svg: ICON.vcf, type: 'Fiche', x: 79, y: 78 },
   { id: 'rejoindre', label: 'Rejoindre l’agence', svg: ICON.form, type: 'Formulaire', x: 70, y: 78 },
@@ -1786,13 +1848,14 @@ function selDesk(id, add = false) {
 }
 FILES.forEach(f => {
   const el = document.createElement('div');
-  el.className = 'file'; el.tabIndex = 0; el.dataset.id = f.id;
+  el.className = 'file' + (f.fold ? ' is-fold' : ''); el.tabIndex = 0; el.dataset.id = f.id;
   el.setAttribute('role', 'button'); el.setAttribute('aria-label', f.label);
   el.addEventListener('keydown', e => {
     if (e.key === 'Enter') { e.preventDefault(); selDesk(f.id); openWin(f.id); }
     else if (e.key === ' ') { e.preventDefault(); if (ql.classList.contains('on')) { closeQL(); return; } selDesk(f.id); f.ql ? quickLook(f.ql) : openWin(f.id); }
   });
-  el.innerHTML = `<span class="ic">${f.img ? `<img class="ph" src="${esc(f.img)}" alt="" draggable="false" loading="lazy" decoding="async">` : f.svg}</span><span class="nm">${esc(f.label)}</span>`;
+  el.innerHTML = f.fold ? `<span class="ic">${folderHTML(f.fold)}</span><span class="nm">${esc(f.label)}</span><span class="sub">${esc(foldSub(f.fold))}</span>`
+    : `<span class="ic">${f.img ? `<img class="ph" src="${esc(f.img)}" alt="" draggable="false" loading="lazy" decoding="async">` : f.svg}</span><span class="nm">${esc(f.label)}</span>`;
   desk.appendChild(el); fileEls.push({ el, f });
   el.addEventListener('pointerdown', e => {
     if (e.button !== 0) return;
@@ -2227,11 +2290,12 @@ const nIG = CREATORS.filter(c => c.nets.some(n => n[0] === 'instagram')).length;
 const nTT = CREATORS.filter(c => c.nets.some(n => n[0] === 'tiktok')).length;
 const calEvRow = e => `<span class="cal-ev"><i style="background:${AG_COLORS[e.k]}"></i><span><b>${esc(e.title)}</b><small>${esc(agWhen(e))}</small></span></span>`;
 const W_AGENCE = `<div class="iw-wrap med"><button class="iw iw-agence" data-open="resultats"><span class="ag-h"><img src="assets/ttp-icon.png" alt=""><b>TTP Creators</b><small>Lyon · Genève</small></span><span class="ag-g">${[[fmtK(TOTAL), 'abonnés cumulés'], [String(CREATORS.length), 'créateurs'], ['+50', 'campagnes livrées'], [String(MARQUES.length), 'marques partenaires']].map(([v, l]) => `<span class="ag-k"><b>${v}</b><small>${l}</small></span>`).join('')}</span></button><span class="wlabel">Agence</span></div>`;
+const W_FOLDS = `<div class="iw-wrap med"><div class="iw iw-folds">${['talents', 'marques', 'documents'].map(k => `<button class="fb" data-open="loc:${k}">${folderHTML(k)}<b>${FOLD_NAMES[k]}</b><small>${foldSub(k)}</small></button>`).join('')}</div><span class="wlabel">Dossiers</span></div>`;
 const W_NEXT = `<div class="iw-wrap med"><button class="iw iw-next" data-open="agenda"><h3>À venir<small>Temps forts · réservations · sport</small></h3>${agUpcoming(3).map(calEvRow).join('')}</button><span class="wlabel">Calendrier</span></div>`;
 const W_STATS = `<div class="iw-wrap med"><button class="iw iw-stocks" data-open="resultats">${[['Roster TTP', `${CREATORS.length} créateurs`, TOTAL], ['Instagram', `${nIG} créateurs`, NET.instagram], ['TikTok', `${nTT} créateurs`, NET.tiktok]].map(([l, s, v]) => `<span class="st-row"><span class="st-l"><b>${l}</b><small>${s}</small></span><span class="st-bar"><i style="width:${(v / TOTAL * 100).toFixed(0)}%"></i></span><span class="st-v">${fmtK(v)}</span></span>`).join('')}</button><span class="wlabel">Résultats</span></div>`;
 const W_PHOTO = `<div class="iw-wrap med"><button class="iw iw-photo" id="phFeat"><img alt="" decoding="async"><span class="pf-cap"><small>À la une</small><b></b></span></button><span class="wlabel">À la une</span></div>`;
 $('#phPages').innerHTML = [
-  W_AGENCE + phApp('roster', 'Roster', iosIcon('roster')) + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')) + phApp('rejoindre', 'Rejoindre', iosIcon('rejoindre')),
+  W_AGENCE + phApp('roster', 'Roster', iosIcon('roster')) + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')) + phApp('rejoindre', 'Rejoindre', iosIcon('rejoindre')) + W_FOLDS,
   W_NEXT + W_STATS + phApp('agenda', 'Calendrier', calIcon()) + phApp('histoire', 'Histoire', iosIcon('histoire')) + phLink(LI_URL, 'LinkedIn', brandIco('linkedin')),
   W_PHOTO + CREATORS.map(c => phApp(c.id, c.name.split(' ')[0], `<img class="ico sq" src="${esc(c.icon)}" alt="" loading="lazy" decoding="async">`)).join(''),
 ].map(p => `<div class="ph-page">${p}</div>`).join('');

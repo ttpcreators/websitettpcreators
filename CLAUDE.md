@@ -52,6 +52,10 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
   Visionneuse = Photos. **Jamais les images Apple elles-mêmes** (droits d'Apple) : on redessine.
   Forme = coins continus façon Apple (`--squircle`, rayon 22 %, lissage 60 %). Grille téléphone aux
   mesures iOS : `--ic` 16,2 vw (64 px sur 393), marges 7 vw, widget moyen 338 × 155, Dock aligné.
+- **Dossiers « vivants »** (2026-11-27, validés par Marc) : Talents (verre fumé, photos des 3 créateurs
+  les plus suivis), Marques (blanc cassé, 3 vrais logos), Documents (bordeaux, fiches PDF/TXT/tableur) :
+  le contenu dépasse du dossier + pastilles devant (`folderHTML()`). Sur le bureau de l'ordinateur à la
+  place des dossiers bleus, et en widget « Dossiers » sur la page 1 de l'iPhone.
 - **Fond d'écran** (2026-11-27) : dégradés unis (`WALLS` : Sable par défaut, Bordeaux, Ardoise, Encre),
   plus de photo floutée. Tons moyens à foncés exprès (libellés blancs sous les icônes).
 - **Résultats** : barres réseaux en couleurs pleines (bordeaux / encre), « Univers du roster » en liste
