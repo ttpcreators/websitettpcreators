@@ -42,12 +42,12 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
 - **Toujours en clair** (choix de Marc, 2026-11-27) : `applyTheme()` force `data-theme="light"`, même
   si l'appareil est en sombre ; plus de réglage « Apparence » (Centre de contrôle, menu, ⌘K). Ne pas
   remettre de mode sombre. Les règles CSS `[data-theme="dark"]` restent mais ne servent plus.
-- **Première page iPhone** : icône Roster en premier (deck agence), widget « Agence » (abonnés cumulés, créateurs, +50 campagnes, marques ;
+- **Première page iPhone** : icône Calendrier en premier (choix de Marc), widget « Agence » (abonnés cumulés, créateurs, +50 campagnes, marques ;
   ouvre Résultats) à la place de l'horloge, du calendrier et des raccourcis Talents (retirés à la
   demande de Marc le 2026-11-27, ne pas les remettre). Le Calendrier reste en page 2 et dans ⌘K.
 - **Icônes** (2026-11-27, après plusieurs essais refusés : illustrations, pictos au trait sur fond blanc,
   pictos sur dégradé « verre ») : dessinées en code comme les apps d'origine de l'iPhone (`APPS` dans
-  `index.html`) : Roster = Fichiers, Services = Notes, Méthode = Rappels, Résultats = Bourse, Marques =
+  `index.html`) : Roster = Fichiers, Services = Notes, Méthode = Rappels, Résultats = Numbers (barres blanches sur vert ; Bourse refusée), Marques =
   Cartes (Wallet), Rejoindre = Messages, Talents = Contacts, Contact = Mail, Histoire = Livres,
   Visionneuse = Photos. **Jamais les images Apple elles-mêmes** (droits d'Apple) : on redessine.
   Forme = coins continus façon Apple (`--squircle`, rayon 22 %, lissage 60 %). Grille téléphone aux
@@ -56,6 +56,12 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
   les plus suivis), Marques (blanc cassé, 3 vrais logos), Documents (bordeaux, fiches PDF/TXT/tableur) :
   le contenu dépasse du dossier + pastilles devant (`folderHTML()`). Sur le bureau de l'ordinateur à la
   place des dossiers bleus, et en widget « Dossiers » sur la page 1 de l'iPhone.
+- **Parcours marque / créateur** (2026-11-27, pour que n'importe qui comprenne) : écran verrouillé avec la
+  phrase « L'agence des créateurs sport & lifestyle » et un bouton **Entrer** ; widget Agence (iPhone) et
+  widget du bureau (ordinateur, `.dw`) avec **Je suis une marque** / **Je suis créateur**, qui ouvrent les
+  fenêtres `marque` et `createur` (3 étapes + boutons : voir les créateurs, roster PDF, proposer une collab /
+  candidater, services, méthode). « Rejoindre » s'appelle **Candidater**. Page 1 iPhone : Calendrier,
+  Services, Méthode, Résultats, Roster, Candidater (plus d'icône Marques : le dossier Marques suffit).
 - **Fond d'écran** (2026-11-27) : dégradés « maillés » doux façon iPhone (`WALLS`). Par défaut **Perle**
   (clair, blanc nacré rosé) ; aussi Aube (clair), Bordeaux et Encre (foncés). Sur un fond clair, la classe
   `body.wall-light` passe les textes (icônes, bureau, barre d'état, écran verrouillé) en encre. Plus de

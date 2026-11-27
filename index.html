@@ -195,6 +195,35 @@ body.fullscreen .desk{visibility:hidden}
 .file.sel .ic{background:rgba(0,0,0,.28)}
 .file.sel .nm{background:#0a64d6;text-shadow:none}
 .file.drag{opacity:.85;z-index:5}
+/* widget du bureau : portes d'entrée marque / créateur */
+.dw{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);width:360px;padding:14px 16px;border-radius:20px;background:rgba(255,255,255,.78);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);box-shadow:0 0 0 .5px rgba(0,0,0,.08),0 10px 30px rgba(60,30,30,.12);color:#1d1d1f;display:flex;flex-direction:column;gap:12px;z-index:1}
+.dw-h{display:flex;align-items:center;gap:10px}
+.dw-h img{width:34px;height:34px;border-radius:8px}
+.dw-h span{display:flex;flex-direction:column;line-height:1.25}
+.dw-h b{font-size:14px;font-weight:700}
+.dw-h small{font-size:12px;color:#6e6e73}
+.dw-k{display:grid;grid-template-columns:repeat(3,1fr)}
+.dw-k span{display:flex;flex-direction:column}
+.dw-k b{font-size:22px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.dw-k small{font-size:11.5px;color:#6e6e73}
+.dw-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dw-cta button{height:34px;border-radius:17px;background:#1d1d1f;color:#fff;font-size:13px;font-weight:600}
+.dw-cta button.alt{background:#3d0000}
+.dw-cta button:hover{opacity:.85}
+@media (max-height:640px){.dw{display:none}}
+
+/* Portes d'entrée marque / créateur */
+.aud{padding:26px 24px 22px;display:flex;flex-direction:column;gap:14px;overflow:auto;height:100%}
+.aud-ic{width:52px;height:52px;border-radius:12px}
+.aud h1{font-size:24px;font-weight:700;letter-spacing:-.5px;line-height:1.1}
+.aud p{font-size:14px;line-height:1.5;color:var(--text-2)}
+.aud-steps{list-style:none;display:flex;flex-direction:column;gap:8px;margin:2px 0}
+.aud-steps li{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;background:var(--win-bg-2);font-size:14px;font-weight:500}
+.aud-steps b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#3d0000;color:#fff;font-size:12px}
+.aud-acts{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.aud-acts .pbtn{width:100%;height:38px;font-size:14px;border-radius:10px}
+.lock .tg{font-size:13px;opacity:.75;margin-top:-6px}
+
 /* fond d'écran clair : textes en encre */
 body.wall-light .wall::after{background:linear-gradient(180deg,rgba(255,255,255,0),rgba(0,0,0,.03))}
 body.wall-light .file .nm{color:#1d1d1f;text-shadow:0 0 6px rgba(255,255,255,.6)}
@@ -202,7 +231,8 @@ body.wall-light .file.sel .nm{color:#fff;text-shadow:none}
 body.wall-light .file.is-fold .sub{color:#6e6e73;text-shadow:none}
 body.wall-light .lock{color:#1d1d1f}
 body.wall-light .lock .bg{filter:none}
-body.wall-light .lock .pw{background:rgba(0,0,0,.06)}
+body.wall-light .lock .pw{background:rgba(0,0,0,.06);color:#1d1d1f}
+body.wall-light .lock .pw *{color:inherit}
 
 /* Dossiers « vivants » */
 .fold{--fw:104px;position:relative;display:block;width:var(--fw);height:calc(var(--fw)*.78)}
@@ -373,7 +403,8 @@ body.alt .tl .f .plus{display:block}
 .insp-big span{color:var(--text-2);font-size:12px}
 .insp-sec{font-size:11px;font-weight:600;color:var(--text-3);margin-top:2px}
 .netrow{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px}
-a.netrow:hover{background:var(--sidebar-sel)}
+@media (hover:hover){a.netrow:hover{background:var(--sidebar-sel)}}
+a.netrow:active{background:var(--sidebar-sel)}
 .netrow span{display:flex;flex-direction:column;line-height:1.2;font-weight:500}
 .netrow small{font-size:11px;color:var(--text-2);font-weight:400}
 .netrow b{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}
@@ -697,6 +728,19 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   body.wall-light .lk-btn{background:rgba(0,0,0,.07)}
   body.wall-light .lk-btn svg{fill:#1d1d1f}
   body.wall-light:not(:has(#lock.out)) .ios-status{color:#1d1d1f}
+  .iw-agence{display:flex!important;flex-direction:column;padding:12px 14px 12px!important;gap:10px!important}
+  .ag-top{display:flex;flex-direction:column;gap:8px;text-align:left;-webkit-tap-highlight-color:transparent}
+  .iw-agence .ag-g{display:grid;grid-template-columns:repeat(3,1fr);gap:0 10px}
+  .iw-agence .ag-k b{font-size:22px}
+  .ag-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
+  .ag-cta button{height:34px;border-radius:17px;background:#1d1d1f;color:#fff;font-size:13px;font-weight:600;-webkit-tap-highlight-color:transparent}
+  .ag-cta button.alt{background:#3d0000}
+  .ag-cta button:active{opacity:.75}
+  .lk-tag{font-size:22px;font-weight:600;letter-spacing:-.3px;line-height:1.2;text-align:center;margin-bottom:4px}
+  .lk-enter{height:44px;padding:0 34px;border-radius:22px;background:rgba(255,255,255,.9);color:#1d1d1f;font-size:16px;font-weight:600}
+  body.wall-light .lk-enter{background:#1d1d1f;color:#fff}
+  .aud-acts .pbtn{height:50px;font-size:17px;border-radius:14px;font-weight:600}
+  .aud-acts .pbtn:not(.blue){background:var(--grp-card);color:var(--accent);box-shadow:none}
   .iw-folds{display:grid!important;grid-template-columns:repeat(3,1fr);align-items:center;padding:0 6px;background:#fff!important}
   .iw-folds .fb{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0;-webkit-tap-highlight-color:transparent}
   .iw-folds .fold{--fw:min(25vw,104px);margin-bottom:6px}
@@ -762,7 +806,7 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   /* fiche créateur : listes groupées iOS */
   .vw{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;background:var(--grp-bg)}
   .vw-img{padding:0;background:#000;max-height:58vh}
-  .vw-img img{width:100%;max-height:58vh;object-fit:cover;box-shadow:none}
+  .vw-img img{width:100%;max-height:58vh;object-fit:cover;object-position:50% 18%;box-shadow:none}
   .insp{border:0;background:var(--grp-bg);padding:18px 16px 40px;gap:12px;overflow:visible}
   .insp h2{font-size:28px;letter-spacing:-.6px}
   .insp-big{background:var(--grp-card);border-radius:12px;padding:14px 16px}
@@ -871,6 +915,33 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   .jf-foot,.jf-acts{width:100%}
   .jf-acts{flex-direction:column}
   .jf-foot .pbtn,.jf-acts .pbtn{width:100%;height:50px;font-size:17px;border-radius:14px;font-weight:600}
+}
+/* Écran d'accueil iPhone : tout doit tenir dans la hauteur visible de Safari (barres comprises).
+   Sur les écrans courts, widgets et espaces se resserrent ; en dernier recours la page défile. */
+@media (max-width:720px){
+  .ph-page{overflow-y:auto;overscroll-behavior-y:contain;scrollbar-width:none;padding-bottom:10px}
+  .ph-page::-webkit-scrollbar{display:none}
+  .ph-pages{touch-action:pan-x pan-y}
+}
+@media (max-width:720px) and (max-height:820px){
+  .ph-page{row-gap:12px;padding-top:4px}
+  .iw-wrap.med .iw{height:calc(2*var(--ic) + var(--hg) - 30px)}
+  .iw-agence{padding:10px 15px 8px;gap:4px}
+  .ag-k b{font-size:22px}
+  .ag-g{row-gap:2px}
+  .ag-h img{width:20px;height:20px}
+  .iw-folds .fold{--fw:min(21vw,88px);margin-bottom:4px}
+  .iw-folds .fb b{font-size:12px}
+}
+@media (max-width:720px) and (max-height:700px){
+  .phone{padding-top:48px}
+  .ph-page{row-gap:8px}
+  .iw-wrap.med .iw{height:calc(2*var(--ic) + var(--hg) - 44px)}
+  .ag-h{display:none}
+  .iw-folds .fold{--fw:min(19vw,78px)}
+  .iw-folds .fb small{display:none}
+  .ph-bottom{gap:8px}
+  .ph-dock{padding-top:12px;padding-bottom:12px}
 }
 </style>
 </head>
@@ -981,12 +1052,15 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   <div class="who">
     <img class="av" src="assets/ttp-icon.png" alt="">
     <div class="nm">TTP Creators</div>
+    <div class="tg">L’agence des créateurs sport &amp; lifestyle</div>
     <button class="pw" id="pw" aria-label="Entrer"><span id="pwText"></span><span class="go" id="pwGo"></span></button>
-    <small><span class="click">Cliquez ou appuyez sur Entrée</span><span class="touch">Touchez pour entrer</span></small>
+    <small><span class="click">Cliquez pour entrer</span><span class="touch">Touchez pour entrer</span></small>
   </div>
   <div class="lock-ios">
+    <div class="lk-tag">L’agence des créateurs<br>sport &amp; lifestyle</div>
     <div class="lk-notif"><img src="assets/ttp-icon.png" alt=""><div><b>TTP Creators</b><br><span id="lkText"></span></div><time>maintenant</time></div>
-    <span class="lk-swipe">Balayez vers le haut pour ouvrir</span>
+    <button class="lk-enter" type="button">Entrer</button>
+    <span class="lk-swipe">ou balayez vers le haut</span>
     <div class="lk-row"><span class="lk-btn" id="lkTorch"></span><span class="lk-btn" id="lkCam"></span></div>
     <span class="lk-home"></span>
   </div>
@@ -1167,7 +1241,7 @@ const APPS = {
   roster: ['linear-gradient(180deg,#fff,#eeeef3)', '<path d="M15 30a6 6 0 0 1 6-6h18.5c1.7 0 3.2.7 4.3 2l4.7 5.4H79a6 6 0 0 1 6 6v5H15z" fill="url(#aFilesBack)"/><rect x="15" y="36.5" width="70" height="45" rx="6.5" fill="url(#aFilesFront)"/><rect x="15" y="36.5" width="70" height="1.6" rx=".8" fill="#a9d8ff"/>'],
   services: ['#fff', '<rect width="100" height="29" fill="url(#aNotes)"/><path d="M1 30.6h98" stroke="#b8b8bd" stroke-width="1.6" stroke-dasharray="1.6 2.2" stroke-linecap="round"/><path d="M9 46.5h82M9 61h82M9 75.5h82M9 90h82" stroke="#dcdce0" stroke-width="1.5"/>'],
   methode: ['#fff', '<circle cx="23" cy="28" r="9" fill="#0a84ff"/><circle cx="23" cy="28" r="6.2" fill="#fff"/><circle cx="23" cy="28" r="4.6" fill="#0a84ff"/><circle cx="23" cy="50" r="9" fill="#ff3b30"/><circle cx="23" cy="50" r="6.2" fill="#fff"/><circle cx="23" cy="50" r="4.6" fill="#ff3b30"/><circle cx="23" cy="72" r="9" fill="#ff9500"/><circle cx="23" cy="72" r="6.2" fill="#fff"/><circle cx="23" cy="72" r="4.6" fill="#ff9500"/><rect x="40" y="26" width="46" height="4" rx="2" fill="#d4d4d9"/><rect x="40" y="48" width="46" height="4" rx="2" fill="#d4d4d9"/><rect x="40" y="70" width="46" height="4" rx="2" fill="#d4d4d9"/>'],
-  resultats: ['#000', '<path d="M10 36h80M10 52h80M10 68h80" stroke="#2c2c2e" stroke-width="1.2"/><path d="M10 62l9-4 7 3 8-12 7 5 8-14 7 6 9-9 8 4 7-7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>'],
+  resultats: ['linear-gradient(180deg,#3fdc7e,#0f9d4c)', '<rect x="20" y="56" width="15" height="26" rx="4" fill="#fff" opacity=".85"/><rect x="42.5" y="40" width="15" height="42" rx="4" fill="#fff" opacity=".92"/><rect x="65" y="22" width="15" height="60" rx="4" fill="#fff"/><path d="M18 84h64" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".55"/>'],
   marques: ['#000', '<rect x="16" y="18" width="68" height="40" rx="6" fill="#34aadc"/><rect x="16" y="27" width="68" height="40" rx="6" fill="#ffcc00"/><rect x="16" y="36" width="68" height="40" rx="6" fill="#34c759"/><rect x="16" y="45" width="68" height="40" rx="6" fill="#ff9500"/><path d="M13 57h23c3 6.5 8 10 14 10s11-3.5 14-10h23v25a7 7 0 0 1-7 7H20a7 7 0 0 1-7-7z" fill="url(#aPocket)"/>'],
   contact: ['linear-gradient(180deg,#1fb2ff,#1567f3)', '<rect x="12" y="27" width="76" height="49" rx="5" fill="#fff"/><path d="M13.5 29l36.5 27 36.5-27" fill="none" stroke="#c4cfde" stroke-width="2.4" stroke-linejoin="round"/>'],
   histoire: ['linear-gradient(180deg,#ffa83a,#ff7a00)', '<path d="M48 31c-8-6-19-7.5-31-4.5v41c12-3 23-1.5 31 4.5zM52 31c8-6 19-7.5 31-4.5v41c-12-3-23-1.5-31 4.5z" fill="#fff"/>'],
@@ -1238,6 +1312,13 @@ function resultatsHTML() {
   <section class="card"><h2>Univers du roster</h2><div class="uni">${NICHES.map(([n, k]) => `<div class="uni-r"><span>${esc(n)}</span><span class="uni-t"><i style="width:${(k / NICHES[0][1] * 100).toFixed(0)}%"></i></span><b>${k}</b></div>`).join('')}</div></section>
   <section class="card"><h2>Temps forts</h2><div class="tf">${HIGHLIGHTS.map(h => `<div class="tf-c"><small>${esc(h[0])}</small><b>${h[1]}</b><span>${h[2]}</span></div>`).join('')}</div></section></div>`;
 }
+// Portes d'entrée selon le visiteur (2026-11-27) : une marque et un créateur ne cherchent pas la même chose
+const marqueHTML = () => `<div class="aud"><img class="aud-ic" src="assets/ttp-icon.png" alt=""><h1>Vous êtes une marque</h1><p>On vous met en relation avec des créateurs sport &amp; lifestyle qui parlent vraiment à votre public. Brief, contrat, suivi et bilan : on s’occupe de tout.</p>
+  <ol class="aud-steps"><li><b>1</b><span>Parcourez nos ${CREATORS.length} créateurs et leurs media kits</span></li><li><b>2</b><span>Dites-nous votre projet en quelques lignes</span></li><li><b>3</b><span>On vous propose les profils qui collent</span></li></ol>
+  <div class="aud-acts"><button class="pbtn blue" data-open="loc:talents">Voir les créateurs</button><button class="pbtn" data-open="roster">Recevoir le roster (PDF)</button><a class="pbtn" href="mailto:${MAIL}?subject=${encodeURIComponent('Projet de collaboration')}">Proposer une collab</a></div></div>`;
+const createurHTML = () => `<div class="aud"><img class="aud-ic" src="assets/ttp-icon.png" alt=""><h1>Tu es créateur</h1><p>On gère ta carrière pour que tu te concentres sur la création : partenariats, négociation, planning et stratégie. Sport, lifestyle, food, santé : on regarde chaque profil.</p>
+  <ol class="aud-steps"><li><b>1</b><span>Envoie ta candidature en 2 minutes</span></li><li><b>2</b><span>On regarde ton compte et on t’appelle</span></li><li><b>3</b><span>On construit ta stratégie ensemble</span></li></ol>
+  <div class="aud-acts"><button class="pbtn blue" data-open="rejoindre">Candidater</button><button class="pbtn" data-open="services">Ce qu’on fait pour toi</button><button class="pbtn" data-open="methode">Notre méthode</button></div></div>`;
 const contactHTML = () => `<div class="ct"><div class="ct-head"><img src="assets/ttp-icon.png" alt=""><h2>TTP Creators</h2><p>Talent management sport &amp; lifestyle</p></div>
   <div class="ct-acts"><a class="ct-act" href="mailto:${MAIL}"><span class="mailic">${ico('mail')}</span>e-mail</a><a class="ct-act" href="${esc(IG_URL)}" target="_blank" rel="noopener">${brand('instagram', 34)}Instagram</a><a class="ct-act" href="${esc(LI_URL)}" target="_blank" rel="noopener">${brand('linkedin', 34)}LinkedIn</a></div>
   <dl class="ct-f"><dt>travail</dt><dd><a href="mailto:${MAIL}">${MAIL}</a></dd><dt>Instagram</dt><dd><a href="${esc(IG_URL)}" target="_blank" rel="noopener">@ttpcreators</a></dd><dt>LinkedIn</dt><dd><a href="${esc(LI_URL)}" target="_blank" rel="noopener">TTP Creators</a></dd><dt>villes</dt><dd>Lyon · Genève</dd></dl>
@@ -1458,13 +1539,15 @@ function wireAgenda(el) {
 }
 
 /* ═════════ Définition des fenêtres ═════════ */
-const APPN = { finder: 'Bureau', viewer: 'Visionneuse', pdf: 'Visionneuse', text: 'Texte', sheet: 'Tableur', contacts: 'Contacts', about: 'TTP Creators', cal: 'Calendrier', form: 'Candidature' };
+const APPN = { finder: 'Bureau', viewer: 'Visionneuse', pdf: 'Visionneuse', text: 'Texte', sheet: 'Tableur', contacts: 'Contacts', about: 'TTP Creators', cal: 'Calendrier', form: 'Candidature', aud: 'TTP Creators' };
 const W = {
   about: () => ({ kind: 'about', title: 'À propos de TTP Creators', w: 300, h: 364, fixed: true, noMin: true, html: aboutHTML() }),
   services: () => ({ kind: 'pdf', title: 'Services.pdf', w: 580, h: 640, html: servicesHTML() }),
   methode: () => ({ kind: 'text', title: 'Méthode.txt', w: 480, h: 460, html: methodeHTML() }),
   histoire: () => ({ kind: 'text', title: 'Notre histoire', w: 540, h: 600, html: histoireHTML() }),
   resultats: () => ({ kind: 'sheet', title: 'Résultats', w: 820, h: 640, minW: 520, html: resultatsHTML(), after: countUp }),
+  marque: () => ({ kind: 'aud', title: 'Pour les marques', w: 440, h: 560, minW: 360, minH: 480, html: marqueHTML() }),
+  createur: () => ({ kind: 'aud', title: 'Pour les créateurs', w: 440, h: 560, minW: 360, minH: 480, html: createurHTML() }),
   contact: () => ({ kind: 'contacts', title: 'TTP Creators.vcf', w: 420, h: 540, minW: 360, minH: 460, html: contactHTML() }),
   rejoindre: () => ({ kind: 'form', title: 'Rejoindre TTP Creators', w: 460, h: 620, minW: 380, minH: 520, html: joinHTML(), after: wireJoin }),
   agenda: () => ({ kind: 'cal', title: 'Calendrier', w: 840, h: 600, minW: 560, minH: 440, html: agendaHTML(), after: wireAgenda }),
@@ -1853,11 +1936,16 @@ const FILES = [
   { id: 'resultats', label: 'Résultats', svg: ICON.sheet, type: 'Tableur', x: 14.5, y: 51 },
   { id: 'histoire', label: 'Notre histoire', svg: ICON.doc, type: 'Document', x: 88, y: 70 },
   { id: 'contact', label: 'TTP Creators.vcf', svg: ICON.vcf, type: 'Fiche', x: 79, y: 78 },
-  { id: 'rejoindre', label: 'Rejoindre l’agence', svg: ICON.form, type: 'Formulaire', x: 70, y: 78 },
+  { id: 'rejoindre', label: 'Candidater (créateurs)', svg: ICON.form, type: 'Formulaire', x: 70, y: 78 },
   ...CREATORS.slice(0, SLOTS.length).map((c, i) => ({ id: c.id, label: c.file, img: c.icon, type: 'Photo', x: SLOTS[i][0], y: SLOTS[i][1], ql: { title: c.name, img: c.photo, open: c.id } })),
 ];
 const fileEls = [];
 const dsel = new Set();
+// widget du bureau (ordinateur) : les deux portes d'entrée, toujours visibles
+const dw = document.createElement('div');
+dw.className = 'dw';
+dw.innerHTML = `<div class="dw-h"><img src="assets/ttp-icon.png" alt=""><span><b>TTP Creators</b><small>L’agence des créateurs sport &amp; lifestyle</small></span></div><div class="dw-k">${[[fmtK(TOTAL), 'abonnés'], [String(CREATORS.length), 'créateurs'], [String(MARQUES.length), 'marques']].map(([v, l]) => `<span><b>${v}</b><small>${l}</small></span>`).join('')}</div><div class="dw-cta"><button data-open="marque">Je suis une marque</button><button class="alt" data-open="createur">Je suis créateur</button></div>`;
+desk.appendChild(dw);
 function layoutDesk() {
   const r = desk.getBoundingClientRect();
   fileEls.forEach(({ el, f }) => { el.style.left = (f.x / 100 * (r.width - 96)) + 'px'; el.style.top = (f.y / 100 * (r.height - 190)) + 'px'; });
@@ -1946,7 +2034,7 @@ const DOCK = [
   { key: 'histoire', label: 'Notre histoire', html: icw(iosIcon('histoire')), run: () => openWin('histoire'), ids: ['histoire'] },
   { key: 'viewer', label: 'Visionneuse', html: icw(iosIcon('viewer')), run: () => { const v = [...wins.values()].filter(w => w.def.kind === 'viewer').sort((a, b) => b.el.style.zIndex - a.el.style.zIndex)[0]; v && (v.state === 'min' ? restoreWin(v.id) : focusWin(v.id)); }, kinds: ['viewer'], dynamic: true },
   { key: 'contact', label: 'Contact', html: icw(iosIcon('contact')), run: () => openWin('contact'), ids: ['contact'] },
-  { key: 'rejoindre', label: 'Rejoindre l’agence', html: icw(iosIcon('rejoindre')), run: () => openWin('rejoindre'), ids: ['rejoindre'] },
+  { key: 'rejoindre', label: 'Candidater (créateurs)', html: icw(iosIcon('rejoindre')), run: () => openWin('rejoindre'), ids: ['rejoindre'] },
   { key: 'instagram', label: 'Instagram', html: icw(`<span class="ico sq b-ig">${BRANDS.instagram.mark}</span>`), run: () => openUrl(IG_URL) },
   { key: 'linkedin', label: 'LinkedIn', html: icw(`<span class="ico sq b-li">${BRANDS.linkedin.mark}</span>`), run: () => openUrl(LI_URL) },
 ];
@@ -2013,7 +2101,7 @@ function menuItems(name) {
   const fin = w && w.def.kind === 'finder';
   const anyMin = [...wins.values()].some(x => x.state === 'min');
   switch (name) {
-    case 'logo': return [{ l: 'À propos de TTP Creators', a: () => openWin('about') }, SEP, { l: 'Écrire à l’agence…', a: mail }, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }, { l: 'Rejoindre l’agence…', a: () => openWin('rejoindre') }, SEP, { l: 'Centre de contrôle', a: () => togglePanel('cc') }, { l: 'Fond d’écran suivant', a: () => setWall((wallIdx + 1) % WALLS.length) }, SEP, { l: 'Verrouiller l’écran', k: '⌥L', a: lockScreen }];
+    case 'logo': return [{ l: 'À propos de TTP Creators', a: () => openWin('about') }, SEP, { l: 'Je suis une marque', a: () => openWin('marque') }, { l: 'Je suis créateur', a: () => openWin('createur') }, SEP, { l: 'Écrire à l’agence…', a: mail }, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }, { l: 'Rejoindre l’agence…', a: () => openWin('rejoindre') }, SEP, { l: 'Centre de contrôle', a: () => togglePanel('cc') }, { l: 'Fond d’écran suivant', a: () => setWall((wallIdx + 1) % WALLS.length) }, SEP, { l: 'Verrouiller l’écran', k: '⌥L', a: lockScreen }];
     case 'app': return [{ l: `À propos de ${appName()}`, a: () => openWin('about') }, SEP, { l: 'Masquer les autres', a: hideOthers, dis: !w }, { l: 'Tout afficher', a: showAll, dis: !anyMin }, SEP, { l: `Quitter ${appName()}`, a: quitApp, dis: !w }];
     case 'fichier': return [{ l: 'Ouvrir…', k: '⌘K', a: openSpot }, { l: 'Nouvelle fenêtre Talents', a: () => openFinder('talents') }, SEP, { l: 'Coup d’œil', k: '␣', a: quickLookSelected, dis: !selectedItem() }, { l: 'Ouvrir l’élément sélectionné', k: '↩', a: openSelected, dis: !selectedItem() }, SEP, { l: 'Fermer la fenêtre', k: '⌥W', a: () => closeWin(front), dis: !w }, { l: 'Tout fermer', a: closeAll, dis: !wins.size }];
     case 'edition': return [{ l: 'Copier l’adresse e-mail', a: () => copyMail() }, { l: 'Tout sélectionner', a: selectAll }, SEP, { l: 'Rechercher', k: '⌘K', a: openSpot }];
@@ -2300,7 +2388,7 @@ function unlock() {
   lock.classList.add('out');
   store.set('ttp-unlocked', '1');
   try { sessionStorage.setItem('ttp-dock-seen', '1'); } catch (e) {}
-  if (!isPhone() && !store.get('ttp-notif-seen')) setTimeout(() => { notify('Bienvenue chez TTP Creators', 'Double-cliquez sur une photo pour découvrir un talent, ou tapez ⌘K pour chercher.', () => openFinder('talents')); }, 700);
+  if (!isPhone() && !store.get('ttp-notif-seen')) setTimeout(() => { notify('Bienvenue chez TTP Creators', 'Marque ou créateur ? Choisissez votre porte d’entrée en bas de l’écran.', () => openWin('marque')); }, 700);
 }
 function lockScreen() { hideMenu(); closePanels(); closeSpot(); lock.classList.remove('out'); typeTagline(); }
 lock.addEventListener('click', unlock);
@@ -2313,21 +2401,21 @@ const topCreators = [...CREATORS].sort((a, b) => K(b.fans) - K(a.fans));
 const nIG = CREATORS.filter(c => c.nets.some(n => n[0] === 'instagram')).length;
 const nTT = CREATORS.filter(c => c.nets.some(n => n[0] === 'tiktok')).length;
 const calEvRow = e => `<span class="cal-ev"><i style="background:${AG_COLORS[e.k]}"></i><span><b>${esc(e.title)}</b><small>${esc(agWhen(e))}</small></span></span>`;
-const W_AGENCE = `<div class="iw-wrap med"><button class="iw iw-agence" data-open="resultats"><span class="ag-h"><img src="assets/ttp-icon.png" alt=""><b>TTP Creators</b><small>Lyon · Genève</small></span><span class="ag-g">${[[fmtK(TOTAL), 'abonnés cumulés'], [String(CREATORS.length), 'créateurs'], ['+50', 'campagnes livrées'], [String(MARQUES.length), 'marques partenaires']].map(([v, l]) => `<span class="ag-k"><b>${v}</b><small>${l}</small></span>`).join('')}</span></button><span class="wlabel">Agence</span></div>`;
+const W_AGENCE = `<div class="iw-wrap med"><div class="iw iw-agence"><button class="ag-top" data-open="resultats"><span class="ag-h"><img src="assets/ttp-icon.png" alt=""><b>TTP Creators</b><small>Lyon · Genève</small></span><span class="ag-g">${[[fmtK(TOTAL), 'abonnés'], [String(CREATORS.length), 'créateurs'], [String(MARQUES.length), 'marques']].map(([v, l]) => `<span class="ag-k"><b>${v}</b><small>${l}</small></span>`).join('')}</span></button><span class="ag-cta"><button data-open="marque">Je suis une marque</button><button class="alt" data-open="createur">Je suis créateur</button></span></div><span class="wlabel">Agence</span></div>`;
 const W_FOLDS = `<div class="iw-wrap med"><div class="iw iw-folds">${['talents', 'marques', 'documents'].map(k => `<button class="fb" data-open="loc:${k}">${folderHTML(k)}<b>${FOLD_NAMES[k]}</b><small>${foldSub(k)}</small></button>`).join('')}</div><span class="wlabel">Dossiers</span></div>`;
 const W_NEXT = `<div class="iw-wrap med"><button class="iw iw-next" data-open="agenda"><h3>À venir<small>Temps forts · réservations · sport</small></h3>${agUpcoming(3).map(calEvRow).join('')}</button><span class="wlabel">Calendrier</span></div>`;
 const W_STATS = `<div class="iw-wrap med"><button class="iw iw-stocks" data-open="resultats">${[['Roster TTP', `${CREATORS.length} créateurs`, TOTAL], ['Instagram', `${nIG} créateurs`, NET.instagram], ['TikTok', `${nTT} créateurs`, NET.tiktok]].map(([l, s, v]) => `<span class="st-row"><span class="st-l"><b>${l}</b><small>${s}</small></span><span class="st-bar"><i style="width:${(v / TOTAL * 100).toFixed(0)}%"></i></span><span class="st-v">${fmtK(v)}</span></span>`).join('')}</button><span class="wlabel">Résultats</span></div>`;
 const W_PHOTO = `<div class="iw-wrap med"><button class="iw iw-photo" id="phFeat"><img alt="" decoding="async"><span class="pf-cap"><small>À la une</small><b></b></span></button><span class="wlabel">À la une</span></div>`;
 $('#phPages').innerHTML = [
-  W_AGENCE + phApp('roster', 'Roster', iosIcon('roster')) + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')) + phApp('rejoindre', 'Rejoindre', iosIcon('rejoindre')) + W_FOLDS,
-  W_NEXT + W_STATS + phApp('agenda', 'Calendrier', calIcon()) + phApp('histoire', 'Histoire', iosIcon('histoire')) + phLink(LI_URL, 'LinkedIn', brandIco('linkedin')),
+  W_AGENCE + phApp('agenda', 'Calendrier', calIcon()) + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('roster', 'Roster', iosIcon('roster')) + phApp('rejoindre', 'Candidater', iosIcon('rejoindre')) + W_FOLDS,
+  W_NEXT + W_STATS + phApp('histoire', 'Histoire', iosIcon('histoire')) + phLink(LI_URL, 'LinkedIn', brandIco('linkedin')),
   W_PHOTO + CREATORS.map(c => phApp(c.id, c.name.split(' ')[0], `<img class="ico sq" src="${esc(c.icon)}" alt="" loading="lazy" decoding="async">`)).join(''),
 ].map(p => `<div class="ph-page">${p}</div>`).join('');
 $('#phDock').innerHTML = phApp('about', 'TTP', '<img class="ico sq" src="assets/ttp-icon.png" alt="">') + phApp('loc:talents', 'Talents', iosIcon('talents')) + phApp('contact', 'Contact', iosIcon('contact')) + phLink(IG_URL, 'Instagram', brandIco('instagram'));
 $('#phDots').innerHTML = '<i class="on"></i><i></i><i></i>';
 $('#phSearchIc').innerHTML = ico('search');
 $('#phSearch').addEventListener('click', () => openSpot());
-$('#lkText').textContent = `Trust The Process. Touchez pour découvrir nos ${CREATORS.length} créateurs.`;
+$('#lkText').textContent = `Marque ou créateur : touchez « Entrer » pour découvrir l’agence et ses ${CREATORS.length} talents.`;
 $('#lkTorch').innerHTML = '<svg viewBox="0 0 24 24"><path d="M8.5 2h7v2.6l-1.6 3.2V21a1 1 0 0 1-1 1h-1.8a1 1 0 0 1-1-1V7.8L8.5 4.6z"/></svg>';
 $('#lkCam').innerHTML = '<svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.6 5.2l1.1-1.5c.3-.4.8-.7 1.3-.7h2c.5 0 1 .3 1.3.7l1.1 1.5H19a2.5 2.5 0 0 1 2.5 2.5v9.8A2.5 2.5 0 0 1 19 20H5a2.5 2.5 0 0 1-2.5-2.5V7.7A2.5 2.5 0 0 1 5 5.2zM12 16.6a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>';
 // pages : la pilule « Rechercher » devient des points pendant le défilement, comme sur iPhone
