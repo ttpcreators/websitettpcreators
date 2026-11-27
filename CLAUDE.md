@@ -56,8 +56,10 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
   les plus suivis), Marques (blanc cassé, 3 vrais logos), Documents (bordeaux, fiches PDF/TXT/tableur) :
   le contenu dépasse du dossier + pastilles devant (`folderHTML()`). Sur le bureau de l'ordinateur à la
   place des dossiers bleus, et en widget « Dossiers » sur la page 1 de l'iPhone.
-- **Fond d'écran** (2026-11-27) : dégradés unis (`WALLS` : Sable par défaut, Bordeaux, Ardoise, Encre),
-  plus de photo floutée. Tons moyens à foncés exprès (libellés blancs sous les icônes).
+- **Fond d'écran** (2026-11-27) : dégradés « maillés » doux façon iPhone (`WALLS`). Par défaut **Perle**
+  (clair, blanc nacré rosé) ; aussi Aube (clair), Bordeaux et Encre (foncés). Sur un fond clair, la classe
+  `body.wall-light` passe les textes (icônes, bureau, barre d'état, écran verrouillé) en encre. Plus de
+  photo floutée.
 - **Résultats** : barres réseaux en couleurs pleines (bordeaux / encre), « Univers du roster » en liste
   à barres, « Temps forts » en cartes (chiffre en grand). Pas de dégradés de marque, pas de pastilles.
 - **Calendrier** : uniquement des dates publiques, recalculées chaque année dans la page (temps

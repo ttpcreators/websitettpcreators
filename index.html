@@ -195,6 +195,15 @@ body.fullscreen .desk{visibility:hidden}
 .file.sel .ic{background:rgba(0,0,0,.28)}
 .file.sel .nm{background:#0a64d6;text-shadow:none}
 .file.drag{opacity:.85;z-index:5}
+/* fond d'écran clair : textes en encre */
+body.wall-light .wall::after{background:linear-gradient(180deg,rgba(255,255,255,0),rgba(0,0,0,.03))}
+body.wall-light .file .nm{color:#1d1d1f;text-shadow:0 0 6px rgba(255,255,255,.6)}
+body.wall-light .file.sel .nm{color:#fff;text-shadow:none}
+body.wall-light .file.is-fold .sub{color:#6e6e73;text-shadow:none}
+body.wall-light .lock{color:#1d1d1f}
+body.wall-light .lock .bg{filter:none}
+body.wall-light .lock .pw{background:rgba(0,0,0,.06)}
+
 /* Dossiers « vivants » */
 .fold{--fw:104px;position:relative;display:block;width:var(--fw);height:calc(var(--fw)*.78)}
 .fold-back{position:absolute;left:3%;right:3%;top:9%;bottom:8%;border-radius:calc(var(--fw)*.09);background:var(--fb)}
@@ -676,6 +685,18 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   .cal-ev b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cal-ev small{display:block;color:#8e8e93;font-size:10.5px}
   .cal-ev span{min-width:0}
+  body.wall-light .phone .app,body.wall-light .wlabel{color:#1d1d1f;text-shadow:none}
+  body.wall-light:has(#lock.out):not(.app-open) .ios-status{color:#1d1d1f}
+  body.wall-light .ph-search,body.wall-light .ph-dots{background:rgba(0,0,0,.07);color:#1d1d1f}
+  body.wall-light .ph-dots i{background:rgba(0,0,0,.22)}
+  body.wall-light .ph-dots i.on{background:#1d1d1f}
+  body.wall-light .ph-dock{background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.7),0 1px 2px rgba(0,0,0,.04)}
+  body.wall-light .iw{box-shadow:0 2px 14px rgba(60,30,30,.10)}
+  body.wall-light .lk-notif{background:rgba(255,255,255,.6);color:#1d1d1f}
+  body.wall-light .lk-home{background:#1d1d1f}
+  body.wall-light .lk-btn{background:rgba(0,0,0,.07)}
+  body.wall-light .lk-btn svg{fill:#1d1d1f}
+  body.wall-light:not(:has(#lock.out)) .ios-status{color:#1d1d1f}
   .iw-folds{display:grid!important;grid-template-columns:repeat(3,1fr);align-items:center;padding:0 6px;background:#fff!important}
   .iw-folds .fb{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0;-webkit-tap-highlight-color:transparent}
   .iw-folds .fold{--fw:min(25vw,104px);margin-bottom:6px}
@@ -2053,16 +2074,19 @@ mbar.addEventListener('pointerleave', () => { if (!menuName) mbar.classList.remo
 
 /* ═════════ Centre de contrôle, widgets, notification ═════════ */
 // Fonds d'écran unis et simples (choix de Marc, 2026-11-27 : plus de photo floutée)
+// Fonds d'écran façon iPhone (2026-11-27) : dégradés « maillés » doux. Clair par défaut (Perle),
+// textes en encre sur les fonds clairs (classe wall-light), en blanc sur les fonds foncés.
 const WALLS = [
-  { name: 'Sable', bg: 'linear-gradient(170deg,#b9aca2 0%,#8a7a71 55%,#5d4a44 100%)' },
-  { name: 'Bordeaux', bg: 'linear-gradient(170deg,#7a3a3c 0%,#4a1216 55%,#2a0507 100%)' },
-  { name: 'Ardoise', bg: 'linear-gradient(170deg,#8c9196 0%,#5b6066 55%,#33363a 100%)' },
-  { name: 'Encre', bg: 'linear-gradient(170deg,#3a3a3f 0%,#1d1d21 55%,#0b0b0d 100%)' },
+  { name: 'Perle', light: true, bg: 'radial-gradient(58% 46% at 10% 6%, #f4d3cb 0%, #f4d3cb00 100%), radial-gradient(50% 42% at 95% 20%, #ece2d4 0%, #ece2d400 100%), radial-gradient(62% 48% at 82% 92%, #e8c3c2 0%, #e8c3c200 100%), radial-gradient(56% 46% at 4% 94%, #f2e7da 0%, #f2e7da00 100%), radial-gradient(40% 30% at 50% 52%, #f8f1ea 0%, #f8f1ea00 100%), linear-gradient(170deg,#fbf8f4,#f0e9e2)' },
+  { name: 'Aube', light: true, bg: 'radial-gradient(58% 46% at 8% 8%, #fad8c6 0%, #fad8c600 100%), radial-gradient(54% 44% at 96% 14%, #e3d8f1 0%, #e3d8f100 100%), radial-gradient(62% 50% at 80% 94%, #f2d6e2 0%, #f2d6e200 100%), radial-gradient(56% 46% at 6% 92%, #f6e6d6 0%, #f6e6d600 100%), linear-gradient(170deg,#fcf9f7,#f3eef3)' },
+  { name: 'Bordeaux', light: false, bg: 'radial-gradient(62% 50% at 14% 10%, #7c2834 0%, #7c283400 100%), radial-gradient(54% 44% at 92% 26%, #4f1420 0%, #4f142000 100%), radial-gradient(66% 52% at 74% 98%, #9a4448 0%, #9a444800 100%), radial-gradient(50% 40% at 6% 86%, #3a0c14 0%, #3a0c1400 100%), linear-gradient(170deg,#2a0a0e,#110304)' },
+  { name: 'Encre', light: false, bg: 'radial-gradient(60% 48% at 12% 8%, #3b3542 0%, #3b354200 100%), radial-gradient(56% 46% at 92% 86%, #2b3140 0%, #2b314000 100%), radial-gradient(44% 36% at 80% 18%, #3a2328 0%, #3a232800 100%), linear-gradient(170deg,#141417,#08080a)' },
 ];
-let wallIdx = Math.min(WALLS.length - 1, Math.max(0, +(store.get('ttp-wall2') || 0)));
+let wallIdx = Math.min(WALLS.length - 1, Math.max(0, +(store.get('ttp-wall3') || 0)));
 function setWall(i) {
-  wallIdx = i; store.set('ttp-wall2', i);
+  wallIdx = i; store.set('ttp-wall3', i);
   $('#wall').style.background = WALLS[i].bg; $('#lockBg').style.background = WALLS[i].bg;
+  document.body.classList.toggle('wall-light', !!WALLS[i].light);
   if ($('#cc').classList.contains('on')) renderCC();
 }
 // Toujours en clair (choix de Marc, 2026-11-27) : pas de mode sombre, même si l'appareil est en sombre
