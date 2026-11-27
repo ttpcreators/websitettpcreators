@@ -42,7 +42,7 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
 - **Toujours en clair** (choix de Marc, 2026-11-27) : `applyTheme()` force `data-theme="light"`, même
   si l'appareil est en sombre ; plus de réglage « Apparence » (Centre de contrôle, menu, ⌘K). Ne pas
   remettre de mode sombre. Les règles CSS `[data-theme="dark"]` restent mais ne servent plus.
-- **Première page iPhone** : widget « Agence » (abonnés cumulés, créateurs, +50 campagnes, marques ;
+- **Première page iPhone** : icône Roster en premier (deck agence), widget « Agence » (abonnés cumulés, créateurs, +50 campagnes, marques ;
   ouvre Résultats) à la place de l'horloge, du calendrier et des raccourcis Talents (retirés à la
   demande de Marc le 2026-11-27, ne pas les remettre). Le Calendrier reste en page 2 et dans ⌘K.
 - **Calendrier** : uniquement des dates publiques, recalculées chaque année dans la page (temps
