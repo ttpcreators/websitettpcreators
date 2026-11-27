@@ -1,4 +1,7 @@
 {
+ "airup": {
+  "fichier": "air-up.svg"
+ },
  "andros": {
   "fichier": "andros.png"
  },
@@ -60,6 +63,10 @@
  "lorespresso": {
   "fichier": "l-or-espresso.png"
  },
+ "maasmechelenvillage": {
+  "fichier": "maasmechelen-village.svg",
+  "fond": "#7e8a4a"
+ },
  "mariemorin": {
   "fichier": "marie-morin.svg"
  },
@@ -77,6 +84,9 @@
  },
  "nestle": {
   "fichier": "nestle.svg"
+ },
+ "nutripure": {
+  "fichier": "nutripure.svg"
  },
  "onatera": {
   "fichier": "onatera.svg"

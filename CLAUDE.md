@@ -45,6 +45,12 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
 - **Première page iPhone** : icône Roster en premier (deck agence), widget « Agence » (abonnés cumulés, créateurs, +50 campagnes, marques ;
   ouvre Résultats) à la place de l'horloge, du calendrier et des raccourcis Talents (retirés à la
   demande de Marc le 2026-11-27, ne pas les remettre). Le Calendrier reste en page 2 et dans ⌘K.
+- **Icônes** (2026-11-27) : minimalistes, fond blanc + pictogramme au trait encre (`PICTO`,
+  `iosIcon()`). Marc a refusé les icônes illustrées (« style Apple ») : ne pas y revenir.
+- **Fond d'écran** (2026-11-27) : dégradés unis (`WALLS` : Sable par défaut, Bordeaux, Ardoise, Encre),
+  plus de photo floutée. Tons moyens à foncés exprès (libellés blancs sous les icônes).
+- **Résultats** : barres réseaux en couleurs pleines (bordeaux / encre), « Univers du roster » en liste
+  à barres, « Temps forts » en cartes (chiffre en grand). Pas de dégradés de marque, pas de pastilles.
 - **Calendrier** : uniquement des dates publiques, recalculées chaque année dans la page (temps
   forts marketing avec la date limite pour réserver des créateurs, journées du sport). **Jamais**
   d'anniversaires ni de rendez-vous des créateurs sur le site public (vie privée et sécurité) :
