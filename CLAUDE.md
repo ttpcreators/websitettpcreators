@@ -39,6 +39,12 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
   fenêtre (`ANCRES` en fin de script) ; `/?nolock` saute l'écran verrouillé.
 - **Image de partage** : `og-bureau.jpg` (capture du Bureau, fenêtre Talents). `og-ttp.jpg` reste
   pour les media kits.
+- **Toujours en clair** (choix de Marc, 2026-11-27) : `applyTheme()` force `data-theme="light"`, même
+  si l'appareil est en sombre ; plus de réglage « Apparence » (Centre de contrôle, menu, ⌘K). Ne pas
+  remettre de mode sombre. Les règles CSS `[data-theme="dark"]` restent mais ne servent plus.
+- **Première page iPhone** : widget « Agence » (abonnés cumulés, créateurs, +50 campagnes, marques ;
+  ouvre Résultats) à la place de l'horloge, du calendrier et des raccourcis Talents (retirés à la
+  demande de Marc le 2026-11-27, ne pas les remettre). Le Calendrier reste en page 2 et dans ⌘K.
 - **Calendrier** : uniquement des dates publiques, recalculées chaque année dans la page (temps
   forts marketing avec la date limite pour réserver des créateurs, journées du sport). **Jamais**
   d'anniversaires ni de rendez-vous des créateurs sur le site public (vie privée et sécurité) :

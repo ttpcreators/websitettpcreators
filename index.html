@@ -623,28 +623,20 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   .iw-wrap.med .iw{aspect-ratio:auto;height:calc((100vw - 2*var(--hp) - 3*var(--hg))/2 + var(--hg))}
   :root[data-theme="dark"] .iw{background:#1c1c1e;color:#fff}
   .wlabel{font-size:11.5px;font-weight:500;color:#fff;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.5)}
-  .iw-clock{background:#1c1c1e!important;color:#fff!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 10px 8px}
-  .dial{width:86%;height:auto}
-  .dial .face{fill:#fff}
-  .dial text{font:600 9.5px var(--font);fill:#1d1d1f;text-anchor:middle}
-  .dial .hh{stroke:#1d1d1f;stroke-width:3.4;stroke-linecap:round}
-  .dial .mh{stroke:#1d1d1f;stroke-width:2.2;stroke-linecap:round}
-  .dial .sh{stroke:#ff9500;stroke-width:1.1;stroke-linecap:round}
-  .dial .pin{fill:#1d1d1f}.dial .pin2{fill:#ff9500}
-  .iw-clock span{font-size:11px;font-weight:600;opacity:.8}
-  .iw-cal{display:flex!important;flex-direction:column;padding:13px 14px 12px}
-  .cal-day{font-size:11.5px;font-weight:700;color:#ff3b30;text-transform:uppercase;letter-spacing:.02em}
-  .cal-num{font-size:40px;font-weight:300;letter-spacing:-1.4px;line-height:1.02;margin-bottom:4px}
-  .cal-evs{display:flex;flex-direction:column;gap:5px;margin-top:auto;overflow:hidden}
+  .iw-agence{display:flex!important;flex-direction:column;padding:14px 16px 13px;gap:12px}
+  .ag-h{display:flex;align-items:center;gap:8px;font-size:13px}
+  .ag-h img{width:22px;height:22px;border-radius:6px}
+  .ag-h b{font-weight:700;letter-spacing:-.2px}
+  .ag-h small{margin-left:auto;color:#8e8e93;font-size:11.5px;font-weight:500}
+  .ag-g{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;align-content:center}
+  .ag-k{display:flex;flex-direction:column;min-width:0}
+  .ag-k b{font-size:26px;font-weight:700;letter-spacing:-.8px;line-height:1.05;font-variant-numeric:tabular-nums}
+  .ag-k small{font-size:11.5px;color:#8e8e93;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cal-ev{display:flex;gap:6px;font-size:11.5px;line-height:1.2;min-width:0}
   .cal-ev i{width:3px;border-radius:2px;flex:none}
   .cal-ev b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cal-ev small{display:block;color:#8e8e93;font-size:10.5px}
   .cal-ev span{min-width:0}
-  .iw-people{display:grid!important;grid-template-columns:repeat(4,1fr);align-items:center;padding:0 8px}
-  .pp{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:12px;font-weight:500;min-width:0;-webkit-tap-highlight-color:transparent}
-  .pp img{width:min(60px,15.5vw);height:min(60px,15.5vw);border-radius:50%;object-fit:cover}
-  .pp:active img{filter:brightness(.8)}
   .iw-next{display:flex!important;flex-direction:column;padding:13px 15px 12px;gap:8px}
   .iw-next h3{font-size:13px;font-weight:700;color:#ff3b30;display:flex;justify-content:space-between}
   .iw-next h3 small{color:#8e8e93;font-weight:500}
@@ -1929,7 +1921,7 @@ function menuItems(name) {
     case 'app': return [{ l: `À propos de ${appName()}`, a: () => openWin('about') }, SEP, { l: 'Masquer les autres', a: hideOthers, dis: !w }, { l: 'Tout afficher', a: showAll, dis: !anyMin }, SEP, { l: `Quitter ${appName()}`, a: quitApp, dis: !w }];
     case 'fichier': return [{ l: 'Ouvrir…', k: '⌘K', a: openSpot }, { l: 'Nouvelle fenêtre Talents', a: () => openFinder('talents') }, SEP, { l: 'Coup d’œil', k: '␣', a: quickLookSelected, dis: !selectedItem() }, { l: 'Ouvrir l’élément sélectionné', k: '↩', a: openSelected, dis: !selectedItem() }, SEP, { l: 'Fermer la fenêtre', k: '⌥W', a: () => closeWin(front), dis: !w }, { l: 'Tout fermer', a: closeAll, dis: !wins.size }];
     case 'edition': return [{ l: 'Copier l’adresse e-mail', a: () => copyMail() }, { l: 'Tout sélectionner', a: selectAll }, SEP, { l: 'Rechercher', k: '⌘K', a: openSpot }];
-    case 'presentation': return [{ l: 'Par icônes', ck: fin && F.view === 'icons' ? '✓' : '', a: () => { F.view = 'icons'; renderFinder(); }, dis: !fin }, { l: 'Par liste', ck: fin && F.view === 'list' ? '✓' : '', a: () => { F.view = 'list'; renderFinder(); }, dis: !fin }, { l: F.side ? 'Masquer la barre latérale' : 'Afficher la barre latérale', a: () => { F.side = !F.side; renderFinder(); }, dis: !fin }, SEP, { l: 'Ranger le bureau', a: () => tidy(false) }, { l: 'Trier par type', a: () => tidy(true) }, SEP, { l: w && w.state === 'full' ? 'Quitter le plein écran' : 'Passer en plein écran', k: '⌥F', a: () => toggleFull(front), dis: !w || w.def.fixed }, { l: document.documentElement.dataset.theme === 'dark' ? 'Apparence claire' : 'Apparence sombre', a: () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark') }];
+    case 'presentation': return [{ l: 'Par icônes', ck: fin && F.view === 'icons' ? '✓' : '', a: () => { F.view = 'icons'; renderFinder(); }, dis: !fin }, { l: 'Par liste', ck: fin && F.view === 'list' ? '✓' : '', a: () => { F.view = 'list'; renderFinder(); }, dis: !fin }, { l: F.side ? 'Masquer la barre latérale' : 'Afficher la barre latérale', a: () => { F.side = !F.side; renderFinder(); }, dis: !fin }, SEP, { l: 'Ranger le bureau', a: () => tidy(false) }, { l: 'Trier par type', a: () => tidy(true) }, SEP, { l: w && w.state === 'full' ? 'Quitter le plein écran' : 'Passer en plein écran', k: '⌥F', a: () => toggleFull(front), dis: !w || w.def.fixed }];
     case 'talents': return [...CREATORS.map(c => ({ l: c.name, k: K(c.fans) > 0 ? c.fans : '', img: c.icon, a: () => openWin(c.id) })), SEP, { l: 'Tous les talents…', a: () => openFinder('talents') }];
     case 'fenetre': return [{ l: 'Réduire', k: '⌥M', a: () => minimizeWin(front), dis: !w || w.def.noMin || w.state === 'full' }, { l: 'Zoom', a: () => toggleZoom(front), dis: !w || w.def.fixed || w.state === 'full' }, { l: w && w.state === 'full' ? 'Quitter le plein écran' : 'Passer en plein écran', k: '⌥F', a: () => toggleFull(front), dis: !w || w.def.fixed }, SEP, { l: 'Tout ramener au premier plan', a: showAll, dis: !wins.size }, ...(wins.size ? [SEP] : []), ...[...wins.values()].map(x => ({ l: x.title, ck: x.id === front ? '✓' : x.state === 'min' ? '◆' : '', a: () => (x.state === 'min' ? restoreWin(x.id) : focusWin(x.id)) }))];
     case 'aide': return [{ search: 1 }, SEP, { l: 'Écrire à l’agence', a: mail }, { l: 'Instagram', brand: 'instagram', a: () => openUrl(IG_URL) }, { l: 'LinkedIn', brand: 'linkedin', a: () => openUrl(LI_URL) }, SEP, { l: 'Mentions légales', a: () => openUrl('/mentions-legales/') }, { l: 'Confidentialité', a: () => openUrl('/confidentialite/') }, { l: 'Conditions d’utilisation', a: () => openUrl('/conditions/') }];
@@ -1996,19 +1988,14 @@ function setWall(i) {
   $('#wall').style.backgroundImage = u; $('#lockBg').style.backgroundImage = u;
   if ($('#cc').classList.contains('on')) renderCC();
 }
-const themePref = () => store.get('ttp-theme') || 'auto';
-function applyTheme() { const p = themePref(); const dark = p === 'dark' || (p === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches); document.documentElement.dataset.theme = dark ? 'dark' : 'light'; }
-function setTheme(v) { store.set('ttp-theme', v); applyTheme(); if ($('#cc').classList.contains('on')) renderCC(); }
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+// Toujours en clair (choix de Marc, 2026-11-27) : pas de mode sombre, même si l'appareil est en sombre
+function applyTheme() { document.documentElement.dataset.theme = 'light'; }
 function renderCC() {
-  const p = themePref();
-  $('#cc').innerHTML = `<div class="tile wide"><div class="tt">Apparence</div><div class="seg3">${[['light', 'Clair', 'sun'], ['dark', 'Sombre', 'moon'], ['auto', 'Auto', 'auto']].map(([v, l, g]) => `<button data-theme-set="${v}" class="${p === v ? 'on' : ''}">${ico(g)}<span>${l}</span></button>`).join('')}</div></div>
-  <div class="tile wide"><div class="tt">Fond d’écran</div><div class="walls">${WALLS.map((w, i) => `<button data-wall="${i}" class="${i === wallIdx ? 'on' : ''}" style="background-image:url('${w.img}')" aria-label="${esc(w.name)}"></button>`).join('')}</div></div>
+  $('#cc').innerHTML = `<div class="tile wide"><div class="tt">Fond d’écran</div><div class="walls">${WALLS.map((w, i) => `<button data-wall="${i}" class="${i === wallIdx ? 'on' : ''}" style="background-image:url('${w.img}')" aria-label="${esc(w.name)}"></button>`).join('')}</div></div>
   <button class="tile" data-run="tidy">${ico('tidy')}<span>Ranger le bureau</span></button>
   <button class="tile" data-run="lock">${ico('lock')}<span>Verrouiller</span></button>`;
 }
 $('#cc').addEventListener('click', e => {
-  const t = e.target.closest('[data-theme-set]'); if (t) { setTheme(t.dataset.themeSet); return; }
   const w = e.target.closest('[data-wall]'); if (w) { setWall(+w.dataset.wall); return; }
 });
 function renderNC() {
@@ -2054,8 +2041,6 @@ const INDEX = [
   ...MARQUES.map(b => ({ sec: 'Marques', t: b.n, s: avec(b.who) || 'Marque', logo: b.f, limg: b.img, lbg: b.bg, word: b.f || b.img ? null : b.n, a: () => quickLook(brandQL(b)) })),
   { sec: 'Actions', t: 'Écrire à l’agence', s: MAIL, icon: 'mail', a: mail },
   { sec: 'Actions', t: 'Rejoindre l’agence', s: 'Candidature de créateur', icon: 'users', a: () => openWin('rejoindre') },
-  { sec: 'Actions', t: 'Apparence sombre', s: 'Centre de contrôle', icon: 'moon', a: () => setTheme('dark') },
-  { sec: 'Actions', t: 'Apparence claire', s: 'Centre de contrôle', icon: 'sun', a: () => setTheme('light') },
   { sec: 'Actions', t: 'Verrouiller l’écran', s: '⌥L', icon: 'lock', a: lockScreen },
   { sec: 'Apps', t: 'Calendrier', s: 'Temps forts des marques et du sport', icon: 'cal', a: () => openWin('agenda') },
   ...agendaIndex(),
@@ -2182,7 +2167,6 @@ const fmt = o => new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', ..
 // minuit à Paris : les « À venir » (widgets, recherche, Calendrier ouvert) passent au jour suivant
 let jourVu = '';
 function majAgenda() {
-  const cal = $('.iw-cal .cal-evs'); if (cal) cal.innerHTML = agUpcoming(2).map(calEvRow).join('');
   const nx = $('.iw-next'); if (nx) { nx.querySelectorAll('.cal-ev').forEach(x => x.remove()); nx.insertAdjacentHTML('beforeend', agUpcoming(3).map(calEvRow).join('')); }
   for (let i = INDEX.length - 1; i >= 0; i--) if (INDEX[i].sec === 'Agenda') INDEX.splice(i, 1);
   INDEX.push(...agendaIndex());
@@ -2198,7 +2182,6 @@ function tick() {
   $('#iosTime').textContent = t; $('#ltime').textContent = t;
   const wd = fmt({ weekday: 'short' }).toUpperCase(), dn = fmt({ day: 'numeric' });
   $$('.cal-wd').forEach(x => { x.textContent = wd; }); $$('.cal-dn').forEach(x => { x.textContent = dn; });
-  const cd = $('#calDay'); if (cd) { cd.textContent = fmt({ weekday: 'long' }); $('#calNum').textContent = dn; }
   $('#ldate').textContent = fmt({ weekday: 'long', day: 'numeric', month: 'long' });
 }
 const lock = $('#lock');
@@ -2225,23 +2208,16 @@ lock.addEventListener('click', unlock);
 const phApp = (open, label, inner) => `<button class="app" data-open="${open}">${icw(inner)}<span class="lab">${esc(label)}</span></button>`;
 const phLink = (href, label, inner) => `<a class="app" href="${esc(href)}" target="_blank" rel="noopener">${icw(inner)}<span class="lab">${esc(label)}</span></a>`;
 const brandIco = n => `<span class="ico sq ${BRANDS[n].cls}">${BRANDS[n].mark}</span>`;
-function dialSVG() {
-  let nums = '';
-  for (let i = 1; i <= 12; i++) { const a = i * Math.PI / 6; nums += `<text x="${(50 + 37 * Math.sin(a)).toFixed(1)}" y="${(53.4 - 37 * Math.cos(a)).toFixed(1)}">${i}</text>`; }
-  return `<svg class="dial" viewBox="0 0 100 100" aria-hidden="true"><circle class="face" cx="50" cy="50" r="49"/>${nums}<line class="hh" x1="50" y1="50" x2="50" y2="28"/><line class="mh" x1="50" y1="50" x2="50" y2="16"/><line class="sh" x1="50" y1="58" x2="50" y2="12"/><circle class="pin" cx="50" cy="50" r="2.5"/><circle class="pin2" cx="50" cy="50" r="1.1"/></svg>`;
-}
 const topCreators = [...CREATORS].sort((a, b) => K(b.fans) - K(a.fans));
 const nIG = CREATORS.filter(c => c.nets.some(n => n[0] === 'instagram')).length;
 const nTT = CREATORS.filter(c => c.nets.some(n => n[0] === 'tiktok')).length;
 const calEvRow = e => `<span class="cal-ev"><i style="background:${AG_COLORS[e.k]}"></i><span><b>${esc(e.title)}</b><small>${esc(agWhen(e))}</small></span></span>`;
-const W_CLOCK = `<div class="iw-wrap"><div class="iw iw-clock">${dialSVG()}<span>Lyon</span></div><span class="wlabel">Horloge</span></div>`;
-const W_CAL = `<div class="iw-wrap"><button class="iw iw-cal" data-open="agenda"><span class="cal-day" id="calDay"></span><span class="cal-num" id="calNum"></span><span class="cal-evs">${agUpcoming(2).map(calEvRow).join('')}</span></button><span class="wlabel">Calendrier</span></div>`;
-const W_PEOPLE = `<div class="iw-wrap med"><div class="iw iw-people">${topCreators.slice(0, 4).map(c => `<button class="pp" data-open="${c.id}"><img src="${esc(c.icon)}" alt="" loading="lazy" decoding="async"><span>${esc(c.name.split(' ')[0])}</span></button>`).join('')}</div><span class="wlabel">Talents</span></div>`;
+const W_AGENCE = `<div class="iw-wrap med"><button class="iw iw-agence" data-open="resultats"><span class="ag-h"><img src="assets/ttp-icon.png" alt=""><b>TTP Creators</b><small>Lyon · Genève</small></span><span class="ag-g">${[[fmtK(TOTAL), 'abonnés cumulés'], [String(CREATORS.length), 'créateurs'], ['+50', 'campagnes livrées'], [String(MARQUES.length), 'marques partenaires']].map(([v, l]) => `<span class="ag-k"><b>${v}</b><small>${l}</small></span>`).join('')}</span></button><span class="wlabel">Agence</span></div>`;
 const W_NEXT = `<div class="iw-wrap med"><button class="iw iw-next" data-open="agenda"><h3>À venir<small>Temps forts · réservations · sport</small></h3>${agUpcoming(3).map(calEvRow).join('')}</button><span class="wlabel">Calendrier</span></div>`;
 const W_STATS = `<div class="iw-wrap med"><button class="iw iw-stocks" data-open="resultats">${[['Roster TTP', `${CREATORS.length} créateurs`, TOTAL], ['Instagram', `${nIG} créateurs`, NET.instagram], ['TikTok', `${nTT} créateurs`, NET.tiktok]].map(([l, s, v]) => `<span class="st-row"><span class="st-l"><b>${l}</b><small>${s}</small></span><span class="st-bar"><i style="width:${(v / TOTAL * 100).toFixed(0)}%"></i></span><span class="st-v">${fmtK(v)}</span></span>`).join('')}</button><span class="wlabel">Résultats</span></div>`;
 const W_PHOTO = `<div class="iw-wrap med"><button class="iw iw-photo" id="phFeat"><img alt="" decoding="async"><span class="pf-cap"><small>À la une</small><b></b></span></button><span class="wlabel">À la une</span></div>`;
 $('#phPages').innerHTML = [
-  W_CLOCK + W_CAL + W_PEOPLE + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')) + phApp('rejoindre', 'Rejoindre', iosIcon('rejoindre')),
+  W_AGENCE + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')) + phApp('rejoindre', 'Rejoindre', iosIcon('rejoindre')),
   W_NEXT + W_STATS + phApp('agenda', 'Calendrier', calIcon()) + phApp('histoire', 'Histoire', iosIcon('histoire')) + phApp('roster', 'Roster', iosIcon('roster')) + phLink(LI_URL, 'LinkedIn', brandIco('linkedin')),
   W_PHOTO + CREATORS.map(c => phApp(c.id, c.name.split(' ')[0], `<img class="ico sq" src="${esc(c.icon)}" alt="" loading="lazy" decoding="async">`)).join(''),
 ].map(p => `<div class="ph-page">${p}</div>`).join('');
@@ -2301,16 +2277,8 @@ function feature() {
   const swap = () => { img.onload = () => { img.style.opacity = 1; }; img.src = c.photo; b.dataset.open = c.id; b.querySelector('b').textContent = c.name; };
   if (img.getAttribute('src')) { img.style.opacity = 0; setTimeout(swap, 400); } else swap();
 }
-// horloge à aiguilles (heure de Lyon)
-function dial() {
-  const p = {};
-  new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).forEach(x => { p[x.type] = +x.value; });
-  const rot = (sel, deg) => $$('.dial ' + sel).forEach(l => l.setAttribute('transform', `rotate(${deg.toFixed(2)} 50 50)`));
-  rot('.hh', (p.hour % 12) * 30 + p.minute * 0.5); rot('.mh', p.minute * 6 + p.second * 0.1); rot('.sh', p.second * 6);
-}
-setInterval(() => { if (isPhone()) dial(); }, 1000);
 setInterval(() => { if (isPhone() && lock.classList.contains('out') && !document.body.classList.contains('app-open')) feature(); }, 6000);
-if (isPhone()) { dial(); feature(); }
+if (isPhone()) feature();
 
 /* ═════════ Démarrage ═════════ */
 applyTheme();
