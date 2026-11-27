@@ -11,7 +11,10 @@
 <meta name="description" content="TTP Creators, agence de talent management Sport et Lifestyle entre Lyon et Genève. On transforme les créateurs en marques.">
     <!-- Aperçu de partage (iMessage, WhatsApp, LinkedIn, Instagram, X, Facebook).
          Image 1200×630 < 300 Ko (WhatsApp ignore les images lourdes). Pour changer
-         l'image : NOUVEAU nom de fichier, sinon les réseaux gardent l'ancienne en cache. -->
+         l'image : NOUVEAU nom de fichier, sinon les réseaux gardent l'ancienne en cache.
+         og-bureau.jpg (2026-11-27) = capture du Bureau, fenêtre Talents ouverte
+         (Chrome sans fenêtre, 1200×630, sur « /?nolock#talents »). og-ttp.jpg reste : les media
+         kits s'en servent quand leur propre capture échoue. -->
     <meta property="og:site_name" content="TTP Creators" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:type" content="website" />
@@ -21,14 +24,14 @@
       property="og:description"
       content="On transforme les créateurs en marques. Management, production et partenariats, entre Lyon et Genève."
     />
-    <meta property="og:image" content="https://ttpcreators.pro/og-ttp.jpg?v=2" />
-    <meta property="og:image:secure_url" content="https://ttpcreators.pro/og-ttp.jpg?v=2" />
+    <meta property="og:image" content="https://ttpcreators.pro/og-bureau.jpg?v=2" />
+    <meta property="og:image:secure_url" content="https://ttpcreators.pro/og-bureau.jpg?v=2" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Cinq créateurs du roster TTP Creators, le logotype TTP® et la promesse « On transforme les créateurs en marques »."
+      content="Le bureau TTP Creators : la fenêtre Talents avec les photos des créateurs du roster et leurs abonnés, la barre de menus et le Dock."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="TTP Creators — Talent management Sport &amp; Lifestyle" />
@@ -36,8 +39,8 @@
       name="twitter:description"
       content="On transforme les créateurs en marques. Management, production et partenariats, entre Lyon et Genève."
     />
-    <meta name="twitter:image" content="https://ttpcreators.pro/og-ttp.jpg?v=2" />
-    <meta name="twitter:image:alt" content="TTP Creators — On transforme les créateurs en marques." />
+    <meta name="twitter:image" content="https://ttpcreators.pro/og-bureau.jpg?v=2" />
+    <meta name="twitter:image:alt" content="Le bureau TTP Creators : la fenêtre Talents avec les photos des créateurs du roster et leurs abonnés, la barre de menus et le Dock." />
 <link rel="canonical" href="https://ttpcreators.pro/">
 <link rel="icon" href="favicon.ico?v=3" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=3">
@@ -300,9 +303,13 @@ body.alt .tl .f .plus{display:block}
 .logo-tile.word{padding:6px;text-align:center}
 .logo-tile.word b{font:700 11px/1.12 var(--font);letter-spacing:-.01em;color:#1d1d1f;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
 .logo-tile.mini{width:18px;height:18px;border-radius:5px;flex:none}
+.logo-tile.img{padding:7px}
+.logo-tile.img img{display:block;width:100%;height:100%;object-fit:contain}
+.logo-tile.mini.img{padding:2px}
+.logo-tile.ri-logo{width:24px;height:24px;border-radius:6px;padding:2px}
 .logo-tile.mini.word{padding:0}
 .logo-tile.mini.word b{font-size:10px;line-height:18px}
-.logo-tile i{display:block;width:72%;height:44%;background:#1d1d1f;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.logo-tile i{display:block;width:88%;height:66%;background:#1d1d1f;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
 .ltable{width:100%;border-collapse:collapse}
 .ltable th{position:sticky;top:-16px;background:var(--win-bg);text-align:left;font-weight:500;font-size:12px;color:var(--text-2);padding:5px 10px;border-bottom:1px solid var(--line)}
 .ltable td{padding:4px 10px;white-space:nowrap}
@@ -457,6 +464,7 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
 .spot .sec{font-size:11px;font-weight:600;color:var(--text-3);padding:7px 10px 3px}
 .spot .r{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:7px}
 .spot .r img,.spot .r .ri{width:24px;height:24px;border-radius:6px;object-fit:cover;flex:none;display:grid;place-items:center}
+.spot .r .logo-tile img{width:100%;height:100%;object-fit:contain;border-radius:0;display:block}
 .spot .r .ri svg{width:22px;height:22px}
 .spot .r .ri .g{width:16px;height:16px}
 .spot .r small{margin-left:auto;color:var(--text-3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45%}
@@ -509,6 +517,8 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
 .ql-x:hover{background:var(--sidebar-sel)}
 .ql-c{position:relative;display:grid;place-items:center;height:min(520px,64vh);background:var(--win-bg-2);padding:20px}
 .ql-c img{max-width:100%;max-height:100%;object-fit:contain}
+.ql-card{display:grid;grid-template:minmax(0,1fr)/minmax(0,1fr);place-items:center;width:min(76%,440px);aspect-ratio:16/10;padding:30px;border-radius:18px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.ql-card img{width:100%;height:100%;object-fit:contain}
 .ql-word{font:700 clamp(30px,7vw,60px)/1.05 var(--font);letter-spacing:-.03em;text-align:center;color:var(--text);max-width:90%;overflow-wrap:anywhere}
 .ql-sub{position:absolute;left:0;right:0;bottom:16px;margin:0;text-align:center;font-size:13px;color:var(--text-2)}
 .ql-logo{width:70%;height:40%;background:var(--text);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
@@ -760,6 +770,50 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   .lock.out{transform:translateY(-100%);opacity:1}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ───────── Formulaire « Rejoindre l'agence » ───────── */
+.k-form .wbody{overflow:auto}
+.jf{display:flex;flex-direction:column;gap:14px;padding:18px 20px 16px;min-height:100%}
+.jf[hidden],.jf-done[hidden],.jf-err[hidden]{display:none}
+.jf-head{display:flex;gap:14px;align-items:center}
+.jf-head img{width:54px;height:54px;border-radius:12px;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.jf-head h2{font-size:17px;font-weight:700;letter-spacing:-.2px}
+.jf-head p{margin-top:3px;font-size:12.5px;line-height:1.4;color:var(--text-2)}
+.jf-grp{border-radius:10px;background:var(--win-bg-2);box-shadow:inset 0 0 0 .5px var(--line)}
+.jf-row{display:flex;align-items:center;gap:10px;min-height:40px;padding:0 12px;border-bottom:.5px solid var(--line)}
+.jf-row:last-child{border-bottom:0}
+.jf-row>span{width:70px;flex:none;font-size:13px;color:var(--text-2)}
+.jf-row input,.jf-row select{flex:1;min-width:0;height:40px;border:0;background:transparent;color:var(--text);font:inherit;font-size:13px;outline:none}
+.jf-row select{-webkit-appearance:none;appearance:none;cursor:pointer}
+.jf-row:focus-within>span{color:var(--accent)}
+.jf-msg{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--text-2)}
+.jf-msg textarea{min-height:88px;resize:vertical;padding:9px 12px;border:0;border-radius:10px;background:var(--win-bg-2);box-shadow:inset 0 0 0 .5px var(--line);color:var(--text);font:inherit;font-size:13px;line-height:1.4;outline:none}
+.jf-msg textarea:focus{box-shadow:inset 0 0 0 2px var(--accent)}
+.jf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.jf-legal{font-size:11.5px;line-height:1.4;color:var(--text-2)}
+.jf-legal a{color:var(--accent)}
+.jf-err{font-size:12.5px;color:#ff3b30}
+:root[data-theme="light"] .jf-err{color:#d70015}
+.jf-adr{font-size:13px;color:var(--text-2)}
+.jf-adr b{color:var(--text);-webkit-user-select:all;user-select:all}
+.jf-done h2:focus{outline:none}
+.jf-foot{display:flex;justify-content:flex-end;margin-top:auto}
+.jf-done{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:100%;padding:28px;text-align:center}
+.jf-ok{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#30d158;color:#fff}
+.jf-done.mail .jf-ok{background:var(--accent)}
+.jf-ok svg{width:28px;height:28px}
+.jf-done h2{font-size:18px;font-weight:700}
+.jf-done p{max-width:300px;font-size:13px;line-height:1.45;color:var(--text-2)}
+.jf-acts{margin-top:6px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+@media (max-width:720px){
+  .jf{padding:16px 16px calc(34px + env(safe-area-inset-bottom, 0px))}
+  .jf-done{padding-bottom:calc(40px + env(safe-area-inset-bottom, 0px))}
+  .jf-row{min-height:46px}
+  .jf-row input,.jf-row select{height:46px;font-size:16px}
+  .jf-msg textarea{font-size:16px}
+  .jf-foot,.jf-acts{width:100%}
+  .jf-acts{flex-direction:column}
+  .jf-foot .pbtn,.jf-acts .pbtn{width:100%;height:50px;font-size:17px;border-radius:14px;font-weight:600}
+}
 </style>
 </head>
 <body>
@@ -803,6 +857,7 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   <p data-texte="marques">Tesla, Ray-Ban, HP, Speedo, Palladium, Bumble, Magnum, Qonto, Nutripure, So Shape, Novoma, Airup, Altalanga, Andros, Banane de Guadeloupe &amp; Martinique, Carlsbourg, Cellublue, Certideal, Colombus, Conforama, Dovy Cuisines, Dulux Valentine, Easy Cooking, Édition point, Emma, Eno, Fabletics, Fitjeans, Flammarion, IKEA, Institut Esthederm, Jean Dubost, Jeunesse Dorée, Kenwood, Knorr, Kosbiotic, Kumali, L'Or Espresso, L'Oréal, Les Lunes, M&amp;M's, Maasmechelen Village, Marie Morin, Motelrock, Moulinex, Musea Lagree Studio, Nanou_thebrand, Nestlé, Onatera, Panda tea, Paramount, Prozis, Respire, Rétif, Robur, Saint Louis, Sephora, Shokz, Silikomart, Sol De Janeiro, St-Germain, Teveo, Typology, Ultraprenium, Victoria's Secret, Waynabox, Wecandoo, Wild, Wines Bordeaux, Wizbii.</p>
   <h2>Contact</h2>
   <p><a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a> · <a href="https://www.instagram.com/ttpcreators/">Instagram</a> · <a href="https://www.linkedin.com/company/ttp-creators/">LinkedIn</a> · <a href="/mediakit/agence/">Le roster de l'agence</a></p>
+  <p>Tu es créateur et tu veux rejoindre l'agence ? Écris-nous à <a href="mailto:partnerships@ttpcreators.pro">partnerships@ttpcreators.pro</a> avec ton compte Instagram ou TikTok.</p>
   <p><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions d'utilisation</a></p>
 </main>
 <noscript><style>body>:not(#texte):not(noscript){display:none!important}#texte[hidden]{display:block!important;max-width:680px;margin:0 auto;padding:32px 16px;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#1d1d1f;background:#fff}#texte a{color:#0066cc}html,body{overflow:auto!important;height:auto!important;background:#fff!important}</style></noscript>
@@ -875,7 +930,7 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   </div>
 </div>
 
-<script id="ttp-data" type="application/json">{"maj":"2026-11-27T16:41Z","createurs":[
+<script id="ttp-data" type="application/json">{"maj":"2026-11-27T19:00Z","createurs":[
 {"nom":"Ana Milanovic","compte":"@anamilanovic_","niche":"Health","kit":"anamilanovic","photo":"ana_milanovic/1791293096572.png","reseaux":[["tiktok",392100,"anamilanovic_"],["instagram",244510,"anamilanovic_"]]},
 {"nom":"Léna Pasquale","compte":"@lenaa.psl","niche":"Sport","kit":"lena","photo":"lena_pasquale/1782992662575.png","reseaux":[["instagram",22940,"lenaa.psl"]]},
 {"nom":"Candice Maissa","compte":"@candicemaissa","niche":"Lifestyle","kit":"candice","photo":"candice_maissa/1782993231244.png","reseaux":[["tiktok",45800,"candicemaissa"],["instagram",11027,"candicemaissa"]]},
@@ -887,7 +942,7 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
 {"nom":"Chloé Deyre","compte":"@chloe.dyr","niche":"Fitness","kit":"chloe","photo":"chloe_deyre/1795537811606.jpeg","reseaux":[["tiktok",16023,"chloe.dyr"],["instagram",10910,"chloe.dyr"]]},
 {"nom":"Anthony Gharbi","compte":"@the_french_osteopath","niche":"Santé / Ostéopathie","kit":"anthony","photo":"anthony_gharbi/1795617934095.png","reseaux":[["tiktok",496000,null],["instagram",213727,"the_french_osteopath"]]},
 {"nom":"Adelina Krasnici","compte":"@adelina_lmp11","niche":"Food","kit":"adelina","photo":"adelina_krasnici/1795617891564.png","reseaux":[["instagram",165998,"adelina_lmp11"],["tiktok",135000,null]]}
-],"marques":[["Flammarion",["Ana"]],["Édition point",["Ana"]],["Kumali",["Ana"]],["Nanou_thebrand",["Ana"]],["Conforama",["Léna"]],["M&M's",["Léna"]],["Colombus",["Léna"]],["Typology",["Léna"]],["L'Oréal",["Léna"]],["Fabletics",["Léna"]],["Eno",["Léna"]],["Sephora",["Léna"]],["Victoria's Secret",["Léna"]],["Nutripure",["Léna"]],["Certideal",["Candice"]],["Sol De Janeiro",["Candice"]],["Jeunesse Dorée",["Candice"]],["Wecandoo",["Candice"]],["Wizbii",["Candice"]],["Waynabox",["Candice"]],["Andros",["Candice"]],["Airup",["Candice"]],["Motelrock",["Candice"]],["Respire",["Candice"]],["Shokz",["Justine"]],["Ultraprenium",["Justine"]],["Onatera",["Justine"]],["Panda tea",["Justine"]],["Prozis",["Justine","Chloé"]],["Teveo",["Chloé"]],["Kosbiotic",["Chloé"]],["Cellublue",["Chloé"]],["Fitjeans",["Chloé"]],["Musea Lagree Studio",["Chloé"]],["Kenwood",["Adelina"]],["Moulinex",["Adelina"]],["Silikomart",["Adelina"]],["Altalanga",["Adelina"]],["Marie Morin",["Adelina"]],["St-Germain",["Adelina"]],["Maasmechelen Village",["Adelina"]],["Easy Cooking",["Adelina"]],["Dulux Valentine",["Adelina"]],["Paramount",["Adelina"]],["Knorr",["Adelina"]],["Wines Bordeaux",["Adelina"]],["Banane de Guadeloupe & Martinique",["Adelina"]],["L'Or Espresso",["Adelina"]],["Robur",["Adelina"]],["Nestlé",["Adelina"]],["Saint Louis",["Adelina"]],["Rétif",["Adelina"]],["Les Lunes",["Adelina"]],["IKEA",["Adelina"]],["Wild",["Adelina"]],["Emma",["Adelina"]],["Carlsbourg",["Adelina"]],["Dovy Cuisines",["Adelina"]],["Jean Dubost",["Adelina"]],["Institut Esthederm",["Adelina"]]]}</script>
+],"marques":[["Flammarion",["Ana"],"flammarion.svg"],["Édition point",["Ana"],"edition-point.png"],["Kumali",["Ana"]],["Nanou_thebrand",["Ana"],"nanou-thebrand.png"],["Conforama",["Léna"],"conforama.svg"],["M&M's",["Léna"],"m-m-s.svg"],["Colombus",["Léna"]],["Typology",["Léna"],"typology.svg"],["L'Oréal",["Léna"],"l-oreal.svg"],["Fabletics",["Léna"],"fabletics.svg"],["Eno",["Léna"]],["Sephora",["Léna"],"sephora.svg"],["Victoria's Secret",["Léna"],"victoria-s-secret.svg"],["Nutripure",["Léna"]],["Certideal",["Candice"],"certideal.svg"],["Sol De Janeiro",["Candice"],"sol-de-janeiro.svg"],["Jeunesse Dorée",["Candice"]],["Wecandoo",["Candice"],"wecandoo.svg"],["Wizbii",["Candice"],"wizbii.svg"],["Waynabox",["Candice"],"waynabox.svg"],["Andros",["Candice"],"andros.png"],["Airup",["Candice"]],["Motelrock",["Candice"],"motelrocks.png"],["Respire",["Candice"],"respire.svg"],["Shokz",["Justine"],"shokz.svg"],["Ultraprenium",["Justine"]],["Onatera",["Justine"],"onatera.svg"],["Panda tea",["Justine"],"panda-tea.png"],["Prozis",["Justine","Chloé"],"prozis.png"],["Teveo",["Chloé"],"teveo.svg"],["Kosbiotic",["Chloé"],"kosbiotic.svg"],["Cellublue",["Chloé"],"cellublue.svg","#2f67f4"],["Fitjeans",["Chloé"],"fitjeans.png"],["Musea Lagree Studio",["Chloé"]],["Kenwood",["Adelina"],"kenwood.svg"],["Moulinex",["Adelina"],"moulinex.svg"],["Silikomart",["Adelina"],"silikomart.svg"],["Altalanga",["Adelina"]],["Marie Morin",["Adelina"],"marie-morin.svg"],["St-Germain",["Adelina"]],["Maasmechelen Village",["Adelina"]],["Easy Cooking",["Adelina"]],["Dulux Valentine",["Adelina"],"dulux-valentine.png"],["Paramount",["Adelina"]],["Knorr",["Adelina"],"knorr.svg"],["Wines Bordeaux",["Adelina"],"wines-bordeaux.svg"],["Banane de Guadeloupe & Martinique",["Adelina"],"banane-de-guadeloupe-martinique.svg"],["L'Or Espresso",["Adelina"],"l-or-espresso.png"],["Robur",["Adelina"]],["Nestlé",["Adelina"],"nestle.svg"],["Saint Louis",["Adelina"]],["Rétif",["Adelina"],"retif.svg"],["Les Lunes",["Adelina"]],["IKEA",["Adelina"],"ikea.svg"],["Wild",["Adelina"]],["Emma",["Adelina"]],["Carlsbourg",["Adelina"],"carlsbourg.png"],["Dovy Cuisines",["Adelina"],"dovy-cuisines.svg"],["Jean Dubost",["Adelina"],"jean-dubost.svg"],["Institut Esthederm",["Adelina"],"institut-esthederm.svg"]]}</script>
 <script>
 // La version texte (robots sans JavaScript) laisse la place au bureau
 document.getElementById('texte')?.remove();
@@ -912,28 +967,37 @@ addEventListener('pointerdown', e => {
 }, true);
 
 /* ═════════ Données ═════════ */
-// Roster et marques : bloc JSON « ttp-data » plus haut. À chaque déploiement (et toutes les
-// heures), scripts/bureau_donnees.py le remplace par les données en direct de Supabase (vues
-// publiques public_roster et public_mediakit) : un créateur ajouté dans TTP Suite apparaît ici tout
-// seul. Le bloc du dépôt sert de repli. Aucun montant, aucune donnée privée.
+// Roster et marques : bloc JSON « ttp-data » plus haut. À chaque déploiement (et avec le cron du
+// déploiement, que GitHub lance en pratique quelques fois par jour), scripts/bureau_donnees.py le
+// remplace par les données en direct de Supabase (vues publiques public_roster et public_mediakit) :
+// un créateur ajouté dans TTP Suite apparaît ici tout seul, en général dans la journée. Le bloc du
+// dépôt sert de repli. Aucun montant, aucune donnée privée.
 const DATA = (() => { try { return JSON.parse(document.getElementById('ttp-data').textContent) || {}; } catch (e) { return {}; } })();
 const MAIL = 'partnerships@ttpcreators.pro';
 const KIT = 'https://ttpcreators.pro/mediakit/';
 const IG_URL = 'https://www.instagram.com/ttpcreators/';
 const LI_URL = 'https://www.linkedin.com/company/ttp-creators/';
 // photo réduite par Supabase (chemin dans le dossier avatars, ou adresse complète du stockage)
+// Toute autre valeur (adresse étrangère, guillemet, code) donne l'icône TTP.
+const STOCKAGE = 'https://zizvggziggswhrbuyhuo.supabase.co/storage/v1/object/public/';
 const thumb = (p, w = 560) => {
-  if (!p) return 'assets/ttp-icon.png';
-  const u = /^https?:/.test(p) ? p.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') : `https://zizvggziggswhrbuyhuo.supabase.co/storage/v1/render/image/public/avatars/${p}`;
-  return `${u}${u.includes('?') ? '&' : '?'}width=${w}&resize=contain&quality=72`;
+  const s = String(p || '');
+  const chemin = /^[A-Za-z0-9_./-]+$/.test(s) && !s.includes('..');
+  const complet = s.startsWith(STOCKAGE) && /^[A-Za-z0-9_./%-]+$/.test(s.slice(STOCKAGE.length)) && !s.includes('..');
+  if (!chemin && !complet) return 'assets/ttp-icon.png';
+  const u = complet ? s.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') : `https://zizvggziggswhrbuyhuo.supabase.co/storage/v1/render/image/public/avatars/${s}`;
+  return `${u}?width=${w}&resize=contain&quality=72`;
 };
 // abonnés : 244510 → « 244,5 K », 1250000 → « 1,25 M »
 const kf = n => n >= 1e6 ? (n / 1e6).toFixed(2).replace(/\.?0+$/, '').replace('.', ',') + ' M' : (n / 1e3).toFixed(1).replace(/\.0$/, '').replace('.', ',') + ' K';
 // nom, compte, niche, media kit, photo, abonnés (tous réseaux), réseaux [réseau, abonnés, compte]
-const C = (DATA.createurs || []).map(c => {
-  const nets = (c.reseaux || []).filter(r => r[1] > 0).sort((a, b) => b[1] - a[1]);
-  return [c.nom, c.compte || '', c.niche || 'Créateur', c.kit || null, c.photo || null, kf(nets.reduce((t, r) => t + r[1], 0)), nets.map(([n, v, h]) => [n, kf(v), h || null])];
+const COMPTE_OK = h => /^[A-Za-z0-9._]{1,30}$/.test(h || '');
+const C = (Array.isArray(DATA.createurs) ? DATA.createurs : []).filter(c => c && typeof c.nom === 'string' && c.nom.trim()).map(c => {
+  const nets = (Array.isArray(c.reseaux) ? c.reseaux : []).filter(r => Array.isArray(r) && ['instagram', 'tiktok'].includes(r[0]) && +r[1] > 0).sort((a, b) => b[1] - a[1]);
+  return [c.nom, String(c.compte || ''), String(c.niche || 'Créateur'), /^[a-z0-9-]+$/.test(c.kit || '') ? c.kit : null, c.photo || null, kf(nets.reduce((t, r) => t + +r[1], 0)), nets.map(([n, v, h]) => [n, kf(+v), COMPTE_OK(h) ? h : null])];
 });
+// « 12,3 K abonnés », ou rien tant que le media kit n'a pas de chiffres
+const abo = c => K(c.fans) > 0 ? `${c.fans} abonnés` : '';
 const usedIds = new Set();
 const CREATORS = C.map(([name, handle, niche, kit, photo, fans, nets]) => {
   const base = norm(name.split(' ')[0]).replace(/[^a-z0-9]+/g, '-') || 'createur';
@@ -951,20 +1015,27 @@ const TAGC = { 'Sport': '#ff453a', 'Lifestyle': '#bf5af2', 'Health': '#32d74b', 
 const tagc = n => TAGC[n] || '#98989d';
 const NICHES = Object.entries(CREATORS.reduce((m, c) => { m[c.niche] = (m[c.niche] || 0) + 1; return m; }, {})).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 // Marques : les 11 logos dessinés (assets/clients), puis toutes les marques citées dans les media kits
-// publics des créateurs (« Ces marques lui ont fait confiance »), avec les créateurs concernés
+// publics des créateurs (« Ces marques lui ont fait confiance »), avec les créateurs concernés.
+// Logo officiel (assets/marques, liste logos.json) quand la marque est certaine, sinon son nom.
 const CLIENTS = [['Tesla', 'tesla'], ['Ray-Ban', 'ray-ban'], ['HP', 'hp'], ['Speedo', 'speedo'], ['Palladium', 'palladium'], ['Bumble', 'bumble'], ['Magnum', 'magnum'], ['Qonto', 'quonto'], ['Nutripure', 'nutripure'], ['So Shape', 'so-shape'], ['Novoma', 'novoma']];
+const cleMarque = n => norm(n).replace(/[^a-z0-9]/g, '');
 const MARQUES = (() => {
   const m = new Map(), rest = [];
-  CLIENTS.forEach(([n, f]) => m.set(norm(n), { n, f, who: [] }));
-  (DATA.marques || []).forEach(([n, who]) => {
-    const k = norm(n), b = m.get(k);
-    if (b) b.who = who || [];
-    else { const x = { n, f: null, who: who || [] }; m.set(k, x); rest.push(x); }
+  CLIENTS.forEach(([n, f]) => m.set(cleMarque(n), { n, f, who: [] }));
+  (Array.isArray(DATA.marques) ? DATA.marques : []).forEach(e => {
+    if (!Array.isArray(e) || typeof e[0] !== 'string' || !cleMarque(e[0])) return;
+    const [n, who, img, bg] = e, k = cleMarque(n), b = m.get(k);
+    if (b) { b.who = Array.isArray(who) ? who : []; return; }
+    const x = { n, f: null, who: Array.isArray(who) ? who.filter(w => typeof w === 'string') : [], img: img && /^[\w.-]+\.(svg|png|webp)$/i.test(img) ? 'assets/marques/' + img : null, bg: /^#[0-9a-f]{3,8}$/i.test(bg || '') ? bg : null };
+    m.set(k, x); rest.push(x);
   });
-  return [...CLIENTS.map(([n]) => m.get(norm(n))), ...rest.sort((a, b) => a.n.localeCompare(b.n, 'fr'))];
+  const abc = (a, b) => a.n.localeCompare(b.n, 'fr');
+  return [...CLIENTS.map(([n]) => m.get(cleMarque(n))), ...rest.filter(b => b.img).sort(abc), ...rest.filter(b => !b.img).sort(abc)];
 })();
 const avec = w => !w || !w.length ? '' : 'Avec ' + (w.length > 1 ? w.slice(0, -1).join(', ') + ' et ' + w[w.length - 1] : w[0]);
-const brandQL = b => ({ title: b.n, logo: b.f, word: b.f ? null : b.n, sub: avec(b.who) });
+const brandQL = b => ({ title: b.n, logo: b.f, limg: b.img, lbg: b.bg, word: b.f || b.img ? null : b.n, sub: avec(b.who) });
+// logo officiel dans sa tuile blanche (ou sur la couleur de la marque quand le logo est blanc)
+const logoImg = (src, bg, cls = '') => `<span class="logo-tile img${cls}"${bg ? ` style="background:${bg}"` : ''}><img src="${esc(src)}" alt="" loading="lazy" decoding="async" draggable="false"></span>`;
 const SERVICES = [
   ['Talent Management', 'Carrière, négociations, planning et développement de revenus. On gère la structure, tu te concentres sur la création.', ['Carrière', 'Deals', 'Planning']],
   ['Production de contenu', 'Direction artistique, tournage, montage, photo. Du contenu prêt à publier, pensé pour chaque plateforme.', ['Photo', 'Vidéo', 'DA']],
@@ -1032,12 +1103,13 @@ const IOSG = {
   book: '<path d="M11.1 5.3C9.5 4.1 7.3 3.5 5 3.5c-.9 0-1.8.1-2.5.3-.3.1-.5.4-.5.7v13.2c0 .5.5.8.9.7.7-.2 1.4-.3 2.1-.3 2.3 0 4.5.7 6.1 1.9z"/><path d="M12.9 5.3c1.6-1.2 3.8-1.8 6.1-1.8.9 0 1.8.1 2.5.3.3.1.5.4.5.7v13.2c0 .5-.5.8-.9.7-.7-.2-1.4-.3-2.1-.3-2.3 0-4.5.7-6.1 1.9z"/>',
   envelope: '<path d="M2.4 7.4l8.8 5.9c.5.3 1.1.3 1.6 0l8.8-5.9V17a2 2 0 0 1-2 2H4.4a2 2 0 0 1-2-2z"/><path d="M4.4 5h15.2c.9 0 1.7.6 1.9 1.5l-9.5 6.1-9.5-6.1C2.7 5.6 3.5 5 4.4 5z"/>',
   doc: '<path fill-rule="evenodd" d="M6.2 2.5h7.3c.5 0 1 .2 1.4.6l4.4 4.4c.4.4.6.9.6 1.4V19.5a2 2 0 0 1-2 2H6.2a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2zM8 12.2h8v1.6H8zm0 3.4h6v1.6H8z"/>',
+  join: '<circle cx="9.5" cy="7.8" r="3.9"/><path d="M2.6 19.6c0-3.7 3.1-6.1 6.9-6.1s6.9 2.4 6.9 6.1c0 .5-.4.9-.9.9H3.5c-.5 0-.9-.4-.9-.9z"/><path d="M18.4 6.5v2.6H21v1.8h-2.6v2.6h-1.8v-2.6H14V9.1h2.6V6.5z"/>',
   photo: '<path fill-rule="evenodd" d="M4.5 4h15A2.5 2.5 0 0 1 22 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5v-11A2.5 2.5 0 0 1 4.5 4zM8.5 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM4 18h16l-5.2-6.5-3.8 4.6-2.4-2.6z"/>',
 };
 const IOS = {
   talents: ['#5fe07e', '#24a548', 'people'], services: ['#d88dff', '#9a3ce0', 'sparkles'], methode: ['#ffd84a', '#ff9a0a', 'checklist'],
   marques: ['#ff6b90', '#e5164b', 'tag'], histoire: ['#ffb53f', '#ff7600', 'book'], contact: ['#5ac8fa', '#0a6cff', 'envelope'],
-  roster: ['#ff6f61', '#de261b', 'doc'], viewer: ['#8fd6ff', '#2f86f0', 'photo'],
+  roster: ['#ff6f61', '#de261b', 'doc'], viewer: ['#8fd6ff', '#2f86f0', 'photo'], rejoindre: ['#a3283a', '#49060d', 'join'],
 };
 const icw = inner => `<span class="icw">${inner}</span>`;
 function iosIcon(k) {
@@ -1050,7 +1122,9 @@ const FOLDER = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 16a4 4 0
 const docIcon = (label, color, inner = '') => `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M15 5h23.5L51 17.5V57a2 2 0 0 1-2 2H15a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="#fff" stroke="rgba(0,0,0,.16)"/><path d="M38.5 5v10.5a2 2 0 0 0 2 2H51" fill="#eceef1" stroke="rgba(0,0,0,.16)"/>${inner}<rect x="17" y="46" width="30" height="9" rx="2" fill="${color}"/><text x="32" y="52.6" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Inter,sans-serif" font-size="6.6" font-weight="700" fill="#fff">${label}</text></svg>`;
 const LINES = '<path d="M20 24h22M20 29h24M20 34h18M20 39h22" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round"/>';
 const SHEETL = '<rect x="20" y="22" width="24" height="18" rx="1.5" fill="none" stroke="#34c759" stroke-width="1.6"/><path d="M20 28h24M20 34h24M28 22v18M36 22v18" stroke="#34c759" stroke-width="1.2"/>';
+const CHECKS = '<rect x="19" y="21" width="5.5" height="5.5" rx="1.2" fill="none" stroke="#49060d" stroke-width="1.5"/><path d="M20.3 23.8l1.3 1.3 2.4-2.6" fill="none" stroke="#49060d" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 23.8h16" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round"/><rect x="19" y="31" width="5.5" height="5.5" rx="1.2" fill="none" stroke="#49060d" stroke-width="1.5"/><path d="M28 33.8h13" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round"/>';
 const ICON = {
+  form: docIcon('FORM', '#49060d', CHECKS),
   pdf: docIcon('PDF', '#e2483d', LINES),
   txt: docIcon('TXT', '#8e8e93', LINES),
   doc: docIcon('DOC', '#2b7de9', LINES),
@@ -1065,25 +1139,28 @@ const DOCS = [
   { id: 'histoire', name: 'Notre histoire', type: 'Document', icon: ICON.doc },
   { id: 'contact', name: 'TTP Creators.vcf', type: 'Fiche contact', icon: ICON.vcf },
   { id: 'roster', name: 'Roster agence.pdf', type: 'PDF', icon: ICON.pdf },
+  { id: 'rejoindre', name: 'Rejoindre l’agence', type: 'Formulaire', icon: ICON.form },
 ];
 
 /* ═════════ Contenu des fenêtres ═════════ */
 function viewerHTML(c) {
   const nets = c.nets.map(([n, v, h]) => {
-    const url = h ? (n === 'instagram' ? `https://www.instagram.com/${h}/` : `https://www.tiktok.com/@${h}`) : '';
+    const url = h ? (n === 'instagram' ? `https://www.instagram.com/${encodeURIComponent(h)}/` : `https://www.tiktok.com/@${encodeURIComponent(h)}`) : '';
     const inner = `${brand(n, 24)}<span>${BRANDS[n].label}<small>${h ? '@' + esc(h) : ''}</small></span><b>${v}</b>`;
-    return url ? `<a class="netrow" href="${url}" target="_blank" rel="noopener">${inner}</a>` : `<div class="netrow">${inner}</div>`;
+    return url ? `<a class="netrow" href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="netrow">${inner}</div>`;
   }).join('');
-  return `<div class="vw"><div class="vw-img"><img src="${c.photo}" alt="${esc(c.name)}"></div>
+  return `<div class="vw"><div class="vw-img"><img src="${esc(c.photo)}" alt="${esc(c.name)}"></div>
   <aside class="insp"><div class="insp-h"><span class="tagdot" style="background:${tagc(c.niche)}"></span>${esc(c.niche)}</div>
   <h2>${esc(c.name)}</h2><p class="dim">${esc(c.handle)}</p>
-  <div class="insp-big"><b>${c.fans}</b><span>abonnés au total</span></div>
+  ${K(c.fans) > 0 ? `<div class="insp-big"><b>${c.fans}</b><span>abonnés au total</span></div>` : ''}
   <div class="insp-sec">Réseaux</div><div class="grp">${nets}</div>
   <div class="insp-acts">${c.kit ? `<a class="pbtn blue" href="${KIT}${c.kit}/" target="_blank" rel="noopener">Voir le media kit</a>` : ''}<a class="pbtn" href="mailto:${MAIL}?subject=${encodeURIComponent('Collab avec ' + c.name)}">Proposer une collab</a></div></aside></div>`;
 }
 const servicesHTML = () => `<div class="pdf"><div class="page"><p class="eyebrow">TTP Creators</p><h1>Services</h1><p class="lead">Une seule équipe, de la stratégie au contrat. Stratégie, production, négociation : tout se passe en interne.</p>${SERVICES.map((s, i) => `<div class="svc"><span class="n">0${i + 1}</span><div><h3>${s[0]}</h3><p>${s[1]}</p><div class="chips">${s[2].map(t => `<span>${t}</span>`).join('')}</div></div></div>`).join('')}</div></div>`;
 const methodeHTML = () => `<div class="doc"><h1>Trust The Process.</h1>${STEPS.map((s, i) => `<p><b>${i + 1}. ${s[0]}</b><br>${s[1]}</p>`).join('')}</div>`;
 const histoireHTML = () => `<div class="doc"><h1>Notre histoire</h1><p>L'agence des créateurs sport &amp; lifestyle, entre Lyon et Genève. Un créateur n'est pas une audience : c'est une marque. On construit une identité qui dure, pas des pics de vues.</p><div class="team"><figure><img src="assets/about/marc.webp" alt=""><figcaption><b>Marc</b><span>Cofondateur</span></figcaption></figure><figure><img src="assets/about/gianni.webp" alt=""><figcaption><b>Gianni</b><span>Cofondateur</span></figcaption></figure></div><h2>2022 · TTP Agency</h2><p>Naissance de l'agence de communication : stratégie de marque, création et campagnes.</p><h2>Aujourd'hui · TTP Creators</h2><p>Le talent management comme évidence : les créateurs au cœur des marques.</p></div>`;
+// date du dernier relevé des données (bloc ttp-data, réécrit à chaque déploiement)
+const dateMaj = () => { const d = DATA.maj ? new Date(DATA.maj) : null; return d && !isNaN(d) ? new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris' }).format(d) : 'dernier déploiement'; };
 function resultatsHTML() {
   const max = Math.max(NET.instagram, NET.tiktok);
   const top = [...CREATORS].sort((a, b) => K(b.fans) - K(a.fans)).slice(0, 3);
@@ -1093,17 +1170,111 @@ function resultatsHTML() {
     { v: 50, pre: '+', txt: '+50', l: 'campagnes livrées' },
     { v: MARQUES.length, txt: String(MARQUES.length), l: 'marques avec nos créateurs' },
   ];
-  return `<div class="sheet"><div class="sh-head"><h1>Résultats</h1><p>Chiffres publics du roster, relevés le 27 novembre 2026.</p></div>
+  return `<div class="sheet"><div class="sh-head"><h1>Résultats</h1><p>Chiffres publics du roster, relevés le ${dateMaj()}.</p></div>
   <div class="kpis">${kpis.map(k => `<div class="kpi"><b data-count="${k.v}" data-dec="${k.dec || 0}" data-pre="${k.pre || ''}" data-suf="${k.suf || ''}">${k.txt}</b><span>${k.l}</span></div>`).join('')}</div>
-  <div class="cols"><section class="card"><h2>Audience par réseau</h2>${['instagram', 'tiktok'].map(n => `<div class="bar"><span class="lbl">${brand(n, 18)}${BRANDS[n].label}</span><span class="track"><i class="${n === 'instagram' ? 'ig' : 'tt'}" data-w="${(NET[n] / max * 100).toFixed(1)}"></i></span><b>${fmtK(NET[n])}</b></div>`).join('')}<p class="dim" style="font-size:12px">Abonnés cumulés des 11 créateurs, réseau par réseau.</p></section>
-  <section class="card"><h2>Plus grandes audiences</h2>${top.map(c => `<button class="toprow" data-open="${c.id}"><img src="${c.icon}" alt=""><span>${esc(c.name)}<small>${esc(c.niche)}</small></span><b>${c.fans}</b></button>`).join('')}</section></div>
+  <div class="cols"><section class="card"><h2>Audience par réseau</h2>${['instagram', 'tiktok'].map(n => `<div class="bar"><span class="lbl">${brand(n, 18)}${BRANDS[n].label}</span><span class="track"><i class="${n === 'instagram' ? 'ig' : 'tt'}" data-w="${(NET[n] / max * 100).toFixed(1)}"></i></span><b>${fmtK(NET[n])}</b></div>`).join('')}<p class="dim" style="font-size:12px">Abonnés cumulés des ${CREATORS.length} créateurs, réseau par réseau.</p></section>
+  <section class="card"><h2>Plus grandes audiences</h2>${top.map(c => `<button class="toprow" data-open="${c.id}"><img src="${esc(c.icon)}" alt=""><span>${esc(c.name)}<small>${esc(c.niche)}</small></span><b>${K(c.fans) > 0 ? c.fans : ''}</b></button>`).join('')}</section></div>
   <section class="card"><h2>Univers du roster</h2><div class="niches">${NICHES.map(([n, k]) => `<span class="niche"><span class="tagdot" style="background:${tagc(n)}"></span>${esc(n)} <b>${k}</b></span>`).join('')}</div></section>
   <section class="card"><h2>Temps forts</h2><table class="gridt"><thead><tr><th>Collab</th><th>Chiffre</th><th>Ce que ça veut dire</th></tr></thead><tbody>${HIGHLIGHTS.map(h => `<tr><td>${esc(h[0])}</td><td class="num">${h[1]}</td><td>${h[2]}</td></tr>`).join('')}</tbody></table></section></div>`;
 }
 const contactHTML = () => `<div class="ct"><div class="ct-head"><img src="assets/ttp-icon.png" alt=""><h2>TTP Creators</h2><p>Talent management sport &amp; lifestyle</p></div>
-  <div class="ct-acts"><a class="ct-act" href="mailto:${MAIL}"><span class="mailic">${ico('mail')}</span>e-mail</a><a class="ct-act" href="${IG_URL}" target="_blank" rel="noopener">${brand('instagram', 34)}Instagram</a><a class="ct-act" href="${LI_URL}" target="_blank" rel="noopener">${brand('linkedin', 34)}LinkedIn</a></div>
-  <dl class="ct-f"><dt>travail</dt><dd><a href="mailto:${MAIL}">${MAIL}</a></dd><dt>Instagram</dt><dd><a href="${IG_URL}" target="_blank" rel="noopener">@ttpcreators</a></dd><dt>LinkedIn</dt><dd><a href="${LI_URL}" target="_blank" rel="noopener">TTP Creators</a></dd><dt>villes</dt><dd>Lyon · Genève</dd></dl>
-  <div class="ct-foot"><button class="pbtn" data-run="copy">${ico('copy')}<span>Copier l'e-mail</span></button><a class="pbtn blue" href="mailto:${MAIL}">Écrire</a></div></div>`;
+  <div class="ct-acts"><a class="ct-act" href="mailto:${MAIL}"><span class="mailic">${ico('mail')}</span>e-mail</a><a class="ct-act" href="${esc(IG_URL)}" target="_blank" rel="noopener">${brand('instagram', 34)}Instagram</a><a class="ct-act" href="${esc(LI_URL)}" target="_blank" rel="noopener">${brand('linkedin', 34)}LinkedIn</a></div>
+  <dl class="ct-f"><dt>travail</dt><dd><a href="mailto:${MAIL}">${MAIL}</a></dd><dt>Instagram</dt><dd><a href="${esc(IG_URL)}" target="_blank" rel="noopener">@ttpcreators</a></dd><dt>LinkedIn</dt><dd><a href="${esc(LI_URL)}" target="_blank" rel="noopener">TTP Creators</a></dd><dt>villes</dt><dd>Lyon · Genève</dd></dl>
+  <div class="ct-foot"><button class="pbtn" data-open="rejoindre">Rejoindre</button><button class="pbtn" data-run="copy">${ico('copy')}<span>Copier l'e-mail</span></button><a class="pbtn blue" href="mailto:${MAIL}">Écrire</a></div></div>`;
+// Candidature d'un créateur : envoyée à la fonction site-lead de TTP Suite (tâche, profil au scouting,
+// notification pour l'agence). Si elle ne répond pas (pas encore à jour, réseau coupé, trop de
+// demandes), le formulaire propose un e-mail pré-rempli, ouvert d'un geste du visiteur, et de copier
+// le message. Les règles du compte sont celles du serveur (lireCompte dans _shared/siteLead.ts).
+const LEAD_URL = 'https://zizvggziggswhrbuyhuo.supabase.co/functions/v1/site-lead';
+const UNIVERS = ['Sport', 'Fitness', 'Lifestyle', 'Food', 'Santé', 'Beauté', 'Mode', 'Voyage', 'Autre'];
+const COCHE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.6 4.6L19 7.6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ENVELOPPE = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m4.5 7.5 7.5 5.4 7.5-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const joinHTML = () => `<form class="jf" novalidate aria-labelledby="jfTitre">
+  <div class="jf-head"><img src="assets/ttp-icon.png" alt=""><div><h2 id="jfTitre">Rejoindre TTP Creators</h2><p>Tu crées du contenu sport ou lifestyle ? Présente-toi : on lit chaque candidature et on te répond sous 48 h.</p></div></div>
+  <div class="jf-grp">
+    <label class="jf-row"><span>Nom</span><input name="nom" autocomplete="name" maxlength="80" placeholder="Prénom Nom" required></label>
+    <label class="jf-row"><span>E-mail</span><input name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="toi@exemple.com" required></label>
+    <label class="jf-row"><span>Réseau</span><select name="reseau"><option value="instagram">Instagram</option><option value="tiktok">TikTok</option></select></label>
+    <label class="jf-row"><span>Compte</span><input name="compte" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="200" placeholder="@toncompte ou le lien du profil" required></label>
+    <label class="jf-row"><span>Univers</span><select name="niche"><option value="">Choisir</option>${UNIVERS.map(u => `<option>${u}</option>`).join('')}</select></label>
+  </div>
+  <label class="jf-msg"><span>Ton message</span><textarea name="message" rows="4" maxlength="1500" placeholder="Ce que tu crées, ta communauté, ce que tu attends de l'agence"></textarea></label>
+  <div class="jf-hp" aria-hidden="true"><label>Ne pas remplir <input name="site" tabindex="-1" autocomplete="off"></label></div>
+  <p class="jf-legal">Tes informations servent uniquement à étudier ta candidature. <a href="/confidentialite/#candidatures" target="_blank" rel="noopener">Confidentialité</a></p>
+  <p class="jf-err" role="alert" hidden></p>
+  <div class="jf-foot"><button class="pbtn blue" type="submit">Envoyer</button></div>
+</form>
+<div class="jf-done" role="status" hidden><span class="jf-ok"></span><h2 tabindex="-1"></h2><p class="jf-txt"></p><p class="jf-adr" hidden>Ou écris-nous à <b>${MAIL}</b></p><div class="jf-acts"></div></div>`;
+// Mêmes règles que lireCompte (serveur) : { compte, reseau }, 'publication' (lien d'un post, d'un reel…) ou null
+const PAS_UN_COMPTE = ['p', 'reel', 'reels', 'tv', 'explore', 'accounts', 'direct', 'share', '_u', 'video', 'photo', 'tag', 'discover', 'music'];
+function compteDe(v, reseau) {
+  const brut = String(v || '').replace(/[\u0000-\u001f\u007f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 200);
+  const lien = /^(?:https?:\/\/)?(?:www\.|m\.)?(instagram\.com|tiktok\.com)\/(.*)$/i.exec(brut);
+  if (!lien) {
+    const c = brut.replace(/^@+/, '');
+    return /^[a-z0-9._]{1,30}$/i.test(c) ? { compte: c, reseau: reseau === 'tiktok' ? 'tiktok' : 'instagram' } : null;
+  }
+  const parts = lien[2].split(/[/?#]/).filter(Boolean);
+  let premier = (parts[0] || '').replace(/^@+/, '');
+  if (premier.toLowerCase() === 'stories') premier = (parts[1] || '').replace(/^@+/, '');
+  else if (PAS_UN_COMPTE.includes(premier.toLowerCase())) return 'publication';
+  return /^[a-z0-9._]{1,30}$/i.test(premier) ? { compte: premier, reseau: lien[1].toLowerCase() === 'tiktok.com' ? 'tiktok' : 'instagram' } : null;
+}
+function wireJoin(el) {
+  const f = el.querySelector('.jf'), err = el.querySelector('.jf-err'), btn = f.querySelector('[type="submit"]');
+  const dire = (t, champ) => { err.textContent = t; err.hidden = !t; if (champ) champ.focus(); };
+  // un lien collé choisit le bon réseau tout seul
+  f.elements.compte.addEventListener('input', () => {
+    const v = f.elements.compte.value;
+    if (/tiktok\.com/i.test(v)) f.elements.reseau.value = 'tiktok';
+    else if (/instagram\.com/i.test(v)) f.elements.reseau.value = 'instagram';
+  });
+  if (!isPhone()) setTimeout(() => f.elements.nom.focus(), 60);
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (btn.disabled) return;
+    const d = Object.fromEntries(new FormData(f));
+    if (String(d.site || '').trim()) return; // piège à robots
+    const nom = String(d.nom || '').trim(), email = String(d.email || '').trim(), c = compteDe(d.compte, d.reseau);
+    if (!nom) return dire('Indique ton nom.', f.elements.nom);
+    if (!/^[^\s@<>"',;:*]+@[^\s@<>"',;:*]+\.[a-z]{2,24}$/i.test(email)) return dire('Indique une adresse e-mail valide.', f.elements.email);
+    if (c === 'publication') return dire('Colle le lien de ton profil, pas celui d’une publication.', f.elements.compte);
+    if (!c) return dire('Indique ton compte Instagram ou TikTok, par exemple @toncompte.', f.elements.compte);
+    dire('');
+    btn.disabled = true; btn.textContent = 'Envoi…';
+    const cand = { type: 'createur', nom, email, compte: '@' + c.compte, reseau: c.reseau, niche: String(d.niche || ''), message: String(d.message || '').trim(), site: '' };
+    let ok = false;
+    try {
+      const ctrl = new AbortController(), t = setTimeout(() => ctrl.abort(), 12000);
+      const r = await fetch(LEAD_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(cand), signal: ctrl.signal });
+      clearTimeout(t);
+      ok = r.ok && (await r.json().catch(() => ({}))).ok === true;
+    } catch (_) { ok = false; }
+    joinDone(el, ok, cand);
+  });
+}
+function joinDone(el, ok, c) {
+  const f = el.querySelector('.jf'), s = el.querySelector('.jf-done'), btn = f.querySelector('[type="submit"]');
+  f.hidden = true; s.hidden = false;
+  s.classList.toggle('mail', !ok);
+  s.querySelector('.jf-ok').innerHTML = ok ? COCHE : ENVELOPPE;
+  s.querySelector('h2').textContent = ok ? 'Candidature envoyée' : 'Dernière étape';
+  s.querySelector('.jf-txt').textContent = ok ? 'Merci ! On lit ta candidature et on te répond sous 48 h.' : 'Ton e-mail de candidature est prêt : ouvre-le et envoie-le. Tu peux aussi copier ton message.';
+  s.querySelector('.jf-adr').hidden = ok;
+  const reseau = c.reseau === 'tiktok' ? 'TikTok' : 'Instagram';
+  const corps = `Nom : ${c.nom}\nE-mail : ${c.email}\nCompte : ${c.compte} (${reseau})${c.niche ? `\nUnivers : ${c.niche}` : ''}${c.message ? `\n\n${c.message}` : ''}`;
+  const acts = s.querySelector('.jf-acts');
+  acts.innerHTML = ok ? '<button class="pbtn" type="button" data-open="loc:talents">Voir les talents</button>'
+    : `<a class="pbtn blue" href="mailto:${MAIL}?subject=${encodeURIComponent(`Candidature : ${c.nom} (${c.compte})`)}&body=${encodeURIComponent(corps)}">Ouvrir l'e-mail</a><button class="pbtn" type="button" data-jf="copier">Copier le message</button><button class="pbtn" type="button" data-jf="modifier">Modifier</button>`;
+  if (!ok) {
+    acts.querySelector('[data-jf="copier"]').addEventListener('click', ev => {
+      const b = ev.currentTarget;
+      (navigator.clipboard ? navigator.clipboard.writeText(`À : ${MAIL}\n\n${corps}`) : Promise.reject()).then(() => { b.textContent = 'Copié'; setTimeout(() => { b.textContent = 'Copier le message'; }, 1600); }).catch(() => {});
+    });
+    acts.querySelector('[data-jf="modifier"]').addEventListener('click', () => { s.hidden = true; f.hidden = false; btn.disabled = false; btn.textContent = 'Envoyer'; f.elements.nom.focus(); });
+  }
+  s.querySelector('h2').focus();
+}
 const aboutHTML = () => `<div class="about"><img class="about-ic" src="assets/ttp-icon.png" alt=""><h2>TTP Creators</h2><p>Talent management sport &amp; lifestyle</p><p class="dim">Lyon · Genève · depuis 2022</p><a class="pbtn blue" href="mailto:${MAIL}">Écrire à l'agence</a><small>© 2022-${new Date().getFullYear()} TTP Creators</small><p class="legal"><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/conditions/">Conditions</a></p></div>`;
 
 /* ═════════ Calendrier : temps forts publics, recalculés pour chaque année ═════════ */
@@ -1192,7 +1363,7 @@ const AG = { y: 0, m: 0, sel: '' };
 function agendaHTML() {
   const t = todayParis(); AG.y = t.y; AG.m = t.m; AG.sel = isoOf(t.y, t.m, t.d);
   return `<div class="agd"><div class="agd-cal"><div class="agd-head"><h1 class="agd-month"></h1><div class="agd-nav"><button data-ag="prev" aria-label="Mois précédent">${ico('left')}</button><button data-ag="today">Aujourd’hui</button><button data-ag="next" aria-label="Mois suivant">${ico('right')}</button></div></div><div class="agd-wd">${['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(d => `<span>${d}</span>`).join('')}</div><div class="agd-grid"></div></div>
-  <div class="agd-side"><h2 class="agd-dayt"></h2><div class="agd-day"></div><h2>À venir</h2>${agUpcoming(6).map(evRow).join('')}<h2>Pour les marques</h2><div class="agd-tip"><p>Réservez vos créateurs 4 à 6 semaines avant un temps fort : brief, tournage et validation prennent ce temps.</p><a class="pbtn blue" href="mailto:${MAIL}?subject=${encodeURIComponent('Réserver des créateurs')}">Réserver</a></div><div class="agd-legend">${Object.keys(AG_LABELS).map(k => `<span><i style="background:${AG_COLORS[k]}"></i>${AG_LABELS[k]}</span>`).join('')}</div></div></div>`;
+  <div class="agd-side"><h2 class="agd-dayt"></h2><div class="agd-day"></div><h2>À venir</h2><div class="agd-next"></div><h2>Pour les marques</h2><div class="agd-tip"><p>Réservez vos créateurs 4 à 6 semaines avant un temps fort : brief, tournage et validation prennent ce temps.</p><a class="pbtn blue" href="mailto:${MAIL}?subject=${encodeURIComponent('Réserver des créateurs')}">Réserver</a></div><div class="agd-legend">${Object.keys(AG_LABELS).map(k => `<span><i style="background:${AG_COLORS[k]}"></i>${AG_LABELS[k]}</span>`).join('')}</div></div></div>`;
 }
 function renderAgenda() {
   const w = wins.get('agenda'); if (!w) return;
@@ -1210,6 +1381,7 @@ function renderAgenda() {
   el.querySelector('.agd-dayt').textContent = AG.sel === today ? 'Aujourd’hui' : agDay(AG.sel, { weekday: 'long', day: 'numeric', month: 'long' });
   const evs = agEventsOn(AG.sel);
   el.querySelector('.agd-day').innerHTML = evs.length ? evs.map(evRow).join('') : '<p class="ev-empty">Aucun événement</p>';
+  el.querySelector('.agd-next').innerHTML = agUpcoming(6).map(evRow).join('');
 }
 function wireAgenda(el) {
   el.addEventListener('click', e => {
@@ -1225,7 +1397,7 @@ function wireAgenda(el) {
 }
 
 /* ═════════ Définition des fenêtres ═════════ */
-const APPN = { finder: 'Bureau', viewer: 'Visionneuse', pdf: 'Visionneuse', text: 'Texte', sheet: 'Tableur', contacts: 'Contacts', about: 'TTP Creators', cal: 'Calendrier' };
+const APPN = { finder: 'Bureau', viewer: 'Visionneuse', pdf: 'Visionneuse', text: 'Texte', sheet: 'Tableur', contacts: 'Contacts', about: 'TTP Creators', cal: 'Calendrier', form: 'Candidature' };
 const W = {
   about: () => ({ kind: 'about', title: 'À propos de TTP Creators', w: 300, h: 364, fixed: true, noMin: true, html: aboutHTML() }),
   services: () => ({ kind: 'pdf', title: 'Services.pdf', w: 580, h: 640, html: servicesHTML() }),
@@ -1233,11 +1405,12 @@ const W = {
   histoire: () => ({ kind: 'text', title: 'Notre histoire', w: 540, h: 600, html: histoireHTML() }),
   resultats: () => ({ kind: 'sheet', title: 'Résultats', w: 820, h: 640, minW: 520, html: resultatsHTML(), after: countUp }),
   contact: () => ({ kind: 'contacts', title: 'TTP Creators.vcf', w: 420, h: 540, minW: 360, minH: 460, html: contactHTML() }),
+  rejoindre: () => ({ kind: 'form', title: 'Rejoindre TTP Creators', w: 460, h: 620, minW: 380, minH: 520, html: joinHTML(), after: wireJoin }),
   agenda: () => ({ kind: 'cal', title: 'Calendrier', w: 840, h: 600, minW: 560, minH: 440, html: agendaHTML(), after: wireAgenda }),
   finder: () => ({ kind: 'finder', title: locName(F.loc), w: 840, h: 560, minW: 540, minH: 340, html: finderHTML(), after: el => { wireFinder(el); renderFinder(); } }),
 };
 CREATORS.forEach(c => {
-  W[c.id] = () => ({ kind: 'viewer', title: c.file, sub: `${c.name} · ${c.fans} abonnés`, w: 800, h: 560, minW: 520, minH: 380, tools: `<button class="tbtn on" data-run="insp" aria-label="Inspecteur">${ico('info')}</button>`, html: viewerHTML(c) });
+  W[c.id] = () => ({ kind: 'viewer', title: c.file, sub: [c.name, abo(c)].filter(Boolean).join(' · '), w: 800, h: 560, minW: 520, minH: 380, tools: `<button class="tbtn on" data-run="insp" aria-label="Inspecteur">${ico('info')}</button>`, html: viewerHTML(c) });
 });
 
 /* ═════════ Gestionnaire de fenêtres ═════════ */
@@ -1283,6 +1456,7 @@ function openWin(id) {
   const el = document.createElement('div');
   el.className = `win k-${def.kind}${def.fixed ? ' fixed' : ''}`;
   el.dataset.id = id;
+  el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', def.title);
   const head = def.kind === 'finder' ? '' : def.kind === 'viewer'
     ? `<div class="tb tall" data-drag><div class="ttl2"><b>${esc(def.title)}</b><small>${esc(def.sub || '')}</small></div><div class="tools">${def.tools || ''}</div></div>`
     : `<div class="tb" data-drag><span class="ttl">${esc(def.title)}</span></div>`;
@@ -1298,7 +1472,7 @@ function openWin(id) {
   let x = a.x + (a.w - w) / 2 - 70 + off, y = a.y + (a.h - h) / 2 - 24 + off * 0.7;
   x = Math.max(a.x, Math.min(x, a.x + a.w - w)); y = Math.max(a.y, Math.min(y, a.y + a.h - h));
   setGeom(el, { x, y, w, h });
-  el.style.minWidth = (def.minW || 300) + 'px'; el.style.minHeight = (def.minH || 200) + 'px';
+  el.style.minWidth = Math.min(def.minW || 300, a.w) + 'px'; el.style.minHeight = Math.min(def.minH || 200, a.h) + 'px';
   layer.appendChild(el);
   const win = { id, el, def, state: 'normal', prev: null, title: def.title };
   wins.set(id, win);
@@ -1349,7 +1523,7 @@ function wireWin(win) {
     const hd = e.target.closest('[data-rz]'); if (!hd || isPhone()) return;
     e.preventDefault(); e.stopPropagation();
     const d = hd.dataset.rz, r = geom(el), sx = e.clientX, sy = e.clientY;
-    const minW = win.def.minW || 300, minH = win.def.minH || 200;
+    const ar = area(), minW = Math.min(win.def.minW || 300, ar.w), minH = Math.min(win.def.minH || 200, ar.h);
     const mv = ev => {
       const dx = ev.clientX - sx, dy = ev.clientY - sy;
       let { x, y, w, h } = r;
@@ -1473,8 +1647,8 @@ function finderHTML() {
     <button class="side-i" data-loc="marques">${ico('tag')}Marques</button>
     <button class="side-i" data-loc="documents">${ico('doc')}Documents</button>
     <div class="side-h">TTP Creators</div>
-    <a class="side-i" href="${IG_URL}" target="_blank" rel="noopener">${brand('instagram', 16)}Instagram</a>
-    <a class="side-i" href="${LI_URL}" target="_blank" rel="noopener">${brand('linkedin', 16)}LinkedIn</a>
+    <a class="side-i" href="${esc(IG_URL)}" target="_blank" rel="noopener">${brand('instagram', 16)}Instagram</a>
+    <a class="side-i" href="${esc(LI_URL)}" target="_blank" rel="noopener">${brand('linkedin', 16)}LinkedIn</a>
     <div class="side-h">Tags</div>
     ${NICHES.map(([n]) => `<button class="side-i" data-loc="tag:${esc(n)}"><span class="tagdot" style="background:${tagc(n)}"></span>${esc(n)}</button>`).join('')}
   </aside>
@@ -1494,9 +1668,9 @@ function finderItems() {
   const l = F.loc;
   let items = [];
   if (l === 'talents' || l.startsWith('tag:')) {
-    items = CREATORS.filter(c => !l.startsWith('tag:') || c.niche === l.slice(4)).map(c => ({ id: c.id, name: c.file, info: c.fans + ' abonnés', type: c.niche, fans: c.fans, img: c.icon, ql: { title: c.name, img: c.photo, open: c.id }, open: () => openWin(c.id) }));
+    items = CREATORS.filter(c => !l.startsWith('tag:') || c.niche === l.slice(4)).map(c => ({ id: c.id, name: c.file, info: abo(c), type: c.niche, fans: c.fans, img: c.icon, ql: { title: c.name, img: c.photo, open: c.id }, open: () => openWin(c.id) }));
   } else if (l === 'marques') {
-    items = MARQUES.map(b => ({ id: 'b:' + norm(b.n).replace(/[^a-z0-9]+/g, '-'), name: b.n, info: avec(b.who), type: b.f ? 'Logo' : 'Marque', logo: b.f, word: b.f ? null : b.n, ql: brandQL(b) }));
+    items = MARQUES.map(b => ({ id: 'b:' + norm(b.n).replace(/[^a-z0-9]+/g, '-'), name: b.n, info: avec(b.who), type: b.f || b.img ? 'Logo' : 'Marque', logo: b.f, limg: b.img, lbg: b.bg, word: b.f || b.img ? null : b.n, ql: brandQL(b) }));
   } else if (l === 'documents') {
     items = DOCS.map(d => ({ id: d.id, name: d.name, type: d.type, svg: d.icon, open: () => openWin(d.id) }));
   }
@@ -1509,8 +1683,9 @@ const wordTile = n => {
   return `<span class="logo-tile word"><b style="font-size:${Math.max(7, Math.min(11.5, 52 / (0.62 * mot))).toFixed(1)}px">${esc(n)}</b></span>`;
 };
 function itemIcon(i, big = true) {
-  if (i.img) return big ? `<img class="ph" src="${i.img}" alt="" draggable="false">` : `<img class="mini" src="${i.img}" alt="">`;
+  if (i.img) return big ? `<img class="ph" src="${esc(i.img)}" alt="" draggable="false">` : `<img class="mini" src="${esc(i.img)}" alt="">`;
   if (i.logo) return `<span class="logo-tile${big ? '' : ' mini'}"><i style="--m:url(assets/clients/${i.logo}.png)"></i></span>`;
+  if (i.limg) return logoImg(i.limg, i.lbg, big ? '' : ' mini');
   if (i.word) return big ? wordTile(i.word) : `<span class="logo-tile mini word"><b>${esc(i.word.slice(0, 1))}</b></span>`;
   return big ? i.svg : `<span class="mini-svg">${i.svg}</span>`;
 }
@@ -1532,7 +1707,7 @@ function renderFinder() {
   else if (!items.length) body.innerHTML = '<div class="empty">Aucun élément</div>';
   else if (F.view === 'list') {
     const cr = F.loc === 'talents' || F.loc.startsWith('tag:');
-    body.innerHTML = `<table class="ltable"><thead><tr><th>Nom</th><th>${cr ? 'Niche' : 'Type'}</th>${cr ? '<th>Abonnés</th>' : ''}</tr></thead><tbody>${items.map(i => `<tr data-it="${esc(i.id)}" class="${F.sel === i.id ? 'sel' : ''}"><td>${itemIcon(i, false)}${esc(i.name)}</td><td>${esc(i.type)}</td>${cr ? `<td>${i.fans}</td>` : ''}</tr>`).join('')}</tbody></table>`;
+    body.innerHTML = `<table class="ltable"><thead><tr><th>Nom</th><th>${cr ? 'Niche' : 'Type'}</th>${cr ? '<th>Abonnés</th>' : ''}</tr></thead><tbody>${items.map(i => `<tr data-it="${esc(i.id)}" class="${F.sel === i.id ? 'sel' : ''}"><td>${itemIcon(i, false)}${esc(i.name)}</td><td>${esc(i.type)}</td>${cr ? `<td>${K(i.fans) > 0 ? i.fans : ''}</td>` : ''}</tr>`).join('')}</tbody></table>`;
   } else {
     body.innerHTML = `<div class="grid">${items.map(i => `<div class="it${F.sel === i.id ? ' sel' : ''}" data-it="${esc(i.id)}"><span class="ic">${itemIcon(i)}</span><span class="nm">${esc(i.name)}</span>${i.info ? `<span class="inf">${esc(i.info)}</span>` : ''}</div>`).join('')}</div>`;
   }
@@ -1591,6 +1766,7 @@ const FILES = [
   { id: 'resultats', label: 'Résultats', svg: ICON.sheet, type: 'Tableur', x: 12, y: 51 },
   { id: 'histoire', label: 'Notre histoire', svg: ICON.doc, type: 'Document', x: 88, y: 70 },
   { id: 'contact', label: 'TTP Creators.vcf', svg: ICON.vcf, type: 'Fiche', x: 79, y: 78 },
+  { id: 'rejoindre', label: 'Rejoindre l’agence', svg: ICON.form, type: 'Formulaire', x: 70, y: 78 },
   ...CREATORS.slice(0, SLOTS.length).map((c, i) => ({ id: c.id, label: c.file, img: c.icon, type: 'Photo', x: SLOTS[i][0], y: SLOTS[i][1], ql: { title: c.name, img: c.photo, open: c.id } })),
 ];
 const fileEls = [];
@@ -1607,7 +1783,12 @@ function selDesk(id, add = false) {
 FILES.forEach(f => {
   const el = document.createElement('div');
   el.className = 'file'; el.tabIndex = 0; el.dataset.id = f.id;
-  el.innerHTML = `<span class="ic">${f.img ? `<img class="ph" src="${f.img}" alt="" draggable="false" loading="lazy" decoding="async">` : f.svg}</span><span class="nm">${esc(f.label)}</span>`;
+  el.setAttribute('role', 'button'); el.setAttribute('aria-label', f.label);
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); selDesk(f.id); openWin(f.id); }
+    else if (e.key === ' ') { e.preventDefault(); if (ql.classList.contains('on')) { closeQL(); return; } selDesk(f.id); f.ql ? quickLook(f.ql) : openWin(f.id); }
+  });
+  el.innerHTML = `<span class="ic">${f.img ? `<img class="ph" src="${esc(f.img)}" alt="" draggable="false" loading="lazy" decoding="async">` : f.svg}</span><span class="nm">${esc(f.label)}</span>`;
   desk.appendChild(el); fileEls.push({ el, f });
   el.addEventListener('pointerdown', e => {
     if (e.button !== 0) return;
@@ -1677,6 +1858,7 @@ const DOCK = [
   { key: 'histoire', label: 'Notre histoire', html: icw(iosIcon('histoire')), run: () => openWin('histoire'), ids: ['histoire'] },
   { key: 'viewer', label: 'Visionneuse', html: icw(iosIcon('viewer')), run: () => { const v = [...wins.values()].filter(w => w.def.kind === 'viewer').sort((a, b) => b.el.style.zIndex - a.el.style.zIndex)[0]; v && (v.state === 'min' ? restoreWin(v.id) : focusWin(v.id)); }, kinds: ['viewer'], dynamic: true },
   { key: 'contact', label: 'Contact', html: icw(iosIcon('contact')), run: () => openWin('contact'), ids: ['contact'] },
+  { key: 'rejoindre', label: 'Rejoindre l’agence', html: icw(iosIcon('rejoindre')), run: () => openWin('rejoindre'), ids: ['rejoindre'] },
   { key: 'instagram', label: 'Instagram', html: icw(`<span class="ico sq b-ig">${BRANDS.instagram.mark}</span>`), run: () => openUrl(IG_URL) },
   { key: 'linkedin', label: 'LinkedIn', html: icw(`<span class="ico sq b-li">${BRANDS.linkedin.mark}</span>`), run: () => openUrl(LI_URL) },
 ];
@@ -1707,11 +1889,12 @@ function markDock() {
     if (d.dynamic) b.hidden = !on;
   });
   document.body.classList.toggle('app-open', [...wins.values()].some(w => w.state !== 'min'));
+  const ph = $('#phone'); if (ph) ph.inert = isPhone() && document.body.classList.contains('app-open');
 }
 function addMinTile(w) {
   const c = CREATORS.find(x => x.id === w.id);
   const k = dockKeyFor(w.id); const app = DOCK.find(d => d.key === k);
-  const inner = c ? `<img class="mw-ph" src="${c.icon}" alt="">` : '<span class="mw-tb"></span>';
+  const inner = c ? `<img class="mw-ph" src="${esc(c.icon)}" alt="">` : '<span class="mw-tb"></span>';
   const b = document.createElement('button');
   b.className = 'di minw'; b.dataset.win = w.id; b.setAttribute('aria-label', w.title);
   b.innerHTML = `<span class="ico">${inner}</span>${app ? `<span class="badge">${app.html}</span>` : ''}<span class="tip">${esc(w.title)}</span>`;
@@ -1742,15 +1925,15 @@ function menuItems(name) {
   const fin = w && w.def.kind === 'finder';
   const anyMin = [...wins.values()].some(x => x.state === 'min');
   switch (name) {
-    case 'logo': return [{ l: 'À propos de TTP Creators', a: () => openWin('about') }, SEP, { l: 'Écrire à l’agence…', a: mail }, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }, SEP, { l: 'Centre de contrôle', a: () => togglePanel('cc') }, { l: 'Fond d’écran suivant', a: () => setWall((wallIdx + 1) % WALLS.length) }, SEP, { l: 'Verrouiller l’écran', k: '⌥L', a: lockScreen }];
+    case 'logo': return [{ l: 'À propos de TTP Creators', a: () => openWin('about') }, SEP, { l: 'Écrire à l’agence…', a: mail }, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }, { l: 'Rejoindre l’agence…', a: () => openWin('rejoindre') }, SEP, { l: 'Centre de contrôle', a: () => togglePanel('cc') }, { l: 'Fond d’écran suivant', a: () => setWall((wallIdx + 1) % WALLS.length) }, SEP, { l: 'Verrouiller l’écran', k: '⌥L', a: lockScreen }];
     case 'app': return [{ l: `À propos de ${appName()}`, a: () => openWin('about') }, SEP, { l: 'Masquer les autres', a: hideOthers, dis: !w }, { l: 'Tout afficher', a: showAll, dis: !anyMin }, SEP, { l: `Quitter ${appName()}`, a: quitApp, dis: !w }];
     case 'fichier': return [{ l: 'Ouvrir…', k: '⌘K', a: openSpot }, { l: 'Nouvelle fenêtre Talents', a: () => openFinder('talents') }, SEP, { l: 'Coup d’œil', k: '␣', a: quickLookSelected, dis: !selectedItem() }, { l: 'Ouvrir l’élément sélectionné', k: '↩', a: openSelected, dis: !selectedItem() }, SEP, { l: 'Fermer la fenêtre', k: '⌥W', a: () => closeWin(front), dis: !w }, { l: 'Tout fermer', a: closeAll, dis: !wins.size }];
     case 'edition': return [{ l: 'Copier l’adresse e-mail', a: () => copyMail() }, { l: 'Tout sélectionner', a: selectAll }, SEP, { l: 'Rechercher', k: '⌘K', a: openSpot }];
     case 'presentation': return [{ l: 'Par icônes', ck: fin && F.view === 'icons' ? '✓' : '', a: () => { F.view = 'icons'; renderFinder(); }, dis: !fin }, { l: 'Par liste', ck: fin && F.view === 'list' ? '✓' : '', a: () => { F.view = 'list'; renderFinder(); }, dis: !fin }, { l: F.side ? 'Masquer la barre latérale' : 'Afficher la barre latérale', a: () => { F.side = !F.side; renderFinder(); }, dis: !fin }, SEP, { l: 'Ranger le bureau', a: () => tidy(false) }, { l: 'Trier par type', a: () => tidy(true) }, SEP, { l: w && w.state === 'full' ? 'Quitter le plein écran' : 'Passer en plein écran', k: '⌥F', a: () => toggleFull(front), dis: !w || w.def.fixed }, { l: document.documentElement.dataset.theme === 'dark' ? 'Apparence claire' : 'Apparence sombre', a: () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark') }];
-    case 'talents': return [...CREATORS.map(c => ({ l: c.name, k: c.fans, img: c.icon, a: () => openWin(c.id) })), SEP, { l: 'Tous les talents…', a: () => openFinder('talents') }];
+    case 'talents': return [...CREATORS.map(c => ({ l: c.name, k: K(c.fans) > 0 ? c.fans : '', img: c.icon, a: () => openWin(c.id) })), SEP, { l: 'Tous les talents…', a: () => openFinder('talents') }];
     case 'fenetre': return [{ l: 'Réduire', k: '⌥M', a: () => minimizeWin(front), dis: !w || w.def.noMin || w.state === 'full' }, { l: 'Zoom', a: () => toggleZoom(front), dis: !w || w.def.fixed || w.state === 'full' }, { l: w && w.state === 'full' ? 'Quitter le plein écran' : 'Passer en plein écran', k: '⌥F', a: () => toggleFull(front), dis: !w || w.def.fixed }, SEP, { l: 'Tout ramener au premier plan', a: showAll, dis: !wins.size }, ...(wins.size ? [SEP] : []), ...[...wins.values()].map(x => ({ l: x.title, ck: x.id === front ? '✓' : x.state === 'min' ? '◆' : '', a: () => (x.state === 'min' ? restoreWin(x.id) : focusWin(x.id)) }))];
     case 'aide': return [{ search: 1 }, SEP, { l: 'Écrire à l’agence', a: mail }, { l: 'Instagram', brand: 'instagram', a: () => openUrl(IG_URL) }, { l: 'LinkedIn', brand: 'linkedin', a: () => openUrl(LI_URL) }, SEP, { l: 'Mentions légales', a: () => openUrl('/mentions-legales/') }, { l: 'Confidentialité', a: () => openUrl('/confidentialite/') }, { l: 'Conditions d’utilisation', a: () => openUrl('/conditions/') }];
-    case 'statut': return [{ head: 'Ouvert aux collabs' }, { l: 'Proposer une collab…', a: mail }, { l: 'Voir les talents', a: () => openFinder('talents') }, SEP, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }];
+    case 'statut': return [{ head: 'Ouvert aux collabs' }, { l: 'Proposer une collab…', a: mail }, { l: 'Voir les talents', a: () => openFinder('talents') }, { l: 'Rejoindre l’agence…', a: () => openWin('rejoindre') }, SEP, { l: 'Recevoir le roster (PDF)', a: () => openWin('roster') }];
     case 'ctx-item': { const one = dsel.size === 1 ? [...dsel][0] : null; return [{ l: 'Ouvrir', a: () => [...dsel].forEach(openWin), dis: !dsel.size }, { l: 'Coup d’œil', k: '␣', a: quickLookSelected, dis: !one || !FILES.find(f => f.id === one)?.ql }, SEP, { l: 'Ranger le bureau', a: () => tidy(false) }]; }
     case 'ctx-desk': return [{ l: 'Ranger le bureau', a: () => tidy(false) }, { l: 'Trier par type', a: () => tidy(true) }, SEP, { l: 'Changer le fond d’écran…', a: () => togglePanel('cc') }, { l: 'Voir les talents', a: () => openFinder('talents') }, { l: 'Écrire à l’agence…', a: mail }];
   }
@@ -1762,7 +1945,7 @@ function showMenu(name, anchor, pos) {
   menuEl.innerHTML = menuList.map((it, i) => it.sep ? '<div class="msep"></div>'
     : it.head ? `<div class="mhead">${esc(it.head)}</div>`
     : it.search ? `<label class="msearch">${ico('search')}<input placeholder="Rechercher" aria-label="Rechercher dans l’aide"></label>`
-    : `<div class="mi${it.dis ? ' dis' : ''}" data-i="${i}" role="menuitem"><span class="ck">${it.ck || ''}</span>${it.img ? `<img src="${it.img}" alt="">` : ''}${it.brand ? brand(it.brand, 15) : ''}<span class="l">${esc(it.l)}</span>${it.k ? `<span class="k">${esc(it.k)}</span>` : ''}</div>`).join('');
+    : `<div class="mi${it.dis ? ' dis' : ''}" data-i="${i}" role="menuitem"><span class="ck">${it.ck || ''}</span>${it.img ? `<img src="${esc(it.img)}" alt="">` : ''}${it.brand ? brand(it.brand, 15) : ''}<span class="l">${esc(it.l)}</span>${it.k ? `<span class="k">${esc(it.k)}</span>` : ''}</div>`).join('');
   menuEl.classList.add('on');
   const mw = menuEl.offsetWidth, mh = menuEl.offsetHeight;
   let x, y;
@@ -1784,6 +1967,11 @@ mbar.addEventListener('pointerdown', e => {
   if (menuName && menuAnchor === b) { hideMenu(); return; }
   showMenu(b.dataset.menu, b);
 });
+mbar.addEventListener('click', e => {
+  if (e.detail !== 0) return;
+  const b = e.target.closest('[data-menu]'); if (!b) return;
+  if (menuName && menuAnchor === b) hideMenu(); else showMenu(b.dataset.menu, b);
+});
 mbar.addEventListener('pointerover', e => { const b = e.target.closest('[data-menu]'); if (b && menuName && menuAnchor && b !== menuAnchor) showMenu(b.dataset.menu, b); });
 menuEl.addEventListener('pointermove', e => { const m = e.target.closest('.mi'); setHl(m ? +m.dataset.i : -1); });
 menuEl.addEventListener('pointerleave', () => setHl(-1));
@@ -1799,7 +1987,7 @@ mbar.addEventListener('pointerleave', () => { if (!menuName) mbar.classList.remo
 /* ═════════ Centre de contrôle, widgets, notification ═════════ */
 const WALLS = [
   { name: 'Candice', img: 'assets/wall-candice.jpg' },
-  ...['ana', 'ivana', 'lea'].map(s => { const c = CREATORS.find(x => x.slug === s); return { name: c.name, img: c.wall }; }),
+  ...['ana', 'ivana', 'lea'].map(s => CREATORS.find(x => x.slug === s)).filter(Boolean).map(c => ({ name: c.name, img: c.wall })),
 ];
 let wallIdx = Math.min(WALLS.length - 1, Math.max(0, +(store.get('ttp-wall') || 0)));
 function setWall(i) {
@@ -1832,7 +2020,7 @@ function renderNC() {
   for (let i = 0; i < first; i++) cells += '<span></span>';
   for (let d = 1; d <= days; d++) cells += `<span class="${d === today ? 'today' : ''}${agEventsOn(isoOf(y, m, d)).length ? ' has' : ''}">${d}</span>`;
   $('#nc').innerHTML = `<div class="widget glass cal"><button class="cal-h" data-open="agenda"><h3>${month}</h3></button><div class="gd">${cells}</div><div class="nc-ev">${agUpcoming(3).map(evRow).join('')}</div></div>
-  <button class="widget glass wg-roster" data-open="loc:talents"><span class="wg-sub">Roster TTP Creators</span><span class="avs">${CREATORS.slice(0, 7).map(c => `<img src="${c.icon}" alt="">`).join('')}</span><span class="wg-big">${fmtK(TOTAL)} d’abonnés</span><span class="wg-sub">${CREATORS.length} créateurs · Instagram et TikTok</span></button>
+  <button class="widget glass wg-roster" data-open="loc:talents"><span class="wg-sub">Roster TTP Creators</span><span class="avs">${CREATORS.slice(0, 7).map(c => `<img src="${esc(c.icon)}" alt="">`).join('')}</span><span class="wg-big">${fmtK(TOTAL)} d’abonnés</span><span class="wg-sub">${CREATORS.length} créateurs · Instagram et TikTok</span></button>
   <button class="widget glass wg-roster" data-open="resultats"><span class="wg-sub">Temps fort</span><span class="wg-big">33 000</span><span class="wg-sub">interactions sur un seul Reel</span></button>`;
 }
 function togglePanel(p) {
@@ -1858,17 +2046,19 @@ const hideNotif = () => $('#notif').classList.remove('on');
 /* ═════════ Spotlight ═════════ */
 const spot = $('#spot'), spotQ = $('#spotQ'), spotRes = $('#spotRes');
 $('#spotIc').innerHTML = ico('search');
+const agendaIndex = () => agUpcoming(8).map(e => ({ sec: 'Agenda', t: e.title, s: agWhen(e), icon: 'cal', a: () => openWin('agenda') }));
 const INDEX = [
-  ...CREATORS.map(c => ({ sec: 'Talents', t: c.name, s: `${c.niche} · ${c.fans} abonnés`, img: c.icon, a: () => openWin(c.id) })),
+  ...CREATORS.map(c => ({ sec: 'Talents', t: c.name, s: [c.niche, abo(c)].filter(Boolean).join(' · '), img: c.icon, a: () => openWin(c.id) })),
   ...DOCS.map(d => ({ sec: 'Documents', t: d.name, s: d.type, svg: d.icon, a: () => openWin(d.id) })),
   ...Object.entries({ talents: 'Talents', marques: 'Marques', documents: 'Documents' }).map(([k, v]) => ({ sec: 'Dossiers', t: v, s: 'Dossier', svg: FOLDER, a: () => openFinder(k) })),
-  ...MARQUES.map(b => ({ sec: 'Marques', t: b.n, s: avec(b.who) || 'Marque', logo: b.f, word: b.f ? null : b.n, a: () => quickLook(brandQL(b)) })),
+  ...MARQUES.map(b => ({ sec: 'Marques', t: b.n, s: avec(b.who) || 'Marque', logo: b.f, limg: b.img, lbg: b.bg, word: b.f || b.img ? null : b.n, a: () => quickLook(brandQL(b)) })),
   { sec: 'Actions', t: 'Écrire à l’agence', s: MAIL, icon: 'mail', a: mail },
+  { sec: 'Actions', t: 'Rejoindre l’agence', s: 'Candidature de créateur', icon: 'users', a: () => openWin('rejoindre') },
   { sec: 'Actions', t: 'Apparence sombre', s: 'Centre de contrôle', icon: 'moon', a: () => setTheme('dark') },
   { sec: 'Actions', t: 'Apparence claire', s: 'Centre de contrôle', icon: 'sun', a: () => setTheme('light') },
   { sec: 'Actions', t: 'Verrouiller l’écran', s: '⌥L', icon: 'lock', a: lockScreen },
   { sec: 'Apps', t: 'Calendrier', s: 'Temps forts des marques et du sport', icon: 'cal', a: () => openWin('agenda') },
-  ...agUpcoming(8).map(e => ({ sec: 'Agenda', t: e.title, s: agWhen(e), icon: 'cal', a: () => openWin('agenda') })),
+  ...agendaIndex(),
 ];
 let hits = [], spSel = 0;
 function renderSpot() {
@@ -1879,7 +2069,7 @@ function renderSpot() {
   hits.forEach((h, i) => {
     const sec = q && i === 0 ? 'Meilleur résultat' : h.sec;
     if (sec !== last) { html += `<div class="sec">${sec}</div>`; last = sec; }
-    const icn = h.img ? `<img src="${h.img}" alt="">` : h.logo ? `<span class="ri"><span class="logo-tile" style="width:24px;height:24px;border-radius:6px"><i style="--m:url(assets/clients/${h.logo}.png)"></i></span></span>` : h.word ? `<span class="ri"><span class="logo-tile word" style="width:24px;height:24px;border-radius:6px;padding:0"><b style="font-size:11px">${esc(h.word.slice(0, 1))}</b></span></span>` : h.svg ? `<span class="ri">${h.svg}</span>` : `<span class="ri">${ico(h.icon)}</span>`;
+    const icn = h.img ? `<img src="${esc(h.img)}" alt="">` : h.logo ? `<span class="ri"><span class="logo-tile" style="width:24px;height:24px;border-radius:6px"><i style="--m:url(assets/clients/${h.logo}.png)"></i></span></span>` : h.limg ? `<span class="ri">${logoImg(h.limg, h.lbg, ' ri-logo')}</span>` : h.word ? `<span class="ri"><span class="logo-tile word" style="width:24px;height:24px;border-radius:6px;padding:0"><b style="font-size:11px">${esc(h.word.slice(0, 1))}</b></span></span>` : h.svg ? `<span class="ri">${h.svg}</span>` : `<span class="ri">${ico(h.icon)}</span>`;
     html += `<div class="r${i === spSel ? ' on' : ''}" data-i="${i}">${icn}<span>${esc(h.t)}</span><small>${esc(h.s)}</small></div>`;
     if (q && i === 0) last = 'Meilleur résultat';
   });
@@ -1904,7 +2094,7 @@ const ql = $('#ql'); let qlItem = null;
 function quickLook(item) {
   if (!item) return;
   qlItem = item;
-  ql.innerHTML = `<div class="ql-p"><div class="ql-bar"><button class="ql-x" data-ql="close" aria-label="Fermer">${ico('x')}</button><b>${esc(item.title)}</b>${item.open ? '<button class="pbtn" data-ql="open">Ouvrir</button>' : '<span style="width:22px"></span>'}</div><div class="ql-c">${item.img ? `<img src="${item.img}" alt="">` : item.word ? `<span class="ql-word">${esc(item.word)}</span>` : `<span class="ql-logo" style="--m:url(assets/clients/${item.logo}.png)"></span>`}${item.sub ? `<p class="ql-sub">${esc(item.sub)}</p>` : ''}</div></div>`;
+  ql.innerHTML = `<div class="ql-p"><div class="ql-bar"><button class="ql-x" data-ql="close" aria-label="Fermer">${ico('x')}</button><b>${esc(item.title)}</b>${item.open ? '<button class="pbtn" data-ql="open">Ouvrir</button>' : '<span style="width:22px"></span>'}</div><div class="ql-c">${item.img ? `<img src="${esc(item.img)}" alt="">` : item.limg ? `<span class="ql-card"${item.lbg ? ` style="background:${item.lbg}"` : ''}><img src="${esc(item.limg)}" alt="${esc(item.title)}"></span>` : item.word ? `<span class="ql-word">${esc(item.word)}</span>` : `<span class="ql-logo" style="--m:url(assets/clients/${item.logo}.png)"></span>`}${item.sub ? `<p class="ql-sub">${esc(item.sub)}</p>` : ''}</div></div>`;
   ql.classList.add('on');
 }
 const closeQL = () => { ql.classList.remove('on'); qlItem = null; };
@@ -1953,7 +2143,7 @@ addEventListener('keydown', e => {
   if (!lock.classList.contains('out')) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); unlock(); } return; }
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); toggleSpot(); return; }
   if (e.key === 'Alt') document.body.classList.add('alt');
-  if (e.altKey && !e.metaKey && !e.ctrlKey) {
+  if (e.altKey && !e.metaKey && !e.ctrlKey && !e.target.closest('input,textarea,select,[contenteditable]')) {
     const c = e.code;
     if (c === 'KeyW') { e.preventDefault(); front && closeWin(front); return; }
     if (c === 'KeyM') { e.preventDefault(); front && minimizeWin(front); return; }
@@ -1980,7 +2170,7 @@ addEventListener('keydown', e => {
     else { const f = [...wins.values()].find(w => w.state === 'full'); f && toggleFull(f.id); }
     return;
   }
-  if (e.target.closest('input,textarea')) return;
+  if (e.target.closest('input,textarea,select,button,a[href],[role="button"]')) return;
   if (e.key === ' ') { e.preventDefault(); ql.classList.contains('on') ? closeQL() : quickLookSelected(); }
   else if (e.key === 'Enter' || (e.metaKey && e.key === 'ArrowDown')) { e.preventDefault(); openSelected(); }
 });
@@ -1989,7 +2179,19 @@ addEventListener('blur', () => document.body.classList.remove('alt'));
 
 /* ═════════ Horloge (Lyon) et écran verrouillé ═════════ */
 const fmt = o => new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', ...o }).format(new Date());
+// minuit à Paris : les « À venir » (widgets, recherche, Calendrier ouvert) passent au jour suivant
+let jourVu = '';
+function majAgenda() {
+  const cal = $('.iw-cal .cal-evs'); if (cal) cal.innerHTML = agUpcoming(2).map(calEvRow).join('');
+  const nx = $('.iw-next'); if (nx) { nx.querySelectorAll('.cal-ev').forEach(x => x.remove()); nx.insertAdjacentHTML('beforeend', agUpcoming(3).map(calEvRow).join('')); }
+  for (let i = INDEX.length - 1; i >= 0; i--) if (INDEX[i].sec === 'Agenda') INDEX.splice(i, 1);
+  INDEX.push(...agendaIndex());
+  if (wins.has('agenda')) renderAgenda();
+}
 function tick() {
+  const tp = todayParis(), jour = isoOf(tp.y, tp.m, tp.d);
+  if (jourVu && jour !== jourVu) majAgenda();
+  jourVu = jour;
   const t = fmt({ hour: '2-digit', minute: '2-digit' });
   $('#mbClock .d').textContent = fmt({ weekday: 'short', day: 'numeric', month: 'short' }) + ' ';
   $('#mbClock .t').textContent = t;
@@ -2021,7 +2223,7 @@ lock.addEventListener('click', unlock);
 
 /* ═════════ Téléphone (façon iPhone) ═════════ */
 const phApp = (open, label, inner) => `<button class="app" data-open="${open}">${icw(inner)}<span class="lab">${esc(label)}</span></button>`;
-const phLink = (href, label, inner) => `<a class="app" href="${href}" target="_blank" rel="noopener">${icw(inner)}<span class="lab">${esc(label)}</span></a>`;
+const phLink = (href, label, inner) => `<a class="app" href="${esc(href)}" target="_blank" rel="noopener">${icw(inner)}<span class="lab">${esc(label)}</span></a>`;
 const brandIco = n => `<span class="ico sq ${BRANDS[n].cls}">${BRANDS[n].mark}</span>`;
 function dialSVG() {
   let nums = '';
@@ -2034,14 +2236,14 @@ const nTT = CREATORS.filter(c => c.nets.some(n => n[0] === 'tiktok')).length;
 const calEvRow = e => `<span class="cal-ev"><i style="background:${AG_COLORS[e.k]}"></i><span><b>${esc(e.title)}</b><small>${esc(agWhen(e))}</small></span></span>`;
 const W_CLOCK = `<div class="iw-wrap"><div class="iw iw-clock">${dialSVG()}<span>Lyon</span></div><span class="wlabel">Horloge</span></div>`;
 const W_CAL = `<div class="iw-wrap"><button class="iw iw-cal" data-open="agenda"><span class="cal-day" id="calDay"></span><span class="cal-num" id="calNum"></span><span class="cal-evs">${agUpcoming(2).map(calEvRow).join('')}</span></button><span class="wlabel">Calendrier</span></div>`;
-const W_PEOPLE = `<div class="iw-wrap med"><div class="iw iw-people">${topCreators.slice(0, 4).map(c => `<button class="pp" data-open="${c.id}"><img src="${c.icon}" alt="" loading="lazy" decoding="async"><span>${esc(c.name.split(' ')[0])}</span></button>`).join('')}</div><span class="wlabel">Talents</span></div>`;
+const W_PEOPLE = `<div class="iw-wrap med"><div class="iw iw-people">${topCreators.slice(0, 4).map(c => `<button class="pp" data-open="${c.id}"><img src="${esc(c.icon)}" alt="" loading="lazy" decoding="async"><span>${esc(c.name.split(' ')[0])}</span></button>`).join('')}</div><span class="wlabel">Talents</span></div>`;
 const W_NEXT = `<div class="iw-wrap med"><button class="iw iw-next" data-open="agenda"><h3>À venir<small>Temps forts · réservations · sport</small></h3>${agUpcoming(3).map(calEvRow).join('')}</button><span class="wlabel">Calendrier</span></div>`;
 const W_STATS = `<div class="iw-wrap med"><button class="iw iw-stocks" data-open="resultats">${[['Roster TTP', `${CREATORS.length} créateurs`, TOTAL], ['Instagram', `${nIG} créateurs`, NET.instagram], ['TikTok', `${nTT} créateurs`, NET.tiktok]].map(([l, s, v]) => `<span class="st-row"><span class="st-l"><b>${l}</b><small>${s}</small></span><span class="st-bar"><i style="width:${(v / TOTAL * 100).toFixed(0)}%"></i></span><span class="st-v">${fmtK(v)}</span></span>`).join('')}</button><span class="wlabel">Résultats</span></div>`;
 const W_PHOTO = `<div class="iw-wrap med"><button class="iw iw-photo" id="phFeat"><img alt="" decoding="async"><span class="pf-cap"><small>À la une</small><b></b></span></button><span class="wlabel">À la une</span></div>`;
 $('#phPages').innerHTML = [
-  W_CLOCK + W_CAL + W_PEOPLE + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')),
+  W_CLOCK + W_CAL + W_PEOPLE + phApp('services', 'Services', iosIcon('services')) + phApp('methode', 'Méthode', iosIcon('methode')) + phApp('resultats', 'Résultats', iosIcon('resultats')) + phApp('loc:marques', 'Marques', iosIcon('marques')) + phApp('rejoindre', 'Rejoindre', iosIcon('rejoindre')),
   W_NEXT + W_STATS + phApp('agenda', 'Calendrier', calIcon()) + phApp('histoire', 'Histoire', iosIcon('histoire')) + phApp('roster', 'Roster', iosIcon('roster')) + phLink(LI_URL, 'LinkedIn', brandIco('linkedin')),
-  W_PHOTO + CREATORS.map(c => phApp(c.id, c.name.split(' ')[0], `<img class="ico sq" src="${c.icon}" alt="" loading="lazy" decoding="async">`)).join(''),
+  W_PHOTO + CREATORS.map(c => phApp(c.id, c.name.split(' ')[0], `<img class="ico sq" src="${esc(c.icon)}" alt="" loading="lazy" decoding="async">`)).join(''),
 ].map(p => `<div class="ph-page">${p}</div>`).join('');
 $('#phDock').innerHTML = phApp('about', 'TTP', '<img class="ico sq" src="assets/ttp-icon.png" alt="">') + phApp('loc:talents', 'Talents', iosIcon('talents')) + phApp('contact', 'Contact', iosIcon('contact')) + phLink(IG_URL, 'Instagram', brandIco('instagram'));
 $('#phDots').innerHTML = '<i class="on"></i><i></i><i></i>';
@@ -2119,6 +2321,10 @@ tick(); setInterval(tick, 10000);
 let seen = false; try { seen = sessionStorage.getItem('ttp-dock-seen') === '1'; } catch (e) {}
 if (seen || new URLSearchParams(location.search).has('nolock')) { lock.classList.add('out'); }
 else typeTagline();
+const ANCRES = { contact: 'contact', services: 'services', method: 'methode', methode: 'methode', roster: 'loc:talents', talents: 'loc:talents', marques: 'loc:marques', clients: 'loc:marques', resultats: 'resultats', stats: 'resultats', story: 'histoire', histoire: 'histoire', about: 'histoire', rejoindre: 'rejoindre', calendrier: 'agenda' };
+const ouvrirAncre = () => { const a = ANCRES[location.hash.slice(1).toLowerCase()]; if (a) { clearTimeout(typing); unlock(); openWin(a); } };
+ouvrirAncre();
+addEventListener('hashchange', ouvrirAncre);
 })();
 </script>
 </body>

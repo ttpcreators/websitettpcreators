@@ -4,7 +4,8 @@ Accueil « Bureau » : roster et marques à jour à chaque déploiement.
 
 L'accueil (index.html) lit ses créateurs et ses marques dans un bloc
 <script id="ttp-data" type="application/json">. Ce script, lancé en CI juste après
-`vite build` (donc aussi toutes les heures avec le cron du déploiement) :
+`vite build` (donc aussi avec le cron du déploiement, prévu toutes les heures mais lancé
+par GitHub quelques fois par jour en pratique) :
   1. lit les vues publiques Supabase `public_roster` (créateurs actifs, dans l'ordre
      de l'app) et `public_mediakit` (abonnés par réseau, adresse du media kit, marques
      citées dans « Ces marques lui ont fait confiance ») ;
@@ -12,6 +13,8 @@ L'accueil (index.html) lit ses créateurs et ses marques dans un bloc
      réseau, absents des vues publiques, sont repris du bloc existant ;
   3. réécrit la version texte de l'accueil (<main id="texte">, lue par les robots sans
      JavaScript) : chiffres, liste des créateurs avec leur media kit, marques.
+Chaque marque reçoit son logo officiel s'il est listé dans public/assets/marques/logos.json
+(sinon l'accueil écrit son nom).
 
 Aucun montant ni aucune donnée privée : seulement ce que les media kits publics montrent déjà.
 
@@ -43,7 +46,11 @@ RESEAUX = ("instagram", "tiktok")  # réseaux que l'accueil sait afficher
 # Marques dont l'accueil a un logo dessiné (public/assets/clients) : en tête, dans cet ordre
 LOGOS = ["Tesla", "Ray-Ban", "HP", "Speedo", "Palladium", "Bumble", "Magnum", "Qonto", "Nutripure", "So Shape", "Novoma"]
 # Fautes de frappe repérées dans les media kits : corrigées à l'affichage (à corriger aussi dans l'app)
-CORRECTIONS = {"victroria's secret": "Victoria's Secret", "l'oréal": "L'Oréal"}
+CORRECTIONS = {"victroriassecret": "Victoria's Secret", "loreal": "L'Oréal"}  # clé : cle_marque()
+COMPTE_RE = re.compile(r"^[A-Za-z0-9._]{1,30}$")  # compte Instagram / TikTok
+PHOTO_RE = re.compile(r"^[A-Za-z0-9_./-]+$")  # chemin dans le dossier avatars du stockage
+# Logos officiels des marques (fichiers dans public/assets/marques), par nom normalisé
+LOGOS_JSON = os.path.join(ROOT, "public", "assets", "marques", "logos.json")
 
 
 def get(path):
@@ -56,6 +63,11 @@ def get(path):
 def norm(s):
     s = unicodedata.normalize("NFD", str(s or ""))
     return "".join(c for c in s if unicodedata.category(c) != "Mn").lower().strip()
+
+
+def cle_marque(s):
+    """Une marque = une entrée, quelle que soit la ponctuation (L’Oréal / L'Oréal, Ray Ban / Ray-Ban)."""
+    return re.sub(r"[^a-z0-9]", "", norm(s))
 
 
 def slugify(s):  # identique à mediakit/_build_mediakits.py
@@ -77,8 +89,8 @@ def nombre(v):
     elif t.endswith("m"):
         mult, t = 1_000_000, t[:-1]
     try:
-        return int(round(float(t.replace(",", ".")) * mult))
-    except ValueError:
+        return max(0, int(round(float(t.replace(",", ".")) * mult)))
+    except (ValueError, OverflowError):
         return 0
 
 
@@ -93,9 +105,10 @@ def slugs_media_kits(kits):
     """Adresse /mediakit/<slug>/ de chaque créateur, calculée comme _build_mediakits.py."""
     used, out = set(), {}
     for r in kits:
-        mk = r.get("mediakit") or {}
-        name = r.get("name") or ""
-        base = slugify(mk.get("slug") or (name.split()[0] if name else ""))
+        mk = r.get("mediakit") if isinstance(r.get("mediakit"), dict) else {}
+        name = r.get("name") if isinstance(r.get("name"), str) else ""
+        s = mk.get("slug") if isinstance(mk.get("slug"), str) else ""
+        base = slugify(s or (name.split()[0] if name.split() else ""))
         slug, i = base, 2
         while slug in used:
             slug, i = "%s-%d" % (base, i), i + 1
@@ -110,7 +123,8 @@ def joli(data):
     lignes = ['{"maj":%s,"createurs":[' % json.dumps(data["maj"])]
     lignes += [json.dumps(x, ensure_ascii=False, separators=(",", ":")) + ("," if i < len(c) - 1 else "") for i, x in enumerate(c)]
     lignes.append('],"marques":' + json.dumps(data["marques"], ensure_ascii=False, separators=(",", ":")) + "}")
-    return "\n".join(lignes).replace("</", "<\\/")
+    # aucun « < » dans le bloc : ni </script> ni <!-- ne peuvent en sortir (JSON.parse relit \u003c)
+    return "\n".join(lignes).replace("<", "\\u003c")
 
 
 def bloc(page, attr, tag, contenu):
@@ -134,54 +148,84 @@ def main():
     except Exception as e:  # réseau, Supabase en panne… : l'accueil garde son repli
         print("Supabase injoignable (%s) : l'accueil garde ses listes de repli." % e)
         return 0
-    if not roster:
-        print("Roster vide : rien écrit.")
+    if not isinstance(roster, list) or not roster or not isinstance(kits, list) or not kits:
+        print("Roster ou media kits vides : rien écrit.")
         return 0
+    roster = [r for r in roster if isinstance(r, dict)]
+    kits = [k for k in kits if isinstance(k, dict)]
 
-    comptes = {norm(c.get("nom")): {r[0]: r[2] for r in c.get("reseaux", []) if len(r) > 2 and r[2]}
-               for c in avant.get("createurs", [])}
+    comptes = {}
+    for c in (avant.get("createurs") if isinstance(avant, dict) else None) or []:
+        if isinstance(c, dict):
+            comptes[norm(c.get("nom"))] = {r[0]: r[2] for r in c.get("reseaux") or [] if isinstance(r, list) and len(r) > 2 and r[2]}
     slugs = slugs_media_kits(kits)
-    contenu = {norm(k.get("name")): (k.get("mediakit") or {}) for k in kits}
+    contenu = {norm(k.get("name")): (k.get("mediakit") if isinstance(k.get("mediakit"), dict) else {}) for k in kits}
 
+    try:
+        fichiers_logos = json.load(open(LOGOS_JSON, encoding="utf-8"))
+    except (OSError, ValueError):
+        fichiers_logos = {}
     createurs, marques, index = [], [], {}
     for r in roster:
-        nom = nom_affiche(r.get("name"))
-        mk = contenu.get(norm(r.get("name")), {})
-        principal = norm(r.get("platform"))
-        compte = (r.get("handle") or "").strip()
-        connus = comptes.get(norm(nom), {})
-        reseaux = []
-        for p in mk.get("platforms") or []:
-            cle = norm(p.get("key"))
-            n = nombre(p.get("followers"))
-            if cle in RESEAUX and n > 0:
-                reseaux.append([cle, n, connus.get(cle) or (compte.lstrip("@") if cle == principal and compte else None)])
-        reseaux.sort(key=lambda x: -x[1])
-        photo = r.get("photo_url") or ""
-        if photo.startswith(AVATARS):
-            photo = photo[len(AVATARS):]
-        createurs.append({"nom": nom, "compte": compte, "niche": (r.get("niche") or "").strip(),
-                          "kit": slugs.get(norm(r.get("name"))), "photo": photo or None, "reseaux": reseaux})
-        prenom = nom.split()[0] if nom else ""
-        for b in mk.get("brands") or []:
-            n = " ".join(str(b if isinstance(b, str) else (b or {}).get("name") or "").split())
-            if not n:
+        # un créateur aux données inattendues ne bloque jamais les autres (comme _build_mediakits.py)
+        try:
+            nom = nom_affiche(r.get("name"))
+            if not nom:
                 continue
-            n = CORRECTIONS.get(n.lower(), n)
-            k = norm(n)
-            if k not in index:
-                index[k] = [n, []]
-                marques.append(index[k])
-            if prenom and prenom not in index[k][1]:
-                index[k][1].append(prenom)
+            mk = contenu.get(norm(r.get("name")), {})
+            principal = norm(r.get("platform"))
+            compte = str(r.get("handle") or "").strip()[:60]
+            frais = compte.lstrip("@")
+            connus = comptes.get(norm(nom), {})
+            reseaux = []
+            plats = mk.get("platforms")
+            for p in plats if isinstance(plats, list) else []:
+                if not isinstance(p, dict):
+                    continue
+                cle = norm(p.get("key"))
+                n = nombre(p.get("followers"))
+                if cle in RESEAUX and n > 0:
+                    # le compte frais de l'app d'abord (réseau principal), sinon celui du repli
+                    h = (frais if cle == principal and frais else None) or connus.get(cle)
+                    reseaux.append([cle, n, h if isinstance(h, str) and COMPTE_RE.match(h) else None])
+            reseaux.sort(key=lambda x: -x[1])
+            photo = str(r.get("photo_url") or "")
+            if photo.startswith(AVATARS):
+                photo = photo[len(AVATARS):]
+            if not PHOTO_RE.match(photo) or ".." in photo:
+                photo = ""
+            createurs.append({"nom": nom, "compte": compte, "niche": str(r.get("niche") or "").strip()[:40],
+                              "kit": slugs.get(norm(r.get("name"))), "photo": photo or None, "reseaux": reseaux})
+            prenom = nom.split()[0]
+            brands = mk.get("brands")
+            for b in brands if isinstance(brands, list) else []:
+                brut = b if isinstance(b, str) else (b.get("name") if isinstance(b, dict) else None)
+                if not isinstance(brut, str):
+                    continue
+                n = " ".join(brut.split())[:60]
+                if not cle_marque(n):
+                    continue
+                n = CORRECTIONS.get(cle_marque(n), n)
+                k = cle_marque(n)
+                if k not in index:
+                    lg = fichiers_logos.get(k) or {}
+                    index[k] = [n, []] + ([lg["fichier"]] + ([lg["fond"]] if lg.get("fond") else []) if lg.get("fichier") else [])
+                    marques.append(index[k])
+                if prenom not in index[k][1]:
+                    index[k][1].append(prenom)
+        except Exception as e:
+            print("Créateur ignoré (%s) : %s" % (r.get("name"), e))
+    if not createurs:
+        print("Aucun créateur lisible : rien écrit.")
+        return 0
 
     data = {"maj": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), "createurs": createurs, "marques": marques}
     page = page[:m.start(2)] + joli(data) + page[m.end(2):]
 
     # version texte (robots sans JavaScript) : mêmes informations que les fenêtres du bureau
     total = sum(x[1] for c in createurs for x in c["reseaux"])
-    logos = {norm(n) for n in LOGOS}
-    noms = LOGOS + sorted((n for n, _ in marques if norm(n) not in logos), key=norm)
+    logos = {cle_marque(n) for n in LOGOS}
+    noms = LOGOS + sorted((m[0] for m in marques if cle_marque(m[0]) not in logos), key=norm)
     k = total / 1000  # même arrondi que la fenêtre Résultats de l'accueil (fmtK)
     cumul = ("%.1f M" % (k / 1000)).replace(".", ",") if k >= 1000 else "%d K" % round(k)
     page = bloc(page, "chiffres", "p", html.escape("%d créateurs, %s d'abonnés cumulés sur Instagram et TikTok, %d marques avec nos créateurs."
