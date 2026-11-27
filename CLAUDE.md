@@ -45,8 +45,13 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
 - **Première page iPhone** : icône Roster en premier (deck agence), widget « Agence » (abonnés cumulés, créateurs, +50 campagnes, marques ;
   ouvre Résultats) à la place de l'horloge, du calendrier et des raccourcis Talents (retirés à la
   demande de Marc le 2026-11-27, ne pas les remettre). Le Calendrier reste en page 2 et dans ⌘K.
-- **Icônes** (2026-11-27) : minimalistes, fond blanc + pictogramme au trait encre (`PICTO`,
-  `iosIcon()`). Marc a refusé les icônes illustrées (« style Apple ») : ne pas y revenir.
+- **Icônes** (2026-11-27, après plusieurs essais refusés : illustrations, pictos au trait sur fond blanc,
+  pictos sur dégradé « verre ») : dessinées en code comme les apps d'origine de l'iPhone (`APPS` dans
+  `index.html`) : Roster = Fichiers, Services = Notes, Méthode = Rappels, Résultats = Bourse, Marques =
+  Cartes (Wallet), Rejoindre = Messages, Talents = Contacts, Contact = Mail, Histoire = Livres,
+  Visionneuse = Photos. **Jamais les images Apple elles-mêmes** (droits d'Apple) : on redessine.
+  Forme = coins continus façon Apple (`--squircle`, rayon 22 %, lissage 60 %). Grille téléphone aux
+  mesures iOS : `--ic` 16,2 vw (64 px sur 393), marges 7 vw, widget moyen 338 × 155, Dock aligné.
 - **Fond d'écran** (2026-11-27) : dégradés unis (`WALLS` : Sable par défaut, Bordeaux, Ardoise, Encre),
   plus de photo floutée. Tons moyens à foncés exprès (libellés blancs sous les icônes).
 - **Résultats** : barres réseaux en couleurs pleines (bordeaux / encre), « Univers du roster » en liste

@@ -132,7 +132,7 @@
   --row-alt:#262628;
   --tile:rgba(255,255,255,.08);
 }
-:root{--squircle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0C88 0 100 12 100 50S88 100 50 100 0 88 0 50 12 0 50 0Z'/%3E%3C/svg%3E")}
+:root{--squircle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M64.8 0c12.32 0 18.48 0 23.19 2.4a22 22 0 0 1 9.61 9.61c2.4 4.71 2.4 10.87 2.4 23.19V64.8c0 12.32 0 18.48-2.4 23.19a22 22 0 0 1-9.61 9.61c-4.71 2.4-10.87 2.4-23.19 2.4H35.2c-12.32 0-18.48 0-23.19-2.4a22 22 0 0 1-9.61-9.61C0 83.28 0 77.12 0 64.8V35.2c0-12.32 0-18.48 2.4-23.19a22 22 0 0 1 9.61-9.61C16.72 0 22.88 0 35.2 0Z'/%3E%3C/svg%3E")}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{font:13px/1.38 var(--font);letter-spacing:-.08px;color:var(--text);background:#2c2522;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;cursor:default}
@@ -442,8 +442,8 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
 .ico .g.w{width:58%;height:58%;color:#fff;stroke-width:1.9}
 .ico .gf{width:60%;height:60%;fill:#fff}
 .ico .gs{width:84%;height:84%}
-.ico.pic{background:#fff}
-.ico .gp{width:50%;height:50%;fill:none;stroke:#1b1b1f;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ico.lg{position:relative}
+.ico .lg-a{position:absolute;inset:0;width:100%;height:100%}
 .ico .gd{width:74%;height:74%}
 .di .tip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);padding:4px 10px;border-radius:7px;background:var(--tip-bg);color:var(--tip-text);font-size:13px;white-space:nowrap;box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 14px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .1s}
 .di .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--tip-bg)}
@@ -615,23 +615,23 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   :root[data-theme="light"] body.app-open .ios-status{color:#000}
   :root[data-theme="light"] body.app-open .homebar{background:#000}
   /* écran d'accueil : pages, widgets, icônes, dock */
-  .phone{--hp:22px;--hg:22px;display:flex;flex-direction:column;position:fixed;inset:0;padding:54px 0 calc(8px + env(safe-area-inset-bottom))}
+  .phone{--ic:min(16.2vw,68px);--hp:min(7vw,32px);--hg:calc((100vw - 2*var(--hp) - 4*var(--ic))/3);display:flex;flex-direction:column;position:fixed;inset:0;padding:54px 0 calc(8px + env(safe-area-inset-bottom))}
   .ph-pages{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x}
   .ph-pages::-webkit-scrollbar{display:none}
-  .ph-page{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:repeat(4,1fr);column-gap:var(--hg);row-gap:18px;align-content:start;padding:10px var(--hp) 0}
-  .phone .app{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px;font-weight:500;letter-spacing:-.1px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent;min-width:0}
-  .phone .app .icw{width:100%;max-width:64px;height:auto;aspect-ratio:1;transition:transform .16s cubic-bezier(.2,.8,.2,1),filter .16s}
+  .ph-page{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:repeat(4,var(--ic));column-gap:var(--hg);row-gap:min(5.2vw,24px);align-content:start;padding:12px var(--hp) 0}
+  .phone .app{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;font-weight:400;letter-spacing:0;color:#fff;text-shadow:0 0 5px rgba(0,0,0,.3),0 1px 1px rgba(0,0,0,.15);-webkit-tap-highlight-color:transparent;min-width:0}
+  .phone .app .icw{width:var(--ic);max-width:none;height:auto;aspect-ratio:1;transition:transform .16s cubic-bezier(.2,.8,.2,1),filter .16s}
   .phone .app:active .icw{transform:scale(.88);filter:brightness(.75) drop-shadow(0 1px 1.5px rgba(0,0,0,.3))}
   .phone .app .ico{width:100%;height:100%;display:grid;place-items:center;overflow:hidden}
   .phone .app img.ico{object-fit:cover}
-  .phone .lab{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .iw-wrap{grid-column:span 2;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .phone .lab{max-width:calc(var(--ic) + var(--hg) - 4px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .iw-wrap{grid-column:span 2;display:flex;flex-direction:column;gap:5px;min-width:0}
   .iw-wrap.med{grid-column:span 4}
   .iw{position:relative;display:block;width:100%;aspect-ratio:1;border-radius:22px;overflow:hidden;background:#fff;color:#000;box-shadow:0 4px 16px rgba(0,0,0,.14);text-align:left;-webkit-tap-highlight-color:transparent;transition:transform .18s cubic-bezier(.2,.8,.2,1)}
   .iw:active{transform:scale(.96)}
-  .iw-wrap.med .iw{aspect-ratio:auto;height:calc((100vw - 2*var(--hp) - 3*var(--hg))/2 + var(--hg))}
+  .iw-wrap.med .iw{aspect-ratio:auto;height:calc(2*var(--ic) + var(--hg))}
   :root[data-theme="dark"] .iw{background:#1c1c1e;color:#fff}
-  .wlabel{font-size:11.5px;font-weight:500;color:#fff;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+  .wlabel{font-size:12px;font-weight:400;color:#fff;text-align:center;text-shadow:0 0 5px rgba(0,0,0,.3),0 1px 1px rgba(0,0,0,.15)}
   .iw-agence{display:flex!important;flex-direction:column;padding:14px 16px 13px;gap:12px}
   .ag-h{display:flex;align-items:center;gap:8px;font-size:13px}
   .ag-h img{width:22px;height:22px;border-radius:6px}
@@ -672,7 +672,7 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
   .ph-dots i.on{background:#fff}
   .phone.paging .ph-search{display:none}
   .phone.paging .ph-dots{display:flex}
-  .ph-dock{display:grid;grid-template-columns:repeat(4,1fr);column-gap:var(--hg);width:100%;padding:15px 14px;border-radius:34px;background:rgba(255,255,255,.2);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6)}
+  .ph-dock{display:grid;grid-template-columns:repeat(4,var(--ic));justify-content:space-between;width:100%;padding:16px calc(var(--hp) - 10px);border-radius:min(9.5vw,40px);background:rgba(255,255,255,.2);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6)}
   .ph-dock .lab{display:none}
   /* apps ouvertes en plein écran, comme sur iPhone */
   .win{left:0!important;top:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;border-radius:0;box-shadow:none}
@@ -865,6 +865,10 @@ body.fullscreen .dock{transform:translate(-50%,130%)}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="gFolderBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aaeef"/><stop offset="1" stop-color="#2f8ad9"/></linearGradient>
+    <linearGradient id="aFilesBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a8cff"/><stop offset="1" stop-color="#1673ec"/></linearGradient>
+    <linearGradient id="aFilesFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6cc0ff"/><stop offset="1" stop-color="#2f8ffb"/></linearGradient>
+    <linearGradient id="aNotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe36e"/><stop offset="1" stop-color="#fdca1e"/></linearGradient>
+    <linearGradient id="aPocket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ececf0"/><stop offset="1" stop-color="#bcbcc3"/></linearGradient>
     <linearGradient id="gFolderFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93d3fc"/><stop offset="1" stop-color="#5cb6f5"/></linearGradient>
   </defs>
 </svg>
@@ -1097,22 +1101,25 @@ const brand = (n, s = 20) => `<span class="bt ${BRANDS[n].cls}" style="--s:${s}p
 const appIcon = (g, c1, c2) => `<span class="ico" style="background:linear-gradient(180deg,${c1},${c2})">${ico(g, 'w')}</span>`;
 // Icônes façon iPhone : forme squircle, dégradé vertical, pictogramme plein et blanc
 const icw = inner => `<span class="icw">${inner}</span>`;
-// Icônes minimalistes (choix de Marc, 2026-11-27) : fond blanc, pictogramme au trait encre,
-// un seul style pour toutes, pour qu'on comprenne tout de suite. Pas d'illustrations.
-const PICTO = {
-  talents: '<circle cx="9" cy="8" r="3.6"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M15.5 4.6a3.6 3.6 0 0 1 0 6.8M18 14.4c2.1.7 3.5 2.7 3.5 5.6"/>',
-  roster: '<rect x="3" y="5" width="18" height="14" rx="2.2"/><circle cx="9" cy="10.6" r="2.2"/><path d="M5.6 16.2c.7-1.5 1.9-2.2 3.4-2.2s2.7.7 3.4 2.2M14.5 10h4M14.5 13.6h3"/>',
-  services: '<rect x="3" y="7.5" width="18" height="12.5" rx="2.2"/><path d="M8.5 7.5V5.6c0-1 .8-1.8 1.8-1.8h3.4c1 0 1.8.8 1.8 1.8v1.9M3 13h18"/>',
-  methode: '<path d="M3.6 6.4l1.9 1.9 3.3-3.6M3.6 13.4l1.9 1.9 3.3-3.6M12 6.8h8.4M12 13.8h8.4M4 20h16.4"/>',
-  resultats: '<path d="M3 20.5h18M6 20.5v-6M12 20.5V9.5M18 20.5V4"/>',
-  marques: '<path d="M12.4 3H5a2 2 0 0 0-2 2v7.4l8.6 8.6a2 2 0 0 0 2.8 0l6.6-6.6a2 2 0 0 0 0-2.8z"/><circle cx="7.6" cy="7.6" r="1.3"/>',
-  histoire: '<path d="M2.5 4.5h6a3.5 3.5 0 0 1 3.5 3.5v12.5a2.8 2.8 0 0 0-2.8-2.8H2.5zM21.5 4.5h-6A3.5 3.5 0 0 0 12 8v12.5a2.8 2.8 0 0 1 2.8-2.8h6.7z"/>',
-  contact: '<rect x="2.5" y="4.5" width="19" height="15" rx="2.2"/><path d="M3.2 6.4l8.8 6.8 8.8-6.8"/>',
-  viewer: '<rect x="3" y="3.5" width="18" height="17" rx="2.2"/><circle cx="9" cy="9.3" r="1.9"/><path d="M21 15.5l-5-5-11 10"/>',
-  rejoindre: '<circle cx="9.5" cy="8" r="3.8"/><path d="M2.5 20.5c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5M19 7.5v6M16 10.5h6"/>',
+// Icônes de l'accueil dessinées comme les apps d'origine de l'iPhone (choix de Marc, 2026-11-27 :
+// « les icônes officielles ») : Contacts, Fichiers, Notes, Rappels, Bourse, Cartes (Wallet), Mail,
+// Livres, Photos, Messages. Dessinées en code (aucune image Apple). Refusés avant : illustrations,
+// pictos au trait sur fond blanc, pictos génériques sur dégradé.
+const APPS = {
+  talents: ['linear-gradient(180deg,#f2f2f5,#c3c3ca)', '<circle cx="45" cy="39" r="15" fill="#8e8e96"/><path d="M16 84c0-17 13-27 29-27s29 10 29 27z" fill="#8e8e96"/><rect x="88" y="10" width="12" height="17" fill="#ff9f0a"/><rect x="88" y="29" width="12" height="17" fill="#34c759"/><rect x="88" y="48" width="12" height="17" fill="#0a84ff"/><rect x="88" y="67" width="12" height="17" fill="#bf5af2"/>'],
+  roster: ['linear-gradient(180deg,#fff,#eeeef3)', '<path d="M15 30a6 6 0 0 1 6-6h18.5c1.7 0 3.2.7 4.3 2l4.7 5.4H79a6 6 0 0 1 6 6v5H15z" fill="url(#aFilesBack)"/><rect x="15" y="36.5" width="70" height="45" rx="6.5" fill="url(#aFilesFront)"/><rect x="15" y="36.5" width="70" height="1.6" rx=".8" fill="#a9d8ff"/>'],
+  services: ['#fff', '<rect width="100" height="29" fill="url(#aNotes)"/><path d="M1 30.6h98" stroke="#b8b8bd" stroke-width="1.6" stroke-dasharray="1.6 2.2" stroke-linecap="round"/><path d="M9 46.5h82M9 61h82M9 75.5h82M9 90h82" stroke="#dcdce0" stroke-width="1.5"/>'],
+  methode: ['#fff', '<circle cx="23" cy="28" r="9" fill="#0a84ff"/><circle cx="23" cy="28" r="6.2" fill="#fff"/><circle cx="23" cy="28" r="4.6" fill="#0a84ff"/><circle cx="23" cy="50" r="9" fill="#ff3b30"/><circle cx="23" cy="50" r="6.2" fill="#fff"/><circle cx="23" cy="50" r="4.6" fill="#ff3b30"/><circle cx="23" cy="72" r="9" fill="#ff9500"/><circle cx="23" cy="72" r="6.2" fill="#fff"/><circle cx="23" cy="72" r="4.6" fill="#ff9500"/><rect x="40" y="26" width="46" height="4" rx="2" fill="#d4d4d9"/><rect x="40" y="48" width="46" height="4" rx="2" fill="#d4d4d9"/><rect x="40" y="70" width="46" height="4" rx="2" fill="#d4d4d9"/>'],
+  resultats: ['#000', '<path d="M10 36h80M10 52h80M10 68h80" stroke="#2c2c2e" stroke-width="1.2"/><path d="M10 62l9-4 7 3 8-12 7 5 8-14 7 6 9-9 8 4 7-7" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>'],
+  marques: ['#000', '<rect x="16" y="18" width="68" height="40" rx="6" fill="#34aadc"/><rect x="16" y="27" width="68" height="40" rx="6" fill="#ffcc00"/><rect x="16" y="36" width="68" height="40" rx="6" fill="#34c759"/><rect x="16" y="45" width="68" height="40" rx="6" fill="#ff9500"/><path d="M13 57h23c3 6.5 8 10 14 10s11-3.5 14-10h23v25a7 7 0 0 1-7 7H20a7 7 0 0 1-7-7z" fill="url(#aPocket)"/>'],
+  contact: ['linear-gradient(180deg,#1fb2ff,#1567f3)', '<rect x="12" y="27" width="76" height="49" rx="5" fill="#fff"/><path d="M13.5 29l36.5 27 36.5-27" fill="none" stroke="#c4cfde" stroke-width="2.4" stroke-linejoin="round"/>'],
+  histoire: ['linear-gradient(180deg,#ffa83a,#ff7a00)', '<path d="M48 31c-8-6-19-7.5-31-4.5v41c12-3 23-1.5 31 4.5zM52 31c8-6 19-7.5 31-4.5v41c-12-3-23-1.5-31 4.5z" fill="#fff"/>'],
+  viewer: ['#fff', '<ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#ff9f0a" transform="rotate(0 50 50)" style="mix-blend-mode:multiply" opacity=".9"/><ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#ffd60a" transform="rotate(45 50 50)" style="mix-blend-mode:multiply" opacity=".9"/><ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#a5d84a" transform="rotate(90 50 50)" style="mix-blend-mode:multiply" opacity=".9"/><ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#34c759" transform="rotate(135 50 50)" style="mix-blend-mode:multiply" opacity=".9"/><ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#30b0e0" transform="rotate(180 50 50)" style="mix-blend-mode:multiply" opacity=".9"/><ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#3b6cf0" transform="rotate(225 50 50)" style="mix-blend-mode:multiply" opacity=".9"/><ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#a050e0" transform="rotate(270 50 50)" style="mix-blend-mode:multiply" opacity=".9"/><ellipse cx="50" cy="30" rx="10.5" ry="19" fill="#ff4f7a" transform="rotate(315 50 50)" style="mix-blend-mode:multiply" opacity=".9"/>'],
+  rejoindre: ['linear-gradient(180deg,#65f26e,#0cbd2a)', '<ellipse cx="50" cy="48" rx="35" ry="29" fill="#fff"/><path d="M27 68c-1.2 7.5-5.8 12-11.5 13.8 9 .9 17-1.8 21.5-7.2z" fill="#fff"/>'],
 };
 function iosIcon(k) {
-  return `<span class="ico sq pic"><svg class="gp" viewBox="0 0 24 24" aria-hidden="true">${PICTO[k]}</svg></span>`;
+  const [bg, art] = APPS[k];
+  return `<span class="ico sq lg" style="background:${bg}"><svg class="lg-a" viewBox="0 0 100 100" aria-hidden="true">${art}</svg></span>`;
 }
 const calIcon = () => '<span class="ico sq cal-ic"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="60" fill="#fff"/><text class="cal-wd" x="30" y="16.5" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" font-weight="600" fill="#ff3b30"></text><text class="cal-dn" x="30" y="47" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="31" font-weight="300" fill="#1d1d1f"></text></svg></span>';
 const FOLDER = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 16a4 4 0 0 1 4-4h13.6a3 3 0 0 1 2.3 1.1l2.4 2.9H54a4 4 0 0 1 4 4v4H6z" fill="url(#gFolderBack)"/><rect x="6" y="20.5" width="52" height="34" rx="4.5" fill="url(#gFolderFront)"/><rect x="6" y="20.5" width="52" height="1.4" rx=".7" fill="#fff" opacity=".55"/></svg>';
