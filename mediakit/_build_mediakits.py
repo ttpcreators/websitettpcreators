@@ -350,7 +350,9 @@ def shell(c, slug, lang="fr"):
     # formats, marques, photos) → le rendu PDF en CI est DÉTERMINISTE et n'attend plus un
     # fetch Supabase live (qui pouvait échouer → PDF tronqué à 2 pages, ex. Léna). Le fetch
     # live reste ensuite comme rafraîchissement pour la page web.
-    baked = json.dumps({"name": name, "handle": handle, "platform": platform, "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
+    # aucun « < » dans les données bakées : une marque ou un texte saisi ne peut pas fermer le
+    # <script> ni ouvrir un commentaire (JavaScript relit \u003c comme « < »)
+    baked = json.dumps({"name": name, "handle": handle, "platform": platform, "photo_url": photo, "mediakit": mk}, ensure_ascii=False).replace("<", "\\u003c")
     base = "https://ttpcreators.pro/mediakit/%s/" % slug
     en = lang == "en"
     canonical = base + ("en/" if en else "")
@@ -417,7 +419,7 @@ def ugc_shell(c, slug):
     handle = str((mk.get("ugc") or {}).get("handle") or mk.get("handle") or c.get("handle") or "").lstrip("@")
     photo = (mk.get("photos") or {}).get("hero") or c.get("photo_url") or None
     baked = json.dumps({"name": name, "handle": handle, "platform": c.get("platform") or "instagram",
-                        "photo_url": photo, "mediakit": mk}, ensure_ascii=False)
+                        "photo_url": photo, "mediakit": mk}, ensure_ascii=False).replace("<", "\\u003c")
     canonical = "https://ttpcreators.pro/mediakit/%s/ugc/" % slug
     desc = "Media kit UGC %s : personnalité, quotidien, matériel et portfolio de contenus. TTP Creators." % de(title)
     og = og_tags(title + " · Media kit UGC", desc, canonical, apercu(slug), "Couverture du media kit " + de(title))
@@ -472,7 +474,7 @@ def agency_shell(creators, agency=None, slugs=None, lang="fr"):
     baked = json.dumps(
         {"creators": slim, "clients": CLIENTS, "pillars": PILLARS, "agency": agency or {}},
         ensure_ascii=False,
-    )
+    ).replace("<", "\\u003c")
     en = lang == "en"
     base = "https://ttpcreators.pro/mediakit/agence/"
     canonical = base + ("en/" if en else "")

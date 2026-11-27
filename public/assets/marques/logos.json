@@ -1,0 +1,129 @@
+{
+ "andros": {
+  "fichier": "andros.png"
+ },
+ "bananedeguadeloupemartinique": {
+  "fichier": "banane-de-guadeloupe-martinique.svg"
+ },
+ "carlsbourg": {
+  "fichier": "carlsbourg.png"
+ },
+ "cellublue": {
+  "fichier": "cellublue.svg",
+  "fond": "#2f67f4"
+ },
+ "certideal": {
+  "fichier": "certideal.svg"
+ },
+ "conforama": {
+  "fichier": "conforama.svg"
+ },
+ "dovycuisines": {
+  "fichier": "dovy-cuisines.svg"
+ },
+ "duluxvalentine": {
+  "fichier": "dulux-valentine.png"
+ },
+ "editionpoint": {
+  "fichier": "edition-point.png"
+ },
+ "fabletics": {
+  "fichier": "fabletics.svg"
+ },
+ "fitjeans": {
+  "fichier": "fitjeans.png"
+ },
+ "flammarion": {
+  "fichier": "flammarion.svg"
+ },
+ "ikea": {
+  "fichier": "ikea.svg"
+ },
+ "institutesthederm": {
+  "fichier": "institut-esthederm.svg"
+ },
+ "jeandubost": {
+  "fichier": "jean-dubost.svg"
+ },
+ "kenwood": {
+  "fichier": "kenwood.svg"
+ },
+ "knorr": {
+  "fichier": "knorr.svg"
+ },
+ "kosbiotic": {
+  "fichier": "kosbiotic.svg"
+ },
+ "loreal": {
+  "fichier": "l-oreal.svg"
+ },
+ "lorespresso": {
+  "fichier": "l-or-espresso.png"
+ },
+ "mariemorin": {
+  "fichier": "marie-morin.svg"
+ },
+ "mms": {
+  "fichier": "m-m-s.svg"
+ },
+ "motelrock": {
+  "fichier": "motelrocks.png"
+ },
+ "moulinex": {
+  "fichier": "moulinex.svg"
+ },
+ "nanouthebrand": {
+  "fichier": "nanou-thebrand.png"
+ },
+ "nestle": {
+  "fichier": "nestle.svg"
+ },
+ "onatera": {
+  "fichier": "onatera.svg"
+ },
+ "pandatea": {
+  "fichier": "panda-tea.png"
+ },
+ "prozis": {
+  "fichier": "prozis.png"
+ },
+ "respire": {
+  "fichier": "respire.svg"
+ },
+ "retif": {
+  "fichier": "retif.svg"
+ },
+ "sephora": {
+  "fichier": "sephora.svg"
+ },
+ "shokz": {
+  "fichier": "shokz.svg"
+ },
+ "silikomart": {
+  "fichier": "silikomart.svg"
+ },
+ "soldejaneiro": {
+  "fichier": "sol-de-janeiro.svg"
+ },
+ "teveo": {
+  "fichier": "teveo.svg"
+ },
+ "typology": {
+  "fichier": "typology.svg"
+ },
+ "victoriassecret": {
+  "fichier": "victoria-s-secret.svg"
+ },
+ "waynabox": {
+  "fichier": "waynabox.svg"
+ },
+ "wecandoo": {
+  "fichier": "wecandoo.svg"
+ },
+ "winesbordeaux": {
+  "fichier": "wines-bordeaux.svg"
+ },
+ "wizbii": {
+  "fichier": "wizbii.svg"
+ }
+}

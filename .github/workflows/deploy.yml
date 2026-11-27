@@ -44,9 +44,10 @@ jobs:
 
       # Accueil « Bureau » : roster et marques en direct de Supabase (vues publiques)
       # glissés dans dist/index.html, avec la version texte lue par les robots sans
-      # JavaScript (ChatGPT, Claude, Perplexity). Tourne aussi avec le cron horaire : un
-      # créateur ajouté dans l'app apparaît sur l'accueil dans l'heure. Ne fait jamais
-      # échouer le déploiement : sans réponse de Supabase, la page garde son repli.
+      # JavaScript (ChatGPT, Claude, Perplexity). Tourne aussi avec le cron (prévu toutes les
+      # heures, lancé par GitHub quelques fois par jour en pratique) : un créateur ajouté dans
+      # l'app apparaît en général dans la journée, tout de suite avec Actions › Run workflow.
+      # Ne fait jamais échouer le déploiement : sans réponse de Supabase, la page garde son repli.
       - name: Roster et marques à jour dans l'accueil (Supabase)
         continue-on-error: true
         run: python3 scripts/bureau_donnees.py
@@ -89,6 +90,11 @@ jobs:
           grep -q 'data-ttp-site="bureau"' dist/index.html || { echo "::error::dist/index.html n'est pas l'accueil officiel (marqueur data-ttp-site absent). Déploiement BLOQUÉ."; exit 1; }
           grep -q 'id="ttp-data"' dist/index.html || { echo "::error::bloc de données ttp-data absent de l'accueil. Déploiement BLOQUÉ."; exit 1; }
           if grep -qiE "<video" dist/index.html; then echo "::error::index.html contient <video> = ancien site cinématique. BLOQUÉ."; exit 1; fi
+          # chaque media kit cité par l'accueil doit exister (Supabase en panne pendant la
+          # génération = kits manquants) : sinon on ne publie pas, le site en ligne reste le précédent
+          for k in $(grep -o 'href="/mediakit/[^"]*/"' dist/index.html | cut -d'"' -f2 | sort -u); do
+            test -f "dist${k}index.html" || { echo "::error::media kit absent : $k. Déploiement BLOQUÉ, le site en ligne reste le précédent."; exit 1; }
+          done
           echo "OK — accueil officiel valide."
 
       - uses: actions/upload-pages-artifact@v3

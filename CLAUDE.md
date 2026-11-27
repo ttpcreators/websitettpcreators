@@ -12,17 +12,33 @@ déploiement met à jour le site public en ~1 minute. Agir en conséquence.
   pages d'apps, retour par glissement). Vite la construit telle quelle (`npm run build` : seul le
   CSS est compacté).
 - **Données** : bloc `<script id="ttp-data" type="application/json">` (créateurs, abonnés par réseau,
-  media kit, marques). À chaque déploiement ET avec le cron horaire, `scripts/bureau_donnees.py`
-  le remplace dans `dist/index.html` par les vues publiques Supabase `public_roster` +
-  `public_mediakit` : un créateur ajouté dans l'app apparaît dans l'heure. Les comptes par réseau
+  media kit, marques). À chaque déploiement ET avec le cron (prévu toutes les heures, lancé par
+  GitHub quelques fois par jour en pratique), `scripts/bureau_donnees.py` le remplace dans
+  `dist/index.html` par les vues publiques Supabase `public_roster` + `public_mediakit` : un créateur
+  ajouté dans l'app apparaît en général dans la journée (tout de suite : Actions › Run workflow). Les comptes par réseau
   (absents des vues) sont repris du bloc du dépôt. Rafraîchir le repli du dépôt :
   `python3 scripts/bureau_donnees.py index.html`.
 - **Version texte** (`<main id="texte" hidden>`, même principe que l'ancien `prerender_text.py`) :
   lue par les robots sans JavaScript, retirée par la page au démarrage. Chiffres, créateurs et
   marques réécrits par le même script.
-- **Marques** : les 11 logos de `public/assets/clients/`, puis toutes les marques des media kits
-  publics (« Ces marques lui ont fait confiance »), écrites comme des logos, avec les créateurs
-  concernés (« Avec Léna »). Corrections de fautes de frappe : `CORRECTIONS` dans le script.
+- **Marques** : les 11 logos de `public/assets/clients/` (masques blancs), puis toutes les marques
+  des media kits publics (« Ces marques lui ont fait confiance »), avec les créateurs concernés
+  (« Avec Léna »). **Logos officiels** (2026-11-27) : `public/assets/marques/` + `logos.json`
+  (clé = nom en minuscules sans accents ni ponctuation, comme `cle_marque()` du script ; `fond` =
+  couleur de la tuile pour un logo blanc). Règle : un logo SEULEMENT si la marque est certaine
+  (site officiel, Wikimedia ou Simple Icons, vérifié à l'œil, SVG sans script ni lien externe) ;
+  une marque ambiguë (Emma, Saint Louis, Robur, Les Lunes, Wild, Colombus, Eno…) garde son nom
+  écrit tant que Marc n'a pas confirmé. Nouvelle marque : fichier dans le dossier + ligne dans
+  `logos.json`. Fautes de frappe : `CORRECTIONS` dans le script (même clé).
+- **Formulaire « Rejoindre l'agence »** (fenêtre `rejoindre` : Dock, bureau, menus, ⌘K, fiche
+  Contact, app iPhone) : envoie `{ type: "createur", nom, email, compte, niche, message }` à la
+  fonction `site-lead` de TTP Suite (profil au scouting créateurs, tâche, push). Si elle ne répond
+  pas (ancienne version, réseau, plafond), un bouton ouvre un e-mail pré-rempli (jamais de mailto
+  automatique : Safari iPhone le bloque après un envoi). Mention dans `/confidentialite/#candidatures`.
+- **Anciens liens** : `/#contact`, `/#services`, `/#talents`, `/#rejoindre`… ouvrent la bonne
+  fenêtre (`ANCRES` en fin de script) ; `/?nolock` saute l'écran verrouillé.
+- **Image de partage** : `og-bureau.jpg` (capture du Bureau, fenêtre Talents). `og-ttp.jpg` reste
+  pour les media kits.
 - **Calendrier** : uniquement des dates publiques, recalculées chaque année dans la page (temps
   forts marketing avec la date limite pour réserver des créateurs, journées du sport). **Jamais**
   d'anniversaires ni de rendez-vous des créateurs sur le site public (vie privée et sécurité) :
