@@ -1,4 +1,6 @@
-# Déploiement GitHub Pages du SITE OFFICIEL (React + Vite) sur https://ttpcreators.pro
+# Déploiement GitHub Pages du SITE OFFICIEL sur https://ttpcreators.pro
+#
+# Accueil = « Bureau » (index.html, page autonome construite par Vite) depuis le 2026-11-27.
 #
 # Un push sur main (ou l'upload d'un fichier via l'interface GitHub) rebuild le
 # site et le publie en ~1 min. Le même déploiement génère aussi le MEDIA KIT
@@ -33,20 +35,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1) Site React → dist/
+      # 1) Site → dist/
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm ci
       - run: npm run build
 
-      # Le HTML de l'accueil est vide sans JavaScript (<div id="root"></div>) : ChatGPT,
-      # Claude, Perplexity et souvent Bing n'y lisaient rien. Ce script y glisse le texte
-      # de la page rendue, masqué (React le remplace au chargement, rien ne change à
-      # l'écran). Il ne fait jamais échouer le déploiement.
-      - name: Version texte de l'accueil pour les robots sans JavaScript (SEO)
+      # Accueil « Bureau » : roster et marques en direct de Supabase (vues publiques)
+      # glissés dans dist/index.html, avec la version texte lue par les robots sans
+      # JavaScript (ChatGPT, Claude, Perplexity). Tourne aussi avec le cron horaire : un
+      # créateur ajouté dans l'app apparaît sur l'accueil dans l'heure. Ne fait jamais
+      # échouer le déploiement : sans réponse de Supabase, la page garde son repli.
+      - name: Roster et marques à jour dans l'accueil (Supabase)
         continue-on-error: true
-        run: python3 scripts/prerender_text.py
+        run: python3 scripts/bureau_donnees.py
 
       # 2) Media kit : pages live + intégration dans dist/, puis rendu PDF
       - uses: actions/setup-python@v5
@@ -77,14 +80,16 @@ jobs:
           SERVE_DIR: dist
         run: python3 mediakit/_render_pdfs.py
 
-      # 3) Garde-fou : ne publier QUE le vrai site React (build valide), jamais
-      #    un ancien site statique/cinématique ni un build cassé (page blanche).
-      - name: Garde-fou — vérifier que le build React est valide
+      # 3) Garde-fou : ne publier QUE l'accueil officiel (« Bureau », marqueur
+      #    data-ttp-site="bureau" sur <html>), jamais un ancien site
+      #    statique/cinématique ni un build cassé (page blanche).
+      - name: Garde-fou — vérifier que l'accueil est le bon
         run: |
           test -f dist/index.html || { echo "::error::dist/index.html manquant — build cassé."; exit 1; }
-          grep -q 'id="root"' dist/index.html || { echo "::error::dist/index.html n'est pas l'app React (id=\"root\" absent). Déploiement BLOQUÉ."; exit 1; }
+          grep -q 'data-ttp-site="bureau"' dist/index.html || { echo "::error::dist/index.html n'est pas l'accueil officiel (marqueur data-ttp-site absent). Déploiement BLOQUÉ."; exit 1; }
+          grep -q 'id="ttp-data"' dist/index.html || { echo "::error::bloc de données ttp-data absent de l'accueil. Déploiement BLOQUÉ."; exit 1; }
           if grep -qiE "<video" dist/index.html; then echo "::error::index.html contient <video> = ancien site cinématique. BLOQUÉ."; exit 1; fi
-          echo "OK — site React valide."
+          echo "OK — accueil officiel valide."
 
       - uses: actions/upload-pages-artifact@v3
         with:
