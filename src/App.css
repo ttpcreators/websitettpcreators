@@ -199,7 +199,7 @@ h2 {
 }
 
 .brand-logo {
-  height: 28px;
+  height: 44px; /* nouveau monogramme TT dans son ovale (vertical, traits fins) */
   width: auto;
 }
 
@@ -1868,7 +1868,7 @@ a.ci:hover b {
   }
 
   .brand-logo {
-    height: 32px;
+    height: 52px; /* monogramme TT : traits fins, il lui faut un peu de taille */
   }
 
   .menu-btn-circle,

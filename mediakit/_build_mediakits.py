@@ -288,7 +288,19 @@ def fetch_creators():
     url = SB_URL + "/rest/v1/public_mediakit?select=name,handle,niche,platform,photo_url,mediakit,sort_order&order=sort_order"
     req = urllib.request.Request(url, headers={"apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY})
     with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)
+        rows = json.load(r)
+    # Le blob `mediakit` arrive parfois en TEXTE (JSON enregistré deux fois par l'app,
+    # ex. Anthony Gharbi en nov. 2026) au lieu d'un objet : on le relit, sinon {}.
+    # Sans ça, `mk.get(...)` plantait et AUCUN kit après ce créateur n'était généré.
+    for c in rows:
+        mk = c.get("mediakit")
+        if isinstance(mk, str):
+            try:
+                mk = json.loads(mk)
+            except ValueError:
+                mk = None
+        c["mediakit"] = mk if isinstance(mk, dict) else {}
+    return rows
 
 
 def fetch_agency():
@@ -363,8 +375,8 @@ def shell(c, slug, lang="fr"):
 <link rel="canonical" href="{canonical}">
 {hreflang}
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=3">
-<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=4">
+<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=4">
 <link rel="stylesheet" href="{up}../_assets/kit-editorial.css">
 {jsonld}
 </head>
@@ -418,8 +430,8 @@ def ugc_shell(c, slug):
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png?v=3">
-<link rel="apple-touch-icon" href="../../../assets/favicon-180.png?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png?v=4">
+<link rel="apple-touch-icon" href="../../../assets/favicon-180.png?v=4">
 <link rel="stylesheet" href="../../_assets/mediakit-ugc.css">
 </head>
 <body>
@@ -480,8 +492,8 @@ def agency_shell(creators, agency=None, slugs=None, lang="fr"):
 <link rel="canonical" href="{canonical}">
 {hreflang}
 {og}
-<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=3">
-<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="{up}../../assets/favicon-32.png?v=4">
+<link rel="apple-touch-icon" href="{up}../../assets/favicon-180.png?v=4">
 <link rel="stylesheet" href="{up}../_assets/kit-editorial.css">
 <link rel="stylesheet" href="{up}../_assets/agence-editorial.css">
 </head>
@@ -546,29 +558,33 @@ def main():
     creators = fetch_creators()
     used, out, ugc_out = set(), [], []
     for c in creators:
-        mk = c.get("mediakit") or {}
-        base = mk.get("slug") or slugify((c.get("name") or "").split()[0] if c.get("name") else "")
-        base = slugify(base)
-        slug, i = base, 2
-        while slug in used:
-            slug = "%s-%d" % (base, i)
-            i += 1
-        used.add(slug)
-        d = os.path.join(ROOT, slug)
-        os.makedirs(d, exist_ok=True)
-        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
-            f.write(shell(c, slug))
-        os.makedirs(os.path.join(d, "en"), exist_ok=True)
-        with open(os.path.join(d, "en", "index.html"), "w", encoding="utf-8") as f:
-            f.write(shell(c, slug, "en"))
-        out.append((c.get("name"), slug))
-        # Page UGC séparée — seulement si le créateur l'a activée dans l'app.
-        if (mk.get("ugc") or {}).get("enabled"):
-            ud = os.path.join(d, "ugc")
-            os.makedirs(ud, exist_ok=True)
-            with open(os.path.join(ud, "index.html"), "w", encoding="utf-8") as f:
-                f.write(ugc_shell(c, slug))
-            ugc_out.append(slug)
+        # un créateur aux données inattendues ne doit jamais bloquer les autres
+        try:
+            mk = c.get("mediakit") or {}
+            base = mk.get("slug") or slugify((c.get("name") or "").split()[0] if c.get("name") else "")
+            base = slugify(base)
+            slug, i = base, 2
+            while slug in used:
+                slug = "%s-%d" % (base, i)
+                i += 1
+            used.add(slug)
+            d = os.path.join(ROOT, slug)
+            os.makedirs(d, exist_ok=True)
+            with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+                f.write(shell(c, slug))
+            os.makedirs(os.path.join(d, "en"), exist_ok=True)
+            with open(os.path.join(d, "en", "index.html"), "w", encoding="utf-8") as f:
+                f.write(shell(c, slug, "en"))
+            out.append((c.get("name"), slug))
+            # Page UGC séparée — seulement si le créateur l'a activée dans l'app.
+            if (mk.get("ugc") or {}).get("enabled"):
+                ud = os.path.join(d, "ugc")
+                os.makedirs(ud, exist_ok=True)
+                with open(os.path.join(ud, "index.html"), "w", encoding="utf-8") as f:
+                    f.write(ugc_shell(c, slug))
+                ugc_out.append(slug)
+        except Exception as e:  # noqa: BLE001 — on loggue et on passe au suivant
+            print("  ⚠ media kit ignoré pour %s : %s" % (c.get("name"), e))
 
     # Deck AGENCE (tous les créateurs dans un seul media kit).
     agency = fetch_agency()
