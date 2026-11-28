@@ -74,8 +74,10 @@
     </main>
     <script>
       // Liste publique d'une sélection préparée dans TTP Suite (Base créateurs › Listes).
-      // Lit la vue anonyme public_creator_lists : seulement les listes dont le lien est activé,
-      // seulement des chiffres publics (jamais d'email, de bio ni de note). Tout est écrit en
+      // Lit la fonction liste_publique de TTP Suite avec l'adresse de la liste (?l=) : elle ne rend
+      // que cette liste, si son lien est activé, et seulement des chiffres publics (jamais d'email,
+      // de bio ni de note). Tant que la fonction n'existe pas (avant le SQL 2026-11-28 de TTP
+      // Suite), la page relit la vue public_creator_lists comme avant. Tout est écrit en
       // textContent : rien de ce qui vient de la base n'est interprété comme du HTML.
       const SB_URL = 'https://zizvggziggswhrbuyhuo.supabase.co'
       const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppenZnZ3ppZ2dzd2hyYnV5aHVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5Mzk2NjcsImV4cCI6MjA5ODUxNTY2N30.5nB-lhwwasTyKKYAyO0m79gcu6xAg5b0oH2uobUcvQU'
@@ -91,9 +93,18 @@
         let rows
         try {
           // `dispos` (dispos du mois) n'existe qu'après le SQL 2026-11-22 de TTP Suite : sans elle, on relit sans.
-          const get = (cols) => fetch(`${SB_URL}/rest/v1/public_creator_lists?slug=eq.${encodeURIComponent(slug)}&select=${cols}`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } })
-          let res = await get('title,brand,intro,updated_at,creators,dispos')
-          if (res.status === 400) res = await get('title,brand,intro,updated_at,creators')
+          const s = encodeURIComponent(slug)
+          const headers = { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+          const lire = async (route) => {
+            const get = (cols) => fetch(`${SB_URL}/rest/v1/${route}&select=${cols}`, { headers })
+            const r = await get('title,brand,intro,updated_at,creators,dispos')
+            return r.status === 400 ? get('title,brand,intro,updated_at,creators') : r
+          }
+          let res = await lire(`rpc/liste_publique?p_slug=${s}`)
+          if (res.status === 404) {
+            const err = await res.json().catch(() => null)
+            if (err && err.code === 'PGRST202') res = await lire(`public_creator_lists?slug=eq.${s}`)
+          }
           if (!res.ok) throw new Error(res.status)
           rows = await res.json()
         } catch {
